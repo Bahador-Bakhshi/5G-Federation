@@ -1,0 +1,48 @@
+set title "Mapping times CDFs"
+set ylab "percent"
+set xlab "time (sec.)"
+
+# color palette -> http://www.colourlovers.com/palette/4520699/Fall_colour
+set style line 1 lw 2 pt 5 ps 1.5 lc rgb "#D35918"
+set style line 2 lw 2 pt 7 ps 1.5 lc rgb "#A9A201"
+set style line 3 lw 2 pt 9 ps 1.5 lc rgb "#068589"
+set style line 4 lw 2 pt 11 ps 1.5 lc rgb "#E3A52A"
+set style line 5 lw 2 pt 13 ps 1.5 lc rgb "#BC363D"
+
+
+# color palette -> https://coolors.co/ee4728-f6254d-000d04-472d60-289066
+set style line 1 lw 2 pt 5 ps 1.5 lc rgb "#ee4728"  # orange
+set style line 2 lw 2 pt 7 ps 1.5 lc rgb "#f6254d"  # red
+set style line 3 lw 2 pt 9 ps 1.5 lc rgb "#472d60"  # purple
+set style line 4 lw 2 pt 11 ps 1.5 lc rgb "#000d04" # black
+set style line 5 lw 2 pt 13 ps 1.5 lc rgb "#000d04" # blue
+
+# color palette -> https://coolors.co/ee4728-f6254d-000d04-472d60-289066
+set style line 1 lw 4 pt 5 ps 0.75 lc rgb "#ee4728"  # orange
+set style line 2 lw 4 pt 7 ps 0.75 lc rgb "#f6254d"  # red
+set style line 3 lw 4 pt 11 ps 0.75 lc rgb "#472d60"  # purple
+set style line 4 lw 4 pt 3 ps 0.75 lc rgb "#289066" # green
+set style line 5 lw 4 pt 13 ps 0.75 lc rgb "#000d04" # black
+
+set yrange [1:100]
+#set xrange [1:7]
+#set xtics (2,3,4,5,6)
+#set xtics ("random" 1, "DFS" 2,  "BFS" 3, "Dijkstra" 4) rotate by 270
+set term eps
+set boxwidth 0.9
+set output "results/tableCDFs.eps"
+set grid y
+set key right center
+set border 3 # remove right and up border
+
+# plot "results/times.dat" using 1:2 title "tabu-greedy" with boxes fs pattern 1 ls 1,\
+#     "results/times.dat" using 1:3 title "greedy" with boxes fs pattern 2  ls 2
+
+plot "results/tabu-dijkstra-dpth=9i=5b=23---d=400-cpu=400-mem=400.cdf" using 1:(100 * $2) notitle smooth csplines ls 4,\
+    "results/tabu-dijkstra-dpth=9i=5b=23---d=400-cpu=400-mem=400.cdf" using 1:(100 * $2) title 'Dijkstra' with points ls 4,\
+    "results/tabu-dfs-dpth=9i=6b=29---d=400-cpu=400-mem=400.cdf" using 1:(100 * $2) notitle smooth csplines ls 2,\
+    "results/tabu-dfs-dpth=9i=6b=29---d=400-cpu=400-mem=400.cdf" using 1:(100 * $2) title 'DFS' with points ls 2,\
+    "results/tabu-bfs-dpth=9i=6b=17---d=400-cpu=400-mem=400.cdf" using 1:(100 * $2) notitle smooth csplines ls 3,\
+    "results/tabu-bfs-dpth=9i=6b=17---d=400-cpu=400-mem=400.cdf" using 1:(100 * $2) title 'BFS' with points ls 3,
+
+
