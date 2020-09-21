@@ -1,0 +1,36 @@
+{
+    "splits": 1,
+    "splitWidth": 3,
+    "branches": 3,
+    "vnfs": 10,
+    "linkTh": {
+        "traffic": {
+            "min": 10,
+            "max": 1000
+        },
+        "delay": {
+            "min": 1,
+            "max": 5
+        }
+    },
+    "vnfTh": {
+        "processing_time": {
+            "min": 1,
+            "max": 20
+        },
+        "requirements": {
+            "cpu": {
+                "min": 1,
+                "max": 24
+            },
+            "memory": {
+                "min": 16,
+                "max": 1024
+            },
+            "storage": {
+                "min": 1024,
+                "max": 10240
+            }
+        }
+    }
+}
