@@ -13,7 +13,7 @@ import matplotlib.style
 
 matplotlib.style.use('ggplot') 
 
-server_size = 20
+server_size = 100
 total_classes = 2
 total_actions = 2
 
@@ -37,7 +37,7 @@ accept = 1
 no_request = 0
 with_request = 1
 
-gamma = 0.9 #TODO  FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
+gamma = 0.9 #TODO  XXX  FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 class Actions:
     n = 0
@@ -59,53 +59,58 @@ class Actions:
 
 
 def arrival_after_reject(cs, arrival_index, total_rates):
-    alives = cs[0]
-    requests = [0] * len(cs[1])
+    capacity = cs[0]
+    alives = cs[1]
+    requests = [0] * len(cs[2])
     requests[arrival_index] = 1
-    ns = (alives, tuple(requests))
+    ns = (capacity, alives, tuple(requests))
     p = lams[arrival_index] / total_rates
     return {ns: p}
 
 
 def departure_after_reject(cs, dep_index, total_rates):
-    alives = cs[0]
+    capacity = cs[0] + ws[dep_index]
+    alives = cs[1]
     alives_list = list(alives)
     alives_list[dep_index] -= 1
     alives = tuple(alives_list)
-    requests = [0] * len(cs[1])
-    ns = (alives, tuple(requests))
+    requests = [0] * len(cs[2])
+    ns = (capacity, alives, tuple(requests))
     p = mus[dep_index] / total_rates
     return {ns: p}
 
 
 def arrival_after_accept(cs, accept_index, arrival_index, total_rates):
-    alives = cs[0]
+    capacity = cs[0]
+    capacity -= ws[accept_index]
+    alives = cs[1]
     alives_list = list(alives)
     alives_list[accept_index] += 1
     alives = tuple(alives_list)
-    requests = [0] * len(cs[1])
+    requests = [0] * len(cs[2])
     requests[arrival_index] = 1
-    ns = (alives, tuple(requests))
+    ns = (capacity, alives, tuple(requests))
     p = lams[arrival_index] / total_rates
     return {ns: p}
-
-
+    
 def departure_after_accept(cs, accept_index, dep_index, total_rates):
-    alives = cs[0]
+    capacity = cs[0]
+    capacity = capacity - ws[accept_index] + ws[dep_index]
+    alives = cs[1]
     alives_list = list(alives)
     alives_list[accept_index] += 1
     alives_list[dep_index] -= 1
     alives = tuple(alives_list)
-    requests = [0] * len(cs[1])
-    ns = (alives, tuple(requests))
+    requests = [0] * len(cs[2])
+    ns = (capacity, alives, tuple(requests))
     p = mus[dep_index] / total_rates
     return {ns: p}
 
 
 def get_total_rates(total_classes, state):
-    alives = state[0]
-    requests = state[1]
-    capacity = compute_capacity(alives)
+    capacity = state[0]
+    alives = state[1]
+    requests = state[2]
  
     total_rates = 0
     for j in range(total_classes):
@@ -116,20 +121,11 @@ def get_total_rates(total_classes, state):
     return total_rates
 
 
-def compute_capacity(alives):
-    capacity = server_size
-    for i in range(total_classes):
-        capacity -= alives[i] * ws[i]
-
-    return capacity
-
-
 def pr(state, action):
     prob = {}
-    alives = state[0]
-    requests = state[1]
-    capacity = compute_capacity(alives)
-
+    capacity = state[0]
+    alives = state[1]
+    requests = state[2]
     total_rates = get_total_rates(total_classes, state)
     
     print("State = ", state, ", action = ", action)
@@ -174,8 +170,8 @@ def pr(state, action):
         else:
             req_index = np.argmax(requests)
             
-            print("alives = ", requests)
-            print("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", ws[req_index])
+            #print("alives = ", requests)
+            #print("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", ws[req_index])
 
             if capacity < ws[req_index]:
                 print("Try to accept but no resource")
@@ -211,7 +207,7 @@ def pr(state, action):
         print("Error in p: ", prob)
         sys.exit()
 
-    print("State = ", state, ", action = ", action)
+    print("State = ",state, ", action = ", action)
     print("\t Prob: ", prob)
     print("\t Reward: ", reward)
 
@@ -227,15 +223,15 @@ def generate_all_states(c, w):
                 alives = (i , j)
                 
                 requests = (0, 0)
-                s = (alives, requests)
+                s = (capacity, alives, requests)
                 res.append(s)
                 
                 requests = (0, 1)
-                s = (alives, requests)
+                s = (capacity, alives, requests)
                 res.append(s)
                 
                 requests = (1, 0)
-                s = (alives, requests)
+                s = (capacity, alives, requests)
                 res.append(s)
                 
 
@@ -267,13 +263,13 @@ def DP():
             for a in range(total_actions):
                 p, r = pr(s, a)
                 for ns in p.keys():
-                    print("a  = ", a)
-                    print("ns = ", ns)
-                    print("p[ns] = ", p[ns])
-                    print("r = ", r)
-                    print("V[ns] = ", V[ns])
+                    #print("a  = ", a)
+                    #print("ns = ", ns)
+                    #print("p[ns] = ", p[ns])
+                    #print("r = ", r)
+                    #print("V[ns] = ", V[ns])
                     improve[a] += (p[ns] * (r + gamma * V[ns]))
-                    print("improve[a] = ", improve[a])
+                    #print("improve[a] = ", improve[a])
             
             new_val = max(improve)
             policy.update({s: np.argmax(improve)})
@@ -283,7 +279,7 @@ def DP():
                 max_diff = diff
 
             V[s] = new_val
-            print("Updated V[s] = ", V[s])
+            #print("Updated V[s] = ", V[s])
 
         if max_diff < 0.0001:
             loop = False
@@ -411,7 +407,7 @@ def test_policy(demands, policy):
         arrival_list = [0] * total_classes
         arrival_list[req_index] = 1
         
-        state = (tuple(alives_list), tuple(arrival_list))
+        state = (capacity, tuple(alives_list), tuple(arrival_list))
         print("State = ", state)
         random_action = False
         if state in policy:
@@ -505,7 +501,7 @@ class Environment:
         self.active_reqs[event.req.class_id] = 1
         self.arriaved_demand = event.req
 
-        state = (tuple(self.alives), tuple(self.active_reqs))
+        state = (self.capacity, tuple(self.alives), tuple(self.active_reqs))
 
         return state
 
@@ -522,9 +518,9 @@ class Environment:
         reward = 0
         print("===========  env step ==================")
         print("s = ", state, ", a = ", action)
-        current_alives = state[0]
-        current_requests = state[1]
-        current_capacity = compute_capacity(current_alives)
+        current_capacity = state[0]
+        current_alives = state[1]
+        current_requests = state[2]
         
         '''
         #check state correctness
@@ -591,7 +587,7 @@ class Environment:
             self.alives[event.req.class_id] -= 1
                 
             requests = [0 for i in range(total_classes)]
-            state = (tuple(self.alives), tuple(requests))
+            state = (self.capacity, tuple(self.alives), tuple(requests))
                 
             if len(self.events) == 0:
                 done = 1
@@ -603,7 +599,7 @@ class Environment:
             requests[event.req.class_id] = 1
             self.arriaved_demand = event.req
 
-            state = (tuple(self.alives), tuple(requests))
+            state = (self.capacity, tuple(self.alives), tuple(requests))
             done = 0
 
         
@@ -613,24 +609,35 @@ class Environment:
 
 
 if __name__ == "__main__":
-    sim_time = 10
+    sim_time = 100
 
-    dp_policy = DP()
-    env = Environment(server_size, sim_time)
-    ql_policy = QL.qLearning(env, 25)
+    init_size = 5
+    step = 5
+    scale = 50
+
+    for i in range(scale):
+        episode_no = init_size + i * step
+
+        dp_policy = DP()
+        env = Environment(server_size, sim_time)
+        ql_policy = QL.qLearning(env, episode_no)
+
+        greedy_profit = 0
+        dp_profit = 0
+        ql_profit = 0
  
-    for i in range(10):
+        for i in range(10):
 
-        demands = generate_req_set(total_classes, sim_time)
-        #print_reqs(demands)
-        greedy_profit = test_greedy_policy(demands)
-        print("Greedy Profit = ", greedy_profit)
+            demands = generate_req_set(total_classes, sim_time)
+            #print_reqs(demands)
+            greedy_profit += test_greedy_policy(demands)
 
-        dp_profit = test_policy(demands, dp_policy)
-        print("DP Profit = ", dp_profit)
+            dp_profit += test_policy(demands, dp_policy)
     
-        ql_profit = test_policy(demands, ql_policy)
-        print("QL Profit = ", ql_profit)
+            ql_profit += test_policy(demands, ql_policy)
 
-
-
+        
+        print("Profits for episode_no = ", episode_no)
+        print("Greedy Profit = ", greedy_profit / 10)
+        print("QL Profit = ", ql_profit / 10)
+        print("DP Profit = ", dp_profit / 10)
