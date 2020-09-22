@@ -613,24 +613,47 @@ class Environment:
 
 
 if __name__ == "__main__":
-    sim_time = 10
+    sim_time = 500
 
-    dp_policy = DP()
-    env = Environment(server_size, sim_time)
-    ql_policy = QL.qLearning(env, 25)
- 
-    for i in range(10):
-
-        demands = generate_req_set(total_classes, sim_time)
-        #print_reqs(demands)
-        greedy_profit = test_greedy_policy(demands)
-        print("Greedy Profit = ", greedy_profit)
-
-        dp_profit = test_policy(demands, dp_policy)
-        print("DP Profit = ", dp_profit)
+    init_size = 0.1
+    step = 0.05
+    scale = 20
     
-        ql_profit = test_policy(demands, ql_policy)
-        print("QL Profit = ", ql_profit)
+    i = 0
 
+    while i < scale:
+        m = init_size + i * step
+        lams[1] = lams[0]
+        mus[1]  = mus[0] * m
+        ws[1]   = int(ws[0] / m)
+        rs[1]   = int(rs[0] * m)
 
+        server_size = int(((lams[0] / mus[0]) * ws[0] + (lams[1] / mus[1]) * ws[1] ) * 0.4)
 
+        dp_policy = DP()
+        env = Environment(server_size, sim_time)
+        ql_policy = QL.qLearning(env, 150)
+
+        greedy_profit = 0
+        dp_profit = 0
+        ql_profit = 0
+ 
+        for j in range(100):
+
+            demands = generate_req_set(total_classes, sim_time)
+            #print_reqs(demands)
+            greedy_profit += test_greedy_policy(demands)
+
+            dp_profit += test_policy(demands, dp_policy)
+    
+            ql_profit += test_policy(demands, ql_policy)
+
+        
+        print("Profits for modifier = ", m, ", server_size = ", server_size)
+        print("Profits for demand 1 = ", lams[0], mus[0], ws[0], rs[0])
+        print("Profits for demand 2 = ", lams[1], mus[1], ws[1], rs[1])
+        print("Greedy Profit = ", greedy_profit / 100)
+        print("QL Profit = ", ql_profit / 100)
+        print("DP Profit = ", dp_profit / 100)
+
+        i += 1

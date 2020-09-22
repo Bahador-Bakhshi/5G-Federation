@@ -613,24 +613,42 @@ class Environment:
 
 
 if __name__ == "__main__":
-    sim_time = 10
+    sim_time = 100
 
-    dp_policy = DP()
-    env = Environment(server_size, sim_time)
-    ql_policy = QL.qLearning(env, 25)
+    init_size = 25
+    step = 20
+    scale = 90
+
+    i = 75
+
+    while i <= scale:
+        server_size = init_size + i * step
+
+        dp_policy = DP()
+        env = Environment(server_size, sim_time)
+        ql_policy = QL.qLearning(env, 150)
+
+        greedy_profit = 0
+        dp_profit = 0
+        ql_profit = 0
  
-    for i in range(10):
+        for j in range(100):
 
-        demands = generate_req_set(total_classes, sim_time)
-        #print_reqs(demands)
-        greedy_profit = test_greedy_policy(demands)
-        print("Greedy Profit = ", greedy_profit)
+            demands = generate_req_set(total_classes, sim_time)
+            #print_reqs(demands)
+            greedy_profit += test_greedy_policy(demands)
 
-        dp_profit = test_policy(demands, dp_policy)
-        print("DP Profit = ", dp_profit)
+            dp_profit += test_policy(demands, dp_policy)
     
-        ql_profit = test_policy(demands, ql_policy)
-        print("QL Profit = ", ql_profit)
+            ql_profit += test_policy(demands, ql_policy)
 
+        
+        print("Profits for server_size = ", server_size)
+        print("Greedy Profit = ", greedy_profit / 100)
+        print("QL Profit = ", ql_profit / 100)
+        print("DP Profit = ", dp_profit / 100)
 
+        i += 1
+        if server_size > 200:
+            i += 1 #step = step * 2
 
