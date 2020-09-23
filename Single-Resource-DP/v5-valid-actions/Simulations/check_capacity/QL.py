@@ -6,6 +6,11 @@ import pandas as pd
 import sys 
 from collections import defaultdict 
 import plotting 
+import Environment
+from Environment import Actions
+from Environment import Env 
+from Environment import get_valid_actions
+
 
 matplotlib.style.use('ggplot') 
 
@@ -36,7 +41,7 @@ def Q_change(Q, old_Q):
 
 
 def copy_Q(Q):
-    copy = defaultdict(lambda: np.zeros(env.action_space.n))
+    copy = defaultdict(lambda: np.zeros(len(env.action_space)))
     for s, s_a in Q.items():
         copy_s_a = [0] * len(s_a)
         for i in range(len(s_a)):
@@ -46,7 +51,7 @@ def copy_Q(Q):
     return copy
 
 
-def createEpsilonGreedyPolicy(Q, epsilon, num_actions): 
+def createEpsilonGreedyPolicy(Q, epsilon, env): 
     """ 
     Creates an epsilon-greedy policy based 
     on a given Q-function and epsilon. 
@@ -57,11 +62,36 @@ def createEpsilonGreedyPolicy(Q, epsilon, num_actions):
     of length of the action space(set of possible actions). 
     """
     def policyFunction(state): 
-        #print_Q(Q)
-        Action_probabilities = np.ones(num_actions, dtype = float) * epsilon / num_actions 
+        print_Q(Q)
+        va = get_valid_actions(state)
+        num_actions = len(va)
+
+        for a in env.action_space:
+            v_flag = False
+            for sa in va:
+                if a == sa:
+                    v_flag = True
+
+            if v_flag == False:
+                Q[state][a] = -1 * np.inf
+
+        Action_probabilities = np.ones(len(env.action_space), dtype = float) * epsilon / num_actions 
 				
         best_action = np.argmax(Q[state]) 
         Action_probabilities[best_action] += (1.0 - epsilon) 
+        
+        print("Action_probabilities before: ", Action_probabilities)
+        for a in env.action_space:
+            v_flag = False
+            for sa in va:
+                if a == sa:
+                    v_flag = True
+
+            if v_flag == False:
+                Action_probabilities[a] = 0
+                Q[state][a] = -1 * np.inf
+        print("Action_probabilities after: ", Action_probabilities)
+        
         return Action_probabilities 
 
     return policyFunction 
@@ -76,7 +106,10 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
     # Action value function
     # A nested dictionary that maps
     # state -> (action -> action-value).
-    Q = defaultdict(lambda: np.zeros(env.action_space.n))
+    
+    # FIXME TODO
+    #Q = defaultdict(lambda: np.zeros(env.action_space.n))
+    Q = defaultdict(lambda: np.random.uniform(0, 10, len(env.action_space)))
 
     # Keeps track of useful statistics
     stats = plotting.EpisodeStats(
@@ -86,7 +119,7 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
 
     # Create an epsilon greedy policy function
     # appropriately for environment action space
-    policy = createEpsilonGreedyPolicy(Q, epsilon, env.action_space.n)
+    policy = createEpsilonGreedyPolicy(Q, epsilon, env)
 
     # For every episode
     for ith_episode in range(num_episodes):
@@ -96,20 +129,21 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
         state = env.reset()
 
         for t in itertools.count():
-            #print("\nt =", t, "sate =", state)
+            print("\nt =", t, "sate =", state)
 
             # get probabilities of all actions from current state
             action_probabilities = policy(state)
 
             # choose action according to
             # the probability distribution
-            action = np.random.choice(np.arange(len(action_probabilities)), p = action_probabilities)
-            #print("action =", action)
+            action_index = np.random.choice(np.arange(len(action_probabilities)), p = action_probabilities)
+            action = Actions(action_index)
+            print("action =", action)
 
             # take action and get reward, transit to next state
             next_state, reward, done = env.step(state, action)
 
-            #print("next_state =", next_state, "reward =", reward, ", done =", done)
+            print("next_state =", next_state, "reward =", reward, ", done =", done)
 
             # Update statistics
             stats.episode_rewards[ith_episode] += reward
@@ -122,11 +156,8 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
                 td_delta = td_target - Q[state][action]
                 Q[state][action] += alpha * td_delta
             else:
-                if reward != -1 * np.inf and done != 1:
+                if reward != -1 * np.inf:
                     print("Error in invalid actions!!!")
-                    print("State = ", state, ", action = ", action)
-                    print("Q[state][action] = ", Q[state][action])
-                    print("reward = ", reward)
                     sys.exit()
 
             state = next_state
@@ -144,6 +175,6 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
     for i in Q:
         final_policy[i] = np.argmax(Q[i])
 
-    print(final_policy)
+    #print(final_policy)
     return final_policy
 
