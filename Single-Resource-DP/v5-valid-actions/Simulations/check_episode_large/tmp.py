@@ -13,7 +13,7 @@ import matplotlib.style
 
 matplotlib.style.use('ggplot') 
 
-server_size = 21
+server_size = 100
 total_classes = 2
 total_actions = 2
 
@@ -24,21 +24,20 @@ rs   = [0] * total_classes
 
 lams[0] = 5.0
 mus[0] = 2.0
-ws[0] = 5.0
+ws[0] = 1.0
 rs[0] = 20.0
 
-lams[1] = 10.0
+lams[1] = 5.0
 mus[1] = 0.1
 ws[1]= 10.0
-rs[1] = 1000.0
-
+rs[1] = 1.0
 
 reject = 0
 accept = 1
 no_request = 0
 with_request = 1
 
-gamma = 0.9 #TODO  FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
+gamma = 0.9 #TODO  XXX  FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 class Actions:
     n = 0
@@ -264,13 +263,13 @@ def DP():
             for a in range(total_actions):
                 p, r = pr(s, a)
                 for ns in p.keys():
-                    print("a  = ", a)
-                    print("ns = ", ns)
-                    print("p[ns] = ", p[ns])
-                    print("r = ", r)
-                    print("V[ns] = ", V[ns])
+                    #print("a  = ", a)
+                    #print("ns = ", ns)
+                    #print("p[ns] = ", p[ns])
+                    #print("r = ", r)
+                    #print("V[ns] = ", V[ns])
                     improve[a] += (p[ns] * (r + gamma * V[ns]))
-                    print("improve[a] = ", improve[a])
+                    #print("improve[a] = ", improve[a])
             
             new_val = max(improve)
             policy.update({s: np.argmax(improve)})
@@ -280,7 +279,7 @@ def DP():
                 max_diff = diff
 
             V[s] = new_val
-            print("Updated V[s] = ", V[s])
+            #print("Updated V[s] = ", V[s])
 
         if max_diff < 0.0001:
             loop = False
@@ -612,22 +611,33 @@ class Environment:
 if __name__ == "__main__":
     sim_time = 100
 
-    dp_policy = DP()
-    env = Environment(server_size, sim_time)
-    ql_policy = QL.qLearning(env, 25)
+    init_size = 5
+    step = 5
+    scale = 50
+
+    for i in range(scale):
+        episode_no = init_size + i * step
+
+        dp_policy = DP()
+        env = Environment(server_size, sim_time)
+        ql_policy = QL.qLearning(env, episode_no)
+
+        greedy_profit = 0
+        dp_profit = 0
+        ql_profit = 0
  
-    for i in range(10):
+        for i in range(10):
 
-        demands = generate_req_set(total_classes, sim_time)
-        #print_reqs(demands)
-        greedy_profit = test_greedy_policy(demands)
-        print("Greedy Profit = ", greedy_profit)
+            demands = generate_req_set(total_classes, sim_time)
+            #print_reqs(demands)
+            greedy_profit += test_greedy_policy(demands)
 
-        dp_profit = test_policy(demands, dp_policy)
-        print("DP Profit = ", dp_profit)
+            dp_profit += test_policy(demands, dp_policy)
     
-        ql_profit = test_policy(demands, ql_policy)
-        print("QL Profit = ", ql_profit)
+            ql_profit += test_policy(demands, ql_policy)
 
-
-
+        
+        print("Profits for episode_no = ", episode_no)
+        print("Greedy Profit = ", greedy_profit / 10)
+        print("QL Profit = ", ql_profit / 10)
+        print("DP Profit = ", dp_profit / 10)
