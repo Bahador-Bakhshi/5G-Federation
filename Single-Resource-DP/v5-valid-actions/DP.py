@@ -28,6 +28,7 @@ rs   = Environment.rs
 total_actions = Environment.total_actions
 total_classes = Environment.total_classes
 
+
 def arrival_after_reject(cs, arrival_index, total_rates):
     alives = cs[0]
     requests = [0] * len(cs[1])
@@ -46,6 +47,14 @@ def departure_after_reject(cs, dep_index, total_rates):
     ns = (alives, tuple(requests))
     p = mus[dep_index] / total_rates
     return {ns: p}
+
+
+def arrival_after_no_action(cs, arrival_index, total_rates):
+    return arrival_after_reject(cs, arrival_index, total_rates)
+
+
+def departure_after_no_action(cs, dep_index, total_rates):
+    return departure_after_reject(cs, dep_index, total_rates)
 
 
 def arrival_after_accept(cs, accept_index, arrival_index, total_rates):
@@ -112,11 +121,11 @@ def pr(state, action):
         reward = 0
         
         for j in range(total_classes):
-            prob.update(arrival_after_reject(state, j, total_rates))
+            prob.update(arrival_after_no_action(state, j, total_rates))
             
         for j in range(total_classes):
             if alives[j] > 0:
-                prob.update(departure_after_reject(state, j, total_rates))
+                prob.update(departure_after_no_action(state, j, total_rates))
  
     elif action == Actions.reject:
         print("Reject")
@@ -139,17 +148,6 @@ def pr(state, action):
             print("Accept for no demand!!!")
             print("Invalid action")
             sys.exit()
-            '''
-            # cannot be accepted, it is like reject but -inf for reward
-            reward = -1 * np.inf
-
-            for j in range(total_classes):
-                prob.update(arrival_after_reject(state, j, total_rates))
-            
-            for j in range(total_classes):
-                if alives[j] > 0:
-                    prob.update(departure_after_reject(state, j, total_rates))
-            '''
         else:
             req_index = np.argmax(requests)
             
