@@ -20,7 +20,7 @@ rs[0] = 20.0
 lams[1] = 10.0
 mus[1] = 0.1
 ws[1]= 10.0
-rs[1]= 1.0
+rs[1] = 1000.0
 
 no_request = 0
 with_request = 1

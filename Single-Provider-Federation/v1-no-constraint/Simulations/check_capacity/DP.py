@@ -28,7 +28,6 @@ rs   = Environment.rs
 total_actions = Environment.total_actions
 total_classes = Environment.total_classes
 
-
 def arrival_after_reject(cs, arrival_index, total_rates):
     alives = cs[0]
     requests = [0] * len(cs[1])
@@ -47,14 +46,6 @@ def departure_after_reject(cs, dep_index, total_rates):
     ns = (alives, tuple(requests))
     p = mus[dep_index] / total_rates
     return {ns: p}
-
-
-def arrival_after_no_action(cs, arrival_index, total_rates):
-    return arrival_after_reject(cs, arrival_index, total_rates)
-
-
-def departure_after_no_action(cs, dep_index, total_rates):
-    return departure_after_reject(cs, dep_index, total_rates)
 
 
 def arrival_after_accept(cs, accept_index, arrival_index, total_rates):
@@ -121,11 +112,11 @@ def pr(state, action):
         reward = 0
         
         for j in range(total_classes):
-            prob.update(arrival_after_no_action(state, j, total_rates))
+            prob.update(arrival_after_reject(state, j, total_rates))
             
         for j in range(total_classes):
             if alives[j] > 0:
-                prob.update(departure_after_no_action(state, j, total_rates))
+                prob.update(departure_after_reject(state, j, total_rates))
  
     elif action == Actions.reject:
         print("Reject")
@@ -148,6 +139,17 @@ def pr(state, action):
             print("Accept for no demand!!!")
             print("Invalid action")
             sys.exit()
+            '''
+            # cannot be accepted, it is like reject but -inf for reward
+            reward = -1 * np.inf
+
+            for j in range(total_classes):
+                prob.update(arrival_after_reject(state, j, total_rates))
+            
+            for j in range(total_classes):
+                if alives[j] > 0:
+                    prob.update(departure_after_reject(state, j, total_rates))
+            '''
         else:
             req_index = np.argmax(requests)
             
@@ -378,30 +380,50 @@ def test_policy(demands, policy):
 
     return profit
 
+
 if __name__ == "__main__":
-    sim_time = 10
+    sim_time = 100
 
-    dp_policy = DP()
-    print("********* Optimal Policy ***********")
-    print_policy(dp_policy)
+    init_size = 25
+    step = 20
+    scale = 90
 
-    env = Env(server_size, sim_time)
-    ql_policy = QL.qLearning(env, 100)
-    print("********* QL Policy ***********")
-    print_policy(ql_policy)
+    i = 0
 
-    for i in range(10):
+    while i <= scale:
+        server_size = init_size + i * step
 
-        demands = generate_req_set(total_classes, sim_time)
-        #print_reqs(demands)
-        greedy_profit = test_greedy_policy(demands)
-        print("Greedy Profit = ", greedy_profit)
+        dp_policy = DP()
+        print("********* Optimal Policy ***********")
+        print_policy(dp_policy)
+        
+        env = Env(server_size, sim_time)
+        ql_policy = QL.qLearning(env, 150)
+        print("********* QL Policy ***********")
+        print_policy(ql_policy)
 
-        dp_profit = test_policy(demands, dp_policy)
-        print("DP Profit = ", dp_profit)
+        greedy_profit = 0
+        dp_profit = 0
+        ql_profit = 0
+ 
+        for j in range(100):
+
+            demands = generate_req_set(total_classes, sim_time)
+            #print_reqs(demands)
+            greedy_profit += test_greedy_policy(demands)
+
+            dp_profit += test_policy(demands, dp_policy)
     
-        ql_profit = test_policy(demands, ql_policy)
-        print("QL Profit = ", ql_profit)
+            ql_profit += test_policy(demands, ql_policy)
 
+        
+        print("Profits for server_size = ", server_size)
+        print("Greedy Profit = ", greedy_profit / 100)
+        print("QL Profit = ", ql_profit / 100)
+        print("DP Profit = ", dp_profit / 100)
+
+        i += 1
+        if server_size > 200:
+            i += 1 #step = step * 2
 
 

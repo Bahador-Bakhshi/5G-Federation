@@ -3,34 +3,69 @@ import numpy as np
 import sys 
 import heapq
 
-server_size = 21
-total_classes = 2
+
+# Classes
+class NFV_NS:
+    nsid = 0
+    cpu = 0
+    revenue = 0
+
+    def __init__(self, nsid, cpu, revenue):
+        self.nsid = nsid
+        self.cpu  = cpu
+        self.revenue = revenue
 
 
-lams = [0] * total_classes
-mus  = [0] * total_classes
-ws   = [0] * total_classes
-rs   = [0] * total_classes
+class Local_Domain:
+    total_cpu = 0
+    services = None
 
-lams[0] = 5.0
-mus[0] = 2.0
-ws[0] = 5.0
-rs[0] = 20.0
+    def __init__(self, cpu):
+        self.total_cpu = cpu
+        self.services = []
 
-lams[1] = 10.0
-mus[1] = 0.1
-ws[1]= 10.0
-rs[1]= 1.0
+    def add_service(self, service):
+        self.services.append(service)
 
-no_request = 0
-with_request = 1
+
+class Traffic_Load:
+    service = None
+    lam  = 0
+    mu   = 0
+
+    def __init__(self, nsid, lam, mu):
+        for service in domain.services:
+            if service.nsid == nsid:
+                self.service = service
+        self.lam  = lam
+        self.mu   = mu
+
+
+class Providers:
+    pid = 0
+    federation_costs = None
+
+    def __init__(self, pid):
+        self.pid = pid
+
+    def add_fed_cost(nsid, cost):
+        for service in domain.services:
+            if service.nsid == nsid:
+                self.federation_costs[service] = cost
+
 
 class Actions(IntEnum):
     no_action = 0
     reject = 1
     accept = 2
 
+# Global Variables
+
+domain = None
+traffic_loads = None
+providers = None 
 total_actions = len(Actions)
+total_classes = 0
 
 class Request:
     w   = 0
@@ -55,27 +90,29 @@ def print_reqs(reqs):
         print(reqs[i])
 
 
-def generate_class_req_set(class_id, time):
+def generate_class_req_set(service, load, time):
     t = 0
     all_req = []
     
     while t <= time:
-        t += np.random.exponential(1.0 / lams[class_id])
-        life = np.random.exponential(1.0 / mus[class_id])
-        all_req.append(Request(ws[class_id], t, t + life, rs[class_id], class_id))
+        t += np.random.exponential(1.0 / load.lam)
+        life = np.random.exponential(1.0 / load.mu)
+        all_req.append(Request(service.cpu, t, t + life, service.revenue, service.nsid))
 
     #print_reqs(all_req)
     return all_req
 
 
-def generate_req_set(total_classes, time):
+def generate_req_set(time):
     all_class_reqs = []
     
     total_n = 0
-    for i in range(total_classes):
-        req_list = generate_class_req_set(i, time)
-        total_n += len(req_list)
-        all_class_reqs.append(req_list)
+    for service in domain.services:
+        for load in traffic_loads:
+            if service.nsid == load.service.nsid:
+                req_list = generate_class_req_set(service, load, time)
+                total_n += len(req_list)
+                all_class_reqs.append(req_list)
 
     j = 0
     req_set = [None] * total_n
@@ -114,7 +151,7 @@ class Env:
         self.capacity = self.server_size
         self.alives = [0 for i in range(total_classes)]
         
-        self.demands = generate_req_set(total_classes, self.episode_len)
+        self.demands = generate_req_set(self.episode_len)
         print_reqs(self.demands)
 
         for i in range(len(self.demands)):
@@ -127,6 +164,7 @@ class Env:
         #print_events(self.events)
 
         self.active_reqs = [0 for i in range(total_classes)]
+        print("event.req.class_id = ", event.req.class_id)
         self.active_reqs[event.req.class_id] = 1
         self.arriaved_demand = event.req
 
@@ -285,9 +323,9 @@ def print_events(events):
         print("type = ", e.event_type ,", req = ", e.req)
 
 def compute_capacity(alives):
-    capacity = server_size
+    capacity = domain.total_cpu
     for i in range(total_classes):
-        capacity -= alives[i] * ws[i]
+        capacity -= alives[i] * domain.services[i].cpu
 
     return capacity
 
