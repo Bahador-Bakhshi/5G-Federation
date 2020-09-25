@@ -46,6 +46,16 @@ def departure_after_no_action(cs, dep_index, total_rates):
     return departure_after_reject(cs, dep_index, total_rates)
 
 
+def arrival_after_federaion(cs, arrival_index, total_rates):
+    #FIXME: update the inter-domain link usage
+    return arrival_after_reject(cs, arrival_index, total_rates)
+
+
+def departure_after_federation(cs, dep_index, total_rates):
+    #FIXME: Update the inter-domain link usage
+    return departure_after_reject(cs, dep_index, total_rates)
+
+
 def arrival_after_accept(cs, accept_index, arrival_index, total_rates):
     alives = cs[0]
     alives_list = list(alives)
@@ -166,8 +176,35 @@ def pr(state, action):
                     if alives[j] > 0:
                         prob.update(departure_after_accept(state, req_index, j, total_rates))
 
+    elif action == Environment.Actions.federate:
+        active = 0
+        for i in range(len(requests)):
+            if requests[i] > 0:
+                active += 1
+
+        if active == 0:
+            print("Federate no demand!!!")
+            print("Invalid action")
+            sys.exit()
+        else:
+            req_index = np.argmax(requests)
+            
+            print("alives = ", requests)
+            print("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.domain.services[req_index].cpu)
+
+            print("In this version, Federation is always possible")
+            provider_domain = Environment.providers[0] # in this version, there is only one provider
+            reward = Environment.domain.services[req_index].revenue - provider_domain.federation_costs[Environment.domain.services[req_index]]
+
+            for j in range(Environment.total_classes):
+                prob.update(arrival_after_federaion(state, j, total_rates))
+
+            for j in range(Environment.total_classes):
+                if alives[j] > 0:
+                    prob.update(departure_after_federation(state, j, total_rates))
+
     else:
-        print("Error")
+        print("Error: Unknown action")
         sys.exit()
 
     tp = 0
@@ -375,7 +412,7 @@ if __name__ == "__main__":
     dp_policy = DP()
     print("********* Optimal Policy ***********")
     print_policy(dp_policy)
-
+    '''
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
     ql_policy = QL.qLearning(env, 100)
     print("********* QL Policy ***********")
@@ -393,6 +430,6 @@ if __name__ == "__main__":
     
         ql_profit = test_policy(demands, ql_policy)
         print("QL Profit = ", ql_profit)
-
+    '''
 
 

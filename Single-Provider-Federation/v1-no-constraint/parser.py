@@ -31,6 +31,12 @@ def parse_config(config_file):
     print_domain(Environment.domain)
 
     # Config providers
+    Environment.providers = []
+    for p in config["providers"]:
+        provider = Providers(p["provider_id"])
+        for costs in p["federation_costs"]:
+            provider.add_fed_cost(costs["nsid"], costs["cost"])
+        Environment.providers.append(provider)
 
     # Config traffic loads
     Environment.traffic_loads = []

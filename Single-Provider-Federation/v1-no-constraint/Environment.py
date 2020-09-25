@@ -47,8 +47,9 @@ class Providers:
 
     def __init__(self, pid):
         self.pid = pid
+        self.federation_costs = {}
 
-    def add_fed_cost(nsid, cost):
+    def add_fed_cost(self, nsid, cost):
         for service in domain.services:
             if service.nsid == nsid:
                 self.federation_costs[service] = cost
@@ -56,8 +57,9 @@ class Providers:
 
 class Actions(IntEnum):
     no_action = 0
-    reject = 1
-    accept = 2
+    reject    = 1
+    accept    = 2
+    federate  = 3
 
 # Global Variables
 
@@ -299,6 +301,7 @@ def get_valid_actions(state):
     if arrived == 1:
         actions.append(Actions.accept)
         actions.append(Actions.reject)
+        actions.append(Actions.federate)
   
     print("Valid actions = ", actions)
     return actions
