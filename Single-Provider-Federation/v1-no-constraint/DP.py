@@ -368,7 +368,7 @@ def test_policy(demands, policy):
     return profit
 
 if __name__ == "__main__":
-    sim_time = 10
+    sim_time = 100
 
     parser.parse_config("config.json")
 
