@@ -1,2 +1,3 @@
 *.out
+*.swp
 __pycache__
