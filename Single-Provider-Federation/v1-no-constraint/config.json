@@ -21,11 +21,11 @@
 			"federation_costs":[
 				{
 					"nsid": 0,
-					"cost": 50
+					"cost": 50000
 				},
 				{
 					"nsid": 1,
-					"cost": 10
+					"cost": 10000
 				}
 			]
 		}	

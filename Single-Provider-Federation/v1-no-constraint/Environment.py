@@ -243,6 +243,33 @@ class Env:
                     self.alives[req.class_id] += 1
                     event = Event(0, req.dt, req) #add the departure event
                     heapq.heappush(self.events, event)
+        
+        elif action == Actions.federate: #federate
+            count = 0
+            for i in range(len(current_requests)):
+                if current_requests[i] != 0:
+                    count += 1
+            
+            if count > 1:
+                print("Error in requests = ", current_requests)
+                sys.exit()
+
+            if count == 0: #there is no requst to accept
+                print("Invalid action")
+                sys.exit()
+            else:
+                req = self.arriaved_demand
+                self.arriaved_demand = None
+
+                print("Try to federate: req = ", req)
+
+                provider_domain = providers[0] # in this version, there is only one provider
+                print("\t federated")
+
+                reward = req.rev - provider_domain.federation_costs[domain.services[req.class_id]]
+                #FIXME: update iner-domain link usage
+                #FIXME: update number of federated requests
+
         else:
             print("Unknown action")
             sys.exit()

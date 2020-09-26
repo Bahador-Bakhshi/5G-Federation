@@ -412,12 +412,13 @@ if __name__ == "__main__":
     dp_policy = DP()
     print("********* Optimal Policy ***********")
     print_policy(dp_policy)
-    '''
+    
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
     ql_policy = QL.qLearning(env, 100)
     print("********* QL Policy ***********")
     print_policy(ql_policy)
 
+    '''
     for i in range(10):
 
         demands = Environment.generate_req_set(sim_time)
