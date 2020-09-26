@@ -48,6 +48,8 @@ def test_greedy_policy(demands):
             error("Error in capacity: ", capacity, ", server_size = ", Environment.domain.total_cpu)
             sys.exit()
 
+        debug("profit = ", profit)
+    
     return profit
 
 
@@ -115,13 +117,15 @@ def test_policy(demands, policy):
             error("Error in capacity: ", capacity, ", server_size = ", Environment.domain.total_cpu)
             sys.exit()
 
+        debug("profit = ", profit)
+
     return profit
 
 
 
 if __name__ == "__main__":
 
-    sim_time = 10
+    sim_time = 500
 
     parser.parse_config("config.json")
 
@@ -129,24 +133,22 @@ if __name__ == "__main__":
     debug("********* Optimal Policy ***********")
     DP.print_policy(dp_policy)
     
-    '''
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    ql_policy = QL.qLearning(env, 100)
+    ql_policy = QL.qLearning(env, 10)
     debug("********* QL Policy ***********")
     DP.print_policy(ql_policy)
-    '''
 
     for i in range(1):
 
         demands = Environment.generate_req_set(sim_time)
         Environment.print_reqs(demands)
+
         greedy_profit = test_greedy_policy(demands)
         print("Greedy Profit = ", greedy_profit)
 
         dp_profit = test_policy(demands, dp_policy)
         print("DP Profit = ", dp_profit)
-    '''
+        
         ql_profit = test_policy(demands, ql_policy)
         print("QL Profit = ", ql_profit)
-    '''
 

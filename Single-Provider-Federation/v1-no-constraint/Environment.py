@@ -264,9 +264,16 @@ class Env:
             error("Unknown action")
             sys.exit()
 
+        next_state = None
         #print_events(self.events)
         if len(self.events) == 0:
-            return None, 0, 1
+            for i in range(len(self.alives)):
+                if self.alives[i] != 0:
+                    error("bug in the last state")
+                    sys.exit()
+            
+            next_state = (tuple([0 for i in range(total_classes)]), tuple([0 for i in range(total_classes)]))
+            return next_state, reward, 1
 
         #generate the next state
         event = heapq.heappop(self.events)
@@ -277,9 +284,10 @@ class Env:
             self.alives[event.req.class_id] -= 1
                 
             requests = [0 for i in range(total_classes)]
-            state = (tuple(self.alives), tuple(requests))
+            next_state = (tuple(self.alives), tuple(requests))
                 
             if len(self.events) == 0:
+                debug("done = 1, next_state = ", next_state)
                 done = 1
             else:
                 done = 0
@@ -289,12 +297,11 @@ class Env:
             requests[event.req.class_id] = 1
             self.arriaved_demand = event.req
 
-            state = (tuple(self.alives), tuple(requests))
+            next_state = (tuple(self.alives), tuple(requests))
             done = 0
-
         
         debug("************  env step *************")
-        return state, reward, done
+        return next_state, reward, done
 
 
 def get_valid_actions(state):
