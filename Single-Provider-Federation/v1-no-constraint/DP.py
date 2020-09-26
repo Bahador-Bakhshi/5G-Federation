@@ -12,11 +12,11 @@ import matplotlib
 import matplotlib.style 
 import Environment
 import parser
+from Environment import debug, error
 
 matplotlib.style.use('ggplot') 
 
 gamma = 0.9 #TODO  FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
 def arrival_after_reject(cs, arrival_index, total_rates):
     alives = cs[0]
@@ -101,22 +101,22 @@ def pr(state, action):
 
     total_rates = get_total_rates(Environment.total_classes, state)
     
-    print("State = ", state, ", action = ", action)
+    debug("State = ", state, ", action = ", action)
 
     active = 0
     for i in range(len(requests)):
         if requests[i] > 0:
             active += 1
     if active > 1:
-        print("Error in requests: ", requests)
+        error("Error in requests: ", requests)
         sys.exit()
 
     if action == Environment.Actions.no_action:
         if active != 0:
-            print("Error in actions")
+            error("Error in actions")
             sys.exit()
 
-        print("No action")
+        debug("No action")
         reward = 0
         
         for j in range(Environment.total_classes):
@@ -127,7 +127,7 @@ def pr(state, action):
                 prob.update(departure_after_no_action(state, j, total_rates))
  
     elif action == Environment.Actions.reject:
-        print("Reject")
+        debug("Reject")
         reward = 0
         
         for j in range(Environment.total_classes):
@@ -144,17 +144,17 @@ def pr(state, action):
                 active += 1
 
         if active == 0:
-            print("Accept for no demand!!!")
-            print("Invalid action")
+            error("Accept for no demand!!!")
+            error("Invalid action")
             sys.exit()
         else:
             req_index = np.argmax(requests)
             
-            print("alives = ", requests)
-            print("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.domain.services[req_index].cpu)
+            debug("alives = ", requests)
+            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.domain.services[req_index].cpu)
 
             if capacity < Environment.domain.services[req_index].cpu:
-                print("Try to accept but no resource")
+                debug("Try to accept but no resource")
                 #cannot be accepted, it is like reject but -inf for reward
 
                 reward = -1 * np.inf
@@ -166,7 +166,7 @@ def pr(state, action):
                     if alives[j] > 0:
                         prob.update(departure_after_reject(state, j, total_rates))
             else:
-                print("Accepting")
+                debug("Accepting")
                 reward = Environment.domain.services[req_index].revenue
 
                 for j in range(Environment.total_classes):
@@ -183,16 +183,16 @@ def pr(state, action):
                 active += 1
 
         if active == 0:
-            print("Federate no demand!!!")
-            print("Invalid action")
+            error("Federate no demand!!!")
+            error("Invalid action")
             sys.exit()
         else:
             req_index = np.argmax(requests)
             
-            print("alives = ", requests)
-            print("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.domain.services[req_index].cpu)
+            debug("alives = ", requests)
+            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.domain.services[req_index].cpu)
 
-            print("In this version, Federation is always possible")
+            debug("In this version, Federation is always possible")
             provider_domain = Environment.providers[0] # in this version, there is only one provider
             reward = Environment.domain.services[req_index].revenue - provider_domain.federation_costs[Environment.domain.services[req_index]]
 
@@ -204,19 +204,19 @@ def pr(state, action):
                     prob.update(departure_after_federation(state, j, total_rates))
 
     else:
-        print("Error: Unknown action")
+        error("Error: Unknown action")
         sys.exit()
 
     tp = 0
     for i in prob.keys():
         tp += prob[i]
     if abs(tp - 1.0) > 0.0001:
-        print("Error in p: ", prob)
+        error("Error in p: ", prob)
         sys.exit()
 
-    print("State = ", state, ", action = ", action)
-    print("\t Prob: ", prob)
-    print("\t Reward: ", reward)
+    debug("State = ", state, ", action = ", action)
+    debug("\t Prob: ", prob)
+    debug("\t Reward: ", reward)
 
     return prob, reward
 
@@ -242,22 +242,22 @@ def generate_all_states(c, tcs):
                 res.append(s)
                 
 
-    print("All States:", res)
+    debug("All States:", res)
 
     return res
 
 
 def print_V(V, all_s):
-    print("**************************")
+    debug("**************************")
     for s in all_s:
         if V[s] != 0:
-            print("V[{}] = {}".format(s,V[s]))
-    print("==========================")
+            debug("V[{}] = {}".format(s,V[s]))
+    debug("==========================")
 
 
 def print_policy(policy):
     for s in policy:
-        print(s, ": ", Environment.Actions(policy[s]))
+        debug(s, ": ", Environment.Actions(policy[s]))
 
 
 def DP():
@@ -277,13 +277,13 @@ def DP():
             for a in va:
                 p, r = pr(s, a)
                 for ns in p.keys():
-                    print("a  = ", a)
-                    print("ns = ", ns)
-                    print("p[ns] = ", p[ns])
-                    print("r = ", r)
-                    print("V[ns] = ", V[ns])
+                    debug("a  = ", a)
+                    debug("ns = ", ns)
+                    debug("p[ns] = ", p[ns])
+                    debug("r = ", r)
+                    debug("V[ns] = ", V[ns])
                     improve[a] += (p[ns] * (r + gamma * V[ns]))
-                print("improve[a] = ", improve[a])
+                debug("improve[a] = ", improve[a])
             
             new_val = -1 * np.inf
             best_action = None
@@ -292,145 +292,31 @@ def DP():
                     new_val = improve[a]
                     best_action = a
 
-            print("new_val = ", new_val)
-            print("best_action = ", best_action)
+            debug("new_val = ", new_val)
+            debug("best_action = ", best_action)
 
             policy.update({s: best_action})
-            print("--------------------------------------")
+            debug("--------------------------------------")
 
             diff = abs(V[s] - new_val)
             if diff > max_diff:
                 max_diff = diff
 
             V[s] = new_val
-            print("Updated V[s] = ", V[s])
+            debug("Updated V[s] = ", V[s])
 
         if max_diff < 0.0001:
             loop = False
 
     return policy
 
-
-def test_greedy_policy(demands):
-    profit = 0
-    accepted = []
-    capacity = Environment.domain.total_cpu
-    for i in range(len(demands)):
-        req = demands[i]
-        print("current: ", req, ", capacity = ", capacity)
-        t = req.st
-       
-        j = 0
-        while j < len(accepted):
-            tmp_req = accepted[j]
-            if tmp_req.dt <= t:
-                print("remove: ", tmp_req)
-                capacity += tmp_req.w
-                accepted.remove(tmp_req)
-            else:
-                j += 1
-
-        if req.w <= capacity:
-            print("accept")
-            profit += req.rev
-            accepted.append(req)
-            capacity -= req.w
-        else:
-            print("reject")
-
-        if capacity > Environment.domain.total_cpu:
-            print("Error in capacity: ", capacity, ", server_size = ", Environment.domain.total_cpu)
-
-    return profit
-
-def test_policy(demands, policy):
-    profit = 0
-    accepted = []
-    capacity = Environment.domain.total_cpu
-    for i in range(len(demands)):
-        req = demands[i]
-        print("current: ", req, ", capacity = ", capacity)
-        t = req.st
-
-        j = 0
-        alives_list = [0] * Environment.total_classes
-        while j < len(accepted):
-            tmp_req = accepted[j]
-            if tmp_req.dt <= t:
-                print("remove: ", tmp_req)
-                capacity += tmp_req.w
-                accepted.remove(tmp_req)
-            else:
-                alives_list[tmp_req.class_id] += 1
-                j += 1
-            
-        req_index = req.class_id
-        arrival_list = [0] * Environment.total_classes
-        arrival_list[req_index] = 1
-        
-        state = (tuple(alives_list), tuple(arrival_list))
-        print("State = ", state)
-        random_action = False
-        if state in policy:
-            action = policy[state]
-        else:
-            print("Unknown state")
-            action = int(np.random.uniform(0,1.9999))
-            random_action = True
-        print("Action = ", action)
-
-        if action == Environment.Actions.accept:
-            if req.w > capacity:
-                if random_action == False:
-                    print("Error: w = ", req.w, "capacity = ", capacity)
-                    sys.exit()
-                else:
-                    print("Invalid random action")
-            else:
-                print("accept")
-                profit += req.rev
-                accepted.append(req)
-                capacity -= req.w
-
-        elif action == Environment.Actions.reject:
-            print("reject")
-        else:
-            print("Error in Actions in Policy")
-            sys.exit()
-        
-        if capacity > Environment.domain.total_cpu:
-            print("Error in capacity: ", capacity, ", server_size = ", Environment.domain.total_cpu)
-            sys.exit()
-
-    return profit
-
 if __name__ == "__main__":
+
     sim_time = 100
 
     parser.parse_config("config.json")
 
     dp_policy = DP()
-    print("********* Optimal Policy ***********")
+    debug("********* Optimal Policy ***********")
     print_policy(dp_policy)
     
-    env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    ql_policy = QL.qLearning(env, 100)
-    print("********* QL Policy ***********")
-    print_policy(ql_policy)
-
-    '''
-    for i in range(10):
-
-        demands = Environment.generate_req_set(sim_time)
-        #print_reqs(demands)
-        greedy_profit = test_greedy_policy(demands)
-        print("Greedy Profit = ", greedy_profit)
-
-        dp_profit = test_policy(demands, dp_policy)
-        print("DP Profit = ", dp_profit)
-    
-        ql_profit = test_policy(demands, ql_policy)
-        print("QL Profit = ", ql_profit)
-    '''
-
-

@@ -3,6 +3,10 @@ import numpy as np
 import sys 
 import heapq
 
+verbose = True
+debug = print if verbose else lambda *a, **k: None
+error = print
+
 
 # Classes
 class NFV_NS:
@@ -89,7 +93,7 @@ class Request:
 
 def print_reqs(reqs):
     for i in range(len(reqs)):
-        print(reqs[i])
+        debug(reqs[i])
 
 
 def generate_class_req_set(service, load, time):
@@ -149,7 +153,7 @@ class Env:
         self.events = []
 
     def start(self):
-        print("env start")
+        debug("env start")
         self.capacity = self.server_size
         self.alives = [0 for i in range(total_classes)]
         
@@ -166,7 +170,7 @@ class Env:
         #print_events(self.events)
 
         self.active_reqs = [0 for i in range(total_classes)]
-        print("event.req.class_id = ", event.req.class_id)
+        debug("event.req.class_id = ", event.req.class_id)
         self.active_reqs[event.req.class_id] = 1
         self.arriaved_demand = event.req
 
@@ -175,42 +179,28 @@ class Env:
         return state
 
     def stop(self):
-        print("env stop")
+        debug("env stop")
         return
 
     def reset(self):
-        print("env reset")
+        debug("env reset")
         self.stop()
         return self.start()
     
     def step(self, state, action):
         reward = 0
-        print("===========  env step ==================")
-        print("s = ", state, ", a = ", action)
+        debug("===========  env step ==================")
+        debug("s = ", state, ", a = ", action)
         current_alives = state[0]
         current_requests = state[1]
         current_capacity = compute_capacity(current_alives)
         
-        '''
-        #check state correctness
-        if current_capacity != self.capacity:
-            print("Error in capacity")
-            sys.exit()
-        for i in range(len(current_alives)):
-            if current_alives[i] != self.alives[i]:
-                print("Error in alives")
-                sys.exit()
-        for i in range(len(current_requests)):
-            if current_requests[i] != self.requests[i]:
-                print("Error in requests")
-                sys.exit()
-        '''
         if action == Actions.no_action:
-            print("no action")
+            debug("no action")
             reward = 0
 
         elif action == Actions.reject: #reject
-            print("reject")
+            debug("reject")
             reward = 0
 
         elif action == Actions.accept: #accept
@@ -220,24 +210,24 @@ class Env:
                     count += 1
             
             if count > 1:
-                print("Error in requests = ", current_requests)
+                error("Error in requests = ", current_requests)
                 sys.exit()
 
             if count == 0: #there is no requst to accept
-                print("Invalid action")
+                error("Invalid action")
                 sys.exit()
             else:
                 req = self.arriaved_demand
                 self.arriaved_demand = None
 
-                print("Try to accept: req = ", req)
+                debug("Try to accept: req = ", req)
 
                 if self.capacity < req.w:
                     #cannot accept
-                    print("\t cannot accept")
+                    debug("\t cannot accept")
                     reward = -1 * np.inf
                 else:
-                    print("\t accepted")
+                    debug("\t accepted")
                     reward = req.rev
                     self.capacity -= req.w
                     self.alives[req.class_id] += 1
@@ -251,27 +241,27 @@ class Env:
                     count += 1
             
             if count > 1:
-                print("Error in requests = ", current_requests)
+                error("Error in requests = ", current_requests)
                 sys.exit()
 
             if count == 0: #there is no requst to accept
-                print("Invalid action")
+                error("Invalid action")
                 sys.exit()
             else:
                 req = self.arriaved_demand
                 self.arriaved_demand = None
 
-                print("Try to federate: req = ", req)
+                debug("Try to federate: req = ", req)
 
                 provider_domain = providers[0] # in this version, there is only one provider
-                print("\t federated")
+                debug("\t federated")
 
                 reward = req.rev - provider_domain.federation_costs[domain.services[req.class_id]]
                 #FIXME: update iner-domain link usage
                 #FIXME: update number of federated requests
 
         else:
-            print("Unknown action")
+            error("Unknown action")
             sys.exit()
 
         #print_events(self.events)
@@ -280,7 +270,7 @@ class Env:
 
         #generate the next state
         event = heapq.heappop(self.events)
-        print("event: type = ", event.event_type ,", req = ", event.req)
+        debug("event: type = ", event.event_type ,", req = ", event.req)
 
         if event.event_type == 0: #departure, update the nework
             self.capacity += event.req.w
@@ -303,7 +293,7 @@ class Env:
             done = 0
 
         
-        print("************  env step *************")
+        debug("************  env step *************")
         return state, reward, done
 
 
@@ -317,8 +307,8 @@ def get_valid_actions(state):
         arrived += requests[i]
 
     if arrived > 1:
-        print("get_valid_actions: Error in state")
-        print("state = ", state)
+        error("get_valid_actions: Error in state")
+        error("state = ", state)
         sys.exit()
 
     if arrived == 0:
@@ -330,7 +320,7 @@ def get_valid_actions(state):
         actions.append(Actions.reject)
         actions.append(Actions.federate)
   
-    print("Valid actions = ", actions)
+    debug("Valid actions = ", actions)
     return actions
 
 class Event:
@@ -347,10 +337,10 @@ class Event:
         return self.time <= other.time
 
 def print_events(events):
-    print("----------------------------")
+    debug("----------------------------")
     for i in range(len(events)):
         e = events[i]
-        print("type = ", e.event_type ,", req = ", e.req)
+        debug("type = ", e.event_type ,", req = ", e.req)
 
 def compute_capacity(alives):
     capacity = domain.total_cpu

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import itertools 
 import matplotlib 
 import matplotlib.style 
@@ -7,23 +9,22 @@ import sys
 from collections import defaultdict 
 import plotting 
 import Environment
-from Environment import Actions
-from Environment import Env 
-from Environment import get_valid_actions
-
+from Environment import debug
+from Environment import error
+import parser
 
 matplotlib.style.use('ggplot') 
 
 
 def print_Q(Q):
     for s, s_a in Q.items():
-        print("{}: {}".format(s, s_a))
-    print("*********************")
+        debug("{}: {}".format(s, s_a))
+    debug("*********************")
 
 
 def print_policy(Q):
     for s, s_a in Q.items():
-        print("{}: {}".format(s, np.argmax(s_a)))
+        debug("{}: {}".format(s, np.argmax(s_a)))
 
 
 def Q_change(Q, old_Q):
@@ -63,7 +64,7 @@ def createEpsilonGreedyPolicy(Q, epsilon, env):
     """
     def policyFunction(state): 
         print_Q(Q)
-        va = get_valid_actions(state)
+        va = Environment.get_valid_actions(state)
         num_actions = len(va)
 
         for a in env.action_space:
@@ -80,7 +81,7 @@ def createEpsilonGreedyPolicy(Q, epsilon, env):
         best_action = np.argmax(Q[state]) 
         Action_probabilities[best_action] += (1.0 - epsilon) 
         
-        print("Action_probabilities before: ", Action_probabilities)
+        debug("Action_probabilities before: ", Action_probabilities)
         for a in env.action_space:
             v_flag = False
             for sa in va:
@@ -90,7 +91,7 @@ def createEpsilonGreedyPolicy(Q, epsilon, env):
             if v_flag == False:
                 Action_probabilities[a] = 0
                 Q[state][a] = -1 * np.inf
-        print("Action_probabilities after: ", Action_probabilities)
+        debug("Action_probabilities after: ", Action_probabilities)
         
         return Action_probabilities 
 
@@ -123,13 +124,13 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
 
     # For every episode
     for ith_episode in range(num_episodes):
-        print("=======================================================")
+        debug("=======================================================")
         old_Q = copy_Q(Q)
         # Reset the environment and pick the first action
         state = env.reset()
 
         for t in itertools.count():
-            print("\nt =", t, "sate =", state)
+            debug("\nt =", t, "sate =", state)
 
             # get probabilities of all actions from current state
             action_probabilities = policy(state)
@@ -137,13 +138,13 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
             # choose action according to
             # the probability distribution
             action_index = np.random.choice(np.arange(len(action_probabilities)), p = action_probabilities)
-            action = Actions(action_index)
-            print("action =", action)
+            action = Environment.Actions(action_index)
+            debug("action =", action)
 
             # take action and get reward, transit to next state
             next_state, reward, done = env.step(state, action)
 
-            print("next_state =", next_state, "reward =", reward, ", done =", done)
+            debug("next_state =", next_state, "reward =", reward, ", done =", done)
 
             # Update statistics
             stats.episode_rewards[ith_episode] += reward
@@ -157,7 +158,7 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
                 Q[state][action] += alpha * td_delta
             else:
                 if reward != -1 * np.inf:
-                    print("Error in invalid actions!!!")
+                    error("Error in invalid actions!!!")
                     sys.exit()
 
             state = next_state
@@ -177,4 +178,17 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
 
     #print(final_policy)
     return final_policy
+
+
+if __name__ == "__main__":
+
+    sim_time = 100
+
+    parser.parse_config("config.json")
+
+    env = Environment.Env(Environment.domain.total_cpu, sim_time)
+    ql_policy = qLearning(env, 100)
+    debug("********* QL Policy ***********")
+    print_policy(ql_policy)
+
 
