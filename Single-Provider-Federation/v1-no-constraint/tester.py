@@ -13,7 +13,7 @@ import matplotlib.style
 import Environment
 import parser
 import DP
-from Environment import debug, error
+from Environment import debug, error, warning
 
 def test_greedy_policy(demands):
     profit = 0
