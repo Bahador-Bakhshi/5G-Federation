@@ -1,15 +1,15 @@
 {
 	"local":{
-		"total_cpu": 10,
+		"total_cpu": 15,
 		"ns_catalog":[
 			{
 				"id": 0,
 				"cpu": 5,
-				"revenue": 200
+				"revenue": 100
 			},
 			{
 				"id": 1,
-				"cpu": 10,
+				"cpu": 7,
 				"revenue": 50
 			}
 		]
@@ -35,13 +35,13 @@
 		{
 			"catalog_id": 0,
 			"lambda": 5,
-			"mu": 2
+			"mu": 4
 
 		},
 		{
 			"catalog_id": 1,
 			"lambda": 5,
-			"mu": 0.1
+			"mu": 0.05
 		}
 	]
 }

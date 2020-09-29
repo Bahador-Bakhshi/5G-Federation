@@ -134,7 +134,7 @@ if __name__ == "__main__":
     DP.print_policy(dp_policy)
     
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    ql_policy = QL.qLearning(env, 10)
+    ql_policy = QL.qLearning(env, 20)
     debug("********* QL Policy ***********")
     DP.print_policy(ql_policy)
 

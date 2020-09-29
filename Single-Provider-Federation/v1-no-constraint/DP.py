@@ -5,6 +5,7 @@ import math
 from collections import defaultdict
 import sys
 import plotting
+import collections
 import QL
 import heapq
 import itertools 
@@ -256,8 +257,10 @@ def print_V(V, all_s):
 
 
 def print_policy(policy):
-    for s in policy:
-        debug(s, ": ", Environment.Actions(policy[s]))
+    op = collections.OrderedDict(sorted(policy.items()))
+    for s in op:
+        #debug(s, ": ", Environment.Actions(policy[s]))
+        debug(s, ": ", op[s])
 
 
 def DP():
