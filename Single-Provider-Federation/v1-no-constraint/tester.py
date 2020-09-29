@@ -125,7 +125,7 @@ def test_policy(demands, policy):
 
 if __name__ == "__main__":
 
-    sim_time = 500
+    sim_time = 200
 
     parser.parse_config("config.json")
 
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     DP.print_policy(dp_policy)
     
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    ql_policy = QL.qLearning(env, 20)
+    ql_policy = QL.qLearning(env, 30)
     debug("********* QL Policy ***********")
     DP.print_policy(ql_policy)
 
