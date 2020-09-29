@@ -125,7 +125,7 @@ def test_policy(demands, policy):
 
 if __name__ == "__main__":
 
-    sim_time = 200
+    sim_time = 150
 
     parser.parse_config("config.json")
 
@@ -144,11 +144,11 @@ if __name__ == "__main__":
         Environment.print_reqs(demands)
 
         greedy_profit = test_greedy_policy(demands)
-        print("Greedy Profit = ", greedy_profit)
+        print("Greedy Profit = ", greedy_profit / float(len(demands)))
 
         dp_profit = test_policy(demands, dp_policy)
-        print("DP Profit = ", dp_profit)
+        print("DP Profit = ", dp_profit / float(len(demands)))
         
         ql_profit = test_policy(demands, ql_policy)
-        print("QL Profit = ", ql_profit)
+        print("QL Profit = ", ql_profit / float(len(demands)))
 
