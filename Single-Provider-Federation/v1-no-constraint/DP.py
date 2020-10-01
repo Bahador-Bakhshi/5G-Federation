@@ -13,7 +13,7 @@ import matplotlib
 import matplotlib.style 
 import Environment
 import parser
-from Environment import debug, error
+from Environment import debug, error, warning
 
 matplotlib.style.use('ggplot') 
 
@@ -84,7 +84,6 @@ def departure_after_accept(cs, accept_index, dep_index, total_rates):
 def get_total_rates(total_classes, state):
     alives = state[0]
     requests = state[1]
-    capacity = Environment.compute_capacity(alives)
  
     total_rates = 0
     for j in range(total_classes):
@@ -93,6 +92,7 @@ def get_total_rates(total_classes, state):
             total_rates += Environment.traffic_loads[j].mu
     
     return total_rates
+
 
 def pr(state, action):
     prob = {}
@@ -221,6 +221,7 @@ def pr(state, action):
 
     return prob, reward
 
+
 #FIXME works only for two classes
 def generate_all_states(c, tcs):
     res = []
@@ -260,7 +261,7 @@ def print_policy(policy):
     op = collections.OrderedDict(sorted(policy.items()))
     for s in op:
         #debug(s, ": ", Environment.Actions(policy[s]))
-        debug(s, ": ", op[s])
+        warning(s, ": ", op[s])
 
 
 def DP():
@@ -290,7 +291,7 @@ def DP():
             
             new_val = -1 * np.inf
             best_action = None
-            for a  in va:
+            for a in va:
                 if improve[a] > new_val:
                     new_val = improve[a]
                     best_action = a

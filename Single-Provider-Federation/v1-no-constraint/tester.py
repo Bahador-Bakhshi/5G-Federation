@@ -84,8 +84,8 @@ def test_policy(demands, policy):
         if state in policy:
             action = policy[state]
         else:
-            warning("Unknown state")
-            action = 1 + int(np.random.uniform(0, Environment.total_actions - 0.00001))
+            warning("Unknown state: ", state)
+            action = 1 + int(np.random.uniform(0, Environment.total_actions - 1.00001))
             random_action = True
         debug("Action = ", action)
 
@@ -111,6 +111,7 @@ def test_policy(demands, policy):
             debug("reject")
         else:
             error("Error in Actions in Policy")
+            error("action = ", action)
             sys.exit()
         
         if capacity > Environment.domain.total_cpu:
@@ -125,7 +126,7 @@ def test_policy(demands, policy):
 
 if __name__ == "__main__":
 
-    sim_time = 150
+    sim_time = 250
 
     parser.parse_config("config.json")
 
@@ -134,21 +135,25 @@ if __name__ == "__main__":
     DP.print_policy(dp_policy)
     
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    ql_policy = QL.qLearning(env, 30)
-    debug("********* QL Policy ***********")
-    DP.print_policy(ql_policy)
+    ql_policy = QL.qLearning(env, 2)
+    warning("********* QL Policy ***********")
+    #DP.print_policy(ql_policy)
 
-    for i in range(1):
+    greedy_profit = dp_profit = ql_profit = 0
 
+    iterations = 50
+    for i in range(iterations):
+        
         demands = Environment.generate_req_set(sim_time)
         Environment.print_reqs(demands)
 
-        greedy_profit = test_greedy_policy(demands)
-        print("Greedy Profit = ", greedy_profit / float(len(demands)))
+        greedy_profit += test_greedy_policy(demands) / float(len(demands))
 
-        dp_profit = test_policy(demands, dp_policy)
-        print("DP Profit = ", dp_profit / float(len(demands)))
+        dp_profit += test_policy(demands, dp_policy) / float(len(demands))
         
-        ql_profit = test_policy(demands, ql_policy)
-        print("QL Profit = ", ql_profit / float(len(demands)))
+        ql_profit += test_policy(demands, ql_policy) / float(len(demands))
 
+
+    print("Greedy Profit = ", greedy_profit / iterations)
+    print("DP Profit = ", dp_profit / iterations)
+    print("QL Profit = ", ql_profit / iterations)

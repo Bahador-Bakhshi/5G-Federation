@@ -3,8 +3,9 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = True
+verbose = False
 debug = print if verbose else lambda *a, **k: None
+warning = print 
 error = print
 
 
@@ -170,7 +171,6 @@ class Env:
         #print_events(self.events)
 
         self.active_reqs = [0 for i in range(total_classes)]
-        debug("event.req.class_id = ", event.req.class_id)
         self.active_reqs[event.req.class_id] = 1
         self.arriaved_demand = event.req
 
