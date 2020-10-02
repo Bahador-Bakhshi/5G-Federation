@@ -4,7 +4,6 @@ import numpy as np
 import math
 from collections import defaultdict
 import sys
-import plotting
 import QL
 import heapq
 import itertools 

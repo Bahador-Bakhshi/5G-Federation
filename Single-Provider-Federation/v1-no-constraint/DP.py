@@ -5,7 +5,6 @@ import math
 from collections import defaultdict
 import sys
 import random
-import plotting
 import collections
 import QL
 import heapq
