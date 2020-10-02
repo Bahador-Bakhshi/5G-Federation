@@ -4,6 +4,7 @@ import numpy as np
 import math
 from collections import defaultdict
 import sys
+import random
 import plotting
 import collections
 import QL
@@ -271,6 +272,7 @@ def DP():
    
     loop = True
     while loop:
+        random.shuffle(all_possible_state)
         max_diff = 0
 
         for s in all_possible_state:

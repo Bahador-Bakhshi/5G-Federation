@@ -1,6 +1,6 @@
 {
 	"local":{
-		"total_cpu": 80,
+		"total_cpu": 250,
 		"ns_catalog":[
 			{
 				"id": 0,
@@ -9,7 +9,7 @@
 			},
 			{
 				"id": 1,
-				"cpu": 7,
+				"cpu": 10,
 				"revenue": 50
 			}
 		]

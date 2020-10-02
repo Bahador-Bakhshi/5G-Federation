@@ -126,14 +126,14 @@ def test_policy(demands, policy):
 
 if __name__ == "__main__":
 
-    sim_time = 100
-    episode_num = 100
+    sim_time = 70
+    episode_num = 150
 
     parser.parse_config("config.json")
 
     init_mult = 0
     step = 0.25
-    scale = 50
+    scale = 25
 
     i = 0
 
@@ -153,15 +153,15 @@ if __name__ == "__main__":
         debug("********* Optimal Policy ***********")
         #DP.print_policy(dp_policy)
     
-        env = Environment.Env(Environment.domain.total_cpu, sim_time)
-        ql_policy = QL.qLearning(env, episode_num)
-        debug("********* QL Policy ***********")
-        #DP.print_policy(ql_policy)
-
         greedy_profit = dp_profit = ql_profit = 0
 
-        iterations = 30
+        iterations = 50
         for j in range(iterations):
+        
+            env = Environment.Env(Environment.domain.total_cpu, sim_time)
+            ql_policy = QL.qLearning(env, episode_num)
+            debug("********* QL Policy ***********")
+            #DP.print_policy(ql_policy)
         
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
