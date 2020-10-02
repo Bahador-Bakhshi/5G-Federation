@@ -125,7 +125,8 @@ def test_policy(demands, policy):
 
 if __name__ == "__main__":
 
-    sim_time = 250
+    sim_time = 50
+    episode_num = 10
 
     parser.parse_config("config.json")
 
@@ -134,13 +135,13 @@ if __name__ == "__main__":
     DP.print_policy(dp_policy)
     
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    ql_policy = QL.qLearning(env, 2)
-    warning("********* QL Policy ***********")
-    #DP.print_policy(ql_policy)
+    ql_policy = QL.qLearning(env, episode_num)
+    debug("********* QL Policy ***********")
+    DP.print_policy(ql_policy)
 
     greedy_profit = dp_profit = ql_profit = 0
 
-    iterations = 50
+    iterations = 2
     for i in range(iterations):
         
         demands = Environment.generate_req_set(sim_time)
