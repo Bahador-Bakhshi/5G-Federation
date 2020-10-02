@@ -5,6 +5,7 @@ import math
 from collections import defaultdict
 import sys
 import random
+import plotting
 import collections
 import QL
 import heapq
@@ -17,7 +18,7 @@ from Environment import debug, error, warning
 
 matplotlib.style.use('ggplot') 
 
-gamma = 0.9 #TODO  FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
+gamma = 1.0
 
 def arrival_after_reject(cs, arrival_index, total_rates):
     alives = cs[0]
@@ -268,14 +269,16 @@ def DP():
     V = defaultdict(lambda: np.random.uniform(-100,-90))
     policy = {}
     all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.domain.services)
-   
+    global gamma 
     loop = True
     while loop:
         random.shuffle(all_possible_state)
+        gamma = 0.95 * gamma
+        debug("Gamma = ", gamma)
         max_diff = 0
 
         for s in all_possible_state:
-            #print_V(V, all_possible_state)
+            print_V(V, all_possible_state)
             improve = np.zeros(Environment.total_actions)
             va = Environment.get_valid_actions(s)
 
@@ -310,7 +313,7 @@ def DP():
             V[s] = new_val
             debug("Updated V[s] = ", V[s])
 
-        if max_diff < 0.0001:
+        if max_diff < 0.01:
             loop = False
 
     return policy
