@@ -1,19 +1,20 @@
 import json
 import Environment
+from Environment import debug, warning, error
 from Environment import NFV_NS, Local_Domain, Traffic_Load, Providers
 
 def print_domain(domain):
-    print("\n* * ** *** ***** Local Domain ***** *** ** * *")
-    print("Total CPU: ", domain.total_cpu)
-    print("Services:")
+    debug("\n* * ** *** ***** Local Domain ***** *** ** * *")
+    debug("Total CPU: ", domain.total_cpu)
+    debug("Services:")
     for ns in domain.services:
-        print("\t ID:", ns.nsid, " CPU:", ns.cpu, " Revenue:", ns.revenue)
+        debug("\t ID:", ns.nsid, " CPU:", ns.cpu, " Revenue:", ns.revenue)
 
 
 def print_loads(loads):
-    print("\n* * ** *** ***** Loads ***** *** ** * *")
+    debug("\n* * ** *** ***** Loads ***** *** ** * *")
     for load in loads:
-        print("ID:", load.service.nsid, " lam:", load.lam, " mu:", load.mu)
+        debug("ID:", load.service.nsid, " lam:", load.lam, " mu:", load.mu)
 
 
 def parse_config(config_file):
