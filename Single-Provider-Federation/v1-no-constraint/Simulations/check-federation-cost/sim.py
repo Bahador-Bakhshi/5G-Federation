@@ -44,15 +44,15 @@ if __name__ == "__main__":
         debug("********* Optimal Policy ***********")
         #DP.print_policy(dp_policy)
     
+        env = Environment.Env(Environment.domain.total_cpu, sim_time)
+        ql_policy = QL.qLearning(env, episode_num)
+        debug("********* QL Policy ***********")
+        #DP.print_policy(ql_policy)
+        
         greedy_profit = dp_profit = ql_profit = 0
 
         iterations = 50
         for j in range(iterations):
-        
-            env = Environment.Env(Environment.domain.total_cpu, sim_time)
-            ql_policy = QL.qLearning(env, episode_num)
-            debug("********* QL Policy ***********")
-            #DP.print_policy(ql_policy)
         
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
