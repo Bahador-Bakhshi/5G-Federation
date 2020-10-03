@@ -1,6 +1,4 @@
-{ 
-"x_label": "beta",
-"results":[
+{ "x_label":"zeta", "results":[
 { "x":  0.1,
 "greedy":  20.51430491569216,
 "DP":  50.04046477879124,
