@@ -9,13 +9,10 @@ import collections
 import QL
 import heapq
 import itertools 
-import matplotlib 
-import matplotlib.style 
 import Environment
 import parser
 from Environment import debug, error, warning
 
-matplotlib.style.use('ggplot') 
 
 gamma = 1.0
 
