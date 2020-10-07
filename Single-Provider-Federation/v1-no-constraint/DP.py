@@ -14,8 +14,6 @@ import parser
 from Environment import debug, error, warning
 
 
-gamma = 1.0
-
 def arrival_after_reject(cs, arrival_index, total_rates):
     alives = cs[0]
     requests = [0] * len(cs[1])
@@ -261,15 +259,14 @@ def print_policy(policy):
         warning(s, ": ", op[s])
 
 
-def DP():
+def DP(gamma = 1.0):
     V = defaultdict(lambda: np.random.uniform(-100,-90))
     policy = {}
     all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.domain.services)
-    global gamma 
     loop = True
     while loop:
         random.shuffle(all_possible_state)
-        gamma = 0.95 * gamma
+        gamma = 0.95 #* gamma
         debug("Gamma = ", gamma)
         max_diff = 0
 

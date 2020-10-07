@@ -105,7 +105,7 @@ def test_policy(demands, policy):
             if req.w > capacity:
                 if random_action == False:
                     error("Error: w = ", req.w, "capacity = ", capacity)
-                    sys.exit()
+                    #sys.exit()
                 else:
                     error("Invalid random action")
             else:

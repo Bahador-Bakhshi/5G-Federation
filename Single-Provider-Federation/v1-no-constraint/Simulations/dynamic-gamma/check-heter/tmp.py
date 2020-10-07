@@ -17,14 +17,14 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 100
-    episode_num = 100
+    sim_time = 1
+    episode_num = 1
 
     parser.parse_config("config.json")
 
-    init_size = 0.05
+    init_size = 0.025
     step = 0.025
-    scale = 20
+    scale = 2
 
     i = 0
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
         greedy_profit_0 = greedy_profit_50 = greedy_profit_100 = dp_profit = ql_profit = 0
 
-        iterations = 20
+        iterations = 3
         for j in range(iterations):
             env = Environment.Env(Environment.domain.total_cpu, sim_time)
             ql_policy = QL.qLearning(env, episode_num)

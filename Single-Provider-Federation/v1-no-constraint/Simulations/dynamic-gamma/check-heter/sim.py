@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
         greedy_profit_0 = greedy_profit_50 = greedy_profit_100 = dp_profit = ql_profit = 0
 
-        iterations = 20
+        iterations = 30
         for j in range(iterations):
             env = Environment.Env(Environment.domain.total_cpu, sim_time)
             ql_policy = QL.qLearning(env, episode_num)
