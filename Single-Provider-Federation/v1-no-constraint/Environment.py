@@ -323,9 +323,14 @@ def get_valid_actions(state):
         actions.append(Actions.no_action)
 
     if arrived == 1:
-        actions.append(Actions.accept)
         actions.append(Actions.reject)
         actions.append(Actions.federate)
+        tmp_alives = [0] * len(alives)
+        for i in range(len(tmp_alives)):
+            tmp_alives[i] = alives[i] + requests[i]
+        
+        if compute_capacity(tmp_alives) > 0:
+            actions.append(Actions.accept)
   
     debug("Valid actions = ", actions)
     return actions
