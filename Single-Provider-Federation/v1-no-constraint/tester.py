@@ -20,6 +20,9 @@ def test_greedy_random_policy(demands, greediness):
     for i in range(len(demands)):
         req = demands[i]
         debug("current: ", req, ", capacity = ", capacity)
+        if capacity < 0:
+            error("Bug in capacity")
+            sys.exit()
         t = req.st
        
         j = 0
@@ -41,7 +44,7 @@ def test_greedy_random_policy(demands, greediness):
                 action = Environment.Actions.federate
         else:
             rnd = np.random.uniform(0,1)
-            if rnd < 0.5:
+            if (rnd < 0.5) and (req.w <= capacity): 
                 action = Environment.Actions.accept
             else:
                 action = Environment.Actions.federate
@@ -160,7 +163,7 @@ if __name__ == "__main__":
         demands = Environment.generate_req_set(sim_time)
         Environment.print_reqs(demands)
 
-        greedy_profit += test_greedy_random_policy(demands, 1) / float(len(demands))
+        greedy_profit += test_greedy_random_policy(demands, 0) / float(len(demands))
 
         #dp_profit += test_policy(demands, dp_policy) / float(len(demands))
         
