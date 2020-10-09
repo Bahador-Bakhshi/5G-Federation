@@ -107,8 +107,6 @@ def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0
     # A nested dictionary that maps
     # state -> (action -> action-value).
     
-    # FIXME TODO
-    #Q = defaultdict(lambda: np.zeros(env.action_space.n))
     Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
 
     # Create an epsilon greedy policy function
@@ -184,12 +182,12 @@ def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0
 
 if __name__ == "__main__":
 
-    sim_time = 100
+    sim_time = 1
 
     parser.parse_config("config.json")
 
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    ql_policy = qLearning(env, 100)
+    ql_policy = qLearning(env, 1)
     debug("********* QL Policy ***********")
     print_policy(ql_policy)
 

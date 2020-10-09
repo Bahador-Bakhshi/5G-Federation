@@ -149,9 +149,9 @@ def pr(state, action):
             req_index = np.argmax(requests)
             
             debug("alives = ", requests)
-            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.domain.services[req_index].cpu)
+            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
 
-            if capacity < Environment.domain.services[req_index].cpu:
+            if capacity < Environment.traffic_loads[req_index].service.cpu:
                 debug("Try to accept but no resource")
                 #cannot be accepted, it is like reject but -inf for reward
 
@@ -165,7 +165,7 @@ def pr(state, action):
                         prob.update(departure_after_reject(state, j, total_rates))
             else:
                 debug("Accepting")
-                reward = Environment.domain.services[req_index].revenue
+                reward = Environment.traffic_loads[req_index].service.revenue
 
                 for j in range(Environment.total_classes):
                     prob.update(arrival_after_accept(state, req_index, j, total_rates))
@@ -188,11 +188,11 @@ def pr(state, action):
             req_index = np.argmax(requests)
             
             debug("alives = ", requests)
-            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.domain.services[req_index].cpu)
+            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
 
             debug("In this version, Federation is always possible")
             provider_domain = Environment.providers[0] # in this version, there is only one provider
-            reward = Environment.domain.services[req_index].revenue - provider_domain.federation_costs[Environment.domain.services[req_index]]
+            reward = Environment.traffic_loads[req_index].service.revenue - provider_domain.federation_costs[Environment.traffic_loads[req_index].service]
 
             for j in range(Environment.total_classes):
                 prob.update(arrival_after_federaion(state, j, total_rates))
@@ -257,34 +257,17 @@ def rec_sate_generate(total_capacity, classes, current, alives, all_states):
         rec_sate_generate(total_capacity - classes[current].cpu * i, classes, current + 1, tmp_alives, all_states)
         i += 1
 
-def generate_all_states(c, tcs):
+
+def generate_all_states(c, loads):
     all_states = []
     alives = ()
+    tcs = []
+
+    for load in loads:
+        tcs.append(load.service)
+
     rec_sate_generate(c, tcs, 0, alives, all_states)
     return all_states
-
-    for i in range (int(c / tcs[0].cpu) + 1):
-        for j in range(int(c / tcs[1].cpu) + 1):
-            if i * tcs[0].cpu + j * tcs[1].cpu <= c:
-                capacity = c - (i * tcs[0].cpu + j * tcs[1].cpu)
-                alives = (i , j)
-                
-                requests = (0, 0)
-                s = (alives, requests)
-                res.append(s)
-                
-                requests = (0, 1)
-                s = (alives, requests)
-                res.append(s)
-                
-                requests = (1, 0)
-                s = (alives, requests)
-                res.append(s)
-                
-
-    debug("All States:", res)
-
-    return res
 
 
 def print_V(V, all_s):
@@ -370,7 +353,7 @@ def policy_improvment(V, policy, all_states, gamma):
 def policy_iteration(gamma = 1.0):
     V = defaultdict(lambda: np.random.uniform(-100,-90))
     policy = {}
-    all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.domain.services)
+    all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.traffic_loads)
     init_random_policy(policy, all_possible_state)
     gamma = 0.97
     while True:
@@ -384,7 +367,7 @@ def policy_iteration(gamma = 1.0):
 def value_iteration(gamma = 1.0):
     V = defaultdict(lambda: np.random.uniform(-100,-90))
     policy = {}
-    all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.domain.services)
+    all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.traffic_loads)
     loop = True
     while loop:
         random.shuffle(all_possible_state)
@@ -436,7 +419,7 @@ def value_iteration(gamma = 1.0):
 
 if __name__ == "__main__":
 
-    sim_time = 70
+    sim_time = 1
 
     parser.parse_config("config.json")
 
@@ -450,11 +433,6 @@ if __name__ == "__main__":
         #Environment.domain.total_cpu = init_size + i * step
         i += 1
        
-        print("Total Capacity = ", Environment.domain.total_cpu)
-        all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.domain.services)
-        print(*all_possible_state, sep = "\n") 
-        
-        '''
         t1 = datetime.datetime.now()
         print(t1)
         pi_policy = policy_iteration()
@@ -466,7 +444,7 @@ if __name__ == "__main__":
         
         pi_profit = vi_profit = 0
 
-        iterations = 20
+        iterations = 1
         for j in range(iterations):
         
             demands = Environment.generate_req_set(sim_time)
@@ -479,4 +457,3 @@ if __name__ == "__main__":
         print("Capacity = ", Environment.domain.total_cpu)
         print("PI Profit = ", pi_profit / iterations, "time = ", t2 - t1)
         print("VI Profit = ", vi_profit / iterations, "time = ", t3 - t2) 
-        '''

@@ -1,16 +1,16 @@
 {
 	"local":{
-		"total_cpu": 5,
+		"total_cpu": 10,
 		"ns_catalog":[
 			{
 				"id": 0,
-				"cpu": 5,
+				"cpu": 9,
 				"revenue": 100
 			},
 			{
 				"id": 1,
-				"cpu": 5,
-				"revenue": 15
+				"cpu": 8,
+				"revenue": 1
 			},
 			{
 				"id": 2,
@@ -30,7 +30,7 @@
 				},
 				{
 					"nsid": 1,
-					"cost": 0
+					"cost": 1
 				},
 				{
 					"nsid": 2,
@@ -44,13 +44,22 @@
 		{
 			"catalog_id": 0,
 			"lambda": 5,
-			"mu": 4
-
+			"mu": 1
 		},
 		{
-			"catalog_id": 1,
+			"catalog_id": 0,
 			"lambda": 5,
-			"mu": 0.1
+			"mu": 1
+		},
+		{
+			"catalog_id": 0,
+			"lambda": 5,
+			"mu": 1
+		},
+		{
+			"catalog_id": 0,
+			"lambda": 5,
+			"mu": 1
 		}
 	]
 }

@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = False
+verbose = True
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print
@@ -32,6 +32,10 @@ class Local_Domain:
     def add_service(self, service):
         self.services.append(service)
 
+    def get_service(self, nsid):
+        for s in self.services:
+            if s.nsid == nsid:
+                return s
 
 class Traffic_Load:
     service = None
@@ -97,14 +101,14 @@ def print_reqs(reqs):
         debug(reqs[i])
 
 
-def generate_class_req_set(service, load, time):
+def generate_class_req_set(service, load, time, class_id):
     t = 0
     all_req = []
     
     while t <= time:
         t += np.random.exponential(1.0 / load.lam)
         life = np.random.exponential(1.0 / load.mu)
-        all_req.append(Request(service.cpu, t, t + life, service.revenue, service.nsid))
+        all_req.append(Request(service.cpu, t, t + life, service.revenue, class_id))
 
     #print_reqs(all_req)
     return all_req
@@ -115,11 +119,13 @@ def generate_req_set(time):
     
     total_n = 0
     for service in domain.services:
+        class_id = 0
         for load in traffic_loads:
             if service.nsid == load.service.nsid:
-                req_list = generate_class_req_set(service, load, time)
+                req_list = generate_class_req_set(service, load, time, class_id)
                 total_n += len(req_list)
                 all_class_reqs.append(req_list)
+            class_id += 1
 
     j = 0
     req_set = [None] * total_n
@@ -256,7 +262,7 @@ class Env:
                 provider_domain = providers[0] # in this version, there is only one provider
                 debug("\t federated")
 
-                reward = req.rev - provider_domain.federation_costs[domain.services[req.class_id]]
+                reward = req.rev - provider_domain.federation_costs[traffic_loads[req.class_id].service]
                 #FIXME: update iner-domain link usage
                 #FIXME: update number of federated requests
 
@@ -357,7 +363,7 @@ def print_events(events):
 def compute_capacity(alives):
     capacity = domain.total_cpu
     for i in range(total_classes):
-        capacity -= alives[i] * domain.services[i].cpu
+        capacity -= alives[i] * traffic_loads[i].service.cpu
 
     return capacity
 
