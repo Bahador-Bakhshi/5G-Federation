@@ -1,6 +1,6 @@
 {
 	"local":{
-		"total_cpu": 10,
+		"total_cpu": 5,
 		"ns_catalog":[
 			{
 				"id": 0,
@@ -9,6 +9,11 @@
 			},
 			{
 				"id": 1,
+				"cpu": 5,
+				"revenue": 15
+			},
+			{
+				"id": 2,
 				"cpu": 5,
 				"revenue": 15
 			}
@@ -26,6 +31,10 @@
 				{
 					"nsid": 1,
 					"cost": 0
+				},
+				{
+					"nsid": 2,
+					"cost": 100
 				}
 			]
 		}	

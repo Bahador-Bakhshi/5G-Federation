@@ -219,9 +219,50 @@ def pr(state, action):
     return prob, reward
 
 
-#FIXME works only for two classes
+def add_arrival_events(alives, all_states):
+    requests = (0,) * len(alives)
+    all_states.append((alives, requests))
+    for i in range(len(alives)):
+        tmp_requests = list(requests)
+        tmp_requests[i] = 1
+        tmp_requests = tuple(tmp_requests)
+        all_states.append((alives, tmp_requests))
+
+
+def rec_sate_generate(total_capacity, classes, current, alives, all_states):
+    debug("---------------------------------------------")
+    debug("total_capacity = ", total_capacity)
+    debug("current = ", current)
+    debug("alives   = ", alives)
+    debug("all_states = ", all_states)
+
+    if classes[current].cpu > total_capacity:
+        zero_suffix = (0,) * (len(classes) - current)
+        alives = alives + zero_suffix
+        add_arrival_events(alives, all_states)
+        return
+
+    if current == len(classes) - 1:
+        i = 0
+        while (classes[current].cpu * i <= total_capacity):
+            tmp_alives = alives + (i,)
+            add_arrival_events(tmp_alives, all_states)
+            i += 1
+
+        return
+
+    i = 0
+    while classes[current].cpu * i <= total_capacity:
+        tmp_alives = alives + (i,)
+        rec_sate_generate(total_capacity - classes[current].cpu * i, classes, current + 1, tmp_alives, all_states)
+        i += 1
+
 def generate_all_states(c, tcs):
-    res = []
+    all_states = []
+    alives = ()
+    rec_sate_generate(c, tcs, 0, alives, all_states)
+    return all_states
+
     for i in range (int(c / tcs[0].cpu) + 1):
         for j in range(int(c / tcs[1].cpu) + 1):
             if i * tcs[0].cpu + j * tcs[1].cpu <= c:
@@ -401,14 +442,19 @@ if __name__ == "__main__":
 
     init_size = 20
     step = 20
-    scale = 15
+    scale = 0
 
     i = 0
 
     while i <= scale:
-        Environment.domain.total_cpu = init_size + i * step
+        #Environment.domain.total_cpu = init_size + i * step
         i += 1
-
+       
+        print("Total Capacity = ", Environment.domain.total_cpu)
+        all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.domain.services)
+        print(*all_possible_state, sep = "\n") 
+        
+        '''
         t1 = datetime.datetime.now()
         print(t1)
         pi_policy = policy_iteration()
@@ -433,3 +479,4 @@ if __name__ == "__main__":
         print("Capacity = ", Environment.domain.total_cpu)
         print("PI Profit = ", pi_profit / iterations, "time = ", t2 - t1)
         print("VI Profit = ", vi_profit / iterations, "time = ", t3 - t2) 
+        '''
