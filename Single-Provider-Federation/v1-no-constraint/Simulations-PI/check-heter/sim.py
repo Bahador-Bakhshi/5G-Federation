@@ -17,7 +17,7 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 100
+    sim_time = 50
     episode_num = 100
 
     parser.parse_config("config.json")

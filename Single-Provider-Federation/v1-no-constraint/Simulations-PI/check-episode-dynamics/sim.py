@@ -17,7 +17,7 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 100
+    sim_time = 50
 
     parser.parse_config("config.json")
 
@@ -28,6 +28,7 @@ if __name__ == "__main__":
     init_size = 5
     step = 10
     scale = 15
+    iterations = 20
 
     i = 0
 
@@ -37,9 +38,9 @@ if __name__ == "__main__":
 
         dp_profit = ql_profit = ql_static_profit= 0
 
-        iterations = 20
         for j in range(iterations):
             env = Environment.Env(Environment.domain.total_cpu, sim_time)
+
             ql_policy = QL.qLearning(env, ep)
             ql_static_policy = QL.qLearning(env, ep, 0)
 
@@ -54,3 +55,5 @@ if __name__ == "__main__":
         print("DP Profit = ", dp_profit / iterations)
         print("QL Profit = ", ql_profit / iterations)
         print("QL Static Profit = ", ql_static_profit / iterations)
+
+

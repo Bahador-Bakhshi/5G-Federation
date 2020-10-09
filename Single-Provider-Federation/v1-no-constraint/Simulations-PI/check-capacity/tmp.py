@@ -18,14 +18,15 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 10
-    episode_num = 2
+    sim_time = 5
+    episode_num = 1
 
     parser.parse_config("config.json")
 
     init_size = 20
     step = 20
-    scale = 25
+    scale = 2
+    iterations = 2
 
     i = 0
 
@@ -33,18 +34,17 @@ if __name__ == "__main__":
         Environment.domain.total_cpu = init_size + i * step
         i += 1
 
-        dp_policy = DP.DP()
+        dp_policy = DP.policy_iteration()
         debug("********* Optimal Policy ***********")
-        #print(dp_policy)
+        #DP.print_policy(dp_policy)
     
         
         greedy_profit_0 = greedy_profit_50 = greedy_profit_100 = dp_profit = ql_profit = 0
 
-        iterations = 2
         for j in range(iterations):
         
             env = Environment.Env(Environment.domain.total_cpu, sim_time)
-            #ql_policy = QL.qLearning(env, episode_num)
+            ql_policy = QL.qLearning(env, episode_num)
             debug("********* QL Policy ***********")
             #DP.print_policy(ql_policy)
         
@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
             dp_profit += test_policy(demands, dp_policy) / float(len(demands))
         
-            #ql_profit += test_policy(demands, ql_policy) / float(len(demands))
+            ql_profit += test_policy(demands, ql_policy) / float(len(demands))
 
 
         print("Capacity = ", Environment.domain.total_cpu)

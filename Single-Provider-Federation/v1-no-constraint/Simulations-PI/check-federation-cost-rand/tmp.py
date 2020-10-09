@@ -17,14 +17,15 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 70
-    episode_num = 150
+    sim_time = 7
+    episode_num = 1
 
     parser.parse_config("config.json")
 
     init_mult = 0
     step = 0.25
-    scale = 3
+    scale = 2
+    iterations = 2
 
     i = 0
 
@@ -39,19 +40,18 @@ if __name__ == "__main__":
             for k in Environment.domain.services:
                 Environment.providers[j].federation_costs[k] = org_fed_cost[j][k] * (init_mult + i * step)
         i += 1
-        '''
-        dp_policy = DP.DP()
-        debug("********* Optimal Policy ***********")
+
+        #dp_policy = DP.policy_iteration()
+        print("********* Optimal Policy ***********")
         #DP.print_policy(dp_policy)
     
         env = Environment.Env(Environment.domain.total_cpu, sim_time)
         ql_policy = QL.qLearning(env, episode_num)
         debug("********* QL Policy ***********")
         #DP.print_policy(ql_policy)
-        '''
+        
         greedy_profit_0 = greedy_profit_50 = greedy_profit_100 = dp_profit = ql_profit = 0
 
-        iterations = 50
         for j in range(iterations):
         
             demands = Environment.generate_req_set(sim_time)
@@ -63,7 +63,8 @@ if __name__ == "__main__":
 
             #dp_profit += test_policy(demands, dp_policy) / float(len(demands))
         
-            #ql_profit += test_policy(demands, ql_policy) / float(len(demands))
+            ql_profit += test_policy(demands, ql_policy) / float(len(demands))
+
 
         print("Costs Scale = ", init_mult + i * step)
         print("Greedy Profit 0   = ", greedy_profit_0 / iterations)

@@ -17,14 +17,15 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 70
-    episode_num = 150
+    sim_time = 50
+    episode_num = 100
 
     parser.parse_config("config.json")
 
     init_mult = 0
     step = 0.25
     scale = 25
+    iterations = 20
 
     i = 0
 
@@ -40,7 +41,7 @@ if __name__ == "__main__":
                 Environment.providers[j].federation_costs[k] = org_fed_cost[j][k] * (init_mult + i * step)
         i += 1
 
-        dp_policy = DP.DP()
+        dp_policy = DP.policy_iteration()
         debug("********* Optimal Policy ***********")
         #DP.print_policy(dp_policy)
     
@@ -51,7 +52,6 @@ if __name__ == "__main__":
         
         greedy_profit_0 = greedy_profit_50 = greedy_profit_100 = dp_profit = ql_profit = 0
 
-        iterations = 50
         for j in range(iterations):
         
             demands = Environment.generate_req_set(sim_time)

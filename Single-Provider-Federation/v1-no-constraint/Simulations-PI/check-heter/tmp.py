@@ -17,12 +17,12 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 1
-    episode_num = 1
+    sim_time = 5
+    episode_num = 2
 
     parser.parse_config("config.json")
 
-    init_size = 0.025
+    init_size = 0.05
     step = 0.025
     scale = 2
 
@@ -42,14 +42,14 @@ if __name__ == "__main__":
 
         i += 1
 
-        dp_policy = DP.DP()
+        #dp_policy = DP.policy_iteration()
         debug("********* Optimal Policy ***********")
         #DP.print_policy(dp_policy)
     
 
         greedy_profit_0 = greedy_profit_50 = greedy_profit_100 = dp_profit = ql_profit = 0
 
-        iterations = 3
+        iterations = 20
         for j in range(iterations):
             env = Environment.Env(Environment.domain.total_cpu, sim_time)
             ql_policy = QL.qLearning(env, episode_num)
@@ -59,11 +59,11 @@ if __name__ == "__main__":
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
 
-            greedy_profit_0 += test_greedy_policy(demands, 0) / float(len(demands))
-            greedy_profit_50 += test_greedy_policy(demands, 0.5) / float(len(demands))
-            greedy_profit_100 += test_greedy_policy(demands, 1) / float(len(demands))
+            greedy_profit_0 += test_greedy_random_policy(demands, 0.0) / float(len(demands))
+            greedy_profit_50 += test_greedy_random_policy(demands, 0.5) / float(len(demands))
+            greedy_profit_100 += test_greedy_random_policy(demands, 1.0) / float(len(demands))
 
-            dp_profit += test_policy(demands, dp_policy) / float(len(demands))
+            #dp_profit += test_policy(demands, dp_policy) / float(len(demands))
         
             ql_profit += test_policy(demands, ql_policy) / float(len(demands))
 

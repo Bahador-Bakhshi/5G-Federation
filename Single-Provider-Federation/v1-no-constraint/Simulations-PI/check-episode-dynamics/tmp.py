@@ -17,17 +17,18 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 1
+    sim_time = 5
 
     parser.parse_config("config.json")
 
-    dp_policy = DP.DP()
+    #dp_policy = DP.policy_iteration()
     debug("********* Optimal Policy ***********")
     #DP.print_policy(dp_policy)
     
     init_size = 5
     step = 10
-    scale = 15
+    scale = 1
+    iterations = 2
 
     i = 0
 
@@ -37,16 +38,16 @@ if __name__ == "__main__":
 
         dp_profit = ql_profit = ql_static_profit= 0
 
-        iterations = 2
         for j in range(iterations):
             env = Environment.Env(Environment.domain.total_cpu, sim_time)
+
             ql_policy = QL.qLearning(env, ep)
             ql_static_policy = QL.qLearning(env, ep, 0)
 
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
 
-            dp_profit += test_policy(demands, dp_policy) / float(len(demands))
+            #dp_profit += test_policy(demands, dp_policy) / float(len(demands))
             ql_profit += test_policy(demands, ql_policy) / float(len(demands))
             ql_static_profit += test_policy(demands, ql_static_policy) / float(len(demands))
 
@@ -54,3 +55,5 @@ if __name__ == "__main__":
         print("DP Profit = ", dp_profit / iterations)
         print("QL Profit = ", ql_profit / iterations)
         print("QL Static Profit = ", ql_static_profit / iterations)
+
+
