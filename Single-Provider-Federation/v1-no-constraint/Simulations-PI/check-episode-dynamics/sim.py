@@ -55,5 +55,5 @@ if __name__ == "__main__":
         print("DP Profit = ", dp_profit / iterations)
         print("QL Profit = ", ql_profit / iterations)
         print("QL Static Profit = ", ql_static_profit / iterations)
-
+        print("", flush=True)
 

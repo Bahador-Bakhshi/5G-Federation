@@ -73,3 +73,4 @@ if __name__ == "__main__":
         print("Greedy Profit = ", greedy_profit_100 / iterations)
         print("DP Profit = ", dp_profit / iterations)
         print("QL Profit = ", ql_profit / iterations)
+        print("", flush=True)

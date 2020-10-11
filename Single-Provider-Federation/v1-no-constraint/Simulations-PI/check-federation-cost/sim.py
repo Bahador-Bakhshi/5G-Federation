@@ -39,7 +39,6 @@ if __name__ == "__main__":
         for j in range(len(Environment.providers)):
             for k in Environment.domain.services:
                 Environment.providers[j].federation_costs[k] = org_fed_cost[j][k] * (init_mult + i * step)
-        i += 1
 
         dp_policy = DP.policy_iteration()
         debug("********* Optimal Policy ***********")
@@ -72,3 +71,6 @@ if __name__ == "__main__":
         print("Greedy Profit 100 = ", greedy_profit_100 / iterations)
         print("DP Profit = ", dp_profit / iterations)
         print("QL Profit = ", ql_profit / iterations)
+        print("", flush=True)        
+        i += 1
+
