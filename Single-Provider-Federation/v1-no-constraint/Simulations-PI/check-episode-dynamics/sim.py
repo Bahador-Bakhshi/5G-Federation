@@ -36,13 +36,13 @@ if __name__ == "__main__":
         ep = init_size + i * step
         i += 1
 
+        env = Environment.Env(Environment.domain.total_cpu, sim_time)
+        ql_policy = QL.qLearning(env, ep)
+        ql_static_policy = QL.qLearning(env, ep, 0)
+
         dp_profit = ql_profit = ql_static_profit= 0
 
         for j in range(iterations):
-            env = Environment.Env(Environment.domain.total_cpu, sim_time)
-
-            ql_policy = QL.qLearning(env, ep)
-            ql_static_policy = QL.qLearning(env, ep, 0)
 
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
