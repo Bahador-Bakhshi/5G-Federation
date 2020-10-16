@@ -296,7 +296,7 @@ def init_random_policy(policy, all_states):
     debug("Init random policy")
     print_policy(policy)
 
-
+policy_iteration_accuracy = 0.01
 def policy_evaluation(V, policy, all_states, gamma):
     while True:
         diff = 0
@@ -320,7 +320,7 @@ def policy_evaluation(V, policy, all_states, gamma):
             diff = max(diff, abs(old_v - V[s]))
 
         debug("diff = ", diff)
-        if diff < 0.1:
+        if diff < policy_iteration_accuracy:
             return
 
 
@@ -344,7 +344,7 @@ def policy_improvment(V, policy, all_states, gamma):
         
         policy.update({s: best_action})
         debug("state = ", s, "best_action = ", best_action, "old_action = ", old_action)
-        if best_action != old_action:
+        if (best_action != old_action) and (abs(improve[best_action] - improve[old_action]) > policy_iteration_accuracy):
             policy_stable = False
 
     return policy_stable
