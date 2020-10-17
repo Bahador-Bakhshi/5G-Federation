@@ -34,5 +34,5 @@ plt.plot(x, QL, label='QL', color='C0', linestyle='dashed', linewidth=1.5)
 plt.plot(x, greedy, label='Greedy', color='C2', linestyle='dashdot', linewidth=1.5)
 plt.legend(loc='best', handlelength=4)
 
-plt.show()
+#plt.show()
 plt.savefig("res.png")

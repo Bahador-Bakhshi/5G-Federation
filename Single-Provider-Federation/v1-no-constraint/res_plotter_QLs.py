@@ -34,5 +34,5 @@ plt.plot(x, QL_dynamic, label='QL-Dynamic', color='C0', linestyle='dashed', line
 plt.plot(x, QL_static, label='QL-Static', color='C1', linestyle='dashdot', linewidth=1.5)
 plt.legend(loc='best', handlelength=4)
 
-plt.show()
+#plt.show()
 plt.savefig("res.png")

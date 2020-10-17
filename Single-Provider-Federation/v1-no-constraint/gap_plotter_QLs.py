@@ -41,5 +41,5 @@ plt.plot(x, QL_dynamic_gap, label='QL-Dynamic', color='C0', linestyle='dashed', 
 plt.plot(x, QL_static_gap, label='QL-Static', color='C1', linestyle='dashdot', linewidth=1.5)
 plt.legend(loc='best', handlelength=4)
 
-plt.show()
+#plt.show()
 plt.savefig("gap.png")

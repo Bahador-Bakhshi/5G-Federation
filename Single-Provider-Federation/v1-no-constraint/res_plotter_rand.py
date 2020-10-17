@@ -40,5 +40,5 @@ plt.plot(x, greedy_050, label='Greedy-0.5', color='C2', linestyle='dashdot', lin
 plt.plot(x, greedy_100, label='Greedy-1.0', color='C3', linestyle='dashdot', linewidth=1.5)
 plt.legend(loc='best', handlelength=4)
 
-plt.show()
+#plt.show()
 plt.savefig("res.png")
