@@ -235,13 +235,7 @@ def rec_sate_generate(total_capacity, classes, current, alives, all_states):
     debug("current = ", current)
     debug("alives   = ", alives)
     debug("all_states = ", all_states)
-
-    if classes[current].cpu > total_capacity:
-        zero_suffix = (0,) * (len(classes) - current)
-        alives = alives + zero_suffix
-        add_arrival_events(alives, all_states)
-        return
-
+    
     if current == len(classes) - 1:
         i = 0
         while (classes[current].cpu * i <= total_capacity):
@@ -283,6 +277,7 @@ def print_policy(policy):
     for s in op:
         #debug(s, ": ", Environment.Actions(policy[s]))
         print(s, ": ", op[s])
+    #debug("----------------------------")
     print("----------------------------")
 
 def init_random_policy(policy, all_states):
@@ -355,22 +350,28 @@ def policy_improvment(V, policy, all_states, gamma):
 
 
 def policy_iteration(gamma = 1.0):
-    V = defaultdict(lambda: np.random.uniform(100, 500))
-    #V = defaultdict(lambda: 0)
+    #V = defaultdict(lambda: np.random.uniform(100, 500))
+    V = defaultdict(lambda: 0)
     policy = {}
     all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.traffic_loads)
     init_random_policy(policy, all_possible_state)
-    #gamma = 0.6
+    
     while True:
-        print("********** At beginning ************")
+        gamma = gamma * 0.95
+        
+        debug("********** At Beginning ************")
         print_V(V, all_possible_state)
         print_policy(policy)
+        
         policy_evaluation(V, policy, all_possible_state, gamma)
-        print("********** After Evaluation ************")
+        
+        debug("********** After Evaluation ************")
         print_V(V, all_possible_state)
         print_policy(policy)
+        
         stable = policy_improvment(V, policy, all_possible_state, gamma)
-        print("********** After improve ************")
+        
+        debug("********** After improve ************")
         print_V(V, all_possible_state)
         print_policy(policy)
 
@@ -432,6 +433,38 @@ def value_iteration(gamma = 1.0):
     return policy
 
 
+def gen_greedy_policy():
+    policy = {}
+    all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.traffic_loads)
+
+    for state in all_possible_state:
+        current_alives = state[0]
+        current_requests = state[1]
+        current_capacity = Environment.compute_capacity(current_alives)
+        
+        count = 0
+        req_index = 0
+        for i in range(len(current_requests)):
+            if current_requests[i] != 0:
+                count += 1
+                req_index = i
+            
+        if count > 1:
+            error("Error in requests = ", current_requests)
+            sys.exit()
+
+        if count == 0: 
+            policy.update({state: Environment.Actions.no_action})
+        else:
+            req = Environment.traffic_loads[req_index].service
+            if current_capacity >= req.cpu:
+                policy.update({state: Environment.Actions.accept})
+            else:
+                policy.update({state: Environment.Actions.federate})
+        
+    return policy
+
+
 if __name__ == "__main__":
 
 
@@ -439,7 +472,7 @@ if __name__ == "__main__":
     
     init_size = 0.05
     step = 0.1
-    scale = 9
+    scale = 0
 
     i = 0
     sim_time = 100
@@ -447,11 +480,13 @@ if __name__ == "__main__":
         gamma = i * step + init_size
         i += 1
        
-        pi_policy = policy_iteration(gamma)
+        #pi_policy = policy_iteration(gamma)
+        pi_policy = policy_iteration()
+        #pi_policy = gen_greedy_policy()
         print_policy(pi_policy)
         
         pi_profit = greedy_profit = 0
-        iterations = 10
+        iterations = 20
         for j in range(iterations):
         
             demands = Environment.generate_req_set(sim_time)

@@ -335,7 +335,7 @@ def get_valid_actions(state):
         for i in range(len(tmp_alives)):
             tmp_alives[i] = alives[i] + requests[i]
         
-        if compute_capacity(tmp_alives) > 0:
+        if compute_capacity(tmp_alives) >= 0:
             actions.append(Actions.accept)
   
     debug("Valid actions = ", actions)
