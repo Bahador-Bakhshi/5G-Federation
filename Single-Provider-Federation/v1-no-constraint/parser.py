@@ -23,7 +23,6 @@ def parse_config(config_file):
     config_file_handler.close()
 
     # Config local domain
-    Environment.domain
     Environment.domain = Local_Domain(config["local"]["total_cpu"])
     for ns in config["local"]["ns_catalog"]:
         service = NFV_NS(ns["id"], ns["cpu"], ns["revenue"])

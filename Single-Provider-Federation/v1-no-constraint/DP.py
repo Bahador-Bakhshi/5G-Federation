@@ -13,7 +13,7 @@ import itertools
 import Environment
 import parser
 from Environment import debug, error, warning
-from tester import test_policy
+from tester import test_policy, test_greedy_random_policy
 
 
 def arrival_after_reject(cs, arrival_index, total_rates):
@@ -282,7 +282,8 @@ def print_policy(policy):
     op = collections.OrderedDict(sorted(policy.items()))
     for s in op:
         #debug(s, ": ", Environment.Actions(policy[s]))
-        debug(s, ": ", op[s])
+        print(s, ": ", op[s])
+    print("----------------------------")
 
 def init_random_policy(policy, all_states):
     for s in all_states:
@@ -304,11 +305,12 @@ def policy_evaluation(V, policy, all_states, gamma):
             old_v = V[s]
             old_action = policy[s]
         
-            debug("state = ", s, ", old_action = ", old_action, "old_v = ", old_v)
+            debug("\n state = ", s, ", old_action = ", old_action, "old_v = ", old_v)
             va = Environment.get_valid_actions(s)
         
             if not(old_action in va):
                 error("current actions is not valid action")
+                sys.exit(-1)
             
             new_v = 0
             p, r = pr(s, old_action)
@@ -327,6 +329,7 @@ def policy_evaluation(V, policy, all_states, gamma):
 def policy_improvment(V, policy, all_states, gamma):
     policy_stable = True
     for s in all_states:
+        debug("\n state = ", s)
         old_action = policy[s]
         improve = np.zeros(Environment.total_actions)
         va = Environment.get_valid_actions(s)
@@ -334,6 +337,7 @@ def policy_improvment(V, policy, all_states, gamma):
             p, r = pr(s, a)
             for ns in p.keys():
                 improve[a] += (p[ns] * (r + gamma * V[ns]))
+            debug("\t improve[",a,"] = ", improve[a])
         
         new_val = -1 * np.inf
         best_action = None
@@ -343,7 +347,7 @@ def policy_improvment(V, policy, all_states, gamma):
                 best_action = a
         
         policy.update({s: best_action})
-        debug("state = ", s, "best_action = ", best_action, "old_action = ", old_action)
+        debug("\t best_action = ", best_action, "old_action = ", old_action)
         if (best_action != old_action) and (abs(improve[best_action] - improve[old_action]) > policy_iteration_accuracy):
             policy_stable = False
 
@@ -351,15 +355,26 @@ def policy_improvment(V, policy, all_states, gamma):
 
 
 def policy_iteration(gamma = 1.0):
-    V = defaultdict(lambda: np.random.uniform(-100,-90))
+    V = defaultdict(lambda: np.random.uniform(100, 500))
+    #V = defaultdict(lambda: 0)
     policy = {}
     all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.traffic_loads)
     init_random_policy(policy, all_possible_state)
-    gamma = 0.97
+    #gamma = 0.6
     while True:
+        print("********** At beginning ************")
         print_V(V, all_possible_state)
+        print_policy(policy)
         policy_evaluation(V, policy, all_possible_state, gamma)
-        if policy_improvment(V, policy, all_possible_state, gamma) == True:
+        print("********** After Evaluation ************")
+        print_V(V, all_possible_state)
+        print_policy(policy)
+        stable = policy_improvment(V, policy, all_possible_state, gamma)
+        print("********** After improve ************")
+        print_V(V, all_possible_state)
+        print_policy(policy)
+
+        if stable == True:
             break
 
     return policy
@@ -419,41 +434,33 @@ def value_iteration(gamma = 1.0):
 
 if __name__ == "__main__":
 
-    sim_time = 1
 
     parser.parse_config("config.json")
-
-    init_size = 20
-    step = 20
-    scale = 0
+    
+    init_size = 0.05
+    step = 0.1
+    scale = 9
 
     i = 0
-
+    sim_time = 100
     while i <= scale:
-        #Environment.domain.total_cpu = init_size + i * step
+        gamma = i * step + init_size
         i += 1
        
-        t1 = datetime.datetime.now()
-        print(t1)
-        pi_policy = policy_iteration()
-        t2 = datetime.datetime.now()
-        print(t2)
-        vi_policy = value_iteration() 
-        t3 = datetime.datetime.now()
-        print(t3)
+        pi_policy = policy_iteration(gamma)
+        print_policy(pi_policy)
         
-        pi_profit = vi_profit = 0
-
-        iterations = 1
+        pi_profit = greedy_profit = 0
+        iterations = 10
         for j in range(iterations):
         
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
 
             pi_profit += test_policy(demands, pi_policy) / float(len(demands))
-            vi_profit += test_policy(demands, vi_policy) / float(len(demands))
+            greedy_profit += test_greedy_random_policy(demands, 1.0) / float(len(demands))
 
 
-        print("Capacity = ", Environment.domain.total_cpu)
-        print("PI Profit = ", pi_profit / iterations, "time = ", t2 - t1)
-        print("VI Profit = ", vi_profit / iterations, "time = ", t3 - t2) 
+        print("gamma = ", gamma)
+        print("PI Profit     = ", pi_profit / iterations)
+        print("Greedy Profit = ", greedy_profit / iterations) 
