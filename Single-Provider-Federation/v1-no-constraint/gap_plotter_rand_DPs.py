@@ -57,7 +57,6 @@ for data in results:
     DP_95.append(DP_95_tmp)
     QL.append(QL_tmp)
 
-
 fig, ax = plt.subplots()
 plt.grid(linestyle="--", linewidth=0.5)
 plt.ylabel("Gap")
