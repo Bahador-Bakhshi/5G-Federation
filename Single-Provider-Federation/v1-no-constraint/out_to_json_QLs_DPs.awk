@@ -1,6 +1,8 @@
 BEGIN{
 	FS="="; 
-	print "{ \"x_label\":\"" x_label "\", \"results\":["; 
+	print "{ \"x_label\":\"" x_label "\",";
+	print "\"y_label\":\"" y_label "\",";
+	print "\"results\":["; 
 	cnt = 0
 } 
 

@@ -1,4 +1,6 @@
-{ "x_label":"Acceptance Rate", "results":[
+{ "x_label":"episodes",
+{ "y_label":"Acceptance Rate",
+"results":[
 { "x":  5,
 "DP_05":  0.5525271347595747,
 "DP_30":  0.5525271347595747,
