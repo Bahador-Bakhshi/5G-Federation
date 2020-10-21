@@ -45,7 +45,7 @@ for data in results:
     QL_tmp = gap(DP_95_tmp, QL_tmp)
     DP_05_tmp = gap(DP_95_tmp, DP_05_tmp)
     DP_30_tmp = gap(DP_95_tmp, DP_30_tmp)
-    DP_05_tmp = gap(DP_95_tmp, DP_60_tmp)
+    DP_60_tmp = gap(DP_95_tmp, DP_60_tmp)
     DP_95_tmp = gap(DP_95_tmp, DP_95_tmp)
 
     greedy_000.append(greedy_000_tmp)
