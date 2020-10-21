@@ -86,3 +86,5 @@ if __name__ == "__main__":
         print("QL Static  Federate =", ql_static_federate / iterations)
         print("", flush=True)
 
+
+print("DONE!!!")
