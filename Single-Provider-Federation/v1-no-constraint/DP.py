@@ -275,10 +275,10 @@ def print_V(V, all_s):
 def print_policy(policy):
     op = collections.OrderedDict(sorted(policy.items()))
     for s in op:
-        #debug(s, ": ", Environment.Actions(policy[s]))
-        print(s, ": ", op[s])
-    #debug("----------------------------")
-    print("----------------------------")
+        debug(s, ": ", Environment.Actions(policy[s]))
+        #print(s, ": ", op[s])
+    debug("----------------------------")
+    #print("----------------------------")
 
 def init_random_policy(policy, all_states):
     for s in all_states:
@@ -349,7 +349,7 @@ def policy_improvment(V, policy, all_states, gamma):
     return policy_stable
 
 
-def policy_iteration(gamma = 1.0):
+def policy_iteration(gamma):
     #V = defaultdict(lambda: np.random.uniform(100, 500))
     V = defaultdict(lambda: 0)
     policy = {}
@@ -357,8 +357,6 @@ def policy_iteration(gamma = 1.0):
     init_random_policy(policy, all_possible_state)
     
     while True:
-        gamma = gamma * 0.95
-        
         debug("********** At Beginning ************")
         print_V(V, all_possible_state)
         print_policy(policy)
@@ -380,7 +378,7 @@ def policy_iteration(gamma = 1.0):
 
     return policy
 
-def value_iteration(gamma = 1.0):
+def value_iteration(gamma):
     V = defaultdict(lambda: np.random.uniform(-100,-90))
     policy = {}
     all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.traffic_loads)
