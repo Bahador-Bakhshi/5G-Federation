@@ -28,5 +28,7 @@ BEGIN{
 	}
 } 
 
-END{print "]}"}
+END{
+	print "]}"
+}
 
