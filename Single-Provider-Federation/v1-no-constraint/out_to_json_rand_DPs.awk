@@ -4,13 +4,17 @@ BEGIN{
 	print "\"y_label\":\"" y_label "\",";
 	print " \"results\":["; 
 	cnt = 0
+	first_data = 1
 } 
 
 {
 	if(length($0) > 2){
 		cnt++; 
-		if(cnt == 1) 
+		if(cnt == 1){
+		       	if (first_data == 0)
+				print ","
 			print "{ \"x\":" $2","; 
+		}
 		else if (cnt == 2) 
 			print "\"greedy000\":" $2 ","; 
 		else if (cnt == 3) 
@@ -26,8 +30,9 @@ BEGIN{
 		else if (cnt == 8) 
 			print "\"DP_95\":" $2","; 
 		else if (cnt == 9) {
-			print "\"QL\":" $2"},"; 
+			print "\"QL\":" $2"}"; 
 			cnt = 0
+			first_data = 0
 		}
 	}
 } 
