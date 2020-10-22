@@ -18,18 +18,18 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 50
-    episode_num = 100
+    sim_time = 20
+    episode_num = 5
 
     parser.parse_config("config.json")
 
     init_size = 20
     step = 20
-    scale = 25
+    scale = 2
 
-    iterations = 20
+    iterations = 5
     
-    i = 16
+    i = 0
 
     while i <= scale:
         Environment.domain.total_cpu = init_size + i * step
@@ -46,6 +46,7 @@ if __name__ == "__main__":
         
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit = 0
         greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_accept = 0
+
         greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate = 0
 
         for j in range(iterations):
@@ -78,7 +79,7 @@ if __name__ == "__main__":
         print("", flush=True)
 
         print("Capacity_Accept = ", Environment.domain.total_cpu)
-        print("Greedy Accept 00 = ", greedy_accept_00 / iterations)
+        print("Greedy Accept 00  = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
         print("Greedy Accept 100 = ", greedy_accept_100 / iterations)
         print("DP_05 Accept = ", dp_accept_05 / iterations)
@@ -87,6 +88,8 @@ if __name__ == "__main__":
         print("DP_95 Accept = ", dp_accept_95 / iterations)
         print("QL Accept    = ", ql_accept / iterations)
         print("", flush=True)
+
+
 
         print("Capacity_Federate = ", Environment.domain.total_cpu)
         print("Greedy Federate 00  = ", greedy_federate_00 / iterations)
@@ -100,4 +103,4 @@ if __name__ == "__main__":
         print("", flush=True)
 
 
-print("DONE!!!")
+

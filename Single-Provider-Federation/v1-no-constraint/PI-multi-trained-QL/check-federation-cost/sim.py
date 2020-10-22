@@ -14,7 +14,6 @@ import parser
 import DP
 from tester import greedy_result, mdp_policy_result
 from Environment import debug, error, warning
-        
 
 if __name__ == "__main__":
 
@@ -23,36 +22,42 @@ if __name__ == "__main__":
 
     parser.parse_config("config.json")
 
-    init_size = 20
-    step = 20
+    init_mult = 0
+    step = 0.25
     scale = 25
 
-    iterations = 20
-    
-    i = 16
+    iterations = 10
+
+    i = 0
+
+    org_fed_cost = [None for j in range(len(Environment.providers))]
+    for j in range(len(Environment.providers)):
+        org_fed_cost[j] = {}
+        for k in Environment.domain.services:
+            org_fed_cost[j][k] = Environment.providers[j].federation_costs[k]
 
     while i <= scale:
-        Environment.domain.total_cpu = init_size + i * step
-        i += 1
+        for j in range(len(Environment.providers)):
+            for k in Environment.domain.services:
+                Environment.providers[j].federation_costs[k] = org_fed_cost[j][k] * (init_mult + i * step)
 
         dp_policy_05 = DP.policy_iteration(0.05)
         dp_policy_30 = DP.policy_iteration(0.30)
         dp_policy_60 = DP.policy_iteration(0.60)
         dp_policy_95 = DP.policy_iteration(0.95)
     
-        env = Environment.Env(Environment.domain.total_cpu, sim_time)
-        ql_policy = QL.qLearning(env, episode_num)
-        
-        
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit = 0
         greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_accept = 0
         greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate = 0
 
-        for j in range(iterations):
         
+        for j in range(iterations):
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
 
+            env = Environment.Env(Environment.domain.total_cpu, sim_time)
+            ql_policy = QL.qLearning(env, episode_num)
+       
             greedy_profit_00, greedy_accept_00, greedy_federate_00 = greedy_result(demands, 0.0, greedy_profit_00, greedy_accept_00, greedy_federate_00)
             greedy_profit_50, greedy_accept_50, greedy_federate_50 = greedy_result(demands, 0.5, greedy_profit_50, greedy_accept_50, greedy_federate_50)
             greedy_profit_100, greedy_accept_100, greedy_federate_100 = greedy_result(demands, 1.0, greedy_profit_100, greedy_accept_100, greedy_federate_100)
@@ -66,7 +71,7 @@ if __name__ == "__main__":
             ql_profit, ql_accept, ql_federate = mdp_policy_result(demands, ql_policy, ql_profit, ql_accept, ql_federate)
 
 
-        print("Capacity_Profit = ", Environment.domain.total_cpu)
+        print("Scale_Profit = ", init_mult + i * step)
         print("Greedy Profit 00  = ", greedy_profit_00 / iterations)
         print("Greedy Profit 50  = ", greedy_profit_50 / iterations)
         print("Greedy Profit 100 = ", greedy_profit_100 / iterations)
@@ -77,7 +82,7 @@ if __name__ == "__main__":
         print("QL Profit = ", ql_profit / iterations)
         print("", flush=True)
 
-        print("Capacity_Accept = ", Environment.domain.total_cpu)
+        print("Scale_Accept = ", init_mult + i * step)
         print("Greedy Accept 00 = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
         print("Greedy Accept 100 = ", greedy_accept_100 / iterations)
@@ -88,7 +93,7 @@ if __name__ == "__main__":
         print("QL Accept    = ", ql_accept / iterations)
         print("", flush=True)
 
-        print("Capacity_Federate = ", Environment.domain.total_cpu)
+        print("Scale_Federate = ", init_mult + i * step)
         print("Greedy Federate 00  = ", greedy_federate_00 / iterations)
         print("Greedy Federate 50  = ", greedy_federate_50 / iterations)
         print("Greedy Federate 100 = ", greedy_federate_100 / iterations)
@@ -99,5 +104,5 @@ if __name__ == "__main__":
         print("QL Federate    = ", ql_federate / iterations)
         print("", flush=True)
 
+        i += 1
 
-print("DONE!!!")

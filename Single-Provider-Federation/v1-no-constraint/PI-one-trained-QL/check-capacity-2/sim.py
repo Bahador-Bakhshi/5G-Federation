@@ -23,13 +23,13 @@ if __name__ == "__main__":
 
     parser.parse_config("config.json")
 
-    init_size = 20
-    step = 20
-    scale = 25
+    init_size = 50
+    step = 100
+    scale = 10
 
     iterations = 20
     
-    i = 16
+    i = 0
 
     while i <= scale:
         Environment.domain.total_cpu = init_size + i * step
