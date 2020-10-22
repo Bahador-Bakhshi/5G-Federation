@@ -4,13 +4,17 @@ BEGIN{
 	print "\"y_label\":\"" y_label "\",";
 	print "\"results\":["; 
 	cnt = 0
+	first_data = 1
 } 
 
 {
 	if(length($0) > 2){
 		cnt++; 
-		if(cnt == 1) 
+		if(cnt == 1){
+		       	if (first_data == 0)
+				print ","	
 			print "{ \"x\":" $2","; 
+		}
 		else if (cnt == 2) 
 			print "\"DP_05\":" $2 ","; 
 		else if (cnt == 3) 
@@ -22,7 +26,7 @@ BEGIN{
 		else if (cnt == 6) 
 			print "\"QL-Dynamic\":" $2 ","; 
 		else if (cnt == 7) {
-			print "\"QL-Static\":" $2 "},"; 
+			print "\"QL-Static\":" $2 "}"; 
 			cnt = 0
 		}
 	}

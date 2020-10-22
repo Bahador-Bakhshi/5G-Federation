@@ -7,4 +7,3 @@ fi
 
 cat res.out | grep $1 -A 8 | gawk -v x_label="$2" -v y_label="$3" -f ../../out_to_json_rand_DPs.awk > $4
 
-echo "Remove the last comma!!!"
