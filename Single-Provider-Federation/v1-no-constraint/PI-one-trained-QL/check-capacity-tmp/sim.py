@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     init_size = 25
     step = 25
-    scale = 20
+    scale = 25
 
     iterations = 5
     
@@ -35,10 +35,10 @@ if __name__ == "__main__":
         Environment.domain.total_cpu = init_size + i * step
         i += 1
 
-        dp_policy_05 = DP.policy_iteration(0.05)
+        dp_policy_05 = DP.policy_iteration(0.01)
         dp_policy_30 = DP.policy_iteration(0.30)
         dp_policy_60 = DP.policy_iteration(0.60)
-        dp_policy_95 = DP.policy_iteration(0.95)
+        dp_policy_95 = DP.policy_iteration(0.99)
     
         
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit = 0
