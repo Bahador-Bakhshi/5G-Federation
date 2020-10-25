@@ -2,7 +2,7 @@ BEGIN{
 	FS="="; 
 	print "{ \"x_label\":\"" x_label "\",";
 	print "\"y_label\":\"" y_label "\",";
-	print "\"results\":["; 
+	print " \"results\":["; 
 	cnt = 0
 	first_data = 1
 } 
@@ -12,21 +12,19 @@ BEGIN{
 		cnt++; 
 		if(cnt == 1){
 		       	if (first_data == 0)
-				print ","	
+				print ","
 			print "{ \"x\":" $2","; 
 		}
 		else if (cnt == 2) 
-			print "\"DP_05\":" $2 ","; 
+			print "\"greedy100\":" $2 ",";  
 		else if (cnt == 3) 
-			print "\"DP_30\":" $2 ","; 
+			print "\"DP_01\":" $2","; 
 		else if (cnt == 4) 
-			print "\"DP_60\":" $2 ","; 
+			print "\"DP_30\":" $2","; 
 		else if (cnt == 5) 
-			print "\"DP_95\":" $2 ","; 
-		else if (cnt == 6) 
-			print "\"QL-Dynamic\":" $2 ","; 
-		else if (cnt == 7) {
-			print "\"QL-Static\":" $2 "}"; 
+			print "\"DP_60\":" $2","; 
+		else if (cnt == 6){
+			print "\"DP_99\":" $2 "}"; 
 			cnt = 0
 			first_data = 0
 		}

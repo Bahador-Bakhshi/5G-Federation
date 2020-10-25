@@ -1,0 +1,1067 @@
+State =  ((0, 0), (0, 1))
+current:  w = 15 st = 0.09288000036184683 dt = 0.31200228188450296 rev = 10, index = 1 , capacity =  400
+State =  ((0, 0), (0, 1))
+current:  w = 15 st = 0.2302306530075106 dt = 5.548547574861488 rev = 10, index = 1 , capacity =  400
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 0.7067512624947621 dt = 1.4252125007060767 rev = 10, index = 1 , capacity =  380
+State =  ((3, 0), (0, 1))
+current:  w = 15 st = 0.7177264834497087 dt = 7.684779858607502 rev = 10, index = 1 , capacity =  385
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 1.2204652436272685 dt = 2.3351153367332067 rev = 10, index = 1 , capacity =  380
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 1.8472713014447137 dt = 2.6190916536422564 rev = 10, index = 1 , capacity =  370
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 2.63935442893421 dt = 3.857483407133964 rev = 10, index = 1 , capacity =  320
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 2.746554746799271 dt = 3.732628786429183 rev = 10, index = 1 , capacity =  315
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 2.8581402135044445 dt = 4.3331883569624985 rev = 10, index = 1 , capacity =  320
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 2.878238385405249 dt = 3.4319523526153737 rev = 10, index = 1 , capacity =  320
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 3.4500826238362756 dt = 10.972179511172316 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 3.476945959061515 dt = 3.7523833802418642 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 3.8568574618809937 dt = 4.622333259278455 rev = 10, index = 1 , capacity =  340
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 3.9495888235686643 dt = 9.832763124312851 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 4.17959419920616 dt = 12.622701544902828 rev = 10, index = 1 , capacity =  355
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 4.692012489817667 dt = 12.075862880207598 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 4.738228729901364 dt = 16.78467146123581 rev = 10, index = 1 , capacity =  365
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 5.018844342063031 dt = 5.280071277304017 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.100586355138464 dt = 8.989298895532826 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.135349618804742 dt = 10.173920864998166 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.148997989376254 dt = 7.3623511365077166 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.259757103926558 dt = 6.107052594303982 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.315327089428857 dt = 10.642366277028362 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.336300415360272 dt = 8.770183782212982 rev = 10, index = 1 , capacity =  365
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 5.681247201696425 dt = 8.789656002727401 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 5.8730767196214995 dt = 9.25110287049823 rev = 10, index = 1 , capacity =  355
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 6.585071023408678 dt = 7.327493358068809 rev = 10, index = 1 , capacity =  345
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 6.940297389439971 dt = 10.738537388885302 rev = 10, index = 1 , capacity =  330
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 7.142369400366472 dt = 7.815259301983586 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 7.177308013964201 dt = 7.293995330273199 rev = 10, index = 1 , capacity =  325
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 7.2009464371278 dt = 17.98770537315819 rev = 10, index = 1 , capacity =  330
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 7.362408450833231 dt = 10.573770156043235 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 7.431703701332749 dt = 9.395719838258108 rev = 10, index = 1 , capacity =  325
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 7.557051548468184 dt = 14.91179905145859 rev = 10, index = 1 , capacity =  320
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 7.79710290919436 dt = 14.013025377058113 rev = 10, index = 1 , capacity =  315
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 7.946299234120573 dt = 25.607361083433016 rev = 10, index = 1 , capacity =  310
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 8.15711169818146 dt = 8.308890117166085 rev = 10, index = 1 , capacity =  310
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 8.523879235984209 dt = 13.139274369886687 rev = 10, index = 1 , capacity =  310
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 8.621249794737635 dt = 13.248967885150032 rev = 10, index = 1 , capacity =  320
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 8.762209154681969 dt = 11.580109740862714 rev = 10, index = 1 , capacity =  320
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 8.837396804914057 dt = 20.030223385062946 rev = 10, index = 1 , capacity =  320
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 9.036525966739555 dt = 16.414689503730123 rev = 10, index = 1 , capacity =  315
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 9.048389658844348 dt = 13.096926136839826 rev = 10, index = 1 , capacity =  315
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 9.256108425772853 dt = 10.651413384211498 rev = 10, index = 1 , capacity =  320
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 9.518783871446807 dt = 11.203199876510217 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 9.55639428123742 dt = 17.815389640300584 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 9.886833771304104 dt = 10.25527654325218 rev = 10, index = 1 , capacity =  325
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 10.05039189580762 dt = 10.708206134589998 rev = 10, index = 1 , capacity =  310
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 10.067766918556382 dt = 14.037135120000737 rev = 10, index = 1 , capacity =  310
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 10.406153731342846 dt = 10.713569905096229 rev = 10, index = 1 , capacity =  320
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 10.502132507497485 dt = 12.10261658441921 rev = 10, index = 1 , capacity =  325
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 10.675340822392805 dt = 11.749120426903072 rev = 10, index = 1 , capacity =  320
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 10.961112209181874 dt = 11.213524132016156 rev = 10, index = 1 , capacity =  315
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 11.213242913712175 dt = 23.692336608873852 rev = 10, index = 1 , capacity =  320
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 11.868308217195702 dt = 13.95851962085467 rev = 10, index = 1 , capacity =  330
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 12.018940346137859 dt = 14.407082120134575 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 12.027466877442388 dt = 21.224893945320396 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 12.175641990370872 dt = 16.905034059985784 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 12.289785261332941 dt = 23.46208264418344 rev = 10, index = 1 , capacity =  340
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 12.76952229814978 dt = 14.811231992999403 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 12.808978059233347 dt = 19.56972930729452 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 12.822985920776507 dt = 19.084149062826256 rev = 10, index = 1 , capacity =  325
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 13.084876189141504 dt = 18.638486422521325 rev = 10, index = 1 , capacity =  330
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 13.292729652851468 dt = 21.60434241949023 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 13.566393844136169 dt = 14.07465973152021 rev = 10, index = 1 , capacity =  340
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 14.06710171062477 dt = 15.43721380099555 rev = 10, index = 1 , capacity =  330
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.14813367258316 dt = 17.290448134375808 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.195998311774357 dt = 15.730685130925053 rev = 10, index = 1 , capacity =  335
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 14.359045029080024 dt = 17.65745139900323 rev = 10, index = 1 , capacity =  330
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.602847205721785 dt = 16.131141743713002 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.608481294670216 dt = 14.658694555481118 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.698464014953993 dt = 16.904851219483906 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 15.069041368983203 dt = 16.295112327551564 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 15.528691207558115 dt = 26.946374474079434 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 15.580097319015035 dt = 15.790141987629095 rev = 10, index = 1 , capacity =  340
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 16.135407582481083 dt = 16.65364592484793 rev = 10, index = 1 , capacity =  335
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 16.295919193397445 dt = 18.845668558177497 rev = 10, index = 1 , capacity =  330
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 16.362453431182313 dt = 18.865211518876105 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 16.516216554944766 dt = 21.763386250637033 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 16.60732243052453 dt = 25.962882250997353 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 16.644053604479787 dt = 16.991928290614055 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 16.912015777718878 dt = 17.311234518649673 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 16.927204305536492 dt = 17.727094006001078 rev = 10, index = 1 , capacity =  340
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 17.17568236949641 dt = 18.00573266428046 rev = 10, index = 1 , capacity =  335
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 17.482901797309434 dt = 18.229748073285524 rev = 10, index = 1 , capacity =  330
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 17.655325819232992 dt = 30.92508640479985 rev = 10, index = 1 , capacity =  330
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 17.88582863949299 dt = 19.542874131448254 rev = 10, index = 1 , capacity =  335
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 18.043056143222874 dt = 18.156950938935896 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 18.055304020830977 dt = 23.39052537797858 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 18.077357920444495 dt = 18.4504103912206 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 18.11285846553945 dt = 22.49570004398309 rev = 10, index = 1 , capacity =  350
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.201182925038108 dt = 22.851737459806994 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.220709709850905 dt = 24.602671058452437 rev = 10, index = 1 , capacity =  360
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 18.29772021632651 dt = 22.67671156391697 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.570292909999157 dt = 19.829115425838257 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.641375692160498 dt = 24.94652800857321 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.659022163491652 dt = 20.286694831534327 rev = 10, index = 1 , capacity =  360
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 18.705022616378493 dt = 20.25961290323077 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 18.771152559615103 dt = 21.5171733655856 rev = 10, index = 1 , capacity =  365
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.278904737968965 dt = 25.985731459585065 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.292242645129154 dt = 21.479632894467127 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.53987154425542 dt = 21.56762172728322 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.5506258361815 dt = 20.487403897337064 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.580823247011686 dt = 23.430451353747202 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.724817697040898 dt = 22.063896397358835 rev = 10, index = 1 , capacity =  370
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 19.942472626660315 dt = 22.47983095582429 rev = 10, index = 1 , capacity =  375
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 19.99997229056831 dt = 20.604993995767394 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 20.139982390792483 dt = 23.16057741697809 rev = 10, index = 1 , capacity =  360
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 20.584023033522143 dt = 24.86563028976377 rev = 10, index = 1 , capacity =  365
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 20.795267123780167 dt = 23.12822084484929 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 20.992679534686513 dt = 22.247971894413098 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 21.171820077444966 dt = 32.013071156235554 rev = 10, index = 1 , capacity =  350
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 21.36560240995854 dt = 30.147847706920075 rev = 10, index = 1 , capacity =  340
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 21.756816479838417 dt = 21.971793567892156 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 21.764931809422276 dt = 22.648414446956885 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 21.773377749252006 dt = 21.90087927640984 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 22.291934913481473 dt = 27.01614684235418 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 22.36472789818076 dt = 28.213782736972163 rev = 10, index = 1 , capacity =  340
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 22.881876469394882 dt = 32.492954186910595 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 22.970170268977515 dt = 24.177938211193233 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 23.35741661147355 dt = 28.230312566109987 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 23.909026838804703 dt = 29.029572695276574 rev = 10, index = 1 , capacity =  350
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 24.25361390668529 dt = 24.727510602281992 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 24.578623809138158 dt = 26.21882593336615 rev = 10, index = 1 , capacity =  345
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 24.798228074035904 dt = 25.271190838803335 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 24.951395261847942 dt = 28.144700422161485 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 24.997222816830924 dt = 32.18259829715908 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 25.002464105273695 dt = 26.41380779176782 rev = 10, index = 1 , capacity =  340
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 25.079112269458502 dt = 26.635857696926784 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 25.201078440242334 dt = 28.077951949327016 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.31309040438675 dt = 28.518736211855845 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.35324490017605 dt = 26.47212141798612 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.374960072953623 dt = 25.505289657113277 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.472277427560687 dt = 29.565392885159646 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.54709525044018 dt = 26.042058495553675 rev = 10, index = 1 , capacity =  360
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 25.869916959895292 dt = 26.589205818384357 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 26.088241780071133 dt = 27.240002997694774 rev = 10, index = 1 , capacity =  360
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 26.29271255731281 dt = 28.21654835598131 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 26.473595631324095 dt = 33.11954928746892 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 26.699517686412168 dt = 32.21957099235362 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 26.747945663714674 dt = 28.20739057643435 rev = 10, index = 1 , capacity =  355
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 27.213970642683595 dt = 31.02745248951041 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 27.353467922854758 dt = 31.82637352563711 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 27.359062117579345 dt = 29.146275427009314 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 27.487666401135495 dt = 28.331019099094966 rev = 10, index = 1 , capacity =  360
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.06103784178792 dt = 32.9666046445827 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.09838618677815 dt = 28.97823734491977 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.425426711887344 dt = 32.25808166806823 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.473835309551095 dt = 28.654434437972746 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.755322735208324 dt = 33.054892266003094 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.804458420397893 dt = 29.838909315640397 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.81333964903561 dt = 35.48433822243854 rev = 10, index = 1 , capacity =  345
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 29.02588706725987 dt = 29.145459040716513 rev = 10, index = 1 , capacity =  340
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 29.419423769014813 dt = 29.659662486162034 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 29.43184569864426 dt = 29.936012902195152 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 29.644013152601676 dt = 29.719342492882852 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 29.805451491395626 dt = 44.66656424080578 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 30.064864153427663 dt = 30.40598486212038 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 30.233604020045355 dt = 34.93335922419037 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 30.23717093717532 dt = 30.302521748815977 rev = 10, index = 1 , capacity =  360
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 30.374037094225024 dt = 31.742124265857605 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 30.686474725401656 dt = 31.015327812011307 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 30.806342117316195 dt = 33.04499379529275 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 30.834556433156187 dt = 31.487607384995922 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 30.941532339189447 dt = 31.16646399985916 rev = 10, index = 1 , capacity =  350
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 31.193194593148316 dt = 34.80047064648488 rev = 10, index = 1 , capacity =  345
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 31.313070872142493 dt = 32.46791964745309 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 31.694855293397875 dt = 37.859299889930725 rev = 10, index = 1 , capacity =  350
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 32.05609723500472 dt = 33.36116144412202 rev = 10, index = 1 , capacity =  345
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 32.31807007080847 dt = 38.37084428283215 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 32.45500449426093 dt = 44.10093708247156 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 32.534412954676625 dt = 36.277142819067244 rev = 10, index = 1 , capacity =  360
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 32.57575883730127 dt = 39.4493633943485 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 33.00150737306774 dt = 34.49263462252978 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 33.342093835275655 dt = 33.616959722427836 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.603405647360105 dt = 36.829594947629126 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.77571237948041 dt = 37.933457546043044 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.779512907495175 dt = 35.347804249989885 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.82873972364896 dt = 34.36710035818363 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.846062884695165 dt = 35.280002438470916 rev = 10, index = 1 , capacity =  360
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 34.21673800248958 dt = 35.99506367821124 rev = 10, index = 1 , capacity =  370
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 34.3604506617051 dt = 39.846657211975426 rev = 10, index = 1 , capacity =  375
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 34.980622574099804 dt = 40.72862734879574 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 35.27035273007506 dt = 35.8634706548373 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 35.2743584705478 dt = 49.56154887994461 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 35.583546242174606 dt = 38.540062883185904 rev = 10, index = 1 , capacity =  360
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 35.80118563000164 dt = 35.87261006609369 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 36.005751037260936 dt = 39.955939542706275 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 36.028518947878474 dt = 38.25394785051061 rev = 10, index = 1 , capacity =  350
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 36.37472196047095 dt = 37.82896069195321 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 36.39344430319704 dt = 39.41280701598036 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 36.580122309065985 dt = 39.95324284860929 rev = 10, index = 1 , capacity =  360
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 36.72271289476589 dt = 37.46578728868282 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 36.734197854295495 dt = 38.259426944561696 rev = 10, index = 1 , capacity =  345
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 36.99845561787433 dt = 37.77774414388033 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 37.14589166656178 dt = 41.11097159186841 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 37.405684250136794 dt = 42.61411019556563 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 37.591938071659634 dt = 38.02727147616542 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 37.624656539545086 dt = 41.49911025182203 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 37.74571925749551 dt = 39.32222177436618 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 37.7520858427409 dt = 39.296175249999635 rev = 10, index = 1 , capacity =  360
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 37.87415092186711 dt = 38.94740592394577 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 37.925675462551204 dt = 42.49445750014867 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 38.324210808543214 dt = 39.591146004125434 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 38.782867402687614 dt = 39.0155460171684 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 39.31833889027274 dt = 48.23318004941009 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 39.3895996491474 dt = 41.37470757268448 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 39.481193597919244 dt = 42.16548629206158 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 39.486464074207205 dt = 39.68848402196127 rev = 10, index = 1 , capacity =  360
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.185213753836905 dt = 40.74663877332153 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.27905485035157 dt = 43.4115558810443 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.32193763148178 dt = 42.78679846575369 rev = 10, index = 1 , capacity =  380
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 40.35487564333233 dt = 40.447182868855535 rev = 10, index = 1 , capacity =  375
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 40.4048581935905 dt = 45.81614213639835 rev = 10, index = 1 , capacity =  375
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.68654013294149 dt = 41.56802544093017 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.749950374333736 dt = 49.294429370889915 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.81109521332273 dt = 42.209399528078976 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.92357269374014 dt = 41.06446803238417 rev = 10, index = 1 , capacity =  380
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 41.18613622515378 dt = 47.962958312413235 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 41.30862714944661 dt = 41.67160032707456 rev = 10, index = 1 , capacity =  365
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 41.50403426965717 dt = 42.547397669567495 rev = 10, index = 1 , capacity =  370
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 41.718130883082154 dt = 42.53243035406676 rev = 10, index = 1 , capacity =  375
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 42.118892758017054 dt = 44.08379227844861 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 42.13342738453607 dt = 62.01878126449621 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 42.68250904950984 dt = 47.56257527563649 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 42.721502297053455 dt = 44.852996796713256 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 43.000254109501064 dt = 46.455512271006626 rev = 10, index = 1 , capacity =  380
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 43.76340286865291 dt = 46.70310956634318 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 43.77370822295274 dt = 47.461544693276046 rev = 10, index = 1 , capacity =  345
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 43.797807270129475 dt = 50.009268615105384 rev = 10, index = 1 , capacity =  340
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 44.2041006331456 dt = 48.930818894123604 rev = 10, index = 1 , capacity =  345
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 44.29531288281579 dt = 45.9900160978572 rev = 10, index = 1 , capacity =  340
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 44.514070530731 dt = 44.75752727242714 rev = 10, index = 1 , capacity =  330
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 44.61813038375509 dt = 48.10780579093186 rev = 10, index = 1 , capacity =  325
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 45.252384512109344 dt = 47.7881896988632 rev = 10, index = 1 , capacity =  335
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 45.37597243107373 dt = 51.91247499721342 rev = 10, index = 1 , capacity =  330
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 46.15759036162215 dt = 46.49118203428723 rev = 10, index = 1 , capacity =  340
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 46.31658674932001 dt = 46.33020011991229 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 46.73779494158063 dt = 51.36392861116078 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 46.813458691162324 dt = 51.59853009486293 rev = 10, index = 1 , capacity =  340
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 47.07699306167335 dt = 48.77388247992069 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 47.12949965932127 dt = 49.16424050225168 rev = 10, index = 1 , capacity =  345
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 47.33191327594197 dt = 48.73971809665459 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 47.49378557425447 dt = 53.510706650779014 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.54409042119009 dt = 48.44857720791423 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.55631741638579 dt = 48.80839045799858 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 47.71538890834832 dt = 53.81634844658322 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 47.73238626243202 dt = 53.19650771395001 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.89009882270387 dt = 48.74835602926366 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.903723528192266 dt = 51.33087362988639 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.95212585975604 dt = 51.02917848457228 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 48.265795446581265 dt = 48.651057108027686 rev = 10, index = 1 , capacity =  350
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 48.45057500904276 dt = 49.8116295968296 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 48.50620014193133 dt = 56.96991327057779 rev = 10, index = 1 , capacity =  360
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 48.67065011428116 dt = 51.151014807792265 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 48.710967343278206 dt = 52.86419826552327 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 48.75320449060664 dt = 48.79595320281862 rev = 10, index = 1 , capacity =  355
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 48.82684005134389 dt = 54.48879742518201 rev = 10, index = 1 , capacity =  365
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 49.99599518894167 dt = 60.56766645215818 rev = 10, index = 1 , capacity =  370
+State =  ((0, 0), (0, 1))
+current:  w = 15 st = 0.09288000036184683 dt = 0.31200228188450296 rev = 10, index = 1 , capacity =  400
+State =  ((0, 0), (0, 1))
+current:  w = 15 st = 0.2302306530075106 dt = 5.548547574861488 rev = 10, index = 1 , capacity =  400
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 0.7067512624947621 dt = 1.4252125007060767 rev = 10, index = 1 , capacity =  380
+State =  ((3, 0), (0, 1))
+current:  w = 15 st = 0.7177264834497087 dt = 7.684779858607502 rev = 10, index = 1 , capacity =  385
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 1.2204652436272685 dt = 2.3351153367332067 rev = 10, index = 1 , capacity =  380
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 1.8472713014447137 dt = 2.6190916536422564 rev = 10, index = 1 , capacity =  370
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 2.63935442893421 dt = 3.857483407133964 rev = 10, index = 1 , capacity =  320
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 2.746554746799271 dt = 3.732628786429183 rev = 10, index = 1 , capacity =  315
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 2.8581402135044445 dt = 4.3331883569624985 rev = 10, index = 1 , capacity =  320
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 2.878238385405249 dt = 3.4319523526153737 rev = 10, index = 1 , capacity =  320
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 3.4500826238362756 dt = 10.972179511172316 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 3.476945959061515 dt = 3.7523833802418642 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 3.8568574618809937 dt = 4.622333259278455 rev = 10, index = 1 , capacity =  340
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 3.9495888235686643 dt = 9.832763124312851 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 4.17959419920616 dt = 12.622701544902828 rev = 10, index = 1 , capacity =  355
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 4.692012489817667 dt = 12.075862880207598 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 4.738228729901364 dt = 16.78467146123581 rev = 10, index = 1 , capacity =  365
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 5.018844342063031 dt = 5.280071277304017 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.100586355138464 dt = 8.989298895532826 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.135349618804742 dt = 10.173920864998166 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.148997989376254 dt = 7.3623511365077166 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.259757103926558 dt = 6.107052594303982 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.315327089428857 dt = 10.642366277028362 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 5.336300415360272 dt = 8.770183782212982 rev = 10, index = 1 , capacity =  365
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 5.681247201696425 dt = 8.789656002727401 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 5.8730767196214995 dt = 9.25110287049823 rev = 10, index = 1 , capacity =  355
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 6.585071023408678 dt = 7.327493358068809 rev = 10, index = 1 , capacity =  345
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 6.940297389439971 dt = 10.738537388885302 rev = 10, index = 1 , capacity =  330
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 7.142369400366472 dt = 7.815259301983586 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 7.177308013964201 dt = 7.293995330273199 rev = 10, index = 1 , capacity =  325
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 7.2009464371278 dt = 17.98770537315819 rev = 10, index = 1 , capacity =  330
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 7.362408450833231 dt = 10.573770156043235 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 7.431703701332749 dt = 9.395719838258108 rev = 10, index = 1 , capacity =  325
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 7.557051548468184 dt = 14.91179905145859 rev = 10, index = 1 , capacity =  320
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 7.79710290919436 dt = 14.013025377058113 rev = 10, index = 1 , capacity =  315
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 7.946299234120573 dt = 25.607361083433016 rev = 10, index = 1 , capacity =  310
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 8.15711169818146 dt = 8.308890117166085 rev = 10, index = 1 , capacity =  310
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 8.523879235984209 dt = 13.139274369886687 rev = 10, index = 1 , capacity =  310
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 8.621249794737635 dt = 13.248967885150032 rev = 10, index = 1 , capacity =  320
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 8.762209154681969 dt = 11.580109740862714 rev = 10, index = 1 , capacity =  320
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 8.837396804914057 dt = 20.030223385062946 rev = 10, index = 1 , capacity =  320
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 9.036525966739555 dt = 16.414689503730123 rev = 10, index = 1 , capacity =  315
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 9.048389658844348 dt = 13.096926136839826 rev = 10, index = 1 , capacity =  315
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 9.256108425772853 dt = 10.651413384211498 rev = 10, index = 1 , capacity =  320
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 9.518783871446807 dt = 11.203199876510217 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 9.55639428123742 dt = 17.815389640300584 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 9.886833771304104 dt = 10.25527654325218 rev = 10, index = 1 , capacity =  325
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 10.05039189580762 dt = 10.708206134589998 rev = 10, index = 1 , capacity =  310
+State =  ((18, 0), (0, 1))
+current:  w = 15 st = 10.067766918556382 dt = 14.037135120000737 rev = 10, index = 1 , capacity =  310
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 10.406153731342846 dt = 10.713569905096229 rev = 10, index = 1 , capacity =  320
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 10.502132507497485 dt = 12.10261658441921 rev = 10, index = 1 , capacity =  325
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 10.675340822392805 dt = 11.749120426903072 rev = 10, index = 1 , capacity =  320
+State =  ((17, 0), (0, 1))
+current:  w = 15 st = 10.961112209181874 dt = 11.213524132016156 rev = 10, index = 1 , capacity =  315
+State =  ((16, 0), (0, 1))
+current:  w = 15 st = 11.213242913712175 dt = 23.692336608873852 rev = 10, index = 1 , capacity =  320
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 11.868308217195702 dt = 13.95851962085467 rev = 10, index = 1 , capacity =  330
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 12.018940346137859 dt = 14.407082120134575 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 12.027466877442388 dt = 21.224893945320396 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 12.175641990370872 dt = 16.905034059985784 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 12.289785261332941 dt = 23.46208264418344 rev = 10, index = 1 , capacity =  340
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 12.76952229814978 dt = 14.811231992999403 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 12.808978059233347 dt = 19.56972930729452 rev = 10, index = 1 , capacity =  325
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 12.822985920776507 dt = 19.084149062826256 rev = 10, index = 1 , capacity =  325
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 13.084876189141504 dt = 18.638486422521325 rev = 10, index = 1 , capacity =  330
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 13.292729652851468 dt = 21.60434241949023 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 13.566393844136169 dt = 14.07465973152021 rev = 10, index = 1 , capacity =  340
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 14.06710171062477 dt = 15.43721380099555 rev = 10, index = 1 , capacity =  330
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.14813367258316 dt = 17.290448134375808 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.195998311774357 dt = 15.730685130925053 rev = 10, index = 1 , capacity =  335
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 14.359045029080024 dt = 17.65745139900323 rev = 10, index = 1 , capacity =  330
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.602847205721785 dt = 16.131141743713002 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.608481294670216 dt = 14.658694555481118 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 14.698464014953993 dt = 16.904851219483906 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 15.069041368983203 dt = 16.295112327551564 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 15.528691207558115 dt = 26.946374474079434 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 15.580097319015035 dt = 15.790141987629095 rev = 10, index = 1 , capacity =  340
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 16.135407582481083 dt = 16.65364592484793 rev = 10, index = 1 , capacity =  335
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 16.295919193397445 dt = 18.845668558177497 rev = 10, index = 1 , capacity =  330
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 16.362453431182313 dt = 18.865211518876105 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 16.516216554944766 dt = 21.763386250637033 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 16.60732243052453 dt = 25.962882250997353 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 16.644053604479787 dt = 16.991928290614055 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 16.912015777718878 dt = 17.311234518649673 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 16.927204305536492 dt = 17.727094006001078 rev = 10, index = 1 , capacity =  340
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 17.17568236949641 dt = 18.00573266428046 rev = 10, index = 1 , capacity =  335
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 17.482901797309434 dt = 18.229748073285524 rev = 10, index = 1 , capacity =  330
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 17.655325819232992 dt = 30.92508640479985 rev = 10, index = 1 , capacity =  330
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 17.88582863949299 dt = 19.542874131448254 rev = 10, index = 1 , capacity =  335
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 18.043056143222874 dt = 18.156950938935896 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 18.055304020830977 dt = 23.39052537797858 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 18.077357920444495 dt = 18.4504103912206 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 18.11285846553945 dt = 22.49570004398309 rev = 10, index = 1 , capacity =  350
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.201182925038108 dt = 22.851737459806994 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.220709709850905 dt = 24.602671058452437 rev = 10, index = 1 , capacity =  360
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 18.29772021632651 dt = 22.67671156391697 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.570292909999157 dt = 19.829115425838257 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.641375692160498 dt = 24.94652800857321 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 18.659022163491652 dt = 20.286694831534327 rev = 10, index = 1 , capacity =  360
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 18.705022616378493 dt = 20.25961290323077 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 18.771152559615103 dt = 21.5171733655856 rev = 10, index = 1 , capacity =  365
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.278904737968965 dt = 25.985731459585065 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.292242645129154 dt = 21.479632894467127 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.53987154425542 dt = 21.56762172728322 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.5506258361815 dt = 20.487403897337064 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.580823247011686 dt = 23.430451353747202 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 19.724817697040898 dt = 22.063896397358835 rev = 10, index = 1 , capacity =  370
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 19.942472626660315 dt = 22.47983095582429 rev = 10, index = 1 , capacity =  375
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 19.99997229056831 dt = 20.604993995767394 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 20.139982390792483 dt = 23.16057741697809 rev = 10, index = 1 , capacity =  360
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 20.584023033522143 dt = 24.86563028976377 rev = 10, index = 1 , capacity =  365
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 20.795267123780167 dt = 23.12822084484929 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 20.992679534686513 dt = 22.247971894413098 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 21.171820077444966 dt = 32.013071156235554 rev = 10, index = 1 , capacity =  350
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 21.36560240995854 dt = 30.147847706920075 rev = 10, index = 1 , capacity =  340
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 21.756816479838417 dt = 21.971793567892156 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 21.764931809422276 dt = 22.648414446956885 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 21.773377749252006 dt = 21.90087927640984 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 22.291934913481473 dt = 27.01614684235418 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 22.36472789818076 dt = 28.213782736972163 rev = 10, index = 1 , capacity =  340
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 22.881876469394882 dt = 32.492954186910595 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 22.970170268977515 dt = 24.177938211193233 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 23.35741661147355 dt = 28.230312566109987 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 23.909026838804703 dt = 29.029572695276574 rev = 10, index = 1 , capacity =  350
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 24.25361390668529 dt = 24.727510602281992 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 24.578623809138158 dt = 26.21882593336615 rev = 10, index = 1 , capacity =  345
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 24.798228074035904 dt = 25.271190838803335 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 24.951395261847942 dt = 28.144700422161485 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 24.997222816830924 dt = 32.18259829715908 rev = 10, index = 1 , capacity =  340
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 25.002464105273695 dt = 26.41380779176782 rev = 10, index = 1 , capacity =  340
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 25.079112269458502 dt = 26.635857696926784 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 25.201078440242334 dt = 28.077951949327016 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.31309040438675 dt = 28.518736211855845 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.35324490017605 dt = 26.47212141798612 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.374960072953623 dt = 25.505289657113277 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.472277427560687 dt = 29.565392885159646 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 25.54709525044018 dt = 26.042058495553675 rev = 10, index = 1 , capacity =  360
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 25.869916959895292 dt = 26.589205818384357 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 26.088241780071133 dt = 27.240002997694774 rev = 10, index = 1 , capacity =  360
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 26.29271255731281 dt = 28.21654835598131 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 26.473595631324095 dt = 33.11954928746892 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 26.699517686412168 dt = 32.21957099235362 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 26.747945663714674 dt = 28.20739057643435 rev = 10, index = 1 , capacity =  355
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 27.213970642683595 dt = 31.02745248951041 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 27.353467922854758 dt = 31.82637352563711 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 27.359062117579345 dt = 29.146275427009314 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 27.487666401135495 dt = 28.331019099094966 rev = 10, index = 1 , capacity =  360
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.06103784178792 dt = 32.9666046445827 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.09838618677815 dt = 28.97823734491977 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.425426711887344 dt = 32.25808166806823 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.473835309551095 dt = 28.654434437972746 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.755322735208324 dt = 33.054892266003094 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.804458420397893 dt = 29.838909315640397 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 28.81333964903561 dt = 35.48433822243854 rev = 10, index = 1 , capacity =  345
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 29.02588706725987 dt = 29.145459040716513 rev = 10, index = 1 , capacity =  340
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 29.419423769014813 dt = 29.659662486162034 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 29.43184569864426 dt = 29.936012902195152 rev = 10, index = 1 , capacity =  370
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 29.644013152601676 dt = 29.719342492882852 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 29.805451491395626 dt = 44.66656424080578 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 30.064864153427663 dt = 30.40598486212038 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 30.233604020045355 dt = 34.93335922419037 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 30.23717093717532 dt = 30.302521748815977 rev = 10, index = 1 , capacity =  360
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 30.374037094225024 dt = 31.742124265857605 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 30.686474725401656 dt = 31.015327812011307 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 30.806342117316195 dt = 33.04499379529275 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 30.834556433156187 dt = 31.487607384995922 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 30.941532339189447 dt = 31.16646399985916 rev = 10, index = 1 , capacity =  350
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 31.193194593148316 dt = 34.80047064648488 rev = 10, index = 1 , capacity =  345
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 31.313070872142493 dt = 32.46791964745309 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 31.694855293397875 dt = 37.859299889930725 rev = 10, index = 1 , capacity =  350
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 32.05609723500472 dt = 33.36116144412202 rev = 10, index = 1 , capacity =  345
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 32.31807007080847 dt = 38.37084428283215 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 32.45500449426093 dt = 44.10093708247156 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 32.534412954676625 dt = 36.277142819067244 rev = 10, index = 1 , capacity =  360
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 32.57575883730127 dt = 39.4493633943485 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 33.00150737306774 dt = 34.49263462252978 rev = 10, index = 1 , capacity =  365
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 33.342093835275655 dt = 33.616959722427836 rev = 10, index = 1 , capacity =  365
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.603405647360105 dt = 36.829594947629126 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.77571237948041 dt = 37.933457546043044 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.779512907495175 dt = 35.347804249989885 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.82873972364896 dt = 34.36710035818363 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 33.846062884695165 dt = 35.280002438470916 rev = 10, index = 1 , capacity =  360
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 34.21673800248958 dt = 35.99506367821124 rev = 10, index = 1 , capacity =  370
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 34.3604506617051 dt = 39.846657211975426 rev = 10, index = 1 , capacity =  375
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 34.980622574099804 dt = 40.72862734879574 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 35.27035273007506 dt = 35.8634706548373 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 35.2743584705478 dt = 49.56154887994461 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 35.583546242174606 dt = 38.540062883185904 rev = 10, index = 1 , capacity =  360
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 35.80118563000164 dt = 35.87261006609369 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 36.005751037260936 dt = 39.955939542706275 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 36.028518947878474 dt = 38.25394785051061 rev = 10, index = 1 , capacity =  350
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 36.37472196047095 dt = 37.82896069195321 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 36.39344430319704 dt = 39.41280701598036 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 36.580122309065985 dt = 39.95324284860929 rev = 10, index = 1 , capacity =  360
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 36.72271289476589 dt = 37.46578728868282 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 36.734197854295495 dt = 38.259426944561696 rev = 10, index = 1 , capacity =  345
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 36.99845561787433 dt = 37.77774414388033 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 37.14589166656178 dt = 41.11097159186841 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 37.405684250136794 dt = 42.61411019556563 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 37.591938071659634 dt = 38.02727147616542 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 37.624656539545086 dt = 41.49911025182203 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 37.74571925749551 dt = 39.32222177436618 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 37.7520858427409 dt = 39.296175249999635 rev = 10, index = 1 , capacity =  360
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 37.87415092186711 dt = 38.94740592394577 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 37.925675462551204 dt = 42.49445750014867 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 38.324210808543214 dt = 39.591146004125434 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 38.782867402687614 dt = 39.0155460171684 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 39.31833889027274 dt = 48.23318004941009 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 39.3895996491474 dt = 41.37470757268448 rev = 10, index = 1 , capacity =  355
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 39.481193597919244 dt = 42.16548629206158 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 39.486464074207205 dt = 39.68848402196127 rev = 10, index = 1 , capacity =  360
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.185213753836905 dt = 40.74663877332153 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.27905485035157 dt = 43.4115558810443 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.32193763148178 dt = 42.78679846575369 rev = 10, index = 1 , capacity =  380
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 40.35487564333233 dt = 40.447182868855535 rev = 10, index = 1 , capacity =  375
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 40.4048581935905 dt = 45.81614213639835 rev = 10, index = 1 , capacity =  375
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.68654013294149 dt = 41.56802544093017 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.749950374333736 dt = 49.294429370889915 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.81109521332273 dt = 42.209399528078976 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 40.92357269374014 dt = 41.06446803238417 rev = 10, index = 1 , capacity =  380
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 41.18613622515378 dt = 47.962958312413235 rev = 10, index = 1 , capacity =  370
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 41.30862714944661 dt = 41.67160032707456 rev = 10, index = 1 , capacity =  365
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 41.50403426965717 dt = 42.547397669567495 rev = 10, index = 1 , capacity =  370
+State =  ((5, 0), (0, 1))
+current:  w = 15 st = 41.718130883082154 dt = 42.53243035406676 rev = 10, index = 1 , capacity =  375
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 42.118892758017054 dt = 44.08379227844861 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 42.13342738453607 dt = 62.01878126449621 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 42.68250904950984 dt = 47.56257527563649 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 42.721502297053455 dt = 44.852996796713256 rev = 10, index = 1 , capacity =  380
+State =  ((4, 0), (0, 1))
+current:  w = 15 st = 43.000254109501064 dt = 46.455512271006626 rev = 10, index = 1 , capacity =  380
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 43.76340286865291 dt = 46.70310956634318 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 43.77370822295274 dt = 47.461544693276046 rev = 10, index = 1 , capacity =  345
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 43.797807270129475 dt = 50.009268615105384 rev = 10, index = 1 , capacity =  340
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 44.2041006331456 dt = 48.930818894123604 rev = 10, index = 1 , capacity =  345
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 44.29531288281579 dt = 45.9900160978572 rev = 10, index = 1 , capacity =  340
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 44.514070530731 dt = 44.75752727242714 rev = 10, index = 1 , capacity =  330
+State =  ((15, 0), (0, 1))
+current:  w = 15 st = 44.61813038375509 dt = 48.10780579093186 rev = 10, index = 1 , capacity =  325
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 45.252384512109344 dt = 47.7881896988632 rev = 10, index = 1 , capacity =  335
+State =  ((14, 0), (0, 1))
+current:  w = 15 st = 45.37597243107373 dt = 51.91247499721342 rev = 10, index = 1 , capacity =  330
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 46.15759036162215 dt = 46.49118203428723 rev = 10, index = 1 , capacity =  340
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 46.31658674932001 dt = 46.33020011991229 rev = 10, index = 1 , capacity =  335
+State =  ((13, 0), (0, 1))
+current:  w = 15 st = 46.73779494158063 dt = 51.36392861116078 rev = 10, index = 1 , capacity =  335
+State =  ((12, 0), (0, 1))
+current:  w = 15 st = 46.813458691162324 dt = 51.59853009486293 rev = 10, index = 1 , capacity =  340
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 47.07699306167335 dt = 48.77388247992069 rev = 10, index = 1 , capacity =  345
+State =  ((11, 0), (0, 1))
+current:  w = 15 st = 47.12949965932127 dt = 49.16424050225168 rev = 10, index = 1 , capacity =  345
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 47.33191327594197 dt = 48.73971809665459 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 47.49378557425447 dt = 53.510706650779014 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.54409042119009 dt = 48.44857720791423 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.55631741638579 dt = 48.80839045799858 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 47.71538890834832 dt = 53.81634844658322 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 47.73238626243202 dt = 53.19650771395001 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.89009882270387 dt = 48.74835602926366 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.903723528192266 dt = 51.33087362988639 rev = 10, index = 1 , capacity =  355
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 47.95212585975604 dt = 51.02917848457228 rev = 10, index = 1 , capacity =  355
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 48.265795446581265 dt = 48.651057108027686 rev = 10, index = 1 , capacity =  350
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 48.45057500904276 dt = 49.8116295968296 rev = 10, index = 1 , capacity =  360
+State =  ((8, 0), (0, 1))
+current:  w = 15 st = 48.50620014193133 dt = 56.96991327057779 rev = 10, index = 1 , capacity =  360
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 48.67065011428116 dt = 51.151014807792265 rev = 10, index = 1 , capacity =  350
+State =  ((10, 0), (0, 1))
+current:  w = 15 st = 48.710967343278206 dt = 52.86419826552327 rev = 10, index = 1 , capacity =  350
+State =  ((9, 0), (0, 1))
+current:  w = 15 st = 48.75320449060664 dt = 48.79595320281862 rev = 10, index = 1 , capacity =  355
+State =  ((7, 0), (0, 1))
+current:  w = 15 st = 48.82684005134389 dt = 54.48879742518201 rev = 10, index = 1 , capacity =  365
+State =  ((6, 0), (0, 1))
+current:  w = 15 st = 49.99599518894167 dt = 60.56766645215818 rev = 10, index = 1 , capacity =  370
+Capacity_Profit =  400
+Greedy Profit 00  =  0.0
+Greedy Profit 50  =  0.0
+Greedy Profit 100 =  0.0
+DP_05 Profit =  0.0
+DP_30 Profit =  0.0
+DP_60 Profit =  24.15274949083503
+DP_95 Profit =  24.15274949083503
+QL Profit =  0.0
+
+Capacity_Accept =  400
+Greedy Accept 00 =  0.0
+Greedy Accept 50  =  0.0
+Greedy Accept 100 =  0.0
+DP_05 Accept =  0.0
+DP_30 Accept =  0.0
+DP_60 Accept =  0.4725050916496945
+DP_95 Accept =  0.4725050916496945
+QL Accept    =  0.0
+
+Capacity_Federate =  400
+Greedy Federate 00  =  0.0
+Greedy Federate 50  =  0.0
+Greedy Federate 100 =  0.0
+DP_05 Federate =  0.0
+DP_30 Federate =  0.0
+DP_60 Federate =  0.5274949083503055
+DP_95 Federate =  0.5274949083503055
+QL Federate    =  0.0
+
+DONE!!!
