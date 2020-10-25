@@ -126,6 +126,8 @@ def test_policy(demands, policy):
 
         elif action == Environment.Actions.federate:
             debug("federate")
+            print("State = ", state)
+            print("current: ", req, ", capacity = ", capacity)
             provider_domain = Environment.providers[0] # in this version, there is only one provider
             profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
             federate_num += 1

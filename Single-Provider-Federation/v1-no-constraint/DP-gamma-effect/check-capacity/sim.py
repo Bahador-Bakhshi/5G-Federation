@@ -23,11 +23,11 @@ if __name__ == "__main__":
 
     parser.parse_config("config.json")
 
-    init_size = 10
+    init_size = 400
     step = 20
-    scale = 15
+    scale = 0
 
-    iterations = 20
+    iterations = 1
     
     i = 0
 
@@ -35,13 +35,13 @@ if __name__ == "__main__":
         Environment.domain.total_cpu = init_size + i * step
         i += 1
 
-        dp_policy_05 = DP.policy_iteration(0.05)
-        dp_policy_30 = DP.policy_iteration(0.30)
+        #dp_policy_05 = DP.policy_iteration(0.05)
+        #dp_policy_30 = DP.policy_iteration(0.30)
         dp_policy_60 = DP.policy_iteration(0.60)
-        dp_policy_95 = DP.policy_iteration(0.95)
+        #dp_policy_95 = DP.policy_iteration(0.95)
     
-        env = Environment.Env(Environment.domain.total_cpu, sim_time)
-        ql_policy = QL.qLearning(env, episode_num)
+        #env = Environment.Env(Environment.domain.total_cpu, sim_time)
+        #ql_policy = QL.qLearning(env, episode_num)
         
         
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit = 0
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
-
+            '''
             greedy_profit_00, greedy_accept_00, greedy_federate_00 = greedy_result(demands, 0.0, greedy_profit_00, greedy_accept_00, greedy_federate_00)
             greedy_profit_50, greedy_accept_50, greedy_federate_50 = greedy_result(demands, 0.5, greedy_profit_50, greedy_accept_50, greedy_federate_50)
             greedy_profit_100, greedy_accept_100, greedy_federate_100 = greedy_result(demands, 1.0, greedy_profit_100, greedy_accept_100, greedy_federate_100)
@@ -60,11 +60,13 @@ if __name__ == "__main__":
             
             dp_profit_05, dp_accept_05, dp_federate_05 = mdp_policy_result(demands, dp_policy_05, dp_profit_05, dp_accept_05, dp_federate_05)
             dp_profit_30, dp_accept_30, dp_federate_30 = mdp_policy_result(demands, dp_policy_30, dp_profit_30, dp_accept_30, dp_federate_30)
+            '''
             dp_profit_60, dp_accept_60, dp_federate_60 = mdp_policy_result(demands, dp_policy_60, dp_profit_60, dp_accept_60, dp_federate_60)
+            '''
             dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
             
             ql_profit, ql_accept, ql_federate = mdp_policy_result(demands, ql_policy, ql_profit, ql_accept, ql_federate)
-
+            '''
 
         print("Capacity_Profit = ", Environment.domain.total_cpu)
         print("Greedy Profit 00  = ", greedy_profit_00 / iterations)

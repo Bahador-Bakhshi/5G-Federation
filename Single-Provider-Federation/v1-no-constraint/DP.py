@@ -385,7 +385,6 @@ def value_iteration(gamma):
     loop = True
     while loop:
         random.shuffle(all_possible_state)
-        gamma = 0.95 #* gamma
         debug("Gamma = ", gamma)
         max_diff = 0
 

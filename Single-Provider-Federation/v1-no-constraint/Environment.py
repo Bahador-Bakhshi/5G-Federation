@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = False
+verbose = True
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print

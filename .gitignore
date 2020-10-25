@@ -1,3 +1,4 @@
 *.out
 *.swp
 __pycache__
+*tmp*
