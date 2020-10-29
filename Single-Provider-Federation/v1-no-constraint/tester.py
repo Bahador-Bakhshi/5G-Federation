@@ -110,6 +110,10 @@ def test_policy(demands, policy):
             random_action = True
         debug("Action = ", action)
 
+        if action == None:
+            va = Environment.get_valid_actions(state)
+            action = va[np.random.randint(0, len(va))]
+
         if action == Environment.Actions.accept:
             if req.w > capacity:
                 if random_action == False:

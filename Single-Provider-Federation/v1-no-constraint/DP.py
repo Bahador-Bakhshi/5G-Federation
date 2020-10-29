@@ -36,22 +36,44 @@ def departure_after_reject(cs, dep_index, total_rates):
     return {ns: p}
 
 
+def next_state_after_reject(cs):
+    alives = cs[0]
+    requests = [0] * len(cs[1])
+    ns = (alives, tuple(requests))
+    p = 1.0
+    return {ns: p}
+
+
 def arrival_after_no_action(cs, arrival_index, total_rates):
-    return arrival_after_reject(cs, arrival_index, total_rates)
+    alives = cs[0]
+    requests = [0] * len(cs[1])
+    requests[arrival_index] = 1
+    ns = (alives, tuple(requests))
+    p = Environment.traffic_loads[arrival_index].lam / total_rates
+    return {ns: p}
 
 
 def departure_after_no_action(cs, dep_index, total_rates):
-    return departure_after_reject(cs, dep_index, total_rates)
+    alives = cs[0]
+    alives_list = list(alives)
+    alives_list[dep_index] -= 1
+    alives = tuple(alives_list)
+    requests = [0] * len(cs[1])
+    ns = (alives, tuple(requests))
+    p = Environment.traffic_loads[dep_index].mu / total_rates
+    return {ns: p}
 
 
 def arrival_after_federaion(cs, arrival_index, total_rates):
-    #FIXME: update the inter-domain link usage
     return arrival_after_reject(cs, arrival_index, total_rates)
 
 
 def departure_after_federation(cs, dep_index, total_rates):
-    #FIXME: Update the inter-domain link usage
     return departure_after_reject(cs, dep_index, total_rates)
+
+
+def next_state_after_federate(cs):
+    return next_state_after_reject(cs)
 
 
 def arrival_after_accept(cs, accept_index, arrival_index, total_rates):
@@ -77,6 +99,16 @@ def departure_after_accept(cs, accept_index, dep_index, total_rates):
     p = Environment.traffic_loads[dep_index].mu / total_rates
     return {ns: p}
 
+def next_state_after_accept(cs, accept_index):
+    alives = cs[0]
+    alives_list = list(alives)
+    alives_list[accept_index] += 1
+    alives = tuple(alives_list)
+    requests = [0] * len(cs[1])
+    ns = (alives, tuple(requests))
+    p = 1.0
+    return {ns: p}
+
 
 def get_total_rates(total_classes, state):
     alives = state[0]
@@ -95,7 +127,103 @@ def pr(state, action):
     prob = {}
     alives = state[0]
     requests = state[1]
-    capacity = Environment.compute_capacity(alives)
+
+    total_rates = get_total_rates(Environment.total_classes, state)
+    
+    debug("State = ", state, ", action = ", action)
+
+    active = 0
+    for i in range(len(requests)):
+        if requests[i] > 0:
+            active += 1
+    if active > 1:
+        error("Error in requests: ", requests)
+        sys.exit()
+
+    if action == Environment.Actions.no_action:
+        if active != 0:
+            error("Error in actions")
+            sys.exit()
+
+        debug("No action")
+        reward = 0
+        
+        for j in range(Environment.total_classes):
+            prob.update(arrival_after_no_action(state, j, total_rates))
+            
+        for j in range(Environment.total_classes):
+            if alives[j] > 0:
+                prob.update(departure_after_no_action(state, j, total_rates))
+ 
+    elif action == Environment.Actions.reject:
+        debug("Reject")
+        reward = 0
+        prob.update(next_state_after_reject(state))
+        
+    elif action == Environment.Actions.accept:
+        if active == 0:
+            error("Accept for no demand!!!")
+            error("Invalid action")
+            sys.exit()
+        else:
+            req_index = np.argmax(requests)
+            capacity = Environment.compute_capacity(alives)
+            
+            debug("alives = ", requests)
+            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
+
+            if capacity < Environment.traffic_loads[req_index].service.cpu:
+                debug("Try to accept but no resource")
+                
+                #cannot be accepted, it is like reject but -inf for reward
+                reward = -1 * np.inf
+                prob.update(next_state_after_reject(state))
+
+            else:
+                debug("Accepting")
+                reward = Environment.traffic_loads[req_index].service.revenue
+                prob.update(next_state_after_accept(state, req_index))
+
+    elif action == Environment.Actions.federate:
+        if active == 0:
+            error("Federate no demand!!!")
+            error("Invalid action")
+            sys.exit()
+        else:
+            req_index = np.argmax(requests)
+            capacity = Environment.compute_capacity(alives)
+            
+            debug("alives = ", requests)
+            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
+
+            debug("In this version, Federation is always possible")
+            provider_domain = Environment.providers[0] # in this version, there is only one provider
+            reward = Environment.traffic_loads[req_index].service.revenue - provider_domain.federation_costs[Environment.traffic_loads[req_index].service]
+
+            prob.update(next_state_after_federate(state))
+
+    else:
+        error("Error: Unknown action")
+        sys.exit()
+
+    tp = 0
+    for i in prob.keys():
+        tp += prob[i]
+    if abs(tp - 1.0) > 0.0001:
+        error("Error in p: ", prob)
+        sys.exit()
+
+    debug("State = ", state, ", action = ", action)
+    debug("\t Prob: ", prob)
+    debug("\t Reward: ", reward)
+
+    return prob, reward
+
+
+def pr_old(state, action):
+    prob = {}
+    alives = state[0]
+    requests = state[1]
 
     total_rates = get_total_rates(Environment.total_classes, state)
     
@@ -136,25 +264,21 @@ def pr(state, action):
                 prob.update(departure_after_reject(state, j, total_rates))
             
     elif action == Environment.Actions.accept:
-        active = 0
-        for i in range(len(requests)):
-            if requests[i] > 0:
-                active += 1
-
         if active == 0:
             error("Accept for no demand!!!")
             error("Invalid action")
             sys.exit()
         else:
             req_index = np.argmax(requests)
+            capacity = Environment.compute_capacity(alives)
             
             debug("alives = ", requests)
             debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
 
             if capacity < Environment.traffic_loads[req_index].service.cpu:
                 debug("Try to accept but no resource")
+                
                 #cannot be accepted, it is like reject but -inf for reward
-
                 reward = -1 * np.inf
 
                 for j in range(Environment.total_classes):
@@ -163,6 +287,7 @@ def pr(state, action):
                 for j in range(Environment.total_classes):
                     if alives[j] > 0:
                         prob.update(departure_after_reject(state, j, total_rates))
+            
             else:
                 debug("Accepting")
                 reward = Environment.traffic_loads[req_index].service.revenue
@@ -175,17 +300,13 @@ def pr(state, action):
                         prob.update(departure_after_accept(state, req_index, j, total_rates))
 
     elif action == Environment.Actions.federate:
-        active = 0
-        for i in range(len(requests)):
-            if requests[i] > 0:
-                active += 1
-
         if active == 0:
             error("Federate no demand!!!")
             error("Invalid action")
             sys.exit()
         else:
             req_index = np.argmax(requests)
+            capacity = Environment.compute_capacity(alives)
             
             debug("alives = ", requests)
             debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
@@ -275,10 +396,11 @@ def print_V(V, all_s):
 def print_policy(policy):
     op = collections.OrderedDict(sorted(policy.items()))
     for s in op:
-        debug(s, ": ", Environment.Actions(policy[s]))
-        #print(s, ": ", op[s])
-    debug("----------------------------")
-    #print("----------------------------")
+        #debug(s, ": ", Environment.Actions(policy[s]))
+        print(s, ": ", op[s])
+    #debug("----------------------------")
+    print("----------------------------")
+
 
 def init_random_policy(policy, all_states):
     for s in all_states:
@@ -290,7 +412,7 @@ def init_random_policy(policy, all_states):
             policy.update({s: va[action]})
 
     debug("Init random policy")
-    print_policy(policy)
+    #print_policy(policy)
 
 policy_iteration_accuracy = 0.01
 def policy_evaluation(V, policy, all_states, gamma):
@@ -359,19 +481,19 @@ def policy_iteration(gamma):
     while True:
         debug("********** At Beginning ************")
         print_V(V, all_possible_state)
-        print_policy(policy)
+        #print_policy(policy)
         
         policy_evaluation(V, policy, all_possible_state, gamma)
         
         debug("********** After Evaluation ************")
         print_V(V, all_possible_state)
-        print_policy(policy)
+        #print_policy(policy)
         
         stable = policy_improvment(V, policy, all_possible_state, gamma)
         
         debug("********** After improve ************")
         print_V(V, all_possible_state)
-        print_policy(policy)
+        #print_policy(policy)
 
         if stable == True:
             break
