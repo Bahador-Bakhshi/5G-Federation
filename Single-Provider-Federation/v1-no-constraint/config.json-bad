@@ -21,11 +21,11 @@
 			"federation_costs":[
 				{
 					"nsid": 0,
-					"cost": 499
+					"cost": 50
 				},
 				{
 					"nsid": 1,
-					"cost": 999
+					"cost": 30
 				}
 			]
 		}	
@@ -35,12 +35,12 @@
 		{
 			"catalog_id": 0,
 			"lambda": 2,
-			"mu": 4
+			"mu": 1
 		},
 		{
 			"catalog_id": 1,
 			"lambda": 2,
-			"mu": 1
+			"mu": 2
 		}
 
 	]

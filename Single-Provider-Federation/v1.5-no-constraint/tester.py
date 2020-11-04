@@ -10,7 +10,7 @@ import itertools
 import random
 import Environment
 import parser
-import DP
+#import DP
 from Environment import debug, error, warning
 
 def test_greedy_random_policy(demands, greediness):
@@ -163,8 +163,8 @@ def test_policy(demands, policy):
 
         debug("profit = ", profit, ", accepted_num = ", accepted_num, ", federate_num = ", federate_num)
    
-    print("next_visited = ")
-    print(next_visited)
+    #print("next_visited = ")
+    #print(next_visited)
     return profit, accepted_num, federate_num
 
 

@@ -15,6 +15,8 @@ import parser
 from Environment import debug, error, warning
 from tester import test_policy, test_greedy_random_policy
 
+accuracy = 0.000000
+NM = -1000000
 
 def arrival_after_reject(cs, arrival_index, total_rates):
     alives = cs[0]
@@ -414,8 +416,8 @@ def init_random_policy(policy, all_states):
     debug("Init random policy")
     #print_policy(policy)
 
-policy_iteration_accuracy = 0.01
-def policy_evaluation(V, policy, all_states, gamma):
+policy_iteration_accuracy = 0.0001
+def policy_evaluation(V, policy, all_states, gamma, Pr, R):
     while True:
         diff = 0
         for s in all_states:
@@ -430,7 +432,11 @@ def policy_evaluation(V, policy, all_states, gamma):
                 sys.exit(-1)
             
             new_v = 0
-            p, r = pr(s, old_action)
+            #p, r = pr(s, old_action)
+            p = Pr[s][old_action]
+            r = R[s][old_action]
+            print("\t p = ", p)
+            print("\t r = ", r)
             for ns in p.keys():
                 new_v += (p[ns] * (r + gamma * V[ns]))
             V[s] = new_v
@@ -443,7 +449,7 @@ def policy_evaluation(V, policy, all_states, gamma):
             return
 
 
-def policy_improvment(V, policy, all_states, gamma):
+def policy_improvment(V, policy, all_states, gamma, Pr, R):
     policy_stable = True
     for s in all_states:
         debug("\n state = ", s)
@@ -451,8 +457,16 @@ def policy_improvment(V, policy, all_states, gamma):
         improve = np.zeros(Environment.total_actions)
         va = Environment.get_valid_actions(s)
         for a in va:
-            p, r = pr(s, a)
+            #p, r = pr(s, a)
+            p = Pr[s][a]
+            r = R[s][a]
             for ns in p.keys():
+                debug("a  = ", a)
+                debug("ns = ", ns)
+                debug("p[ns] = ", p[ns])
+                debug("r = ", r)
+                debug("V[ns] = ", V[ns])
+             
                 improve[a] += (p[ns] * (r + gamma * V[ns]))
             debug("\t improve[",a,"] = ", improve[a])
         
@@ -470,30 +484,128 @@ def policy_improvment(V, policy, all_states, gamma):
 
     return policy_stable
 
+def state_tuple_to_num(tuple_states):
+    index = 0
+    num_states = []
+    tuple_to_num = {}
+    num_to_tuple = {}
+
+    for s in tuple_states:
+        num_states.append(index)
+        tuple_to_num.update({s: index})
+        num_to_tuple.update({index: s})
+        index += 1
+
+    return num_states, tuple_to_num, num_to_tuple
+
+
+def compute_Pr_R(states, actions, tuple_to_num, num_to_tuple, Actions):
+
+    Pr = [None] * len(states)
+    for s in states:
+        Pr[s] = [None] * len(actions)
+        for a in actions:
+            Pr[s][a] = [None] * len(states)
+            for ns in states:
+                Pr[s][a][ns] = 0
+    
+    R = [None] * len(states)
+    for s in states:
+        R[s] = [None] * len(actions)
+        for a in actions:
+            R[s][a] = NM
+
+    for s in states:
+        state_tuple = num_to_tuple[s]
+        va_tuple = Environment.get_valid_actions(state_tuple)
+        va = action_enum_to_num(va_tuple)
+        for a in va:
+            action_code = Actions(a)
+
+            p, r = pr(state_tuple, action_code)
+
+            R[s][a] = r
+
+            for ns_tuple in p.keys():
+                ns = tuple_to_num[ns_tuple]
+                Pr[s][a][ns] = p[ns_tuple] 
+    
+    return Pr, R
+
+
 
 def policy_iteration(gamma):
     #V = defaultdict(lambda: np.random.uniform(100, 500))
     V = defaultdict(lambda: 0)
     policy = {}
+    
     all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.traffic_loads)
-    init_random_policy(policy, all_possible_state)
+    num_states, tuple_to_num, num_to_tuple = state_tuple_to_num(all_possible_state)
+    num_actions = action_enum_to_num(Environment.Actions)
+    
+    Pr, R = compute_Pr_R(num_states, num_actions, tuple_to_num, num_to_tuple, Environment.Actions)
+    
+    print("Before Correction")
+    print("---------- Pr ------------")
+    print(Pr)
+    print("---------- R -------------")
+    print(R)
+    
+    Pr, R, reduce_num_to_num = correct_mdp(Pr, R, num_actions, num_to_tuple, tuple_to_num, Environment.Actions)
+ 
+    print("After Correction")
+    print("---------- Pr ------------")
+    print(Pr)
+    print("---------- R -------------")
+    print(R)
+    
+    reduced_all_possible_state = []
+    for s in range(len(Pr)):
+        num_s = reduce_num_to_num[s]
+        debug("num_s = ", num_s)
+        tuple_s = num_to_tuple[num_s]
+        debug("tuple_s = ", tuple_s)
+        reduced_all_possible_state.append(tuple_s)
+
+    print("----------- reduced_all_possible_state ---------")
+    print(reduced_all_possible_state)
+
+    new_Pr = {}
+    new_R  = {}
+    for s in range(len(Pr)):
+        tuple_s = num_to_tuple[reduce_num_to_num[s]]
+        new_Pr.update({tuple_s: {}})
+        new_R.update({tuple_s: {}})
+        for a in range(len(Pr[s])):
+            new_R[tuple_s].update({Environment.Actions(a): R[s][a]})
+            new_Pr[tuple_s].update({Environment.Actions(a): {}})
+            for ns in range(len(Pr[s][a])):
+                tuple_ns = num_to_tuple[reduce_num_to_num[ns]]
+                new_Pr[tuple_s][Environment.Actions(a)].update({tuple_ns: Pr[s][a][ns]})
+
+    print("------- new_Pr ------------")
+    print(new_Pr)
+    print("------- new_R  ------------")
+    print(new_R)
+
+    init_random_policy(policy, reduced_all_possible_state)
     
     while True:
         debug("********** At Beginning ************")
         print_V(V, all_possible_state)
-        #print_policy(policy)
+        print_policy(policy)
         
-        policy_evaluation(V, policy, all_possible_state, gamma)
+        policy_evaluation(V, policy, reduced_all_possible_state, gamma, new_Pr, new_R)
         
         debug("********** After Evaluation ************")
         print_V(V, all_possible_state)
-        #print_policy(policy)
+        print_policy(policy)
         
-        stable = policy_improvment(V, policy, all_possible_state, gamma)
+        stable = policy_improvment(V, policy, reduced_all_possible_state, gamma, new_Pr, new_R)
         
         debug("********** After improve ************")
         print_V(V, all_possible_state)
-        #print_policy(policy)
+        print_policy(policy)
 
         if stable == True:
             break
@@ -582,6 +694,156 @@ def gen_greedy_policy():
                 policy.update({state: Environment.Actions.federate})
         
     return policy
+
+def is_active_request(state):
+    alives   = state[0]
+    requests = state[1]
+
+    for i in range(len(requests)):
+        if requests[i] != 0:
+            return True
+    
+    else:
+        return False
+
+
+def action_enum_to_num(Actions):
+    num_actions = [e.value for e in Actions]
+    return num_actions
+
+
+def get_next_actives(state, Pr, R, num_to_tuple, tuple_to_num, Actions):
+    debug("get_next_actives: state = ", state)
+    no_action_next_states = {}
+    state_tuple = num_to_tuple[state]
+    va_tuple = Environment.get_valid_actions(state_tuple)
+    if Actions.accept in va_tuple or Actions.federate in va_tuple or Actions.reject in va_tuple:
+        print("Error in get_next_actives")
+        sys.exit()
+
+    actions = action_enum_to_num(va_tuple)
+
+    for action in actions:
+        for ns in range(len(Pr[state][action])):
+            pr = Pr[state][action][ns]
+
+            if pr > 0:
+                next_state_tuple = num_to_tuple[ns]
+                if is_active_request(next_state_tuple):
+                    total_pr = 0
+                    if ns in no_action_next_states:
+                        total_pr = no_action_next_states[ns]
+
+                    total_pr += pr
+                    no_action_next_states.update({ns: total_pr})
+                else:
+                    next_actives_list = get_next_actives(ns, Pr, R, num_to_tuple, tuple_to_num, Actions)
+                    for s in next_actives_list.keys():
+                        p = next_actives_list[s] * pr
+                        if s in no_action_next_states:
+                            p += no_action_next_states[s]
+                        next_actives_list.update({s: p})
+
+                    no_action_next_states.update(next_actives_list)
+
+    return no_action_next_states
+
+
+def start_finding_next_active_states(state, Pr, R, num_to_tuple, tuple_to_num, Actions):
+    debug("Start: state = ", num_to_tuple[state])
+
+    state_tuple = num_to_tuple[state]
+    va_tuple = Environment.get_valid_actions(state_tuple)
+    va = action_enum_to_num(va_tuple)
+    all_next_active_states = [None] * len(Actions)
+
+    for action in va:
+        for ns in range(len(Pr[state][action])):
+            pr = Pr[state][action][ns]
+            if pr > 0:
+                next_state_tuple = num_to_tuple[ns]
+                if is_active_request(next_state_tuple):
+                    print("Error in Pr")
+                    sys.exit()
+
+                next_list = get_next_actives(ns, Pr, R, num_to_tuple, tuple_to_num, Actions)
+                for s in next_list:
+                    p = next_list[s] * pr
+                    next_list.update({s: p})
+
+                all_next_active_states[action] = next_list
+
+    
+    debug("\t all_next_active_states: ", all_next_active_states)
+    return all_next_active_states
+
+
+def correct_mdp(extra_state_Pr, extra_state_R, actions, num_to_tuple, tuple_to_num, Actions):
+    Pr_dict = {}
+    num_to_reduce_num = {}
+    reduce_num_to_num = {}
+
+    #scan active states
+    for s in range(len(extra_state_Pr)):
+        state_tuple = num_to_tuple[s]
+        if is_active_request(state_tuple):
+            debug("Active Request State: ", state_tuple)
+            next_states = start_finding_next_active_states(s, extra_state_Pr, extra_state_R, num_to_tuple, tuple_to_num, Actions)
+            Pr_dict.update({s: next_states})
+
+    print("-------------- Pr_dict ----------------")
+    print(Pr_dict)
+
+    new_index = 0
+    for active_state in Pr_dict.keys():
+        num_to_reduce_num.update({active_state: new_index})
+        reduce_num_to_num.update({new_index: active_state})
+        new_index += 1
+
+    print("num_to_reduce_num: ", num_to_reduce_num)
+    print("reduce_num_to_num: ", reduce_num_to_num)
+
+    Pr = [None] * len(reduce_num_to_num)
+    for old_s in Pr_dict.keys():
+        s = num_to_reduce_num[old_s]
+        Pr[s] = [None] * len(actions)
+        for a in actions:
+            Pr[s][a] = [None] * len(reduce_num_to_num)
+            for old_ns in Pr_dict.keys():
+                ns = num_to_reduce_num[old_ns]
+                Pr[s][a][ns] = 0
+
+    R = [None] * len(Pr_dict.keys())
+    for old_s in Pr_dict.keys():
+        s = num_to_reduce_num[old_s]
+        R[s] = [None] * len(actions)
+        for a in actions:
+            R[s][a] = NM
+
+    reduced_states = Pr_dict.keys()
+    for s in reduced_states:
+        new_s = num_to_reduce_num[s]
+        for a in actions:
+            probs = Pr_dict[s][a]
+            if probs != None:
+                for ns in probs.keys():
+                    new_ns = num_to_reduce_num[ns]
+                    Pr[new_s][a][new_ns] = probs[ns]
+            
+            R[new_s][a] = extra_state_R[s][a]
+
+    for s in range(len(Pr)):
+        for a in range(len(Pr[s])):
+            pr_sum = 0
+            for ns in range(len(Pr[s][a])):
+                pr_sum += Pr[s][a][ns]
+
+            if (pr_sum > 0 and abs(pr_sum - 1.0) > 0.000001):
+                print("Error in Pr, 1 != sum_ns pr[s][a] = ", pr_sum)
+                sys.exit()
+
+
+    return Pr, R, reduce_num_to_num
 
 
 if __name__ == "__main__":

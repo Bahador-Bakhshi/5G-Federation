@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = True
+verbose = False
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print
@@ -156,7 +156,7 @@ def generate_req_set(time):
                 delay += r.st - last_st
                 last_st = r.st
 
-        print("cid = ", cid,", cnt = ", cnt,", life = ", life / cnt, ", delay = ", delay / cnt)
+        #print("cid = ", cid,", cnt = ", cnt,", life = ", life / cnt, ", delay = ", delay / cnt)
 
     return result
 
@@ -329,33 +329,33 @@ class Env:
 
 def get_valid_actions(state):
     alives = state[0]
-    requests = state[1]
+    events = state[1]
     actions = []
 
-    arrived = 0
-    for i in range(len(requests)):
-        arrived += requests[i]
+    actives = 0
+    for i in range(len(events)):
+        actives += abs(events[i])
 
-    if arrived > 1:
+    if actives != 1:
         error("get_valid_actions: Error in state")
         error("state = ", state)
         sys.exit()
 
-    if arrived == 0:
+    if -1 in events:
         #agent cannot do anything
         actions.append(Actions.no_action)
 
-    if arrived == 1:
+    else:
         actions.append(Actions.reject)
         actions.append(Actions.federate)
         tmp_alives = [0] * len(alives)
         for i in range(len(tmp_alives)):
-            tmp_alives[i] = alives[i] + requests[i]
+            tmp_alives[i] = alives[i] + events[i]
         
         if compute_capacity(tmp_alives) >= 0:
             actions.append(Actions.accept)
   
-    debug("Valid actions = ", actions)
+    debug("state =", state, ", Valid actions = ", actions)
     return actions
 
 class Event:
