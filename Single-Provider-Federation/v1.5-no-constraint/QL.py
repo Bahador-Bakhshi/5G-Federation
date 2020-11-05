@@ -12,8 +12,6 @@ from Environment import debug
 from Environment import error
 import parser
 
-matplotlib.style.use('ggplot') 
-
 
 def print_Q(Q):
     for s, s_a in Q.items():
@@ -118,13 +116,13 @@ def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0
     for ith_episode in range(num_episodes):
 
         if(dynamic == 1):
-            alpha = alpha * 0.95
-            epsilon = epsilon * 0.95
-            discount_factor = discount_factor * 0.95
+            alpha = alpha * 0.99
+            epsilon = epsilon * 0.99
+            gamma = 0.99
         else:
-            alpha = epsilon = discount_factor = 0.8
+            alpha = epsilon = gamma = 0.8
 
-        debug("alpha = ", alpha, "epsilon = ", epsilon, "discount_factor = ", discount_factor)
+        debug("alpha = ", alpha, "epsilon = ", epsilon, "gamma = ", gamma)
         debug("=======================================================")
         old_Q = copy_Q(Q)
         # Reset the environment and pick the first action
@@ -147,6 +145,17 @@ def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0
             next_state, reward, done = env.step(state, action)
 
             debug("next_state =", next_state, "reward =", reward, ", done =", done)
+            
+            # done is True if episode terminated
+            if done:
+                #print_Q(Q)
+                #print("Total Changes =", Q_change(Q, old_Q))
+                break
+
+            if Environment.is_active_state(state):
+                discount_factor = gamma
+            else:
+                discount_factor = 1
 
             if Q[state][action] != -1 * np.inf:
                 # TD Update
@@ -163,13 +172,6 @@ def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0
                     sys.exit()
 
             state = next_state
-
-
-            # done is True if episode terminated
-            if done:
-                #print_Q(Q)
-                #print("Total Changes =", Q_change(Q, old_Q))
-                break
 
     
     final_policy = {}

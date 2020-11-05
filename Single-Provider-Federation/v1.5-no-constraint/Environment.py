@@ -295,7 +295,7 @@ class Env:
                     error("bug in the last state")
                     sys.exit()
             
-            next_state = (tuple([0 for i in range(total_classes)]), tuple([0 for i in range(total_classes)]))
+            #next_state = (tuple([0 for i in range(total_classes)]), tuple([0 for i in range(total_classes)]))
             return next_state, reward, 1
 
         #generate the next state
@@ -307,6 +307,7 @@ class Env:
             self.alives[event.req.class_id] -= 1
                 
             requests = [0 for i in range(total_classes)]
+            requests[event.req.class_id] = -1
             next_state = (tuple(self.alives), tuple(requests))
                 
             if len(self.events) == 0:
@@ -325,6 +326,13 @@ class Env:
         
         debug("************  env step *************")
         return next_state, reward, done
+
+
+def is_active_state(state):
+    alives = state[0]
+    events = state[1]
+
+    return True if (1 in events) else False
 
 
 def get_valid_actions(state):

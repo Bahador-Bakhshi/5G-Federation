@@ -251,7 +251,7 @@ def policy_evaluation(V, policy, all_states, gamma):
             debug("\t p = ", p)
             debug("\t r = ", r)
             for ns in p.keys():
-                if is_active_state(s):
+                if Environment.is_active_state(s):
                     new_v += (p[ns] * (r + gamma * V[ns]))
                 else:
                     new_v += (p[ns] * (r + V[ns]))
@@ -465,12 +465,6 @@ def gen_greedy_policy():
                 policy.update({state: Environment.Actions.federate})
         
     return policy
-
-def is_active_state(state):
-    alives = state[0]
-    events = state[1]
-
-    return True if (1 in events) else False
 
 
 if __name__ == "__main__":
