@@ -19,7 +19,7 @@ from Environment import debug, error, warning
 if __name__ == "__main__":
 
     sim_time = 80
-    episode_num = 50
+    episode_num = 80
 
     parser.parse_config("config.json")
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
         Environment.providers[0].federation_costs[Environment.domain.services[1]] = int(Environment.providers[0].federation_costs[Environment.domain.services[0]] / m)
 
 
-        Environment.domain.total_cpu = 0.6 * (((Environment.traffic_loads[0].lam / Environment.traffic_loads[0].mu) * Environment.domain.services[0].cpu) + ((Environment.traffic_loads[1].lam / Environment.traffic_loads[1].mu) * Environment.domain.services[1].cpu)) 
+        Environment.domain.total_cpu = 0.4 * (((Environment.traffic_loads[0].lam / Environment.traffic_loads[0].mu) * Environment.domain.services[0].cpu) + ((Environment.traffic_loads[1].lam / Environment.traffic_loads[1].mu) * Environment.domain.services[1].cpu)) 
         print("Environment.domain.total_cpu = ", Environment.domain.total_cpu)
 
         i += 1
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         
         for j in range(iterations):
             env = Environment.Env(Environment.domain.total_cpu, sim_time)
-            ql_policy = QL.qLearning(env, episode_num)
+            ql_policy = QL.qLearning(env, episode_num, 1)
             
             demands = Environment.generate_req_set(5 * sim_time)
             Environment.print_reqs(demands)

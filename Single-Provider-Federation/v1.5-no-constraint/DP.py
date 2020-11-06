@@ -8,7 +8,7 @@ import random
 import collections
 import datetime
 from operator import add
-#import QL
+import QL
 import heapq
 import itertools 
 import Environment
@@ -214,7 +214,7 @@ def print_policy(policy):
     op = collections.OrderedDict(sorted(policy.items()))
     for s in op:
         #debug(s, ": ", Environment.Actions(policy[s]))
-        print(s, ": ", op[s])
+        print(s, ": ", Environment.Actions(policy[s]))
     #debug("----------------------------")
     print("----------------------------")
 
@@ -473,11 +473,11 @@ if __name__ == "__main__":
     parser.parse_config("config.json")
    
     init_size = 10
-    step = 10
-    scale = 10
+    step = 50
+    scale = 1
 
     i = 0
-    sim_time = 1000
+    sim_time = 100
     while i <= scale:
         Environment.domain.total_cpu = init_size + i * step
         i += 1
@@ -485,26 +485,31 @@ if __name__ == "__main__":
         pi_policy = policy_iteration(gamma)
         print("------------- PI Policy -----------------")
         print_policy(pi_policy)
-        '''
-        gr_policy = gen_greedy_policy()
-        print("------------- Gr Policy -----------------")
-        print_policy(gr_policy)
-        '''
+        
+        env = Environment.Env(Environment.domain.total_cpu, sim_time)
+        ql_policy = QL.qLearning(env, 100, 1)
+        print("------------- QL Policy -----------------")
+        print_policy(ql_policy)
 
-        pi_profit = gr_profit = 0
+
+        pi_profit = ql_profit = gr_profit = 0
         iterations = 20
         for j in range(iterations):
         
-            demands = Environment.generate_req_set(sim_time)
+            demands = Environment.generate_req_set(5 * sim_time)
             Environment.print_reqs(demands)
 
             p, a, f = test_policy(demands, pi_policy)
             pi_profit += p / float(len(demands))
+
+            p, a, f = test_policy(demands, ql_policy)
+            ql_profit += p / float(len(demands))
 
             p, a, f =  test_greedy_random_policy(demands, 1.0)
             gr_profit += p / float(len(demands))
 
         print("Profit CPU = ", Environment.domain.total_cpu)
         print("PI Profit  = ", pi_profit / iterations)
+        print("QL Profit  = ", ql_profit / iterations)
         print("Gr Profit  = ", gr_profit / iterations) 
         print("", flush=True)

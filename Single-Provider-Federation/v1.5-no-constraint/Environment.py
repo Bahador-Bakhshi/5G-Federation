@@ -219,7 +219,18 @@ class Env:
         current_capacity = compute_capacity(current_alives)
         
         if action == Actions.no_action:
-            debug("no action")
+            debug("no action, in fact it is departure")
+            index = -1
+            for i in range(len(current_requests)):
+                if current_requests[i] == -1:
+                    if index != -1:
+                        Error("Multiple departure")
+                        sys.exit()
+                    
+                    index = i
+
+            self.alives[index] -= 1
+            self.capacity += traffic_loads[index].service.cpu
             reward = 0
 
         elif action == Actions.reject: #reject
@@ -303,9 +314,6 @@ class Env:
         debug("event: type = ", event.event_type ,", req = ", event.req)
 
         if event.event_type == 0: #departure, update the nework
-            self.capacity += event.req.w
-            self.alives[event.req.class_id] -= 1
-                
             requests = [0 for i in range(total_classes)]
             requests[event.req.class_id] = -1
             next_state = (tuple(self.alives), tuple(requests))

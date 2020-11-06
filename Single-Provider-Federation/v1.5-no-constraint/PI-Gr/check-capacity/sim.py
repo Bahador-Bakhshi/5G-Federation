@@ -18,8 +18,8 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 50
-    episode_num = 100
+    sim_time = 80
+    episode_num = 80
 
     parser.parse_config("config.json")
 
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     step = 20
     scale = 25
 
-    iterations = 20
+    iterations = 10
     
     i = 0
 
@@ -40,15 +40,15 @@ if __name__ == "__main__":
         dp_policy_60 = DP.policy_iteration(0.600)
         dp_policy_95 = DP.policy_iteration(0.995)
     
-        env = Environment.Env(Environment.domain.total_cpu, sim_time)
-        #ql_policy = QL.qLearning(env, episode_num)
-        
         
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit = 0
         greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_accept = 0
         greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate = 0
 
         for j in range(iterations):
+        
+            env = Environment.Env(Environment.domain.total_cpu, sim_time)
+            ql_policy = QL.qLearning(env, episode_num)
         
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)

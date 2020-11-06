@@ -18,7 +18,7 @@ from Environment import debug, error, warning
 if __name__ == "__main__":
 
     sim_time = 80
-    episode_num = 50
+    episode_num = 80
 
     init_size = 1
     step = 1
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         for j in range(iterations):
         
             env = Environment.Env(Environment.domain.total_cpu, sim_time)
-            ql_policy = QL.qLearning(env, episode_num)
+            ql_policy = QL.qLearning(env, episode_num, 1)
  
             
             demands = Environment.generate_req_set(5 * sim_time)

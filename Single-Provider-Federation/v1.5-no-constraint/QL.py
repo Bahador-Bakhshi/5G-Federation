@@ -11,18 +11,13 @@ import Environment
 from Environment import debug
 from Environment import error
 import parser
+#from DP import policy_iteration, print_policy
 
 
 def print_Q(Q):
     for s, s_a in Q.items():
         debug("{}: {}".format(s, s_a))
     debug("*********************")
-
-
-def print_policy(Q):
-    for s, s_a in Q.items():
-        debug("{}: {}".format(s, np.argmax(s_a)))
-
 
 def Q_change(Q, old_Q):
     total = 0
@@ -95,7 +90,7 @@ def createEpsilonGreedyPolicy(Q, env):
     return policyFunction 
 
 
-def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0, epsilon = 1.0):
+def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, epsilon = 1.0):
     """
     Q-Learning algorithm: Off-policy TD control.
     Finds the optimal greedy policy while improving
@@ -118,13 +113,15 @@ def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0
         if(dynamic == 1):
             alpha = alpha * 0.99
             epsilon = epsilon * 0.99
-            gamma = 0.99
+            gamma = 0.98
         else:
-            alpha = epsilon = gamma = 0.8
+            alpha = epsilon =  0.8
+            gamma = 0.98
 
         debug("alpha = ", alpha, "epsilon = ", epsilon, "gamma = ", gamma)
         debug("=======================================================")
-        old_Q = copy_Q(Q)
+        
+        #old_Q = copy_Q(Q)
         # Reset the environment and pick the first action
         state = env.reset()
 
@@ -155,7 +152,7 @@ def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0
             if Environment.is_active_state(state):
                 discount_factor = gamma
             else:
-                discount_factor = 1
+                discount_factor = 1.0
 
             if Q[state][action] != -1 * np.inf:
                 # TD Update
@@ -172,7 +169,6 @@ def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0
                     sys.exit()
 
             state = next_state
-
     
     final_policy = {}
     for i in Q:
@@ -184,12 +180,17 @@ def qLearning(env, num_episodes, dynamic = 1, discount_factor = 1.0, alpha = 1.0
 
 if __name__ == "__main__":
 
-    sim_time = 1
+    sim_time = 100
 
     parser.parse_config("config.json")
 
+    pi_policy = policy_iteration(0.995)
+    print("------------- PI Policy -----------------")
+    print_policy(pi_policy)
+ 
+
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    ql_policy = qLearning(env, 1)
+    ql_policy = qLearning(env, 1, 1)
     debug("********* QL Policy ***********")
     print_policy(ql_policy)
 
