@@ -1,5 +1,5 @@
-{ "x_label":"Federation Rate",
-"y_label":"episode",
+{ "x_label":"episode",
+"y_label":"Federation Rate",
 "results":[
 { "x":  5,
 "DP_05":  0.487250541066635,

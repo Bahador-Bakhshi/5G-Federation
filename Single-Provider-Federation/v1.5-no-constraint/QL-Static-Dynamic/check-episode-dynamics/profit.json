@@ -1,5 +1,5 @@
-{ "x_label":"Average Profit",
-"y_label":"episode",
+{ "x_label":"episode",
+"y_label":"Average Profit",
 "results":[
 { "x":  5,
 "DP_05":  60.04549758413818,
