@@ -71,7 +71,6 @@ def pr(state, action):
         reward = 0
         new_state_alives = alives
         new_state_alives = list(map(add, new_state_alives, events))
-        
 
     elif action == Environment.Actions.reject:
         if not(1 in events):
