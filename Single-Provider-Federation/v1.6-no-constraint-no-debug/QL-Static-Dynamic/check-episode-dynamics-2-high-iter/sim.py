@@ -17,7 +17,7 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 80
+    sim_time = 150
 
     parser.parse_config("config.json")
 
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     init_size = 5
     step = 5
     scale = 19
-    iterations = 10
+    iterations = 50
 
     i = 11
 

@@ -17,7 +17,7 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 80
+    sim_time = 100
 
     parser.parse_config("config.json")
 
