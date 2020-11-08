@@ -31,7 +31,7 @@ if __name__ == "__main__":
     scale = 19
     iterations = 50
 
-    i = 11
+    i = 0
 
     while i <= scale:
         ep = init_size + i * step
