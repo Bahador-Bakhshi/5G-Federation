@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
 
         print("Multiplier_Profit = ", m)
-        print("Capacity_Profit = ", Environment.domain.total_cpu)
+        #print("Capacity_Profit = ", Environment.domain.total_cpu)
         print("Greedy Profit 00  = ", greedy_profit_00 / iterations)
         print("Greedy Profit 50  = ", greedy_profit_50 / iterations)
         print("Greedy Profit 100 = ", greedy_profit_100 / iterations)
@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
 
         print("Multiplier_Accept = ", m)
-        print("Capacity_Accept = ", Environment.domain.total_cpu)
+        #print("Capacity_Accept = ", Environment.domain.total_cpu)
         print("Greedy Accept 00  = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
         print("Greedy Accept 100 = ", greedy_accept_100 / iterations)
