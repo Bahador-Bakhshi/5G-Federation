@@ -40,8 +40,9 @@ if __name__ == "__main__":
         Environment.providers[0].federation_costs[Environment.domain.services[1]] = int(Environment.providers[0].federation_costs[Environment.domain.services[0]] / m)
 
 
-        Environment.domain.total_cpu = 0.4 * (((Environment.traffic_loads[0].lam / Environment.traffic_loads[0].mu) * Environment.domain.services[0].cpu) + ((Environment.traffic_loads[1].lam / Environment.traffic_loads[1].mu) * Environment.domain.services[1].cpu)) 
+        Environment.domain.total_cpu = int(0.4 * (((Environment.traffic_loads[0].lam / Environment.traffic_loads[0].mu) * Environment.domain.services[0].cpu) + ((Environment.traffic_loads[1].lam / Environment.traffic_loads[1].mu) * Environment.domain.services[1].cpu)))
         print("Environment.domain.total_cpu = ", Environment.domain.total_cpu)
+        episode_num = 200 * (int (Environment.domain.total_cpu / 100) + 1)
 
         i += 1
 
