@@ -28,7 +28,7 @@ if __name__ == "__main__":
     
     init_size = 5
     step = 5
-    scale = 19
+    scale = 39
     iterations = 50
 
     i = 0
