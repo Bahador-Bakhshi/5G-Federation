@@ -1,11 +1,11 @@
 {
 	"local":{
-		"total_cpu": 250,
+		"total_cpu": 80,
 		"ns_catalog":[
 			{
 				"id": 0,
 				"cpu": 5,
-				"revenue": 80
+				"revenue": 100
 			},
 			{
 				"id": 1,
@@ -21,11 +21,11 @@
 			"federation_costs":[
 				{
 					"nsid": 0,
-					"cost": 30
+					"cost": 80
 				},
 				{
 					"nsid": 1,
-					"cost": 20
+					"cost": 5
 				}
 			]
 		}	
@@ -35,13 +35,13 @@
 		{
 			"catalog_id": 0,
 			"lambda": 5,
-			"mu": 1.5
+			"mu": 1
 
 		},
 		{
 			"catalog_id": 1,
 			"lambda": 5,
-			"mu": 0.1
+			"mu": 0.4
 		}
 	]
 }
