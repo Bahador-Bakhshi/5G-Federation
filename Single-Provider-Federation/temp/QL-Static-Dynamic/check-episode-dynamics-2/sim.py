@@ -28,10 +28,10 @@ if __name__ == "__main__":
     
     init_size = 5
     step = 20
-    scale = 10
+    scale = 20
     iterations = 20
 
-    i = 0
+    i = 11
 
     while i <= scale:
         ep = init_size + i * step
