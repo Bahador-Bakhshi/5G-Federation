@@ -10,7 +10,6 @@ import itertools
 import matplotlib 
 import matplotlib.style 
 import Environment
-import OldEnvironment
 import parser
 import DP
 from tester import greedy_result, mdp_policy_result
@@ -18,7 +17,7 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 150
+    sim_time = 100
 
     parser.parse_config("config.json")
 
@@ -29,8 +28,8 @@ if __name__ == "__main__":
     
     init_size = 5
     step = 20
-    scale = 10
-    iterations = 50
+    scale = 13
+    iterations = 20
 
     i = 0
 
@@ -44,7 +43,7 @@ if __name__ == "__main__":
 
         for j in range(iterations):
 
-            env = OldEnvironment.Env(OldEnvironment.Environment.domain.total_cpu, sim_time)
+            env = Environment.Env(Environment.domain.total_cpu, sim_time)
             ql_policy = QL.qLearning(env, ep, 1)
             ql_static_policy = QL.qLearning(env, ep, 0)
 

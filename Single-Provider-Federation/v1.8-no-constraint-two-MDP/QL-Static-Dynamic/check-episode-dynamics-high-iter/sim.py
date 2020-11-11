@@ -28,8 +28,8 @@ if __name__ == "__main__":
     dp_policy_95 = DP.policy_iteration(0.995)
     
     init_size = 5
-    step = 5
-    scale = 49
+    step = 20
+    scale = 12
     iterations = 20
 
     i = 0

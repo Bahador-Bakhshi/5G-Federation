@@ -7,25 +7,18 @@ import numpy as np
 import pandas as pd 
 import sys 
 from collections import defaultdict 
-import OldEnvironment
+import Environment
+from Environment import debug
+from Environment import error
 import parser
-
-matplotlib.style.use('ggplot') 
+#from DP import policy_iteration, print_policy
 
 
 def print_Q(Q):
     for s, s_a in Q.items():
-        if OldEnvironment.Environment.verbose:
-            OldEnvironment.Environment.debug("{}: {}".format(s, s_a))
-    if OldEnvironment.Environment.verbose:
-        OldEnvironment.Environment.debug("*********************")
-
-
-def print_policy(Q):
-    for s, s_a in Q.items():
-        if OldEnvironment.Environment.verbose:
-            OldEnvironment.Environment.debug("{}: {}".format(s, np.argmax(s_a)))
-
+        pass
+        #debug("{}: {}".format(s, s_a))
+    #debug("*********************")
 
 def Q_change(Q, old_Q):
     total = 0
@@ -64,7 +57,7 @@ def createEpsilonGreedyPolicy(Q, env):
     """
     def policyFunction(state, epsilon): 
         print_Q(Q)
-        va = OldEnvironment.get_valid_actions(state)
+        va = Environment.get_valid_actions(state)
         num_actions = len(va)
 
         for a in env.action_space:
@@ -81,8 +74,7 @@ def createEpsilonGreedyPolicy(Q, env):
         best_action = np.argmax(Q[state]) 
         Action_probabilities[best_action] += (1.0 - epsilon) 
         
-        if OldEnvironment.Environment.verbose:
-            OldEnvironment.Environment.debug("Action_probabilities before: ", Action_probabilities)
+        #debug("Action_probabilities before: ", Action_probabilities)
         for a in env.action_space:
             v_flag = False
             for sa in va:
@@ -92,8 +84,7 @@ def createEpsilonGreedyPolicy(Q, env):
             if v_flag == False:
                 Action_probabilities[a] = 0
                 Q[state][a] = -1 * np.inf
-        if OldEnvironment.Environment.verbose:
-            OldEnvironment.Environment.debug("Action_probabilities after: ", Action_probabilities)
+        #debug("Action_probabilities after: ", Action_probabilities)
         
         return Action_probabilities 
 
@@ -109,8 +100,8 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
     # Action value function
     # A nested dictionary that maps
     # state -> (action -> action-value).
-   
-    Q = defaultdict(lambda: np.append([-1 * np.inf], np.random.uniform(0, 1, len(env.action_space) - 1)))
+    
+    Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
 
     # Create an epsilon greedy policy function
     # appropriately for environment action space
@@ -123,21 +114,20 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
         if(dynamic == 1):
             epsilon = epsilon * 0.99
             alpha = 0.98
-            discount_factor =  0.98
+            gamma = 0.98
         else:
-            alpha = discount_factor = 0.98
-            epsilon = 0.1
+            alpha = epsilon =  0.8
+            gamma = 0.98
 
-        if OldEnvironment.Environment.verbose:
-            OldEnvironment.Environment.debug("alpha = ", alpha, "epsilon = ", epsilon, "discount_factor = ", discount_factor)
-            OldEnvironment.Environment.debug("=======================================================")
+        #debug("alpha = ", alpha, "epsilon = ", epsilon, "gamma = ", gamma)
+        #debug("=======================================================")
+        
+        #old_Q = copy_Q(Q)
         # Reset the environment and pick the first action
         state = env.reset()
 
         for t in itertools.count():
-            if OldEnvironment.Environment.verbose:
-                OldEnvironment.Environment.debug("\nt =", t, "sate =", state)
-            
+            #debug("\nt =", t, "sate =", state)
             seen_states.add(state)
 
             # get probabilities of all actions from current state
@@ -146,15 +136,24 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
             # choose action according to
             # the probability distribution
             action_index = np.random.choice(np.arange(len(action_probabilities)), p = action_probabilities)
-            action = OldEnvironment.Environment.Actions(action_index)
-            if OldEnvironment.Environment.verbose:
-                OldEnvironment.Environment.debug("action =", action)
+            action = Environment.Actions(action_index)
+            #debug("action =", action)
 
             # take action and get reward, transit to next state
             next_state, reward, done = env.step(state, action)
 
-            if OldEnvironment.Environment.verbose:
-                OldEnvironment.Environment.debug("next_state =", next_state, "reward =", reward, ", done =", done)
+            #debug("next_state =", next_state, "reward =", reward, ", done =", done)
+            
+            # done is True if episode terminated
+            if done:
+                #print_Q(Q)
+                #print("Total Changes =", Q_change(Q, old_Q))
+                break
+
+            if Environment.is_active_state(state):
+                discount_factor = gamma
+            else:
+                discount_factor = 1.0
 
             if Q[state][action] != -1 * np.inf:
                 # TD Update
@@ -171,18 +170,10 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
                     sys.exit()
 
             state = next_state
-
-
-            # done is True if episode terminated
-            if done:
-                #print_Q(Q)
-                #print("Total Changes =", Q_change(Q, old_Q))
-                break
-
     
     final_policy = {}
     for i in Q:
-        final_policy[i] = OldEnvironment.Environment.Actions(np.argmax(Q[i]))
+        final_policy[i] = Environment.Actions(np.argmax(Q[i]))
 
     #print(final_policy)
     return final_policy
@@ -190,14 +181,18 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
 
 if __name__ == "__main__":
 
-    sim_time = 109
+    sim_time = 100
 
     parser.parse_config("config.json")
 
-    env = OldEnvironment.Env(OldEnvironment.Environment.domain.total_cpu, sim_time)
-    ql_policy = qLearning(env, 10, 1)
-    OldEnvironment.Environment.debug("********* QL Policy ***********")
-    #print_policy(ql_policy)
-    print(ql_policy)
+    pi_policy = policy_iteration(0.995)
+    print("------------- PI Policy -----------------")
+    print_policy(pi_policy)
+ 
+
+    env = Environment.Env(Environment.domain.total_cpu, sim_time)
+    ql_policy = qLearning(env, 1, 1)
+    #debug("********* QL Policy ***********")
+    print_policy(ql_policy)
 
 
