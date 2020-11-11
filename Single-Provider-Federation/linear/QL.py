@@ -112,7 +112,9 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
     for ith_episode in range(num_episodes):
 
         if(dynamic == 1):
-            epsilon = epsilon * 0.99
+            max_epsilon = 0.95
+            min_epsilon = 0.05
+            epsilon = max_epsilon - ((max_epsilon - min_epsilon) / num_episodes) * ith_episode
             max_alpha = 0.99
             min_alpha = 0.50
             alpha = max_alpha - ((max_alpha - min_alpha) / num_episodes) * ith_episode
