@@ -24,8 +24,8 @@ if __name__ == "__main__":
     parser.parse_config("config.json")
 
     init_size = 0.1
-    step = 0.025
-    scale = 20
+    step = 0.075
+    scale = 7
 
     iterations = 20
     

@@ -5,7 +5,7 @@
 			{
 				"id": 0,
 				"cpu": 5,
-				"revenue": 80
+				"revenue": 100
 			},
 			{
 				"id": 1,
@@ -21,7 +21,7 @@
 			"federation_costs":[
 				{
 					"nsid": 0,
-					"cost": 30
+					"cost": 10
 				},
 				{
 					"nsid": 1,

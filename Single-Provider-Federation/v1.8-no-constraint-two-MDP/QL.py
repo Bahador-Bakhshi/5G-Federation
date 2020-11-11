@@ -122,10 +122,10 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
 
         if(dynamic == 1):
             epsilon = epsilon * 0.99
-            alpha = 0.98
-            discount_factor =  0.98
+            alpha = 0.6
+            discount_factor =  0.99
         else:
-            alpha = discount_factor = 0.98
+            alpha = discount_factor = 0.6
             epsilon = 0.1
 
         if OldEnvironment.Environment.verbose:
