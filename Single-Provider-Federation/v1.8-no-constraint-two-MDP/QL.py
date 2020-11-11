@@ -119,7 +119,7 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
 
     # For every episode
     for ith_episode in range(num_episodes):
-
+        ''' this setting provide static >> dynamic 
         if(dynamic == 1):
             epsilon = epsilon * 0.99
             alpha = 0.6
@@ -127,7 +127,16 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
         else:
             alpha = discount_factor = 0.6
             epsilon = 0.1
-
+        '''
+        if(dynamic == 1):
+            epsilon = epsilon * 0.99
+            alpha = 0.6
+            discount_factor =  0.99
+        else:
+            alpha = 0.6
+            discount_factor = 0.99
+            epsilon = 0.1
+ 
         if OldEnvironment.Environment.verbose:
             OldEnvironment.Environment.debug("alpha = ", alpha, "epsilon = ", epsilon, "discount_factor = ", discount_factor)
             OldEnvironment.Environment.debug("=======================================================")
