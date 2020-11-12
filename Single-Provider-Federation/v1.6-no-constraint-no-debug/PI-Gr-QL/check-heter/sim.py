@@ -25,11 +25,11 @@ if __name__ == "__main__":
 
     init_size = 0.1
     step = 0.025
-    scale = 20
+    scale = 30
 
     iterations = 20
     
-    i = 0
+    i = 21
 
     while i <= scale:
         m = init_size + i * step
