@@ -17,7 +17,7 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 100
+    sim_time = 150
 
     parser.parse_config("config.json")
 
@@ -26,10 +26,10 @@ if __name__ == "__main__":
     dp_policy_60 = DP.policy_iteration(0.600)
     dp_policy_95 = DP.policy_iteration(0.995)
     
-    init_size = 5
-    step = 20
-    scale = 13
-    iterations = 20
+    init_size = 10
+    step = 10
+    scale = 24
+    iterations = 50
 
     i = 0
 

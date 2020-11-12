@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     init_mult = 0
     step = 0.25
-    scale = 20
+    scale = 16
     iterations = 20
 
     i = 0

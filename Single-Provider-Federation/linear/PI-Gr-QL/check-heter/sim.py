@@ -18,14 +18,14 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 100
+    sim_time = 150
     #episode_num = 200
 
     parser.parse_config("config.json")
 
-    init_size = 0.1
-    step = 0.075
-    scale = 7
+    init_size = 0.15
+    step = 0.05
+    scale = 15
 
     iterations = 20
     
@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
         Environment.domain.total_cpu = int(0.4 * (((Environment.traffic_loads[0].lam / Environment.traffic_loads[0].mu) * Environment.domain.services[0].cpu) + ((Environment.traffic_loads[1].lam / Environment.traffic_loads[1].mu) * Environment.domain.services[1].cpu)))
         print("Environment.domain.total_cpu = ", Environment.domain.total_cpu)
-        episode_num = 300 * (int (Environment.domain.total_cpu / 100) + 1)
+        episode_num = 200 * (int (Environment.domain.total_cpu / 100) + 1)
 
         i += 1
 
