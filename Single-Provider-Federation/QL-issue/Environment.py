@@ -338,10 +338,12 @@ class Env:
                     sys.exit()
             
             #next_state = (tuple([0 for i in range(total_classes)]), tuple([0 for i in range(total_classes)]))
-            return next_state, reward, 1
+            done = 1
+            return next_state, reward, done 
 
         #generate the next state
         event = heapq.heappop(self.events)
+        done = 0
         #debug("event: type = ", event.event_type ,", req = ", event.req)
 
         if event.event_type == 0: #departure, update the nework
@@ -355,7 +357,6 @@ class Env:
             self.arriaved_demand = event.req
 
             next_state = (tuple(self.alives), tuple(requests))
-            done = 0
         
         #debug("************  env step *************")
         return next_state, reward, done
