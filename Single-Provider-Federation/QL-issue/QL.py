@@ -156,7 +156,8 @@ def qLearning(env, num_episodes, dynamic, discount_factor = 1.0, alpha = 1.0, ep
             if Environment.is_active_state(state):
                 discount_factor = gamma
             else:
-                discount_factor = 1.0
+                #discount_factor = 1.0
+                idiscount_factor = gamma
 
             if Q[state][action] != -1 * np.inf:
                 # TD Update

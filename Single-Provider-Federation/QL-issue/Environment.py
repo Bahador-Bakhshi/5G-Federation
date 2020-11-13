@@ -236,12 +236,13 @@ class Env:
 
         elif action == Actions.reject: #reject
             #debug("reject")
-            reward = 0
-
-        elif action == Actions.accept: #accept
             count = 0
             for i in range(len(current_requests)):
-                if current_requests[i] != 0:
+                if current_requests[i] == -1:
+                    error("Invalid state, both arrival and departure")
+                    sys.exit()
+
+                if current_requests[i] == 1:
                     count += 1
             
             if count > 1:
@@ -251,6 +252,27 @@ class Env:
             if count == 0: #there is no requst to accept
                 error("Invalid action")
                 sys.exit()
+
+            reward = 0
+
+        elif action == Actions.accept: #accept
+            count = 0
+            for i in range(len(current_requests)):
+                if current_requests[i] == -1:
+                    error("Invalid state, both arrival and departure")
+                    sys.exit()
+
+                if current_requests[i] == 1:
+                    count += 1
+            
+            if count > 1:
+                error("Error in requests = ", current_requests)
+                sys.exit()
+
+            if count == 0: #there is no requst to accept
+                error("Invalid action")
+                sys.exit()
+
             else:
                 req = self.arriaved_demand
                 self.arriaved_demand = None
@@ -259,7 +281,9 @@ class Env:
 
                 if self.capacity < req.w:
                     #cannot accept
-                    #debug("\t cannot accept")
+                    #debug("\t cannot accept")a
+                    error("Erro in valid actions, cannot accept")
+                    sys.exit()
                     reward = -1 * np.inf
                 else:
                     #debug("\t accepted")
@@ -270,9 +294,14 @@ class Env:
                     heapq.heappush(self.events, event)
         
         elif action == Actions.federate: #federate
+            
             count = 0
             for i in range(len(current_requests)):
-                if current_requests[i] != 0:
+                if current_requests[i] == -1:
+                    error("Invalid state, both arrival and departure")
+                    sys.exit()
+
+                if current_requests[i] == 1:
                     count += 1
             
             if count > 1:
@@ -282,6 +311,7 @@ class Env:
             if count == 0: #there is no requst to accept
                 error("Invalid action")
                 sys.exit()
+            
             else:
                 req = self.arriaved_demand
                 self.arriaved_demand = None
@@ -319,12 +349,6 @@ class Env:
             requests[event.req.class_id] = -1
             next_state = (tuple(self.alives), tuple(requests))
                 
-            if len(self.events) == 0:
-                #debug("done = 1, next_state = ", next_state)
-                done = 1
-            else:
-                done = 0
-        
         else: #new arrival
             requests = [0 for i in range(total_classes)]
             requests[event.req.class_id] = 1
