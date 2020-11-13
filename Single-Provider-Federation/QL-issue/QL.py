@@ -119,7 +119,7 @@ def qLearning(env, num_episodes, dynamic, alpha = 1.0, epsilon = 1.0, gamma = 1.
             epsilon = epsilon * 0.99
             #epsilon = 0.99
             #gamma = gamma * 0.99
-            gamma = 0.98
+            gamma = 0.995
         else:
             alpha = epsilon =  0.8
             gamma = 0.98
