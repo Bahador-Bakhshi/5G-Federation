@@ -24,11 +24,11 @@ if __name__ == "__main__":
 
     init_size = 50
     step = 200
-    scale = 2
+    scale = 3
 
     iterations = 5
     
-    i = 0
+    i = 3
 
     while i <= scale:
         Environment.domain.total_cpu = init_size + i * step
