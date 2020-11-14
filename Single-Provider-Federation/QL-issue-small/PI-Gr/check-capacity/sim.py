@@ -18,24 +18,22 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 2000
+    sim_time = 80
+    episode_num = 80
 
     parser.parse_config("config.json")
 
-    init_size = 50
-    step = 200
-    scale = 3
+    init_size = 20
+    step = 20
+    scale = 25
 
-    iterations = 3
+    iterations = 10
     
     i = 0
 
     while i <= scale:
         Environment.domain.total_cpu = init_size + i * step
-        #episode_num = 300 * (int (Environment.domain.total_cpu / 100) + 1)
         i += 1
-
-        episode_num = 200
 
         dp_policy_05 = DP.policy_iteration(0.005)
         dp_policy_30 = DP.policy_iteration(0.300)
@@ -48,10 +46,9 @@ if __name__ == "__main__":
         greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate = 0
 
         for j in range(iterations):
-            
-            env = Environment.Env(Environment.domain.total_cpu, sim_time)
-            ql_policy = QL.qLearning(env, episode_num, 1)
         
+            env = Environment.Env(Environment.domain.total_cpu, sim_time)
+            ql_policy = QL.qLearning(env, episode_num)
         
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
@@ -66,7 +63,7 @@ if __name__ == "__main__":
             dp_profit_60, dp_accept_60, dp_federate_60 = mdp_policy_result(demands, dp_policy_60, dp_profit_60, dp_accept_60, dp_federate_60)
             dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
             
-            ql_profit, ql_accept, ql_federate = mdp_policy_result(demands, ql_policy, ql_profit, ql_accept, ql_federate)
+            #ql_profit, ql_accept, ql_federate = mdp_policy_result(demands, ql_policy, ql_profit, ql_accept, ql_federate)
 
 
         print("Capacity_Profit = ", Environment.domain.total_cpu)
@@ -104,4 +101,3 @@ if __name__ == "__main__":
 
 
 print("DONE!!!")
-

@@ -18,7 +18,7 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 2000
+    sim_time = 1500
 
     parser.parse_config("config.json")
 
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     step = 200
     scale = 3
 
-    iterations = 3
+    iterations = 5
     
     i = 0
 
@@ -34,8 +34,8 @@ if __name__ == "__main__":
         Environment.domain.total_cpu = init_size + i * step
         #episode_num = 300 * (int (Environment.domain.total_cpu / 100) + 1)
         i += 1
-
-        episode_num = 200
+        
+        episode_num = 200 * i
 
         dp_policy_05 = DP.policy_iteration(0.005)
         dp_policy_30 = DP.policy_iteration(0.300)
@@ -104,4 +104,3 @@ if __name__ == "__main__":
 
 
 print("DONE!!!")
-

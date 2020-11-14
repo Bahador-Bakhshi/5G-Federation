@@ -1,0 +1,3802 @@
+
+* * ** *** ***** Local Domain ***** *** ** * *
+Total CPU:  80
+Services:
+	 ID: 0  CPU: 5  Revenue: 100
+	 ID: 1  CPU: 10  Revenue: 50
+
+* * ** *** ***** Loads ***** *** ** * *
+index =  0
+Service ID: 0 , cpu: 5 , revenue: 100 , lam: 5  mu: 1
+index =  1
+Service ID: 1 , cpu: 10 , revenue: 50 , lam: 5  mu: 0.4
+Unknown state:  ((3, 0), (1, 0))
+Unknown state:  ((3, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((3, 0), (1, 0))
+Unknown state:  ((3, 0), (1, 0))
+Unknown state:  ((3, 0), (1, 0))
+Unknown state:  ((3, 0), (1, 0))
+Unknown state:  ((3, 0), (1, 0))
+Unknown state:  ((3, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 1), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 1), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 4), (0, 1))
+Unknown state:  ((6, 4), (0, 1))
+Unknown state:  ((6, 4), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 1), (0, 1))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((5, 1), (0, 1))
+Unknown state:  ((5, 1), (0, 1))
+Unknown state:  ((5, 1), (0, 1))
+Unknown state:  ((5, 1), (0, 1))
+Unknown state:  ((5, 1), (0, 1))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Episode_Profit =  5
+DP_05 Profit =  60.46152976445135
+DP_30 Profit =  67.11075610311879
+DP_60 Profit =  70.06456133793996
+DP_95 Profit =  72.85903453849619
+QL Dynamic Profit = 43.22817090960565
+QL Static  Profit = 43.770986045857455
+
+Episode_Accept =  5
+DP_05 Accept =  0.5541457125032209
+DP_30 Accept =  0.6094790360255938
+DP_60 Accept =  0.6269622426105326
+DP_95 Accept =  0.5928592921601586
+QL Dynamic Accept = 0.30653096404002544
+QL Static  Accept = 0.33461085076741676
+
+Episode_Federate =  5
+DP_05 Federate =  0.4458542874967793
+DP_30 Federate =  0.3905209639744062
+DP_60 Federate =  0.3730377573894676
+DP_95 Federate =  0.40714070783984124
+QL Dynamic Federate = 0.5252991799041026
+QL Static  Federate = 0.48665796523095706
+
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((4, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Episode_Profit =  10
+DP_05 Profit =  60.615137207043375
+DP_30 Profit =  67.25715875532256
+DP_60 Profit =  70.16374240080746
+DP_95 Profit =  72.83809438731866
+QL Dynamic Profit = 49.518535766606476
+QL Static  Profit = 50.728308508056315
+
+Episode_Accept =  10
+DP_05 Accept =  0.556299059171635
+DP_30 Accept =  0.6118808201990764
+DP_60 Accept =  0.6288586873642718
+DP_95 Accept =  0.5918530797961971
+QL Dynamic Accept = 0.39258899089140337
+QL Static  Accept = 0.4133002191812492
+
+Episode_Federate =  10
+DP_05 Federate =  0.44370094082836503
+DP_30 Federate =  0.3881191798009236
+DP_60 Federate =  0.3711413126357281
+DP_95 Federate =  0.40814692020380283
+QL Dynamic Federate = 0.4742725898273518
+QL Static  Federate = 0.4604897834902304
+
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 2), (1, 0))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((4, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Episode_Profit =  15
+DP_05 Profit =  60.501998416994155
+DP_30 Profit =  67.10938549441138
+DP_60 Profit =  70.02462872393808
+DP_95 Profit =  72.75270754777857
+QL Dynamic Profit = 52.56212272834552
+QL Static  Profit = 51.6968711482568
+
+Episode_Accept =  15
+DP_05 Accept =  0.554438615780277
+DP_30 Accept =  0.6096277775375823
+DP_60 Accept =  0.6265738891834789
+DP_95 Accept =  0.5907634475720054
+QL Dynamic Accept = 0.43233082558173036
+QL Static  Accept = 0.42717485937898403
+
+Episode_Federate =  15
+DP_05 Federate =  0.445561384219723
+DP_30 Federate =  0.3903722224624177
+DP_60 Federate =  0.3734261108165211
+DP_95 Federate =  0.40923655242799456
+QL Dynamic Federate = 0.44252751799567713
+QL Static  Federate = 0.4424338216911928
+
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((8, 4), (0, 1))
+Unknown state:  ((7, 4), (1, 0))
+Unknown state:  ((7, 4), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 3), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Episode_Profit =  20
+DP_05 Profit =  60.47294561504955
+DP_30 Profit =  67.0642237850273
+DP_60 Profit =  70.04430160297699
+DP_95 Profit =  72.77533117337224
+QL Dynamic Profit = 56.256409517883675
+QL Static  Profit = 55.916982167731284
+
+Episode_Accept =  20
+DP_05 Accept =  0.5549516059132195
+DP_30 Accept =  0.6096782141888457
+DP_60 Accept =  0.627548463267782
+DP_95 Accept =  0.5920051737998263
+QL Dynamic Accept = 0.4703126853070217
+QL Static  Accept = 0.46591893733927736
+
+Episode_Federate =  20
+DP_05 Federate =  0.44504839408678054
+DP_30 Federate =  0.39032178581115423
+DP_60 Federate =  0.3724515367322178
+DP_95 Federate =  0.4079948262001738
+QL Dynamic Federate = 0.42754299224932524
+QL Static  Federate = 0.45859194786114565
+
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((8, 4), (0, 1))
+Unknown state:  ((8, 4), (0, 1))
+Invalid random action
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((8, 3), (1, 0))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 2), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((6, 1), (0, 1))
+Unknown state:  ((6, 1), (0, 1))
+Unknown state:  ((6, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Episode_Profit =  25
+DP_05 Profit =  60.573230918274305
+DP_30 Profit =  67.18888080853732
+DP_60 Profit =  70.1509561456562
+DP_95 Profit =  72.85185737040786
+QL Dynamic Profit = 58.37764629822312
+QL Static  Profit = 57.56257745468849
+
+Episode_Accept =  25
+DP_05 Accept =  0.5572352570448523
+DP_30 Accept =  0.6126965397176535
+DP_60 Accept =  0.6300979397052909
+DP_95 Accept =  0.593489645367659
+QL Dynamic Accept = 0.49360556903342484
+QL Static  Accept = 0.488599484750989
+
+Episode_Federate =  25
+DP_05 Federate =  0.4427647429551478
+DP_30 Federate =  0.3873034602823466
+DP_60 Federate =  0.36990206029470907
+DP_95 Federate =  0.40651035463234086
+QL Dynamic Federate = 0.4161742788676623
+QL Static  Federate = 0.4230913107827617
+
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((11, 2), (0, 1))
+Invalid random action
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((6, 1), (0, 1))
+Unknown state:  ((6, 1), (0, 1))
+Unknown state:  ((6, 1), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((5, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 1), (0, 1))
+Unknown state:  ((6, 1), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Episode_Profit =  30
+DP_05 Profit =  60.51090995872982
+DP_30 Profit =  67.14360150762678
+DP_60 Profit =  70.13229987188453
+DP_95 Profit =  72.86427456823083
+QL Dynamic Profit = 61.158976250164805
+QL Static  Profit = 58.96378144513708
+
+Episode_Accept =  30
+DP_05 Accept =  0.5547108047797239
+DP_30 Accept =  0.610262737342701
+DP_60 Accept =  0.6282433707707977
+DP_95 Accept =  0.5927676022114086
+QL Dynamic Accept = 0.5219969108716641
+QL Static  Accept = 0.5023739197600253
+
+Episode_Federate =  30
+DP_05 Federate =  0.44528919522027605
+DP_30 Federate =  0.38973726265729886
+DP_60 Federate =  0.37175662922920233
+DP_95 Federate =  0.4072323977885913
+QL Dynamic Federate = 0.41313893530964185
+QL Static  Federate = 0.4194475705392836
+
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((8, 4), (0, 1))
+Invalid random action
+Unknown state:  ((8, 4), (0, 1))
+Invalid random action
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 4), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((5, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((8, 4), (0, 1))
+Unknown state:  ((8, 4), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Episode_Profit =  35
+DP_05 Profit =  60.47156317212989
+DP_30 Profit =  67.1372221729605
+DP_60 Profit =  70.09112675542688
+DP_95 Profit =  72.81617454183456
+QL Dynamic Profit = 61.799768586818836
+QL Static  Profit = 59.072139089055675
+
+Episode_Accept =  35
+DP_05 Accept =  0.5544827789288922
+DP_30 Accept =  0.6103485025980772
+DP_60 Accept =  0.6279313445734456
+DP_95 Accept =  0.5920654288281486
+QL Dynamic Accept = 0.5261802617604715
+QL Static  Accept = 0.5018646487374413
+
+Episode_Federate =  35
+DP_05 Federate =  0.4455172210711079
+DP_30 Federate =  0.3896514974019227
+DP_60 Federate =  0.37206865542655465
+DP_95 Federate =  0.40793457117185133
+QL Dynamic Federate = 0.4129831773227361
+QL Static  Federate = 0.4220229817245885
+
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Episode_Profit =  40
+DP_05 Profit =  60.49359831219392
+DP_30 Profit =  67.0830892734568
+DP_60 Profit =  70.01838400265791
+DP_95 Profit =  72.81281477711093
+QL Dynamic Profit = 63.002643396021995
+QL Static  Profit = 59.806111255426295
+
+Episode_Accept =  40
+DP_05 Accept =  0.5542985390857269
+DP_30 Accept =  0.6089582970519967
+DP_60 Accept =  0.6260774311607201
+DP_95 Accept =  0.5916493409040805
+QL Dynamic Accept = 0.539330283110877
+QL Static  Accept = 0.5087583686442493
+
+Episode_Federate =  40
+DP_05 Federate =  0.44570146091427304
+DP_30 Federate =  0.39104170294800333
+DP_60 Federate =  0.37392256883927977
+DP_95 Federate =  0.40835065909591955
+QL Dynamic Federate = 0.4075608450655088
+QL Static  Federate = 0.4132488030366091
+
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Episode_Profit =  45
+DP_05 Profit =  60.41356792495301
+DP_30 Profit =  67.09708346561622
+DP_60 Profit =  70.02974641034317
+DP_95 Profit =  72.82279118561966
+QL Dynamic Profit = 62.98234825519486
+QL Static  Profit = 61.27991036400284
+
+Episode_Accept =  45
+DP_05 Accept =  0.5530545458728588
+DP_30 Accept =  0.6096664586011309
+DP_60 Accept =  0.6261431371073664
+DP_95 Accept =  0.5920112892201689
+QL Dynamic Accept = 0.5388223936433207
+QL Static  Accept = 0.5183113835836287
+
+Episode_Federate =  45
+DP_05 Federate =  0.44694545412714126
+DP_30 Federate =  0.3903335413988691
+DP_60 Federate =  0.3738568628926336
+DP_95 Federate =  0.4079887107798312
+QL Dynamic Federate = 0.40819841923113265
+QL Static  Federate = 0.41764115610784047
+
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Episode_Profit =  50
+DP_05 Profit =  60.48298489471773
+DP_30 Profit =  67.1552166256676
+DP_60 Profit =  70.09174878534081
+DP_95 Profit =  72.8740221232306
+QL Dynamic Profit = 64.34096560098067
+QL Static  Profit = 61.6825896814777
+
+Episode_Accept =  50
+DP_05 Accept =  0.555529353150739
+DP_30 Accept =  0.6115782569656677
+DP_60 Accept =  0.6279034669579461
+DP_95 Accept =  0.5929343546046372
+QL Dynamic Accept = 0.5561307184331025
+QL Static  Accept = 0.5226044304191991
+
+Episode_Federate =  50
+DP_05 Federate =  0.44447064684926096
+DP_30 Federate =  0.3884217430343323
+DP_60 Federate =  0.37209653304205376
+DP_95 Federate =  0.40706564539536283
+QL Dynamic Federate = 0.39604113852963335
+QL Static  Federate = 0.41389740762623006
+
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((11, 2), (0, 1))
+Unknown state:  ((11, 2), (0, 1))
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Episode_Profit =  55
+DP_05 Profit =  60.55443551174022
+DP_30 Profit =  67.19756553341236
+DP_60 Profit =  70.10265751120149
+DP_95 Profit =  72.83603441762055
+QL Dynamic Profit = 64.87083959125161
+QL Static  Profit = 61.43939171919438
+
+Episode_Accept =  55
+DP_05 Accept =  0.5560241985109095
+DP_30 Accept =  0.6113607211475487
+DP_60 Accept =  0.6284130086167328
+DP_95 Accept =  0.5931655452735503
+QL Dynamic Accept = 0.5577342516949849
+QL Static  Accept = 0.5246567981356268
+
+Episode_Federate =  55
+DP_05 Federate =  0.44397580148909044
+DP_30 Federate =  0.3886392788524513
+DP_60 Federate =  0.3715869913832674
+DP_95 Federate =  0.4068344547264499
+QL Dynamic Federate = 0.40622326397079916
+QL Static  Federate = 0.41209689428644675
+
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Episode_Profit =  60
+DP_05 Profit =  60.51104472593969
+DP_30 Profit =  67.17374455184815
+DP_60 Profit =  70.03715341947682
+DP_95 Profit =  72.78435734723206
+QL Dynamic Profit = 65.42792011940935
+QL Static  Profit = 62.4128008874075
+
+Episode_Accept =  60
+DP_05 Accept =  0.5537947031276247
+DP_30 Accept =  0.6098790333904265
+DP_60 Accept =  0.6265360671197869
+DP_95 Accept =  0.5907613669454184
+QL Dynamic Accept = 0.5634704159499492
+QL Static  Accept = 0.5282473113229788
+
+Episode_Federate =  60
+DP_05 Federate =  0.4462052968723753
+DP_30 Federate =  0.3901209666095737
+DP_60 Federate =  0.373463932880213
+DP_95 Federate =  0.4092386330545816
+QL Dynamic Federate = 0.40003748725517385
+QL Static  Federate = 0.4093764313952116
+
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((10, 0), (1, 0))
+Unknown state:  ((11, 0), (1, 0))
+Unknown state:  ((11, 0), (0, 1))
+Unknown state:  ((11, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((11, 2), (0, 1))
+Invalid random action
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Episode_Profit =  65
+DP_05 Profit =  60.59771083303323
+DP_30 Profit =  67.0931560839899
+DP_60 Profit =  70.11126735410943
+DP_95 Profit =  72.84585108876196
+QL Dynamic Profit = 65.95650173547949
+QL Static  Profit = 61.94899186536447
+
+Episode_Accept =  65
+DP_05 Accept =  0.5561569129731102
+DP_30 Accept =  0.6100462670951673
+DP_60 Accept =  0.6286041384823201
+DP_95 Accept =  0.5926129863266781
+QL Dynamic Accept = 0.5669463778007117
+QL Static  Accept = 0.5209513556658578
+
+Episode_Federate =  65
+DP_05 Federate =  0.44384308702688974
+DP_30 Federate =  0.3899537329048328
+DP_60 Federate =  0.37139586151767995
+DP_95 Federate =  0.40738701367332164
+QL Dynamic Federate = 0.40266772881458124
+QL Static  Federate = 0.41652730907639685
+
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((11, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Episode_Profit =  70
+DP_05 Profit =  60.62070988845775
+DP_30 Profit =  67.26037610146663
+DP_60 Profit =  70.16287545106786
+DP_95 Profit =  72.88295792155732
+QL Dynamic Profit = 65.86119948355034
+QL Static  Profit = 62.418760485776026
+
+Episode_Accept =  70
+DP_05 Accept =  0.5568140049631709
+DP_30 Accept =  0.6127202195930399
+DP_60 Accept =  0.6290007226517124
+DP_95 Accept =  0.5937564728579264
+QL Dynamic Accept = 0.5668477970743584
+QL Static  Accept = 0.5334800334183624
+
+Episode_Federate =  70
+DP_05 Federate =  0.443185995036829
+DP_30 Federate =  0.38727978040696015
+DP_60 Federate =  0.3709992773482876
+DP_95 Federate =  0.40624352714207373
+QL Dynamic Federate = 0.4030614231481007
+QL Static  Federate = 0.3984560074581143
+
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 3), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Episode_Profit =  75
+DP_05 Profit =  60.370674937166896
+DP_30 Profit =  66.99565007734854
+DP_60 Profit =  70.01812579905898
+DP_95 Profit =  72.82165997571062
+QL Dynamic Profit = 66.36135927119568
+QL Static  Profit = 63.01036641120637
+
+Episode_Accept =  75
+DP_05 Accept =  0.5522862182366002
+DP_30 Accept =  0.6076534900566599
+DP_60 Accept =  0.6256627703448739
+DP_95 Accept =  0.5914651545045035
+QL Dynamic Accept = 0.5717806534843933
+QL Static  Accept = 0.5332372912738776
+
+Episode_Federate =  75
+DP_05 Federate =  0.44771378176339993
+DP_30 Federate =  0.39234650994334025
+DP_60 Federate =  0.37433722965512595
+DP_95 Federate =  0.40853484549549646
+QL Dynamic Federate = 0.40016242420718756
+QL Static  Federate = 0.4107105700959029
+
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((12, 1), (0, 1))
+Unknown state:  ((12, 2), (1, 0))
+Unknown state:  ((12, 2), (1, 0))
+Unknown state:  ((11, 1), (0, 1))
+Unknown state:  ((11, 2), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Episode_Profit =  80
+DP_05 Profit =  60.59263821634646
+DP_30 Profit =  67.22149736372407
+DP_60 Profit =  70.19143672132456
+DP_95 Profit =  72.8751408671647
+QL Dynamic Profit = 66.849438686336
+QL Static  Profit = 63.787931040987026
+
+Episode_Accept =  80
+DP_05 Accept =  0.5563284983649133
+DP_30 Accept =  0.6123082978253102
+DP_60 Accept =  0.629771457808528
+DP_95 Accept =  0.5933017960766972
+QL Dynamic Accept = 0.5772984791149177
+QL Static  Accept = 0.5423944084806388
+
+Episode_Federate =  80
+DP_05 Federate =  0.4436715016350866
+DP_30 Federate =  0.38769170217468996
+DP_60 Federate =  0.370228542191472
+DP_95 Federate =  0.40669820392330264
+QL Dynamic Federate = 0.4010085570560827
+QL Static  Federate = 0.39944771591355505
+
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Episode_Profit =  85
+DP_05 Profit =  60.505188398862494
+DP_30 Profit =  67.12054698249648
+DP_60 Profit =  70.0913749736468
+DP_95 Profit =  72.79219786774809
+QL Dynamic Profit = 66.9224356847113
+QL Static  Profit = 62.66406604222941
+
+Episode_Accept =  85
+DP_05 Accept =  0.5553406648140927
+DP_30 Accept =  0.6104092694221012
+DP_60 Accept =  0.6279438698084604
+DP_95 Accept =  0.5920956838786496
+QL Dynamic Accept = 0.5749136452705745
+QL Static  Accept = 0.5276571064998979
+
+Episode_Federate =  85
+DP_05 Federate =  0.4446593351859074
+DP_30 Federate =  0.38959073057789867
+DP_60 Federate =  0.37205613019153944
+DP_95 Federate =  0.4079043161213505
+QL Dynamic Federate = 0.39968290365759807
+QL Static  Federate = 0.4108508974364874
+
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((10, 0), (1, 0))
+Unknown state:  ((10, 0), (1, 0))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Episode_Profit =  90
+DP_05 Profit =  60.385127543820566
+DP_30 Profit =  67.07490371682225
+DP_60 Profit =  69.99387543595326
+DP_95 Profit =  72.76145153604517
+QL Dynamic Profit = 66.99362900140216
+QL Static  Profit = 63.747453764902836
+
+Episode_Accept =  90
+DP_05 Accept =  0.5536332645294901
+DP_30 Accept =  0.6100264272573573
+DP_60 Accept =  0.6268543116809521
+DP_95 Accept =  0.5918813738925391
+QL Dynamic Accept = 0.576879731176848
+QL Static  Accept = 0.5389993257605787
+
+Episode_Federate =  90
+DP_05 Federate =  0.4463667354705096
+DP_30 Federate =  0.38997357274264255
+DP_60 Federate =  0.37314568831904815
+DP_95 Federate =  0.4081186261074608
+QL Dynamic Federate = 0.39973784051012584
+QL Static  Federate = 0.39881188994579486
+
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((11, 2), (0, 1))
+Invalid random action
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((12, 2), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Episode_Profit =  95
+DP_05 Profit =  60.450745798819106
+DP_30 Profit =  67.181162166286
+DP_60 Profit =  70.07410953847217
+DP_95 Profit =  72.84778009907123
+QL Dynamic Profit = 67.36861756890778
+QL Static  Profit = 63.97551805835299
+
+Episode_Accept =  95
+DP_05 Accept =  0.5548378276362916
+DP_30 Accept =  0.6111117982733861
+DP_60 Accept =  0.6282021582881611
+DP_95 Accept =  0.5925350691598223
+QL Dynamic Accept = 0.585336318289901
+QL Static  Accept = 0.5461184570609892
+
+Episode_Federate =  95
+DP_05 Federate =  0.4451621723637084
+DP_30 Federate =  0.3888882017266139
+DP_60 Federate =  0.371797841711839
+DP_95 Federate =  0.4074649308401777
+QL Dynamic Federate = 0.39292601076759276
+QL Static  Federate = 0.3928247235106147
+
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((10, 0), (1, 0))
+Unknown state:  ((10, 0), (1, 0))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Episode_Profit =  100
+DP_05 Profit =  60.59818998923588
+DP_30 Profit =  67.20324349664322
+DP_60 Profit =  70.15068796662258
+DP_95 Profit =  72.85506236019445
+QL Dynamic Profit = 67.93669949871399
+QL Static  Profit = 63.795539099261816
+
+Episode_Accept =  100
+DP_05 Accept =  0.5567723634226863
+DP_30 Accept =  0.6118344755452668
+DP_60 Accept =  0.6291975960144431
+DP_95 Accept =  0.5924938522442781
+QL Dynamic Accept = 0.590583856377157
+QL Static  Accept = 0.5395593736141561
+
+Episode_Federate =  100
+DP_05 Federate =  0.44322763657731357
+DP_30 Federate =  0.3881655244547332
+DP_60 Federate =  0.3708024039855568
+DP_95 Federate =  0.40750614775572175
+QL Dynamic Federate = 0.39099849296477884
+QL Static  Federate = 0.40542481029934885
+
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Episode_Profit =  105
+DP_05 Profit =  60.47267356196367
+DP_30 Profit =  67.06899514303889
+DP_60 Profit =  70.04641944861486
+DP_95 Profit =  72.73433680398682
+QL Dynamic Profit = 67.71594879467682
+QL Static  Profit = 63.646642385020726
+
+Episode_Accept =  105
+DP_05 Accept =  0.5554717104076357
+DP_30 Accept =  0.6095089235464358
+DP_60 Accept =  0.6276615862983481
+DP_95 Accept =  0.590731384343955
+QL Dynamic Accept = 0.5841856371798655
+QL Static  Accept = 0.5372844515645212
+
+Episode_Federate =  105
+DP_05 Federate =  0.44452828959236435
+DP_30 Federate =  0.3904910764535641
+DP_60 Federate =  0.37233841370165194
+DP_95 Federate =  0.40926861565604505
+QL Dynamic Federate = 0.39581242210206136
+QL Static  Federate = 0.4100723543154415
+
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((6, 0), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Episode_Profit =  110
+DP_05 Profit =  60.42724813291661
+DP_30 Profit =  67.12379468528322
+DP_60 Profit =  70.11130728995553
+DP_95 Profit =  72.87805398461505
+QL Dynamic Profit = 68.31344923177755
+QL Static  Profit = 63.890514096720295
+
+Episode_Accept =  110
+DP_05 Accept =  0.55403797217878
+DP_30 Accept =  0.6099956262663316
+DP_60 Accept =  0.6284853173172175
+DP_95 Accept =  0.5932149872304247
+QL Dynamic Accept = 0.5910585432757643
+QL Static  Accept = 0.5410392784021072
+
+Episode_Federate =  110
+DP_05 Federate =  0.4459620278212199
+DP_30 Federate =  0.3900043737336682
+DP_60 Federate =  0.37151468268278265
+DP_95 Federate =  0.40678501276957535
+QL Dynamic Federate = 0.3921938266766814
+QL Static  Federate = 0.40765658254710435
+
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Episode_Profit =  115
+DP_05 Profit =  60.492315772173306
+DP_30 Profit =  67.23573385428412
+DP_60 Profit =  70.11323803665195
+DP_95 Profit =  72.81246998669259
+QL Dynamic Profit = 68.58776221573984
+QL Static  Profit = 64.43236033688737
+
+Episode_Accept =  115
+DP_05 Accept =  0.5551343851986065
+DP_30 Accept =  0.6122017557242739
+DP_60 Accept =  0.6280516285793518
+DP_95 Accept =  0.5921806122257685
+QL Dynamic Accept = 0.5973156814691555
+QL Static  Accept = 0.5396398499212816
+
+Episode_Federate =  115
+DP_05 Federate =  0.4448656148013935
+DP_30 Federate =  0.38779824427572607
+DP_60 Federate =  0.3719483714206482
+DP_95 Federate =  0.40781938777423155
+QL Dynamic Federate = 0.3892601355377264
+QL Static  Federate = 0.40599376344971927
+
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((11, 1), (0, 1))
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Episode_Profit =  120
+DP_05 Profit =  60.34867852239134
+DP_30 Profit =  67.08211434158645
+DP_60 Profit =  70.01835439828487
+DP_95 Profit =  72.77029608184442
+QL Dynamic Profit = 68.50600546329991
+QL Static  Profit = 65.0028073633058
+
+Episode_Accept =  120
+DP_05 Accept =  0.5525919013355063
+DP_30 Accept =  0.6092399178976704
+DP_60 Accept =  0.6268934308390425
+DP_95 Accept =  0.59130128971671
+QL Dynamic Accept = 0.5972013545055059
+QL Static  Accept = 0.5489283247344323
+
+Episode_Federate =  120
+DP_05 Federate =  0.44740809866449377
+DP_30 Federate =  0.3907600821023295
+DP_60 Federate =  0.37310656916095736
+DP_95 Federate =  0.40869871028328997
+QL Dynamic Federate = 0.38807206099901675
+QL Static  Federate = 0.40301039023667573
+
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Episode_Profit =  125
+DP_05 Profit =  60.47387924706374
+DP_30 Profit =  67.11009490823608
+DP_60 Profit =  70.04983338171131
+DP_95 Profit =  72.80412790653452
+QL Dynamic Profit = 68.72546524739812
+QL Static  Profit = 64.20776541937641
+
+Episode_Accept =  125
+DP_05 Accept =  0.5546349301299237
+DP_30 Accept =  0.6102736593520383
+DP_60 Accept =  0.6271316434435501
+DP_95 Accept =  0.5917177017457991
+QL Dynamic Accept = 0.5953702775195353
+QL Static  Accept = 0.547160233909141
+
+Episode_Federate =  125
+DP_05 Federate =  0.44536506987007635
+DP_30 Federate =  0.38972634064796147
+DP_60 Federate =  0.3728683565564499
+DP_95 Federate =  0.4082822982542009
+QL Dynamic Federate = 0.39376799200963297
+QL Static  Federate = 0.3902820364363808
+
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Episode_Profit =  130
+DP_05 Profit =  60.577807808034024
+DP_30 Profit =  67.2175950813696
+DP_60 Profit =  70.12902013701505
+DP_95 Profit =  72.81039273543199
+QL Dynamic Profit = 68.9157537789
+QL Static  Profit = 64.74317617011052
+
+Episode_Accept =  130
+DP_05 Accept =  0.5565353837472709
+DP_30 Accept =  0.6121894930519572
+DP_60 Accept =  0.6293151554526003
+DP_95 Accept =  0.5924503620885684
+QL Dynamic Accept = 0.6012692724334984
+QL Static  Accept = 0.5515314183880601
+
+Episode_Federate =  130
+DP_05 Federate =  0.4434646162527292
+DP_30 Federate =  0.38781050694804264
+DP_60 Federate =  0.37068484454739975
+DP_95 Federate =  0.40754963791143156
+QL Dynamic Federate = 0.3866954765320649
+QL Static  Federate = 0.391030547775299
+
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((6, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((11, 1), (0, 1))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Episode_Profit =  135
+DP_05 Profit =  60.43278803756551
+DP_30 Profit =  67.11054973337217
+DP_60 Profit =  70.02297079186371
+DP_95 Profit =  72.76767113589399
+QL Dynamic Profit = 68.76847131228327
+QL Static  Profit = 64.59742263124616
+
+Episode_Accept =  135
+DP_05 Accept =  0.5533690490980758
+DP_30 Accept =  0.609752764853
+DP_60 Accept =  0.626390312838284
+DP_95 Accept =  0.5909972496192203
+QL Dynamic Accept = 0.5977230843026553
+QL Static  Accept = 0.5469858174661918
+
+Episode_Federate =  135
+DP_05 Federate =  0.4466309509019241
+DP_30 Federate =  0.390247235147
+DP_60 Federate =  0.3736096871617162
+DP_95 Federate =  0.40900275038077966
+QL Dynamic Federate = 0.3923636369115468
+QL Static  Federate = 0.3995936326592955
+
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((11, 2), (0, 1))
+Invalid random action
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Episode_Profit =  140
+DP_05 Profit =  60.38518942490059
+DP_30 Profit =  67.03749727205634
+DP_60 Profit =  70.04064549133541
+DP_95 Profit =  72.79681714515819
+QL Dynamic Profit = 69.18521248423295
+QL Static  Profit = 64.9492768037787
+
+Episode_Accept =  140
+DP_05 Accept =  0.5529585828207635
+DP_30 Accept =  0.6088969884533353
+DP_60 Accept =  0.6274318706049216
+DP_95 Accept =  0.5916544727627696
+QL Dynamic Accept = 0.5999687644606878
+QL Static  Accept = 0.5495946087444656
+
+Episode_Federate =  140
+DP_05 Federate =  0.4470414171792366
+DP_30 Federate =  0.3911030115466647
+DP_60 Federate =  0.3725681293950782
+DP_95 Federate =  0.40834552723723055
+QL Dynamic Federate = 0.3928209098902334
+QL Static  Federate = 0.39798289476022697
+
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Episode_Profit =  145
+DP_05 Profit =  60.626007065889674
+DP_30 Profit =  67.21586497299081
+DP_60 Profit =  70.13476721942888
+DP_95 Profit =  72.85719275531984
+QL Dynamic Profit = 68.94667027132708
+QL Static  Profit = 65.65518276148487
+
+Episode_Accept =  145
+DP_05 Accept =  0.5578091654750974
+DP_30 Accept =  0.6126290515556445
+DP_60 Accept =  0.6289838189201156
+DP_95 Accept =  0.5935647639516888
+QL Dynamic Accept = 0.6020805268859393
+QL Static  Accept = 0.5526301811768449
+
+Episode_Federate =  145
+DP_05 Federate =  0.4421908345249026
+DP_30 Federate =  0.3873709484443556
+DP_60 Federate =  0.37101618107988443
+DP_95 Federate =  0.40643523604831117
+QL Dynamic Federate = 0.38666377280579367
+QL Static  Federate = 0.4046170967652414
+
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Episode_Profit =  150
+DP_05 Profit =  60.53534940708476
+DP_30 Profit =  67.13163027461427
+DP_60 Profit =  70.08315289030992
+DP_95 Profit =  72.86047481324582
+QL Dynamic Profit = 69.13545779911412
+QL Static  Profit = 65.18847066559782
+
+Episode_Accept =  150
+DP_05 Accept =  0.5551804304375765
+DP_30 Accept =  0.6095226114856969
+DP_60 Accept =  0.6270454136517669
+DP_95 Accept =  0.5925363974976561
+QL Dynamic Accept = 0.602671010630364
+QL Static  Accept = 0.5562752773389372
+
+Episode_Federate =  150
+DP_05 Federate =  0.4448195695624235
+DP_30 Federate =  0.3904773885143032
+DP_60 Federate =  0.37295458634823325
+DP_95 Federate =  0.407463602502344
+QL Dynamic Federate = 0.38788905749053026
+QL Static  Federate = 0.39202980647893165
+
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((11, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 2), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Episode_Profit =  155
+DP_05 Profit =  60.51296657177418
+DP_30 Profit =  67.1593385785222
+DP_60 Profit =  70.1165105313381
+DP_95 Profit =  72.81853954226122
+QL Dynamic Profit = 69.3925544302657
+QL Static  Profit = 65.6280766288579
+
+Episode_Accept =  155
+DP_05 Accept =  0.5563312498940818
+DP_30 Accept =  0.611769593325001
+DP_60 Accept =  0.6291348721058171
+DP_95 Accept =  0.5927519456880195
+QL Dynamic Accept = 0.6044693247407644
+QL Static  Accept = 0.5530781423093962
+
+Episode_Federate =  155
+DP_05 Federate =  0.4436687501059181
+DP_30 Federate =  0.38823040667499886
+DP_60 Federate =  0.3708651278941829
+DP_95 Federate =  0.4072480543119807
+QL Dynamic Federate = 0.38662346965946237
+QL Static  Federate = 0.3994239459889146
+
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Episode_Profit =  160
+DP_05 Profit =  60.4964646696447
+DP_30 Profit =  67.09244339747741
+DP_60 Profit =  70.03803621063817
+DP_95 Profit =  72.81188361563444
+QL Dynamic Profit = 69.30885301473582
+QL Static  Profit = 65.5462462588639
+
+Episode_Accept =  160
+DP_05 Accept =  0.5553224627093942
+DP_30 Accept =  0.6104163573840409
+DP_60 Accept =  0.6270854401325892
+DP_95 Accept =  0.5921098672072125
+QL Dynamic Accept = 0.6040310900621157
+QL Static  Accept = 0.5575102492542193
+
+Episode_Federate =  160
+DP_05 Federate =  0.44467753729060583
+DP_30 Federate =  0.3895836426159594
+DP_60 Federate =  0.3729145598674109
+DP_95 Federate =  0.4078901327927877
+QL Dynamic Federate = 0.3863889474372333
+QL Static  Federate = 0.393779357614387
+
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Episode_Profit =  165
+DP_05 Profit =  60.47239892486908
+DP_30 Profit =  67.09511901537529
+DP_60 Profit =  70.05719884060883
+DP_95 Profit =  72.80443051699854
+QL Dynamic Profit = 69.23062852686292
+QL Static  Profit = 65.36177442447739
+
+Episode_Accept =  165
+DP_05 Accept =  0.5551660645358732
+DP_30 Accept =  0.6107109829683036
+DP_60 Accept =  0.6281405548953775
+DP_95 Accept =  0.5919581973187787
+QL Dynamic Accept = 0.6019472426474524
+QL Static  Accept = 0.5603850983041218
+
+Episode_Federate =  165
+DP_05 Federate =  0.4448339354641267
+DP_30 Federate =  0.38928901703169655
+DP_60 Federate =  0.37185944510462265
+DP_95 Federate =  0.40804180268122126
+QL Dynamic Federate = 0.38996491468886196
+QL Static  Federate = 0.38702447613114316
+
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((10, 3), (1, 0))
+Invalid random action
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((10, 3), (1, 0))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Invalid random action
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((9, 3), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Episode_Profit =  170
+DP_05 Profit =  60.42485894202391
+DP_30 Profit =  67.0452180266324
+DP_60 Profit =  70.0566032081212
+DP_95 Profit =  72.79126157765778
+QL Dynamic Profit = 69.27770262439306
+QL Static  Profit = 65.37125563241848
+
+Episode_Accept =  170
+DP_05 Accept =  0.553004596278474
+DP_30 Accept =  0.6084145903002532
+DP_60 Accept =  0.6267455781166429
+DP_95 Accept =  0.5907505963679883
+QL Dynamic Accept = 0.6030907978050848
+QL Static  Accept = 0.5538982061425708
+
+Episode_Federate =  170
+DP_05 Federate =  0.44699540372152596
+DP_30 Federate =  0.3915854096997469
+DP_60 Federate =  0.37325442188335684
+DP_95 Federate =  0.4092494036320115
+QL Dynamic Federate = 0.3878578398344755
+QL Static  Federate = 0.3992075994695064
+
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Invalid random action
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((10, 3), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((10, 0), (1, 0))
+Unknown state:  ((11, 0), (0, 1))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Episode_Profit =  175
+DP_05 Profit =  60.53120922864053
+DP_30 Profit =  67.14605442590418
+DP_60 Profit =  70.09274773319243
+DP_95 Profit =  72.82472085406057
+QL Dynamic Profit = 69.42640935527227
+QL Static  Profit = 66.00447204622445
+
+Episode_Accept =  175
+DP_05 Accept =  0.5550379629447049
+DP_30 Accept =  0.6099074872966235
+DP_60 Accept =  0.6275936745057041
+DP_95 Accept =  0.592434852278065
+QL Dynamic Accept = 0.6033990471648674
+QL Static  Accept = 0.5498937378632273
+
+Episode_Federate =  175
+DP_05 Federate =  0.4449620370552952
+DP_30 Federate =  0.39009251270337664
+DP_60 Federate =  0.37240632549429575
+DP_95 Federate =  0.40756514772193486
+QL Dynamic Federate = 0.3916579218252808
+QL Static  Federate = 0.4150292158856896
+
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((11, 1), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((11, 2), (0, 1))
+Invalid random action
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Episode_Profit =  180
+DP_05 Profit =  60.45690311837162
+DP_30 Profit =  67.20768754283746
+DP_60 Profit =  70.08189795331309
+DP_95 Profit =  72.8144621750165
+QL Dynamic Profit = 69.53814169710134
+QL Static  Profit = 65.86482744883483
+
+Episode_Accept =  180
+DP_05 Accept =  0.5547231055640158
+DP_30 Accept =  0.6112995573395472
+DP_60 Accept =  0.6278806224655018
+DP_95 Accept =  0.5922567763694502
+QL Dynamic Accept = 0.6056274641864529
+QL Static  Accept = 0.5489589982624463
+
+Episode_Federate =  180
+DP_05 Federate =  0.4452768944359841
+DP_30 Federate =  0.3887004426604528
+DP_60 Federate =  0.3721193775344982
+DP_95 Federate =  0.40774322363054977
+QL Dynamic Federate = 0.38849307296931335
+QL Static  Federate = 0.4125412966806059
+
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 0), (0, 1))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((10, 1), (1, 0))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((12, 1), (1, 0))
+Unknown state:  ((12, 1), (1, 0))
+Unknown state:  ((13, 1), (1, 0))
+Unknown state:  ((14, 1), (1, 0))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((11, 1), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((9, 2), (1, 0))
+Unknown state:  ((8, 2), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Episode_Profit =  185
+DP_05 Profit =  60.536047549084216
+DP_30 Profit =  67.11616809348436
+DP_60 Profit =  70.13916536383744
+DP_95 Profit =  72.81844406102724
+QL Dynamic Profit = 69.52220218173112
+QL Static  Profit = 66.10396433716278
+
+Episode_Accept =  185
+DP_05 Accept =  0.5556630336175928
+DP_30 Accept =  0.6106916877371035
+DP_60 Accept =  0.6291378880681754
+DP_95 Accept =  0.5921395110790876
+QL Dynamic Accept = 0.6061918394305388
+QL Static  Accept = 0.5628484306619805
+
+Episode_Federate =  185
+DP_05 Federate =  0.444336966382407
+DP_30 Federate =  0.38930831226289636
+DP_60 Federate =  0.3708621119318248
+DP_95 Federate =  0.4078604889209124
+QL Dynamic Federate = 0.38931874651755755
+QL Static  Federate = 0.39053242437466806
+
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((10, 1), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Episode_Profit =  190
+DP_05 Profit =  60.4448996717705
+DP_30 Profit =  67.10139262452451
+DP_60 Profit =  70.06272930908729
+DP_95 Profit =  72.8032375842504
+QL Dynamic Profit = 69.55205619637951
+QL Static  Profit = 65.70968947841116
+
+Episode_Accept =  190
+DP_05 Accept =  0.5535399073224491
+DP_30 Accept =  0.6094651521553875
+DP_60 Accept =  0.6271111884681466
+DP_95 Accept =  0.5917360738688094
+QL Dynamic Accept = 0.6055971941836584
+QL Static  Accept = 0.5537536101145544
+
+Episode_Federate =  190
+DP_05 Federate =  0.446460092677551
+DP_30 Federate =  0.39053484784461234
+DP_60 Federate =  0.37288881153185366
+DP_95 Federate =  0.4082639261311904
+QL Dynamic Federate = 0.3884081793006622
+QL Static  Federate = 0.3995605974285891
+
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 2), (0, 1))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Episode_Profit =  195
+DP_05 Profit =  60.47437997107986
+DP_30 Profit =  67.16279673117656
+DP_60 Profit =  70.08997645912483
+DP_95 Profit =  72.77147233954553
+QL Dynamic Profit = 69.41472316713417
+QL Static  Profit = 66.42654012193941
+
+Episode_Accept =  195
+DP_05 Accept =  0.554916943748374
+DP_30 Accept =  0.6106874789617703
+DP_60 Accept =  0.6278786317049849
+DP_95 Accept =  0.5912031889036315
+QL Dynamic Accept = 0.6038119118193083
+QL Static  Accept = 0.5674530237166029
+
+Episode_Federate =  195
+DP_05 Federate =  0.4450830562516259
+DP_30 Federate =  0.3893125210382295
+DP_60 Federate =  0.372121368295015
+DP_95 Federate =  0.4087968110963684
+QL Dynamic Federate = 0.38943969110255416
+QL Static  Federate = 0.38755651709782946
+
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (0, 1))
+Unknown state:  ((7, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 1), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 1), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((9, 0), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((10, 2), (0, 1))
+Unknown state:  ((8, 0), (1, 0))
+Unknown state:  ((8, 0), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((11, 2), (1, 0))
+Unknown state:  ((11, 2), (0, 1))
+Unknown state:  ((10, 2), (1, 0))
+Unknown state:  ((9, 0), (1, 0))
+Episode_Profit =  200
+DP_05 Profit =  60.53785104501274
+DP_30 Profit =  67.13566401136183
+DP_60 Profit =  70.08068628718847
+DP_95 Profit =  72.81446773621965
+QL Dynamic Profit = 69.61989572226469
+QL Static  Profit = 65.48194033448189
+
+Episode_Accept =  200
+DP_05 Accept =  0.5554321777264252
+DP_30 Accept =  0.6102558284526661
+DP_60 Accept =  0.6278970503827592
+DP_95 Accept =  0.5916710871285463
+QL Dynamic Accept = 0.606075503466456
+QL Static  Accept = 0.5572056034558908
+
+Episode_Federate =  200
+DP_05 Federate =  0.4445678222735749
+DP_30 Federate =  0.38974417154733404
+DP_60 Federate =  0.3721029496172407
+DP_95 Federate =  0.4083289128714535
+QL Dynamic Federate = 0.3891249865921638
+QL Static  Federate = 0.38951986993476173
+
+DONE!!!
