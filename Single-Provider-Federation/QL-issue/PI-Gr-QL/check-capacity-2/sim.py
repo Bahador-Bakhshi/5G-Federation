@@ -18,7 +18,7 @@ from Environment import debug, error, warning
 
 if __name__ == "__main__":
 
-    sim_time = 100
+    sim_time = 1500
 
     parser.parse_config("config.json")
 
@@ -28,17 +28,18 @@ if __name__ == "__main__":
 
     iterations = 5
     
-    i = 3
+    i = 0
 
     while i <= scale:
         Environment.domain.total_cpu = init_size + i * step
-        episode_num = 300 * (int (Environment.domain.total_cpu / 100) + 1)
-        #episode_num = 1000
+        #episode_num = 300 * (int (Environment.domain.total_cpu / 100) + 1)
         i += 1
+        
+        episode_num = 200 * i
 
-        #dp_policy_05 = DP.policy_iteration(0.005)
-        #dp_policy_30 = DP.policy_iteration(0.300)
-        #dp_policy_60 = DP.policy_iteration(0.600)
+        dp_policy_05 = DP.policy_iteration(0.005)
+        dp_policy_30 = DP.policy_iteration(0.300)
+        dp_policy_60 = DP.policy_iteration(0.600)
         dp_policy_95 = DP.policy_iteration(0.995)
     
         
@@ -52,17 +53,17 @@ if __name__ == "__main__":
             ql_policy = QL.qLearning(env, episode_num, 1)
         
         
-            demands = Environment.generate_req_set(sim_time * 5)
+            demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
 
-            #greedy_profit_00, greedy_accept_00, greedy_federate_00 = greedy_result(demands, 0.0, greedy_profit_00, greedy_accept_00, greedy_federate_00)
-            #greedy_profit_50, greedy_accept_50, greedy_federate_50 = greedy_result(demands, 0.5, greedy_profit_50, greedy_accept_50, greedy_federate_50)
+            greedy_profit_00, greedy_accept_00, greedy_federate_00 = greedy_result(demands, 0.0, greedy_profit_00, greedy_accept_00, greedy_federate_00)
+            greedy_profit_50, greedy_accept_50, greedy_federate_50 = greedy_result(demands, 0.5, greedy_profit_50, greedy_accept_50, greedy_federate_50)
             greedy_profit_100, greedy_accept_100, greedy_federate_100 = greedy_result(demands, 1.0, greedy_profit_100, greedy_accept_100, greedy_federate_100)
 
             
-            #dp_profit_05, dp_accept_05, dp_federate_05 = mdp_policy_result(demands, dp_policy_05, dp_profit_05, dp_accept_05, dp_federate_05)
-            #dp_profit_30, dp_accept_30, dp_federate_30 = mdp_policy_result(demands, dp_policy_30, dp_profit_30, dp_accept_30, dp_federate_30)
-            #dp_profit_60, dp_accept_60, dp_federate_60 = mdp_policy_result(demands, dp_policy_60, dp_profit_60, dp_accept_60, dp_federate_60)
+            dp_profit_05, dp_accept_05, dp_federate_05 = mdp_policy_result(demands, dp_policy_05, dp_profit_05, dp_accept_05, dp_federate_05)
+            dp_profit_30, dp_accept_30, dp_federate_30 = mdp_policy_result(demands, dp_policy_30, dp_profit_30, dp_accept_30, dp_federate_30)
+            dp_profit_60, dp_accept_60, dp_federate_60 = mdp_policy_result(demands, dp_policy_60, dp_profit_60, dp_accept_60, dp_federate_60)
             dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
             
             ql_profit, ql_accept, ql_federate = mdp_policy_result(demands, ql_policy, ql_profit, ql_accept, ql_federate)
