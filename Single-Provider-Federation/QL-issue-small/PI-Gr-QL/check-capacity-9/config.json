@@ -1,6 +1,6 @@
 {
 	"local":{
-		"total_cpu": 80,
+		"total_cpu": 1,
 		"ns_catalog":[
 			{
 				"id": 0,

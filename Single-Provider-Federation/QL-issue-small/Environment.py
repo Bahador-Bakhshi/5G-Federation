@@ -253,6 +253,8 @@ class Env:
                 error("Invalid action")
                 sys.exit()
 
+            req = self.arriaved_demand
+            self.arriaved_demand = None
             reward = 0
 
         elif action == Actions.accept: #accept

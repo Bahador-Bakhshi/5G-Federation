@@ -16,9 +16,9 @@ import parser
 
 def print_Q(Q):
     for s, s_a in Q.items():
-        pass
-        #debug("{}: {}".format(s, s_a))
-    #debug("*********************")
+        #pass
+        debug("{}: {}".format(s, s_a))
+    debug("*********************")
 
 def Q_change(Q, old_Q):
     total = 0
@@ -142,12 +142,12 @@ def qLearning(env, num_episodes, dynamic, alpha = 1.0, epsilon = 1.0, gamma = 1.
             # the probability distribution
             action_index = np.random.choice(np.arange(len(action_probabilities)), p = action_probabilities)
             action = Environment.Actions(action_index)
-            #debug("action =", action)
+            debug("action =", action)
 
             # take action and get reward, transit to next state
             next_state, reward, done = env.step(state, action)
 
-            #debug("next_state =", next_state, "reward =", reward, ", done =", done)
+            debug("next_state =", next_state, "reward =", reward, ", done =", done)
             
             # done is True if episode terminated
             if done:
