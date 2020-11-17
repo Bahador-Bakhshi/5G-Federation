@@ -91,34 +91,38 @@ def createEpsilonGreedyPolicy(Q, env):
     return policyFunction 
 
 
-def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0.5):
+def rLearning(env, num_episodes, dynamic, alpha = 0.05,  epsilon = 0.8, beta = 0.9):
     """
     Q-Learning algorithm: Off-policy TD control.
     Finds the optimal greedy policy while improving
-    following an epsilon-greedy policy
-    """
+    following an epsilon-greedy policy"""
 
     # Action value function
     # A nested dictionary that maps
     # state -> (action -> action-value).
     
-    Q = defaultdict(lambda: [0, 0, 0, 0])
+    Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
 
     # Create an epsilon greedy policy function
     # appropriately for environment action space
     policy = createEpsilonGreedyPolicy(Q, env)
     seen_states = set()
 
-    discount_factor = 0.0
+    rho = 1.0
 
     # For every episode
     for ith_episode in range(num_episodes):
 
         if(dynamic == 1):
             alpha = alpha * 0.99
+            #alpha =  0.99
             epsilon = epsilon * 0.99
+            #epsilon = 0.99
+        else:
+            #alpha = epsilon =  0.8
+            pass
 
-        debug("alpha = ", alpha, "epsilon = ", epsilon, "gamma = ", gamma)
+        debug("alpha = ", alpha, "epsilon = ", epsilon)
         
         #old_Q = copy_Q(Q)
         # Reset the environment and pick the first action
@@ -151,33 +155,28 @@ def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0
                 #print("Total Changes =", Q_change(Q, old_Q))
                 break
 
-            if Environment.is_active_state(state):
-                discount_factor = gamma
-            else:
-                discount_factor = 1.0
-                #discount_factor = gamma
 
             if Q[state][action] != -1 * np.inf:
                 # TD Update
                 best_next_action = np.argmax(Q[next_state])
                 debug("best_next_action = ", best_next_action)
 
-                if state == next_state: #and action == best_next_action:
-                    debug("the same")
-                else:
+                print("reward = ", reward, ", rho = ", rho, " Q = ", Q[next_state][best_next_action])
+                td_target = reward - rho + Q[next_state][best_next_action]
 
-                    if next_state in seen_states:
-                        td_target = reward + discount_factor * Q[next_state][best_next_action]
-                    else:
-                        td_target = reward
-    
-                    debug("td_target = ", td_target)
+                debug("td_target = ", td_target)
                 
-                    td_delta = td_target - Q[state][action]
-                    debug("td_delta = ", td_delta)
+                td_delta = td_target - Q[state][action]
+                debug("td_delta = ", td_delta)
 
-                    Q[state][action] += alpha * td_delta
-            
+                Q[state][action] += alpha * td_delta
+
+                current_best_action = np.argmax(Q[state])
+
+                if Q[state][action] == Q[state][current_best_action]:
+                    rho += beta * (reward - rho + Q[next_state][best_next_action] - Q[state][current_best_action])
+                
+                debug("rho = ", rho)
             else:
                 if reward != -1 * np.inf:
                     error("Error in invalid actions!!!")
@@ -205,8 +204,8 @@ if __name__ == "__main__":
  
 
     env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    ql_policy = qLearning(env, 10, 1)
+    rl_policy = rLearning(env, 1, 1)
     #debug("********* QL Policy ***********")
-    print_policy(ql_policy)
+    print_policy(rl_policy)
 
 

@@ -15,11 +15,11 @@ from DP import policy_iteration, print_policy
 
 
 def print_Q(Q):
-    debug("---------------------")
+    #debug("---------------------")
     for s, s_a in Q.items():
-        #pass
-        debug("{}: {}".format(s, s_a))
-    debug("*********************")
+        #debug("{}: {}".format(s, s_a))
+        pass
+    #debug("*********************")
 
 def Q_change(Q, old_Q):
     total = 0
@@ -95,14 +95,13 @@ def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0
     """
     Q-Learning algorithm: Off-policy TD control.
     Finds the optimal greedy policy while improving
-    following an epsilon-greedy policy
-    """
+    following an epsilon-greedy policy"""
 
     # Action value function
     # A nested dictionary that maps
     # state -> (action -> action-value).
     
-    Q = defaultdict(lambda: [0, 0, 0, 0])
+    Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
 
     # Create an epsilon greedy policy function
     # appropriately for environment action space
@@ -118,32 +117,32 @@ def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0
             alpha = alpha * 0.99
             epsilon = epsilon * 0.99
 
-        debug("alpha = ", alpha, "epsilon = ", epsilon, "gamma = ", gamma)
+        #debug("alpha = ", alpha, "epsilon = ", epsilon, "gamma = ", gamma)
         
         #old_Q = copy_Q(Q)
         # Reset the environment and pick the first action
         state = env.reset()
 
         for t in itertools.count():
-            debug("\nt =", t, "sate =", state)
+            #debug("\nt =", t, "sate =", state)
             print_Q(Q)
             seen_states.add(state)
-            debug("seen_states = ", seen_states)
+            #debug("seen_states = ", seen_states)
 
             # get probabilities of all actions from current state
             action_probabilities = policy(state, epsilon)
-            print("action_probabilities = ", action_probabilities)
+            #debug("action_probabilities = ", action_probabilities)
 
             # choose action according to
             # the probability distribution
             action_index = np.random.choice(np.arange(len(action_probabilities)), p = action_probabilities)
             action = Environment.Actions(action_index)
-            debug("selected action =", action)
+            #debug("selected action =", action)
 
             # take action and get reward, transit to next state
             next_state, reward, done = env.step(state, action)
 
-            debug("next_state =", next_state, "reward =", reward, ", done =", done)
+            #debug("next_state =", next_state, "reward =", reward, ", done =", done)
             
             # done is True if episode terminated
             if done:
@@ -160,21 +159,21 @@ def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0
             if Q[state][action] != -1 * np.inf:
                 # TD Update
                 best_next_action = np.argmax(Q[next_state])
-                debug("best_next_action = ", best_next_action)
+                #debug("best_next_action = ", best_next_action)
 
-                if state == next_state: #and action == best_next_action:
-                    debug("the same")
+                if state == next_state:
+                    pass
+
                 else:
-
                     if next_state in seen_states:
                         td_target = reward + discount_factor * Q[next_state][best_next_action]
                     else:
                         td_target = reward
-    
-                    debug("td_target = ", td_target)
+
+                    #debug("td_target = ", td_target)
                 
                     td_delta = td_target - Q[state][action]
-                    debug("td_delta = ", td_delta)
+                    #debug("td_delta = ", td_delta)
 
                     Q[state][action] += alpha * td_delta
             

@@ -268,7 +268,7 @@ def policy_evaluation(V, policy, all_states, gamma):
 def policy_improvment(V, policy, all_states, gamma):
     policy_stable = True
     for s in all_states:
-        debug("\n state = ", s)
+        #debug("\n state = ", s)
         old_action = policy[s]
         improve = np.zeros(Environment.total_actions)
         va = Environment.get_valid_actions(s)
@@ -283,7 +283,7 @@ def policy_improvment(V, policy, all_states, gamma):
                 #debug("V[ns] = ", V[ns])
              
                 improve[a] += (p[ns] * (r + gamma * V[ns]))
-            debug("\t improve[",a,"] = ", improve[a])
+            #debug("\t improve[",a,"] = ", improve[a])
         
         new_val = -1 * np.inf
         best_action = None
@@ -298,6 +298,7 @@ def policy_improvment(V, policy, all_states, gamma):
             policy_stable = False
 
     return policy_stable
+
 
 def state_tuple_to_num(tuple_states):
     index = 0

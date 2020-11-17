@@ -67,8 +67,8 @@ class Providers:
 class Actions(IntEnum):
     no_action = 0
     reject    = 1
-    federate  = 2
-    accept    = 3
+    accept    = 2
+    federate  = 3
 
 # Global Variables
 
@@ -145,6 +145,7 @@ def generate_req_set(time):
 
     result = req_set[:cut_num]
 
+    '''
     for cid in range(2):
         life = 0
         cnt = 0
@@ -157,7 +158,8 @@ def generate_req_set(time):
                 delay += r.st - last_st
                 last_st = r.st
 
-        #print("cid = ", cid,", cnt = ", cnt,", life = ", life / cnt, ", delay = ", delay / cnt)
+        print("cid = ", cid,", cnt = ", cnt,", life = ", life / cnt, ", delay = ", delay / cnt)
+    '''
 
     return result
 
@@ -178,7 +180,7 @@ class Env:
         self.events = []
 
     def start(self):
-        #debug("env start")
+        #debug("------------- env start ---------------")
         self.capacity = self.server_size
         self.alives = [0 for i in range(total_classes)]
         
@@ -220,145 +222,108 @@ class Env:
         current_capacity = compute_capacity(current_alives)
         
         if action == Actions.no_action:
-            #debug("no action, in fact it is departure")
-            index = -1
-            for i in range(len(current_requests)):
-                if current_requests[i] == -1:
-                    if index != -1:
-                        Error("Multiple departure")
-                        sys.exit()
-                    
-                    index = i
+            error("no_action")
+            sys.exit()
 
-            self.alives[index] -= 1
-            self.capacity += traffic_loads[index].service.cpu
-            reward = 0
+        req = self.arriaved_demand
+        count = 0
+        for i in range(len(current_requests)):
+            if current_requests[i] == -1:
+                error("Invalid state, both arrival and departure")
+                sys.exit()
 
-        elif action == Actions.reject: #reject
+            if current_requests[i] == 1:
+                count += 1
+            
+        if count > 1:
+            error("Error in requests = ", current_requests)
+            sys.exit()
+
+        if count == 0: #there is no requst to accept
+            error("Invalid action")
+            sys.exit()
+
+        if action == Actions.reject: #reject
             #debug("reject")
-            count = 0
-            for i in range(len(current_requests)):
-                if current_requests[i] == -1:
-                    error("Invalid state, both arrival and departure")
-                    sys.exit()
-
-                if current_requests[i] == 1:
-                    count += 1
-            
-            if count > 1:
-                error("Error in requests = ", current_requests)
-                sys.exit()
-
-            if count == 0: #there is no requst to accept
-                error("Invalid action")
-                sys.exit()
-
-            req = self.arriaved_demand
-            self.arriaved_demand = None
             reward = 0
-
-        elif action == Actions.accept: #accept
-            count = 0
-            for i in range(len(current_requests)):
-                if current_requests[i] == -1:
-                    error("Invalid state, both arrival and departure")
-                    sys.exit()
-
-                if current_requests[i] == 1:
-                    count += 1
-            
-            if count > 1:
-                error("Error in requests = ", current_requests)
-                sys.exit()
-
-            if count == 0: #there is no requst to accept
-                error("Invalid action")
-                sys.exit()
-
-            else:
-                req = self.arriaved_demand
-                self.arriaved_demand = None
-
-                #debug("Try to accept: req = ", req)
-
-                if self.capacity < req.w:
-                    #cannot accept
-                    #debug("\t cannot accept")a
-                    error("Erro in valid actions, cannot accept")
-                    sys.exit()
-                    reward = -1 * np.inf
-                else:
-                    #debug("\t accepted")
-                    reward = req.rev
-                    self.capacity -= req.w
-                    self.alives[req.class_id] += 1
-                    event = Event(0, req.dt, req) #add the departure event
-                    heapq.heappush(self.events, event)
         
         elif action == Actions.federate: #federate
             
-            count = 0
-            for i in range(len(current_requests)):
-                if current_requests[i] == -1:
-                    error("Invalid state, both arrival and departure")
-                    sys.exit()
+            #debug("Try to federate: req = ", req)
+            provider_domain = providers[0] # in this version, there is only one provider
+            #debug("\t federated")
 
-                if current_requests[i] == 1:
-                    count += 1
-            
-            if count > 1:
-                error("Error in requests = ", current_requests)
-                sys.exit()
+            reward = req.rev - provider_domain.federation_costs[traffic_loads[req.class_id].service]
 
-            if count == 0: #there is no requst to accept
-                error("Invalid action")
+        elif action == Actions.accept: #accept
+            #debug("Try to accept: req = ", req)
+            if self.capacity < req.w:
+                #cannot accept
+                #debug("\t cannot accept")a
+                error("Erro in valid actions, cannot accept")
                 sys.exit()
-            
             else:
-                req = self.arriaved_demand
-                self.arriaved_demand = None
-
-                #debug("Try to federate: req = ", req)
-
-                provider_domain = providers[0] # in this version, there is only one provider
-                #debug("\t federated")
-
-                reward = req.rev - provider_domain.federation_costs[traffic_loads[req.class_id].service]
-                #FIXME: update iner-domain link usage
-                #FIXME: update number of federated requests
-
+                #debug("\t accepted")
+                reward = req.rev
+                self.capacity -= req.w
+                self.alives[req.class_id] += 1
+                event = Event(0, req.dt, req) #add the departure event
+                heapq.heappush(self.events, event)
+        
         else:
             error("Unknown action")
             sys.exit()
 
-        next_state = None
-        #print_events(self.events)
+        
         if len(self.events) == 0:
             for i in range(len(self.alives)):
                 if self.alives[i] != 0:
                     error("bug in the last state")
                     sys.exit()
             
-            #next_state = (tuple([0 for i in range(total_classes)]), tuple([0 for i in range(total_classes)]))
+                #next_state = (tuple([0 for i in range(total_classes)]), tuple([0 for i in range(total_classes)]))
             done = 1
-            return next_state, reward, done 
+            return None, reward, done 
 
-        #generate the next state
         event = heapq.heappop(self.events)
+        #debug("event: time = ", event.time, ", type = ", event.event_type ,", req = ", event.req)
+        #debug("self.alives = ", self.alives)
+        #debug("event.req.class_id = ", event.req.class_id)
+
+        while event.event_type == 0: #departure, update the nework
+            #debug("Departure event")
+            self.capacity += event.req.w
+            self.alives[event.req.class_id] -= 1
+            #debug("self.alives = ", self.alives)
+
+            if len(self.events) == 0:
+                for i in range(len(self.alives)):
+                    if self.alives[i] != 0:
+                        error("bug in the last state")
+                        sys.exit()
+            
+                #next_state = (tuple([0 for i in range(total_classes)]), tuple([0 for i in range(total_classes)]))
+                done = 1
+                return None, reward, done 
+
+            event = heapq.heappop(self.events)
+            #debug("event: time = ", event.time, ", type = ", event.event_type ,", req = ", event.req)
+            #debug("self.alives = ", self.alives)
+            #debug("event.req.class_id = ", event.req.class_id)
+
+        if compute_capacity(self.alives) != self.capacity:
+            error("capacity error")
+            sys.exit()
+
+        self.arriaved_demand = None
+        next_state = None
         done = 0
-        debug("event: time = ", event.time, ", type = ", event.event_type ,", req = ", event.req)
 
-        if event.event_type == 0: #departure, update the nework
-            requests = [0 for i in range(total_classes)]
-            requests[event.req.class_id] = -1
-            next_state = (tuple(self.alives), tuple(requests))
-                
-        else: #new arrival
-            requests = [0 for i in range(total_classes)]
-            requests[event.req.class_id] = 1
-            self.arriaved_demand = event.req
+        requests = [0 for i in range(total_classes)]
+        requests[event.req.class_id] = 1
+        self.arriaved_demand = event.req
 
-            next_state = (tuple(self.alives), tuple(requests))
+        next_state = (tuple(self.alives), tuple(requests))
         
         #debug("************  env step *************")
         return next_state, reward, done
@@ -413,7 +378,8 @@ class Event:
         self.req = rq
 
     def __lt__(self, other):
-        return self.time <= other.time
+        return self.time < other.time
+
 
 def print_events(events):
     #debug("----------------------------")

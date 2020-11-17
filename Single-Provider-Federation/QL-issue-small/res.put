@@ -1,0 +1,32 @@
+
+* * ** *** ***** Local Domain ***** *** ** * *
+Total CPU:  1
+Services:
+	 ID: 0  CPU: 1  Revenue: 50
+	 ID: 1  CPU: 2  Revenue: 40
+
+* * ** *** ***** Loads ***** *** ** * *
+index =  0
+Service ID: 0 , cpu: 1 , revenue: 50 , lam: 5  mu: 5
+index =  1
+Service ID: 1 , cpu: 2 , revenue: 40 , lam: 5  mu: 2
+
+ state =  ((0, 0), (1, 0))
+	 improve[ Actions.reject ] =  4283.695108795343
+	 improve[ Actions.federate ] =  4293.695108795343
+	 improve[ Actions.accept ] =  4326.747469630793
+
+ state =  ((0, 0), (0, 1))
+	 improve[ Actions.reject ] =  4283.695108795343
+	 improve[ Actions.federate ] =  4319.695108795343
+
+ state =  ((1, 0), (1, 0))
+	 improve[ Actions.reject ] =  4276.747469630793
+	 improve[ Actions.federate ] =  4286.747469630793
+
+ state =  ((1, 0), (0, 1))
+	 improve[ Actions.reject ] =  4276.747469630793
+	 improve[ Actions.federate ] =  4312.747469630793
+
+ state =  ((1, 0), (-1, 0))
+	 improve[ Actions.no_action ] =  4283.695108795343
