@@ -9,7 +9,46 @@ warning = print
 error = print
 
 
-# Classes
+providers_num = 0
+
+class State:
+    local_domain = 0
+    domains_alives= []
+    arrivals_departures = ()
+
+    def __init__(self, tc_num):
+        self.domains_alives = [None] * (1 + providers_num) #1 for the local domain
+        for i in range(len(self.domains_alives)):
+            alives_tuple= (0,) * tc_num
+            self.domains_alives[i]=alives_tuple
+        
+        arrivals_list = [0] * tc_num
+        self.arrivals_departures = tuple(arrivals_list)
+
+    def __str__(self):
+        res = ""
+        res += "["
+        for i in range(len(self.domains_alives)):
+            res += "("
+            res += str(self.domains_alives[i])
+            res += ")"
+
+        res += "],"
+        res += str(self.arrivals_departures)
+        return res
+
+    def __eq__(self, other):
+        for i in range(len(self.domains_alives)):
+            for j in range(len(self.domains_alives[i])):
+                if self.domains_alives[i][j] != other.domains_alives[i][j]:
+                    return False
+        for i in range(len(self.arrivals_departures)):
+            if self.arrivals_departures[i] != other.arrivals_departures[i]:
+                return False
+        
+        return True
+
+
 class NFV_NS:
     nsid = 0
     cpu = 0
@@ -52,6 +91,7 @@ class Traffic_Load:
 
 class Providers:
     pid = 0
+    quota = 0
     federation_costs = None
 
     def __init__(self, pid):
@@ -169,16 +209,17 @@ def generate_req_set(time):
 
 class Env:
     action_space = None
-    server_size = 0
+    local_domain_capacity = 0
+    provider_domain_capacity = 0
     episode_len = 0
     capacity = 0
     demands = None
     events  = None
     arriaved_demand = None
 
-    def __init__(self, size, eplen):
+    def __init__(self, local_capacity, eplen):
         self.action_space = Actions
-        self.server_size  = size
+        self.local_domain_capacity  = local_capacity
         self.episode_len = eplen
         self.events = []
 
@@ -186,7 +227,7 @@ class Env:
         if verbose:
             debug("------------- env start ---------------")
         
-        self.capacity = self.server_size
+        self.capacity = self.local_domain_capacity
         self.alives = [0 for i in range(total_classes)]
         
         self.demands = generate_req_set(self.episode_len)
@@ -283,7 +324,7 @@ class Env:
                 #cannot accept
                 
                 if verbose:
-                    debug("\t cannot accept")a
+                    debug("\t cannot accept")
                 
                 error("Erro in valid actions, cannot accept")
                 sys.exit()
@@ -441,3 +482,6 @@ def compute_capacity(alives):
     return capacity
 
 
+if __name__ == "__main__":
+    s1 = State(4)
+    print(s1)
