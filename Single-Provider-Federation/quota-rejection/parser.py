@@ -22,6 +22,9 @@ def print_loads(loads):
 def print_providers(providers):
     debug("\n* * ** *** ***** Providers ***** *** ** * *")
     for p in providers:
+        if p == None:
+            continue
+
         debug("ID = ", p.pid)
         debug("Quota = ", p.quota)
         debug("Costs = ")
@@ -44,6 +47,7 @@ def parse_config(config_file):
 
     # Config providers
     Environment.providers = []
+    Environment.providers.append(None) #this is the placeholder for the local/consumer domain
     for p in config["providers"]:
         provider = Providers(p["provider_id"])
         provider.quota = p["quota"]
@@ -51,7 +55,7 @@ def parse_config(config_file):
             provider.add_fed_cost(costs["nsid"], costs["cost"])
         Environment.providers.append(provider)
 
-    Environment.providers_num = len(Environment.providers)
+    Environment.providers_num = len(Environment.providers) - 1
     print_providers(Environment.providers)
 
     # Config traffic loads

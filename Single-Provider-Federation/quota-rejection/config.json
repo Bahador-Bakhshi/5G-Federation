@@ -29,34 +29,14 @@
 					"cost": 4
 				}
 			]
-		},
-		{
-			"provider_id": 1,
-			"quota": 1,
-			"federation_costs":[
-				{
-					"nsid": 0,
-					"cost": 40
-				},
-				{
-					"nsid": 1,
-					"cost": 4
-				}
-			]
-		}	
-
+		}
 	],
 
 	"loads":[
 		{
 			"catalog_id": 0,
-			"lambda": 5,
-			"mu": 5
-		},
-		{
-			"catalog_id": 1,
-			"lambda": 5,
-			"mu": 5
+			"lambda": 1,
+			"mu": 2
 		}
 	]
 }

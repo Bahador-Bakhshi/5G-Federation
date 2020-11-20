@@ -48,6 +48,12 @@ class State:
         
         return True
 
+    def __hash__(self):
+        res = 0
+        for a in self.domains_alives:
+            res += hash(a)
+        res += hash(self.arrivals_departures)
+        return res
 
 class NFV_NS:
     nsid = 0
@@ -206,7 +212,7 @@ def generate_req_set(time):
 
     return result
 
-
+'''
 class Env:
     action_space = None
     local_domain_capacity = 0
@@ -410,18 +416,16 @@ class Env:
             debug("************  env step *************")
         
         return next_state, reward, done
-
+'''
 
 def is_active_state(state):
-    alives = state[0]
-    events = state[1]
+    events = state.arrivals_departures
 
     return True if (1 in events) else False
 
-
 def get_valid_actions(state):
-    alives = state[0]
-    events = state[1]
+    all_domains_alives = state.domains_alives.copy()
+    events = state.arrivals_departures 
     actions = []
 
     actives = 0
@@ -439,16 +443,26 @@ def get_valid_actions(state):
 
     else:
         actions.append(Actions.reject)
-        actions.append(Actions.federate)
-        tmp_alives = [0] * len(alives)
-        for i in range(len(tmp_alives)):
-            tmp_alives[i] = alives[i] + events[i]
         
-        if compute_capacity(tmp_alives) >= 0:
+        local_alives = [0] * len(all_domains_alives[State.local_domain])
+        for i in range(len(local_alives)):
+            local_alives[i] = all_domains_alives[State.local_domain][i] + events[i]
+        all_domains_alives[State.local_domain] = tuple(local_alives)
+       
+        if compute_capacity(State.local_domain, all_domains_alives) >= 0:
             actions.append(Actions.accept)
-  
+
+        provider_alives = [0] * len(all_domains_alives[1]) #There is only one provider domain
+        for i in range(len(provider_alives)):
+            provider_alives[i] = all_domains_alives[1][i] + events[i]
+        all_domains_alives[1] = tuple(provider_alives)
+         
+        if compute_capacity(1, all_domains_alives) >= 0:
+            actions.append(Actions.federate)
+
     if verbose:
-        debug("state =", state, ", Valid actions = ", actions)
+        debug("get_valid_actions: state =", state, ", Valid actions = ", actions)
+    
     return actions
 
 class Event:
@@ -474,8 +488,14 @@ def print_events(events):
         if verbose:
             debug("type = ", e.event_type ,", req = ", e.req)
 
-def compute_capacity(alives):
-    capacity = domain.total_cpu
+def compute_capacity(domain_index, all_domains_alives):
+    if domain_index == State.local_domain:
+        capacity = domain.total_cpu
+    else:
+        capacity = providers[domain_index].quota
+
+    alives = all_domains_alives[domain_index]
+    
     for i in range(total_classes):
         capacity -= alives[i] * traffic_loads[i].service.cpu
 

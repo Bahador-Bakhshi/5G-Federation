@@ -19,40 +19,69 @@ from Environment import debug, error, warning, verbose, State
 accuracy = 0.000000
 NM = -1000000
 
-def arrival_events(next_state_alives, arrival_index):
-    arrivals = [0] * len(next_state_alives)
+def arrival_events(all_domains_alives, arrival_index, base_prob):
+    arrivals = [0] * len(Environment.traffic_loads)
     arrivals[arrival_index] = 1
-    ns = (tuple(next_state_alives), tuple(arrivals))
-    total_rates = get_total_rates(next_state_alives)
+    ns = State(len(Environment.traffic_loads))
+    ns.domains_alives = all_domains_alives.copy()
+    ns.arrivals_departures = tuple(arrivals)
+
+    total_rates = get_total_rates(all_domains_alives)
     p = Environment.traffic_loads[arrival_index].lam / total_rates
+    p *= base_prob
     return {ns: p}
 
 
-def departure_events(next_state_alives, dep_index):
-    departures = [0] * len(next_state_alives)
+def departure_events(all_domains_alives, dep_index, base_prob):
+    total_dep_rate = 0.0
+    for d in range(len(all_domains_alives)):
+        total_dep_rate += all_domains_alives[d][dep_index]
+    
+    if total_dep_rate == 0:
+        return None
+
+    departures = [0] * len(Environment.traffic_loads)
     departures[dep_index] = -1
-    ns = (tuple(next_state_alives), tuple(departures))
-    total_rates = get_total_rates(next_state_alives)
-    p = (next_state_alives[dep_index] * Environment.traffic_loads[dep_index].mu) / total_rates
+    ns = State(len(Environment.traffic_loads))
+    ns.domains_alives = all_domains_alives.copy()
+    ns.arrivals_departures = tuple(departures)
+
+    total_rates = get_total_rates(all_domains_alives)
+    p = (total_dep_rate * Environment.traffic_loads[dep_index].mu) / total_rates
+    p *= base_prob
     return {ns: p}
 
 
-def get_total_rates(state_alives):
+def get_total_rates(all_domains_alives):
     
     total_rates = 0
-    for j in range(len(state_alives)):
+
+    for j in range(len(Environment.traffic_loads)):
         total_rates += Environment.traffic_loads[j].lam
-        total_rates += state_alives[j] * Environment.traffic_loads[j].mu
+
+    for d in range(len(all_domains_alives)):
+        for j in range(len(all_domains_alives[d])):
+            total_rates += all_domains_alives[d][j] * Environment.traffic_loads[j].mu
     
     return total_rates
+
+def print_trans_prob(p):
+    print("---------- transition probabilities -----------")
+    for s in p:
+        print(s,": ", p[s]) 
 
 
 def pr(state, action):
     prob = {}
-    alives = state[0]
-    events = state[1]
 
-    #debug("State = ", state, ", action = ", action)
+    domains_alives_list = []
+    domains_alives_rate = []
+
+    current_domains_alives = state.domains_alives.copy()
+    events = state.arrivals_departures
+
+    if verbose:
+        debug("State = ", state, ", action = ", action)
 
     active = 0
     for i in range(len(events)):
@@ -69,9 +98,21 @@ def pr(state, action):
 
         #debug("No action")
         reward = 0
-        new_state_alives = alives
-        new_state_alives = list(map(add, new_state_alives, events))
+        dep_index = np.argmin(events)
+        total_alives = 0.0
+        for d in range(len(current_domains_alives)):
+            total_alives += current_domains_alives[d][dep_index]
 
+        for d in range(len(current_domains_alives)):
+            if current_domains_alives[d][dep_index] > 0:
+                new_domains_alives = current_domains_alives.copy()
+                state_alives = new_domains_alives[d]
+                state_alives = tuple(map(add, state_alives, events))
+                new_domains_alives[d] = state_alives
+
+                domains_alives_list.append(new_domains_alives)
+                domains_alives_rate.append(current_domains_alives[d][dep_index] / total_alives)
+                
     elif action == Environment.Actions.reject:
         if not(1 in events):
             error("Error in actions reject")
@@ -79,29 +120,45 @@ def pr(state, action):
 
         #debug("Reject")
         reward = 0
-        new_state_alives = alives
-        
+
+        domains_alives_list.append(current_domains_alives)
+        domains_alives_rate.append(1.0)
+                
     elif action == Environment.Actions.accept:
         if not(1 in events):
             error("Error in actions accept")
             sys.exit()
 
         req_index = np.argmax(events)
-        capacity = Environment.compute_capacity(alives)
+        domain_index = State.local_domain
+        capacity = Environment.compute_capacity(domain_index, current_domains_alives)
             
-        #debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
+        if verbose:
+            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
 
         if capacity < Environment.traffic_loads[req_index].service.cpu:
-            #debug("Try to accept but no resource")
+            if verbose:
+                debug("Try to accept but no resource")
+            
             #cannot be accepted, it is like reject but -inf for reward
             reward = -1 * np.inf
-            new_state_alives = alives
 
+            domains_alives_list.append(current_domains_alives)
+            domains_alives_rate.append(1.0)
+        
         else:
-            #debug("Accepting")
+            if verbose:
+                debug("Accepting")
+            
             reward = Environment.traffic_loads[req_index].service.revenue
-            new_state_alives = alives
-            new_state_alives = list(map(add, new_state_alives, events))
+            new_domains_alives = current_domains_alives.copy()
+            domain_state_alives = new_domains_alives[State.local_domain]
+            domain_state_alives = tuple(map(add, domain_state_alives, events))
+            new_domains_alives[State.local_domain] = domain_state_alives
+
+            domains_alives_list.append(new_domains_alives)
+            domains_alives_rate.append(1.0)
+
 
     elif action == Environment.Actions.federate:
         if not(1 in events):
@@ -109,27 +166,55 @@ def pr(state, action):
             sys.exit()
 
         req_index = np.argmax(events)
-        capacity = Environment.compute_capacity(alives)
-            
-        #debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
-        #debug("In this version, Federation is always possible")
-        provider_domain = Environment.providers[0] # in this version, there is only one provider
-        reward = Environment.traffic_loads[req_index].service.revenue - provider_domain.federation_costs[Environment.traffic_loads[req_index].service]
 
-        new_state_alives = alives
+        #In this version, there is only one provider
+        domain_index = 1
+
+        capacity = Environment.compute_capacity(domain_index, current_domains_alives)
+            
+        if verbose:
+            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
+        
+        if capacity < Environment.traffic_loads[req_index].service.cpu:
+            if verbose:
+                debug("Try to federate but no resource")
+            
+            #cannot be accepted, it is like reject but -inf for reward
+            reward = -1 * np.inf
+            domains_alives_list.append(current_domains_alives)
+            domains_alives_rate.append(1.0)
+
+        else:
+            if verbose:
+                debug("Federating")
+ 
+            provider_domain = Environment.providers[domain_index] # in this version, there is only one provider
+            reward = Environment.traffic_loads[req_index].service.revenue - provider_domain.federation_costs[Environment.traffic_loads[req_index].service]
+
+            new_domains_alives = current_domains_alives.copy()
+            domain_state_alives = new_domains_alives[domain_index]
+            domain_state_alives = tuple(map(add, domain_state_alives, events))
+            new_domains_alives[domain_index] = domain_state_alives
+
+            domains_alives_list.append(new_domains_alives)
+            domains_alives_rate.append(1.0)
 
     else:
         error("Error: Unknown action")
         sys.exit()
 
 
-    for j in range(Environment.total_classes):
-        prob.update(arrival_events(new_state_alives, j))
+    for i in range(len(domains_alives_list)):
+        all_domains_alives = domains_alives_list[i]
+        base_prob = domains_alives_rate[i]
+
+        for j in range(Environment.total_classes):
+            prob.update(arrival_events(all_domains_alives, j, base_prob))
             
-    for j in range(Environment.total_classes):
-        if new_state_alives[j] > 0:
-            prob.update(departure_events(new_state_alives, j))
- 
+        for j in range(Environment.total_classes):
+            res = departure_events(all_domains_alives, j, base_prob)
+            if res != None:
+                prob.update(res)
 
     tp = 0
     for i in prob.keys():
@@ -146,9 +231,10 @@ def pr(state, action):
 
 
 def add_arrive_depart_events(all_domains_alives, domain_index, all_states):
-    print("---------- add_arrive_depart_events ----------")
-    print("\t all_domains_alives = ", all_domains_alives)
-    print("\t domain_index = ", domain_index)
+    if verbose:
+        debug("---------- add_arrive_depart_events ----------")
+        debug("\t all_domains_alives = ", all_domains_alives)
+        debug("\t domain_index = ", domain_index)
 
     tc_num = len(all_domains_alives[0])
     for i in range(tc_num):
@@ -227,11 +313,12 @@ def all_possible_alives(classes, capacity, index, alives, result):
         i += 1
 
 def rec_state_generate(all_domains_capacities, all_domains_alives, current_domain, classes, all_states):
-    print("----------- rec_state_generate ---------- ")
-    print("\t all_domains_capacities: ", all_domains_capacities)
-    print("\t all_domains_alives: ", all_domains_alives)
-    print("\t current_domain: ", current_domain)
-    print("\t all_states: ", all_states)
+    if verbose:
+        debug("----------- rec_state_generate ---------- ")
+        debug("\t all_domains_capacities: ", all_domains_capacities)
+        debug("\t all_domains_alives: ", all_domains_alives)
+        debug("\t current_domain: ", current_domain)
+        debug("\t all_states: ", all_states)
 
     if current_domain == Environment.providers_num:
         per_domain_state_generate(all_domains_capacities[current_domain], current_domain, classes, 0, all_domains_alives, all_states)
@@ -241,7 +328,8 @@ def rec_state_generate(all_domains_capacities, all_domains_alives, current_domai
     domain_possible_alives = []
     all_possible_alives(classes, all_domains_capacities[current_domain], 0, tmp_alives, domain_possible_alives)
 
-    print("\t all_possible_alives: ", domain_possible_alives)
+    if verbose:
+        debug("\t all_possible_alives: ", domain_possible_alives)
 
     for alive in domain_possible_alives:
         all_domains_alives[current_domain] = alive
@@ -257,7 +345,7 @@ def generate_all_states():
         if i == 0:
             pass
         else:
-            all_domains_capacities[i] = Environment.providers[i-1].quota
+            all_domains_capacities[i] = Environment.providers[i].quota
 
     all_domains_alives = [()] * (Environment.providers_num + 1)
     for i in range(Environment.providers_num + 1):
@@ -291,8 +379,8 @@ def print_V(V, all_s):
 def print_policy(policy):
     ##debug("**************************")
     print("**************************")
-    op = collections.OrderedDict(sorted(policy.items()))
-    for s in op:
+    #op = collections.OrderedDict(sorted(policy.items()))
+    for s in policy:
         ##debug(s, ": ", Environment.Actions(policy[s]))
         print(s, ": ", Environment.Actions(policy[s]))
     ##debug("----------------------------")
@@ -302,14 +390,13 @@ def print_policy(policy):
 def init_random_policy(policy, all_states):
     for s in all_states:
         va = Environment.get_valid_actions(s)
-        if len(va) == 1:
-            policy.update({s: Environment.Actions.no_action})
-        else:
-            action = np.random.randint(0, len(va)) 
-            policy.update({s: va[action]})
+        action = np.random.randint(0, len(va)) 
+        policy.update({s: va[action]})
 
-    #debug("Init random policy")
-    #print_policy(policy)
+    if verbose:
+        debug("------- Init random policy ----------")
+        print_policy(policy)
+    
 
 policy_iteration_accuracy = 0.0001
 def policy_evaluation(V, policy, all_states, gamma):
@@ -319,7 +406,9 @@ def policy_evaluation(V, policy, all_states, gamma):
             old_v = V[s]
             old_action = policy[s]
         
-            #debug("\n state = ", s, ", old_action = ", old_action, "old_v = ", old_v)
+            if verbose:
+                debug("\n state = ", s, ", old_action = ", old_action, "old_v = ", old_v)
+            
             va = Environment.get_valid_actions(s)
         
             if not(old_action in va):
@@ -328,8 +417,11 @@ def policy_evaluation(V, policy, all_states, gamma):
             
             new_v = 0
             p, r = pr(s, old_action)
-            #debug("\t p = ", p)
-            #debug("\t r = ", r)
+            
+            if verbose:
+                print_trans_prob(p)
+                debug("\t r = ", r)
+            
             for ns in p.keys():
                 if Environment.is_active_state(s):
                     new_v += (p[ns] * (r + gamma * V[ns]))
@@ -337,11 +429,15 @@ def policy_evaluation(V, policy, all_states, gamma):
                     new_v += (p[ns] * (r + V[ns]))
 
             V[s] = new_v
-            #debug("\t new_v = ", new_v)
+            
+            if verbose:
+                debug("\t new_v = ", new_v)
 
             diff = max(diff, abs(old_v - V[s]))
-
-        #debug("diff = ", diff)
+        
+        if verbose:
+            debug("diff = ", diff)
+        
         if diff < policy_iteration_accuracy:
             return
 
@@ -396,79 +492,52 @@ def state_tuple_to_num(tuple_states):
     return num_states, tuple_to_num, num_to_tuple
 
 
-def compute_Pr_R(states, actions, tuple_to_num, num_to_tuple, Actions):
-
-    Pr = [None] * len(states)
-    for s in states:
-        Pr[s] = [None] * len(actions)
-        for a in actions:
-            Pr[s][a] = [None] * len(states)
-            for ns in states:
-                Pr[s][a][ns] = 0
-    
-    R = [None] * len(states)
-    for s in states:
-        R[s] = [None] * len(actions)
-        for a in actions:
-            R[s][a] = NM
-
-    for s in states:
-        state_tuple = num_to_tuple[s]
-        va_tuple = Environment.get_valid_actions(state_tuple)
-        va = action_enum_to_num(va_tuple)
-        for a in va:
-            action_code = Actions(a)
-
-            p, r = pr(state_tuple, action_code)
-
-            R[s][a] = r
-
-            for ns_tuple in p.keys():
-                ns = tuple_to_num[ns_tuple]
-                Pr[s][a][ns] = p[ns_tuple] 
-    
-    return Pr, R
-
-
-'''
 def policy_iteration(gamma):
-    #V = defaultdict(lambda: np.random.uniform(100, 500))
     V = defaultdict(lambda: 0)
     policy = {}
     
-    all_possible_state = generate_all_states(Environment.domain.total_cpu, Environment.traffic_loads)
-    #debug("---------------  all_possible_state  --------------------------")
-    #debug(all_possible_state)
-    
+    all_possible_state = generate_all_states()
+    if verbose:
+        debug("---------------  all_possible_state  --------------------------")
+        print_states(all_possible_state)
+
     init_random_policy(policy, all_possible_state)
     
+    policy_evaluation(V, policy, all_possible_state, gamma)
+    
+    stable = policy_improvment(V, policy, all_possible_state, gamma)
+    
+    '''
     while True:
-        #debug("********** At Beginning ************")
-        #print_V(V, all_possible_state)
-        #print_policy(policy)
+        if verbose:
+            debug("********** At Beginning ************")
+            print_V(V, all_possible_state)
+            print_policy(policy)
         
         policy_evaluation(V, policy, all_possible_state, gamma)
-        
-        #debug("********** After Evaluation ************")
-        #print_V(V, all_possible_state)
-        #print_policy(policy)
+       
+        if verbose:
+            debug("********** After Evaluation ************")
+            print_V(V, all_possible_state)
+            print_policy(policy)
         
         stable = policy_improvment(V, policy, all_possible_state, gamma)
-        
-        #debug("********** After improve ************")
-        #print_V(V, all_possible_state)
-        #print_policy(policy)
+       
+        if verbose:
+            debug("********** After improve ************")
+            print_V(V, all_possible_state)
+            print_policy(policy)
 
         if stable == True:
             break
 
-
-    debug("********** DP Final ************")
-    print_V(V, all_possible_state)
-    print_policy(policy)
-
+    '''
+    if verbose:
+        debug("********** DP Final ************")
+        print_V(V, all_possible_state)
+        print_policy(policy)
+    
     return policy
-'''
 
 '''
 def value_iteration(gamma):
@@ -562,10 +631,7 @@ if __name__ == "__main__":
     gamma = 0.995
     parser.parse_config("config.json")
    
-    all_possible_state = generate_all_states()
-    print_states(all_possible_state)
-
-    #pi_policy = policy_iteration(gamma)
+    pi_policy = policy_iteration(gamma)
     
     ''' 
     init_size = 10
