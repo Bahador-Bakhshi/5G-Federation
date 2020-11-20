@@ -503,11 +503,6 @@ def policy_iteration(gamma):
 
     init_random_policy(policy, all_possible_state)
     
-    policy_evaluation(V, policy, all_possible_state, gamma)
-    
-    stable = policy_improvment(V, policy, all_possible_state, gamma)
-    
-    '''
     while True:
         if verbose:
             debug("********** At Beginning ************")
@@ -530,8 +525,7 @@ def policy_iteration(gamma):
 
         if stable == True:
             break
-
-    '''
+    
     if verbose:
         debug("********** DP Final ************")
         print_V(V, all_possible_state)

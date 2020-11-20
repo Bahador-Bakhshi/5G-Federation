@@ -130,6 +130,7 @@ class Request:
     dt  = 0
     rev = 0
     class_id = 0
+    deployed = -1 # adomain id
 
     def __init__(self, w, st, dt, rev, index):
         self.w  = w
@@ -139,7 +140,7 @@ class Request:
         self.class_id = index
 
     def __str__(self):
-        return "w = "+ str(self.w) +" st = "+ str(self.st) +" dt = "+ str(self.dt) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id)
+        return "w = "+ str(self.w) +" st = "+ str(self.st) +" dt = "+ str(self.dt) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed)
 
 
 def print_reqs(reqs):

@@ -9,8 +9,8 @@
 			},
 			{
 				"id": 1,
-				"cpu": 2,
-				"revenue": 40
+				"cpu": 1,
+				"revenue": 4
 			}
 		]
 	},
@@ -22,11 +22,11 @@
 			"federation_costs":[
 				{
 					"nsid": 0,
-					"cost": 40
+					"cost": 1
 				},
 				{
 					"nsid": 1,
-					"cost": 4
+					"cost": 1
 				}
 			]
 		}
@@ -36,7 +36,12 @@
 		{
 			"catalog_id": 0,
 			"lambda": 1,
-			"mu": 2
+			"mu": 20
+		},
+		{
+			"catalog_id": 1,
+			"lambda": 1,
+			"mu": 1
 		}
 	]
 }
