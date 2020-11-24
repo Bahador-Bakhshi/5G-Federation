@@ -377,13 +377,10 @@ def print_V(V, all_s):
 
 
 def print_policy(policy):
-    ##debug("**************************")
     print("**************************")
     #op = collections.OrderedDict(sorted(policy.items()))
     for s in policy:
-        ##debug(s, ": ", Environment.Actions(policy[s]))
         print(s, ": ", Environment.Actions(policy[s]))
-    ##debug("----------------------------")
     print("----------------------------")
 
 

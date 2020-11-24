@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = True
+verbose = False
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print
@@ -29,9 +29,7 @@ class State:
         res = ""
         res += "["
         for i in range(len(self.domains_alives)):
-            res += "("
             res += str(self.domains_alives[i])
-            res += ")"
 
         res += "],"
         res += str(self.arrivals_departures)
@@ -54,6 +52,7 @@ class State:
             res += hash(a)
         res += hash(self.arrivals_departures)
         return res
+
 
 class NFV_NS:
     nsid = 0
@@ -213,20 +212,24 @@ def generate_req_set(time):
 
     return result
 
-'''
+
 class Env:
     action_space = None
     local_domain_capacity = 0
     provider_domain_capacity = 0
     episode_len = 0
-    capacity = 0
+    current_local_capacity = 0
+    current_provider_capacity = 0
+    local_alives = None
+    provider_alives = None
     demands = None
     events  = None
     arriaved_demand = None
 
-    def __init__(self, local_capacity, eplen):
+    def __init__(self, local_capacity, provider_capacity, eplen):
         self.action_space = Actions
         self.local_domain_capacity  = local_capacity
+        self.provider_domain_capacity = provider_capacity
         self.episode_len = eplen
         self.events = []
 
@@ -234,8 +237,11 @@ class Env:
         if verbose:
             debug("------------- env start ---------------")
         
-        self.capacity = self.local_domain_capacity
-        self.alives = [0 for i in range(total_classes)]
+        self.current_local_capacity = self.local_domain_capacity
+        self.current_provider_capacity = self.provider_domain_capacity
+
+        self.local_alives = [0 for i in range(total_classes)]
+        self.provider_alives = [0 for i in range(total_classes)]
         
         self.demands = generate_req_set(self.episode_len)
         
@@ -250,16 +256,22 @@ class Env:
         if verbose:
             print_events(self.events)
         
+        # The first event
         event = heapq.heappop(self.events)
         
         if verbose:
             print_events(self.events)
 
-        self.active_reqs = [0 for i in range(total_classes)]
-        self.active_reqs[event.req.class_id] = 1
+        requests = [0 for i in range(total_classes)]
+        requests[event.req.class_id] = 1
         self.arriaved_demand = event.req
 
-        state = (tuple(self.alives), tuple(self.active_reqs))
+        state = State(len(traffic_loads))
+        state.domains_alives = [tuple(self.local_alives), tuple(self.provider_alives)]
+        state.arrivals_departures = tuple(requests)
+        
+        if verbose:
+            print("The first state = ", state)
 
         return state
 
@@ -278,12 +290,15 @@ class Env:
     def step(self, state, action):
         reward = 0
         if verbose:
-            debug("===========  env step ==================")
+            debug("============= env step: start  ================")
             debug("s = ", state, ", a = ", action)
         
-        current_alives = state[0]
-        current_requests = state[1]
-        current_capacity = compute_capacity(current_alives)
+        current_local_alives = state.domains_alives[0]
+        current_provider_alives = state.domains_alives[1]
+        current_requests = state.arrivals_departures
+
+        self.current_local_capacity = compute_capacity(0, state.domains_alives)
+        self.current_provider_capacity = compute_capacity(1, state.domains_alives)
         
         if action == Actions.no_action:
             error("no_action")
@@ -293,7 +308,7 @@ class Env:
         count = 0
         for i in range(len(current_requests)):
             if current_requests[i] == -1:
-                error("Invalid state, both arrival and departure")
+                error("Invalid state, departure event!!!")
                 sys.exit()
 
             if current_requests[i] == 1:
@@ -304,8 +319,9 @@ class Env:
             sys.exit()
 
         if count == 0: #there is no requst to accept
-            error("Invalid action")
+            error("Invalid state, no event!!!")
             sys.exit()
+
 
         if action == Actions.reject: #reject
             if verbose:
@@ -316,18 +332,30 @@ class Env:
             if verbose:
                 debug("Try to federate: req = ", req)
             
-            provider_domain = providers[0] # in this version, there is only one provider
+            if self.current_provider_capacity < req.w:
+                if verbose:
+                    debug("\t cannot accept")
+                
+                error("Erro in valid actions, cannot accept")
+                sys.exit()
             
-            if verbose:
-                debug("\t federated")
-
-            reward = req.rev - provider_domain.federation_costs[traffic_loads[req.class_id].service]
+            else:
+                if verbose:
+                    debug("\t federated")
+ 
+                provider_domain = providers[1] # in this version, there is only one provider
+                reward = req.rev - provider_domain.federation_costs[traffic_loads[req.class_id].service]
+                self.current_provider_capacity -= req.w
+                self.provider_alives[req.class_id] += 1
+                req.deployed = 1
+                event = Event(0, req.dt, req) #add the departure event
+                heapq.heappush(self.events, event)
 
         elif action == Actions.accept: #accept
             if verbose:
                 debug("Try to accept: req = ", req)
             
-            if self.capacity < req.w:
+            if self.current_local_capacity < req.w:
                 #cannot accept
                 
                 if verbose:
@@ -341,54 +369,63 @@ class Env:
                     debug("\t accepted")
                 
                 reward = req.rev
-                self.capacity -= req.w
-                self.alives[req.class_id] += 1
+                self.current_local_capacity -= req.w
+                self.local_alives[req.class_id] += 1
+                req.deployed = 0
                 event = Event(0, req.dt, req) #add the departure event
                 heapq.heappush(self.events, event)
         
         else:
             error("Unknown action")
             sys.exit()
-
         
         if len(self.events) == 0:
-            for i in range(len(self.alives)):
-                if self.alives[i] != 0:
-                    error("bug in the last state")
+            for i in range(len(self.local_alives)):
+                if self.local_alives[i] != 0:
+                    error("bug in the last state for local domain")
                     sys.exit()
             
-                if verbose:
-                    next_state = (tuple([0 for i in range(total_classes)]), tuple([0 for i in range(total_classes)]))
-            
+            for i in range(len(self.provider_alives)):
+                if self.provider_alives[i] != 0:
+                    error("bug in the last state for provider domain")
+                    sys.exit()
+
             done = 1
             return None, reward, done 
+
 
         event = heapq.heappop(self.events)
         
         if verbose:
             debug("event: time = ", event.time, ", type = ", event.event_type ,", req = ", event.req)
-            debug("self.alives = ", self.alives)
+            debug("self.local_alives = ", self.local_alives)
+            debug("self.provider_alives = ", self.provider_alives)
             debug("event.req.class_id = ", event.req.class_id)
 
         while event.event_type == 0: #departure, update the nework
             if verbose:
                 debug("Departure event")
-            
-            self.capacity += event.req.w
-            self.alives[event.req.class_id] -= 1
-            
+           
+            if event.req.deployed == 0:
+                self.current_local_capacity += event.req.w
+                self.local_alives[event.req.class_id] -= 1
+            elif event.req.deployed == 1:
+                self.current_provider_capacity += event.req.w
+                self.provider_alives[event.req.class_id] -= 1
+            else:
+                error("Wrong deployment")
+                sys.exit()
+
             if verbose:
-                debug("self.alives = ", self.alives)
+                debug("self.local_alives = ", self.local_alives)
+                debug("self.provider_alives = ", self.provider_alives)
 
             if len(self.events) == 0:
-                for i in range(len(self.alives)):
-                    if self.alives[i] != 0:
+                for i in range(len(self.local_alives)):
+                    if self.local_alives[i] != 0 or self.provider_alives[i]:
                         error("bug in the last state")
                         sys.exit()
             
-                if verbose:
-                    next_state = (tuple([0 for i in range(total_classes)]), tuple([0 for i in range(total_classes)]))
-                
                 done = 1
                 return None, reward, done 
 
@@ -396,11 +433,14 @@ class Env:
             
             if verbose:
                 debug("event: time = ", event.time, ", type = ", event.event_type ,", req = ", event.req)
-                debug("self.alives = ", self.alives)
+                debug("self.local_alives = ", self.local_alives)
+                debug("self.provider_alives = ", self.provider_alives)
                 debug("event.req.class_id = ", event.req.class_id)
 
-        if compute_capacity(self.alives) != self.capacity:
+  
+        if compute_capacity(0, [self.local_alives]) != self.current_local_capacity or compute_capacity(1, [0,self.provider_alives]) != self.current_provider_capacity:
             error("capacity error")
+            error("compute local = ", compute_capacity(0, [self.local_alives]), ", self.local = ", self.current_local_capacity, ", compute provider = ", compute_capacity(1, [0,self.provider_alives]), ", self.provider = ", self.current_provider_capacity)
             sys.exit()
 
         self.arriaved_demand = None
@@ -411,18 +451,22 @@ class Env:
         requests[event.req.class_id] = 1
         self.arriaved_demand = event.req
 
-        next_state = (tuple(self.alives), tuple(requests))
-        
+        next_state = State(len(traffic_loads))
+        next_state.domains_alives = [tuple(self.local_alives), tuple(self.provider_alives)]
+        next_state.arrivals_departures = tuple(requests)
+
         if verbose:
-            debug("************  env step *************")
+            debug("next_state = ", next_state)
+            debug("************  env step: end *************")
         
         return next_state, reward, done
-'''
+
 
 def is_active_state(state):
     events = state.arrivals_departures
 
     return True if (1 in events) else False
+
 
 def get_valid_actions(state):
     all_domains_alives = state.domains_alives.copy()
