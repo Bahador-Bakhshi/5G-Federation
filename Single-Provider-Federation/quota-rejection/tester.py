@@ -278,7 +278,6 @@ if __name__ == "__main__":
     
     i = 0
     
-    diff_count = 0
     while i <= scale:
         Environment.domain.total_cpu = init_size + i * step
         #episode_num = 300 * (int (Environment.domain.total_cpu / 100) + 1)
@@ -364,6 +363,5 @@ if __name__ == "__main__":
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
 
-print("diff_count = ", diff_count)
-print("DONE!!!")
+    print("DONE!!!")
 
