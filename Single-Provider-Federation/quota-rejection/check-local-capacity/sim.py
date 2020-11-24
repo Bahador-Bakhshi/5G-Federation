@@ -34,7 +34,7 @@ if __name__ == "__main__":
     
     init_size = 2
     step = 4
-    scale = 10
+    scale = 15
 
     iterations = 10
     
