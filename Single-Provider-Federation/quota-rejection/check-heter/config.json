@@ -35,7 +35,7 @@
 	"loads":[
 		{
 			"catalog_id": 0,
-			"lambda": 10,
+			"lambda": 5,
 			"mu": 4
 		},
 		{

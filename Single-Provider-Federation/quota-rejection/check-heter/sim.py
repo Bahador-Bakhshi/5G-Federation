@@ -32,11 +32,11 @@ if __name__ == "__main__":
     parser.parse_config("config.json")
 
     
-    init_size = .35
-    step = 0.065
-    scale = 10
+    init_size = 0.1
+    step = 0.1
+    scale = 9
 
-    iterations = 10
+    iterations = 20
     
     i = 0
     
@@ -47,11 +47,11 @@ if __name__ == "__main__":
         Environment.traffic_loads[1].mu = Environment.traffic_loads[0].mu * m
         Environment.domain.services[1].cpu = int(Environment.domain.services[0].cpu / m)
         Environment.domain.services[1].revenue = int(Environment.domain.services[0].revenue * m)
-        Environment.providers[1].federation_costs[Environment.domain.services[1]] = int(Environment.providers[1].federation_costs[Environment.domain.services[0]] / m)
+        Environment.providers[1].federation_costs[Environment.domain.services[1]] = int(Environment.providers[1].federation_costs[Environment.domain.services[0]] * m)
 
 
-        Environment.domain.total_cpu = int(0.4 * (((Environment.traffic_loads[0].lam / Environment.traffic_loads[0].mu) * Environment.domain.services[0].cpu) + ((Environment.traffic_loads[1].lam / Environment.traffic_loads[1].mu) * Environment.domain.services[1].cpu)))
-        Environment.providers[1].quota = int(Environment.domain.total_cpu * 0.5)
+        Environment.domain.total_cpu = int(0.7 * (((Environment.traffic_loads[0].lam / Environment.traffic_loads[0].mu) * Environment.domain.services[0].cpu) + ((Environment.traffic_loads[1].lam / Environment.traffic_loads[1].mu) * Environment.domain.services[1].cpu)))
+        Environment.providers[1].quota = int(Environment.domain.total_cpu * 0.3)
 
         #dp_policy_05 = DP.policy_iteration(0.005)
         #dp_policy_30 = DP.policy_iteration(0.300)
