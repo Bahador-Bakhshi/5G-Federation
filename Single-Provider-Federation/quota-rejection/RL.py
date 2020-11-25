@@ -71,6 +71,7 @@ def rLearning(env, num_episodes, dynamic, alpha = 0.2,  epsilon = 0.8, beta = 0.
         if(dynamic == 1):
             alpha = alpha * 0.99
             epsilon = epsilon * 0.99
+            beta = beta * 0.99
 
         if verbose:
             debug("alpha = ", alpha, "epsilon = ", epsilon)
