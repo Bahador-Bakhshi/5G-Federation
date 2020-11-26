@@ -62,7 +62,7 @@ for data in results:
     DP_60.append(DP_60_tmp)
     DP_95.append(DP_95_tmp)
     QL_09.append(QL_09_tmp)
-    QL_09.append(QL_09_tmp)
+    QL_05.append(QL_05_tmp)
     RL.append(RL_tmp)
 
 fig, ax = plt.subplots()
