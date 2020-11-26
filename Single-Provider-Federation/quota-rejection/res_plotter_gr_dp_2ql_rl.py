@@ -55,7 +55,7 @@ plt.ylabel(y_label)
 plt.plot(x, DP_95, label='DP', color='C4', linestyle='solid', linewidth=1)
 
 plt.plot(x, QL_09, label='QL-0.9', color='C5', linestyle='dashed', linewidth=1)
-plt.plot(x, QL_09, label='QL-0.5', color='C6', linestyle='dashed', linewidth=1)
+plt.plot(x, QL_05, label='QL-0.5', color='C6', linestyle='dashed', linewidth=1)
 plt.plot(x, RL, label='RL', color='C9', linestyle='-.', linewidth=1)
 
 #plt.plot(x, greedy_000, label='Greedy-0.0', color='C6', linestyle='dashdot', linewidth=1)
