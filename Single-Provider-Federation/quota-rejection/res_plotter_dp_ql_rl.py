@@ -38,6 +38,9 @@ fig, ax = plt.subplots()
 plt.grid(linestyle="--", linewidth=0.5)
 plt.xlabel(x_label)
 plt.ylabel(y_label)
+axes = plt.gca()
+axes.set_ylim([10,80])
+
 
 plt.plot(x, DP_95, label='DP', color='C4', linestyle='solid', linewidth=1)
 
