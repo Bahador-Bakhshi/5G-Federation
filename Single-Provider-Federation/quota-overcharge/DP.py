@@ -335,6 +335,7 @@ def rec_state_generate(all_domains_capacities, all_domains_alives, current_domai
 
 
 def generate_all_states():
+    Environment.seen_state_valid_actions = {}
     all_states = []
     
     all_domains_capacities = [0] * (Environment.providers_num + 1)

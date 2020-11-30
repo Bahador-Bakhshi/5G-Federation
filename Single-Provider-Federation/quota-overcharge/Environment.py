@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = True
+verbose = False
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print
@@ -197,7 +197,7 @@ def generate_req_set(time):
 
     return result
 
-'''
+
 class Env:
     action_space = None
     local_domain_capacity = 0
@@ -269,6 +269,9 @@ class Env:
         if verbose:
             debug("env reset")
         
+        global seen_state_valid_actions
+        seen_state_valid_actions = {}
+
         self.stop()
         return self.start()
     
@@ -319,10 +322,10 @@ class Env:
             
             if self.current_provider_capacity < req.w:
                 if verbose:
-                    debug("\t cannot accept")
+                    debug("\t There is not sufficient resource --> overcharging")
                 
-                error("Erro in valid actions, cannot accept")
-                sys.exit()
+                provider_domain = providers[1] # in this version, there is only one provider
+                reward = req.rev - (provider_domain.overcharge * provider_domain.federation_costs[traffic_loads[req.class_id].service])
             
             else:
                 if verbose:
@@ -445,7 +448,7 @@ class Env:
             debug("************  env step: end *************")
         
         return next_state, reward, done
-'''
+
 
 def is_active_state(state):
     events = state.arrivals_departures
@@ -453,7 +456,13 @@ def is_active_state(state):
     return True if (1 in events) else False
 
 
+seen_state_valid_actions = {}
+
 def get_valid_actions(state):
+
+    if state in seen_state_valid_actions:
+        return seen_state_valid_actions[state]
+
     all_domains_alives = state.domains_alives.copy()
     events = state.arrivals_departures 
     actions = []
@@ -497,6 +506,7 @@ def get_valid_actions(state):
     if verbose:
         debug("get_valid_actions: state =", state, ", Valid actions = ", actions)
     
+    seen_state_valid_actions[state] = actions
     return actions
 
 class Event:
