@@ -18,7 +18,7 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_time = 250
+    sim_time = 150
     episode_num = 100
 
     best_QL_alpha   = 0.9
@@ -36,9 +36,9 @@ if __name__ == "__main__":
     step = 0.3
     scale = 10
 
-    iterations = 10
+    iterations = 5
     
-    i = 0
+    i = 3
     
     lambda0 = Environment.traffic_loads[0].lam
     lambda1 = Environment.traffic_loads[1].lam
@@ -54,8 +54,8 @@ if __name__ == "__main__":
         #dp_policy_30 = DP.policy_iteration(0.300)
         #dp_policy_60 = DP.policy_iteration(0.600)
         dp_policy_95 = DP.policy_iteration(0.99)
-        print("------------ DP -------------")
-        DP.print_policy(dp_policy_95)
+        #print("------------ DP -------------")
+        #DP.print_policy(dp_policy_95)
     
         
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit_09 = ql_profit_05 = rl_profit = 0
@@ -67,16 +67,16 @@ if __name__ == "__main__":
             env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
             
             ql_policy_09 = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, best_QL_gamma)
-            print("---------- QL-0.9 --------------")
-            DP.print_policy(ql_policy_09)
+            #print("---------- QL-0.9 --------------")
+            #DP.print_policy(ql_policy_09)
         
             ql_policy_05 = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, 0.5)
-            print("---------- QL-0.5 --------------")
-            DP.print_policy(ql_policy_05)
+            #print("---------- QL-0.5 --------------")
+            #DP.print_policy(ql_policy_05)
         
             rl_policy = RL.rLearning(env, episode_num, 1, best_RL_alpha, best_RL_epsilon, best_RL_beta)
-            print("---------- RL --------------")
-            DP.print_policy(rl_policy)
+            #print("---------- RL --------------")
+            #DP.print_policy(rl_policy)
 
             demands = Environment.generate_req_set(sim_time)
             Environment.print_reqs(demands)
