@@ -18,7 +18,7 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_time = 150
+    sim_time = 80
     episode_num = 100
 
     best_QL_alpha   = 0.9
@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     iterations = 5
     
-    i = 3
+    i = 6
     
     lambda0 = Environment.traffic_loads[0].lam
     lambda1 = Environment.traffic_loads[1].lam
