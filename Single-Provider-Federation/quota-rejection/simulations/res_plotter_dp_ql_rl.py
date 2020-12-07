@@ -3,6 +3,7 @@
 import json
 from numpy import *
 import math
+import matplotlib
 import matplotlib.pyplot as plt
 import sys
 
@@ -33,6 +34,12 @@ for data in results:
     QL_05.append(data["QL_05"])
     RL.append(data["RL"])
 
+font = {
+        'weight' : 'bold',
+        'size'   : 12}
+
+matplotlib.rc('font', **font)
+plt.rcParams["axes.labelweight"] = "bold"
 
 fig, ax = plt.subplots()
 plt.grid(linestyle="--", linewidth=0.5)
