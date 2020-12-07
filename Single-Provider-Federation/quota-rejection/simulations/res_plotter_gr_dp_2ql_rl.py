@@ -52,7 +52,7 @@ plt.ylabel(y_label)
 #plt.plot(x, DP_05, label='DP-0.05', color='C1', linestyle='solid', linewidth=1)
 #plt.plot(x, DP_30, label='DP-0.30', color='C2', linestyle='solid', linewidth=1)
 #plt.plot(x, DP_60, label='DP-0.60', color='C3', linestyle='solid', linewidth=1)
-plt.plot(x, DP_95, label='DP', color='C4', linestyle='solid', linewidth=1)
+plt.plot(x, DP_95, label='DP', color='r', linestyle='solid', linewidth=2, marker = '*')
 
 plt.plot(x, QL_09, label='QL-0.9', color='C5', linestyle='dashed', linewidth=1)
 plt.plot(x, QL_05, label='QL-0.5', color='C6', linestyle='dashed', linewidth=1)
