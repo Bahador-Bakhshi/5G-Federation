@@ -48,12 +48,11 @@ plt.ylabel(y_label)
 axes = plt.gca()
 axes.set_ylim([45,75])
 
+plt.plot(x, DP_95, label='DP', color='k', linestyle='solid', linewidth=2, marker = '*')
 
-plt.plot(x, DP_95, label='DP', color='C4', linestyle='solid', linewidth=1)
-
-plt.plot(x, QL_09, label='QL-0.9', color='C5', linestyle='dashed', linewidth=1)
-plt.plot(x, QL_05, label='QL-0.5', color='C6', linestyle='dashed', linewidth=1)
-plt.plot(x, RL, label='RL', color='C9', linestyle='-.', linewidth=1)
+plt.plot(x, QL_09, label='QL-0.9', color='g', linestyle='dashed', linewidth=2, marker = 's')
+plt.plot(x, QL_05, label='QL-0.5', color='b', linestyle='dashed', linewidth=2, marker = 'D')
+plt.plot(x, RL, label='RL', color='r', linestyle='-.', linewidth=2, marker = 'o')
 
 plt.legend(loc='best', handlelength=4)
 
