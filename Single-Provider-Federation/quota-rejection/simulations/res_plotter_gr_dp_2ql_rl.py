@@ -54,7 +54,21 @@ plt.rcParams["axes.labelweight"] = "bold"
 
 fig, ax = plt.subplots()
 plt.grid(linestyle="--", linewidth=0.5)
-plt.xlabel(r'$\lambda$')
+
+if x_label == "episode":
+    plt.xlabel(r'$n$')
+elif x_label == "LC":
+    plt.xlabel(r'$LC$')
+elif x_label == "PC":
+    plt.xlabel(r'$PC$')
+elif x_label == "zeta":
+    plt.xlabel(r'$\zeta$')
+elif x_label == "l":
+    plt.xlabel(r'$\ell$')
+else:
+    print("Unknow axis X")
+    sys.exit(-1)
+
 plt.ylabel(y_label)
 
 plt.plot(x, DP_95, label='DP', color='k', linestyle='solid', linewidth=2, marker = '*')
