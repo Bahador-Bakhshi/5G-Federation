@@ -54,7 +54,7 @@ plt.rcParams["axes.labelweight"] = "bold"
 
 fig, ax = plt.subplots()
 plt.grid(linestyle="--", linewidth=0.5)
-plt.xlabel(x_label)
+plt.xlabel(r'$\lambda$')
 plt.ylabel(y_label)
 
 plt.plot(x, DP_95, label='DP', color='k', linestyle='solid', linewidth=2, marker = '*')
