@@ -18,8 +18,7 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_time = 250
-    episode_num = 100
+    sim_time = 1000
 
     best_QL_alpha   = 0.9
     best_QL_epsilon = 0.9
@@ -31,37 +30,30 @@ if __name__ == "__main__":
 
     parser.parse_config("config.json")
 
+    env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
+            
+    rl_policy = RL.rLearning(env, 30, 1, best_RL_alpha, best_RL_epsilon, best_RL_beta)
+
+    demands = Environment.generate_req_set(sim_time)
+ 
+    rl_profit = rl_accept = rl_federate = 0
+    rl_profit, rl_accept, rl_federate = mdp_policy_result(demands, rl_policy, rl_profit, rl_accept, rl_federate)
     
-    init_size = 0.0
-    step = 0.3
+    print("RL Profit = ", rl_profit)
+
+    '''   
+    init_size = 10
+    step = 20
     scale = 10
 
     iterations = 10
     
-    
-    org_fed_cost = [None for j in range(len(Environment.providers))]
-    for j in range(len(Environment.providers)):
-        if j == 0:
-            pass #local domain
-        else:
-            org_fed_cost[j] = {}
-            for k in Environment.domain.services:
-                org_fed_cost[j][k] = Environment.providers[j].federation_costs[k]
-    
     i = 0
-   
+    
     while i <= scale:
-        cost_scale = init_size + i * step
+        episode_num = init_size + i * step
         i += 1
 
-        for j in range(len(Environment.providers)):
-            if j == 0:
-                pass #local domain
-            else:
-                for k in Environment.domain.services:
-                    Environment.providers[j].federation_costs[k] = org_fed_cost[j][k] * cost_scale
- 
-        
         #dp_policy_05 = DP.policy_iteration(0.005)
         #dp_policy_30 = DP.policy_iteration(0.300)
         #dp_policy_60 = DP.policy_iteration(0.600)
@@ -69,6 +61,7 @@ if __name__ == "__main__":
         print("------------ DP -------------")
         DP.print_policy(dp_policy_95)
     
+        
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_09_profit = ql_05_profit = rl_profit = 0
         greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_09_accept = ql_05_accept = rl_accept = 0
         greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_09_federate = ql_05_federate = rl_federate = 0
@@ -84,7 +77,7 @@ if __name__ == "__main__":
             ql_05_policy = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, 0.5)
             print("---------- QL-0.5 --------------")
             DP.print_policy(ql_05_policy)
-       
+        
             rl_policy = RL.rLearning(env, episode_num, 1, best_RL_alpha, best_RL_epsilon, best_RL_beta)
             print("---------- RL --------------")
             DP.print_policy(rl_policy)
@@ -110,7 +103,7 @@ if __name__ == "__main__":
 
 
 
-        print("Scale_Profit = ", cost_scale)
+        print("Episode_Profit = ", episode_num)
         print("Greedy Profit 00  = ", greedy_profit_00 / iterations)
         print("Greedy Profit 50  = ", greedy_profit_50 / iterations)
         print("Greedy Profit 100 = ", greedy_profit_100 / iterations)
@@ -123,7 +116,7 @@ if __name__ == "__main__":
         print("RL Profit = ", rl_profit / iterations)
         print("", flush=True)
 
-        print("Scale_Accept = ", cost_scale)
+        print("Episode_Accept = ", episode_num)
         print("Greedy Accept 00 = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
         print("Greedy Accept 100 = ", greedy_accept_100 / iterations)
@@ -136,7 +129,7 @@ if __name__ == "__main__":
         print("RL Accept    = ", rl_accept / iterations)
         print("", flush=True)
 
-        print("Scale_Federate = ", cost_scale)
+        print("Episode_Federate = ", episode_num)
         print("Greedy Federate 00  = ", greedy_federate_00 / iterations)
         print("Greedy Federate 50  = ", greedy_federate_50 / iterations)
         print("Greedy Federate 100 = ", greedy_federate_100 / iterations)
@@ -148,6 +141,6 @@ if __name__ == "__main__":
         print("QL_05 Federate    = ", ql_05_federate / iterations)
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
-
+        '''
 print("DONE!!!")
-
+    

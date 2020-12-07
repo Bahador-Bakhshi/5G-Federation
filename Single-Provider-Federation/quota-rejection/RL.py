@@ -75,6 +75,9 @@ def rLearning(env, num_episodes, dynamic, alpha = 0.2,  epsilon = 0.8, beta = 0.
 
         if verbose:
             debug("alpha = ", alpha, "epsilon = ", epsilon)
+            
+        if ith_episode % 10 == 0:
+            print("t = ", ith_episode," rho = ", rho)
         
         # Reset the environment and pick the first action
         state = env.reset()
@@ -136,7 +139,8 @@ def rLearning(env, num_episodes, dynamic, alpha = 0.2,  epsilon = 0.8, beta = 0.
                     sys.exit()
 
             state = next_state
-    
+
+   
     final_policy = {}
     for i in Q:
         final_policy[i] = Environment.Actions(np.argmax(Q[i]))
