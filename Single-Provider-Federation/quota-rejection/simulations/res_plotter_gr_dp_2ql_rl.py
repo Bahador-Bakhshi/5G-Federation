@@ -52,15 +52,15 @@ plt.ylabel(y_label)
 #plt.plot(x, DP_05, label='DP-0.05', color='C1', linestyle='solid', linewidth=1)
 #plt.plot(x, DP_30, label='DP-0.30', color='C2', linestyle='solid', linewidth=1)
 #plt.plot(x, DP_60, label='DP-0.60', color='C3', linestyle='solid', linewidth=1)
-plt.plot(x, DP_95, label='DP', color='r', linestyle='solid', linewidth=2, marker = '*')
+plt.plot(x, DP_95, label='DP', color='k', linestyle='solid', linewidth=2, marker = '*')
 
-plt.plot(x, QL_09, label='QL-0.9', color='C5', linestyle='dashed', linewidth=1)
-plt.plot(x, QL_05, label='QL-0.5', color='C6', linestyle='dashed', linewidth=1)
-plt.plot(x, RL, label='RL', color='C9', linestyle='-.', linewidth=1)
+plt.plot(x, QL_09, label='QL-0.9', color='g', linestyle='dashed', linewidth=2, marker = 's')
+plt.plot(x, QL_05, label='QL-0.5', color='b', linestyle='dashed', linewidth=2, marker = 'D')
+plt.plot(x, RL, label='RL', color='r', linestyle='-.', linewidth=2, marker = 'o')
 
 #plt.plot(x, greedy_000, label='Greedy-0.0', color='C6', linestyle='dashdot', linewidth=1)
 #plt.plot(x, greedy_050, label='Greedy-0.5', color='C7', linestyle='dashdot', linewidth=1)
-plt.plot(x, greedy_100, label='Greedy', color='C8', linestyle='dashdot', linewidth=1)
+plt.plot(x, greedy_100, label='Greedy', color='y', linestyle='dashdot', linewidth=2, marker = '+')
 
 plt.legend(loc='best', handlelength=4)
 
