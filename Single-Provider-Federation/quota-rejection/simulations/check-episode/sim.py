@@ -35,7 +35,7 @@ if __name__ == "__main__":
     step = 20
     scale = 10
 
-    iterations = 10
+    iterations = 1
     
     i = 0
     
@@ -49,7 +49,6 @@ if __name__ == "__main__":
         dp_policy_95 = DP.policy_iteration(0.99)
         print("------------ DP -------------")
         DP.print_policy(dp_policy_95)
-    
         
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_09_profit = ql_05_profit = rl_profit = 0
         greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_09_accept = ql_05_accept = rl_accept = 0
