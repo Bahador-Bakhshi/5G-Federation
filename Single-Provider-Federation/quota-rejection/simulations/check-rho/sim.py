@@ -18,7 +18,7 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_time = 1000
+    sim_time = 10000
 
     best_QL_alpha   = 0.9
     best_QL_epsilon = 0.9
@@ -26,20 +26,22 @@ if __name__ == "__main__":
 
     best_RL_alpha   = 0.1
     best_RL_epsilon = 0.9
-    best_RL_beta    = 0.1
+    best_RL_beta    = 0.001
 
     parser.parse_config("config.json")
 
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
             
-    rl_policy = RL.rLearning(env, 30, 1, best_RL_alpha, best_RL_epsilon, best_RL_beta)
+    rl_policy = RL.rLearning(env, 1, 1, best_RL_alpha, best_RL_epsilon, best_RL_beta)
 
+    '''
     demands = Environment.generate_req_set(sim_time)
  
     rl_profit = rl_accept = rl_federate = 0
     rl_profit, rl_accept, rl_federate = mdp_policy_result(demands, rl_policy, rl_profit, rl_accept, rl_federate)
     
     print("RL Profit = ", rl_profit)
+    '''
 
     '''   
     init_size = 10

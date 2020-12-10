@@ -61,7 +61,6 @@ def rLearning(env, num_episodes, dynamic, alpha = 0.2,  epsilon = 0.8, beta = 0.
     # Create an epsilon greedy policy function
     # appropriately for environment action space
     policy = createEpsilonGreedyPolicy(Q, env)
-    seen_states = set()
 
     rho = 1.0
 
@@ -76,14 +75,10 @@ def rLearning(env, num_episodes, dynamic, alpha = 0.2,  epsilon = 0.8, beta = 0.
         if verbose:
             debug("alpha = ", alpha, "epsilon = ", epsilon)
             
-        if ith_episode % 10 == 0:
-            print("t = ", ith_episode," rho = ", rho)
-        
         # Reset the environment and pick the first action
         state = env.reset()
 
         for t in itertools.count():
-            seen_states.add(state)
             
             # get probabilities of all actions from current state
             action_probabilities = policy(state, epsilon)
@@ -105,45 +100,40 @@ def rLearning(env, num_episodes, dynamic, alpha = 0.2,  epsilon = 0.8, beta = 0.
                 break
 
 
-            if Q[state][action] != -1 * np.inf:
-                # TD Update
-                best_next_action = np.argmax(Q[next_state])
+            best_next_action = np.argmax(Q[next_state])
                 
-                if verbose:
-                    debug("best_next_action = ", best_next_action)
-                    debug("reward = ", reward, ", rho = ", rho, " Q = ", Q[next_state][best_next_action])
+            if verbose:
+                debug("best_next_action = ", best_next_action)
+                debug("reward = ", reward, ", rho = ", rho, " Q = ", Q[next_state][best_next_action])
                 
-                td_target = reward - rho + Q[next_state][best_next_action]
+            td_target = reward - rho + Q[next_state][best_next_action]
 
-                if verbose:
-                    debug("td_target = ", td_target)
+            if verbose:
+                debug("td_target = ", td_target)
                 
-                td_delta = td_target - Q[state][action]
+            td_delta = td_target - Q[state][action]
                 
-                if verbose:
-                    debug("td_delta = ", td_delta)
+            if verbose:
+                debug("td_delta = ", td_delta)
 
-                Q[state][action] += alpha * td_delta
+            Q[state][action] += alpha * td_delta
 
-                current_best_action = np.argmax(Q[state])
+            current_best_action = np.argmax(Q[state])
 
-                if Q[state][action] == Q[state][current_best_action]:
-                    rho += beta * (reward - rho + Q[next_state][best_next_action] - Q[state][current_best_action])
+            #if Q[state][action] == Q[state][current_best_action]:
+            if action == current_best_action:
+                rho += beta * (reward - rho + Q[next_state][best_next_action] - Q[state][current_best_action])
                 
-                if verbose:
-                    debug("rho = ", rho)
+            if verbose:
+                debug("rho = ", rho)
             
-            else:
-                if reward != -1 * np.inf:
-                    error("Error in invalid actions!!!")
-                    sys.exit()
-
             state = next_state
 
    
     final_policy = {}
     for i in Q:
         final_policy[i] = Environment.Actions(np.argmax(Q[i]))
+        #print("i = ", i," Q[i] = ", Q[i], " best = ", Q[i][final_policy[i]])
 
     return final_policy
 
