@@ -1,0 +1,64 @@
+{
+	"local":{
+		"capacities":[
+			1,
+			2,
+			3
+		],
+		"ns_catalog":[
+			{
+				"id": 0,
+				"resources":[
+					1,
+					2
+				],
+				"revenue": 100
+			},
+			{
+				"id": 1,
+				"resources":[
+					2,
+					1
+				],
+				"revenue": 20
+			}
+		]
+	},
+
+	"providers":[
+		{
+			"provider_id": 0,
+			"quotas": [
+				3,
+				2,
+				1
+			],
+			"overcharge": 3,
+			"federation_costs":[
+				{
+					"nsid": 0,
+					"cost": 20
+				},
+				{
+					"nsid": 1,
+					"cost": 3
+				}
+			]
+		}
+	],
+
+	"loads":[
+		{
+			"catalog_id": 0,
+			"lambda": 10,
+			"mu": 2
+		},
+		{
+			"catalog_id": 1,
+			"lambda": 5,
+			"mu": 0.5
+		}
+
+	]
+}
+
