@@ -10,7 +10,7 @@ from collections import defaultdict
 import Environment
 from Environment import debug, error, verbose
 import parser
-from DP import policy_iteration, print_policy
+#from DP import policy_iteration, print_policy
 
 
 def createEpsilonGreedyPolicy(Q, env): 

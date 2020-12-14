@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = True
+verbose = False
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print
@@ -134,22 +134,25 @@ total_actions = len(Actions)
 total_classes = 0
 
 class Request:
-    w   = 0
+    cap = None
     st  = 0
     dt  = 0
     rev = 0
     class_id = 0
-    deployed = -1 # adomain id
+    deployed = -1 # ID of the domain where the demand is deployed
 
-    def __init__(self, w, st, dt, rev, index):
-        self.w  = w
+    def __init__(self, st, dt, rev, index):
+        self.cap = []
         self.st = st
         self.dt = dt
         self.rev= rev
         self.class_id = index
 
+    def add_required_capacity(self, service):
+        self.cap = service.resources.copy()
+
     def __str__(self):
-        return "w = "+ str(self.w) +" st = "+ str(self.st) +" dt = "+ str(self.dt) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed)
+        return "w = "+ str(self.cap) +" st = "+ str(self.st) +" dt = "+ str(self.dt) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed)
 
 
 def print_reqs(reqs):
@@ -159,6 +162,14 @@ def print_reqs(reqs):
         pass
 
 
+def deploy_service(instance_num, service, domain_capacities):
+    for index in range(len(service.resources)):
+        domain_capacities[index] -= instance_num * service.resources[index]
+
+def depart_demand(service, domain_capacities):
+    for index in range(len(service.resources)):
+        domain_capacities[index] += service.resources[index]
+
 def generate_class_req_set(service, load, num, class_id):
     
     t = 0
@@ -167,7 +178,9 @@ def generate_class_req_set(service, load, num, class_id):
     for i in range(num):
         t += np.random.exponential(1.0 / load.lam)
         life = np.random.exponential(1.0 / load.mu)
-        all_req.append(Request(service.cpu, t, t + life, service.revenue, class_id))
+        req = Request(t, t + life, service.revenue, class_id)
+        req.add_required_capacity(traffic_loads[class_id].service)
+        all_req.append(req)
 
     return all_req
 
@@ -201,21 +214,21 @@ def generate_req_set(num):
 
 class Env:
     action_space = None
-    local_domain_capacity = 0
-    provider_domain_capacity = 0
+    local_domain_capacities = None
+    provider_domain_capacities = None
     episode_len = 0
-    current_local_capacity = 0
-    current_provider_capacity = 0
+    current_local_capacities = None 
+    current_provider_capacities = None
     local_alives = None
     provider_alives = None
     demands = None
     events  = None
     arriaved_demand = None
 
-    def __init__(self, local_capacity, provider_capacity, eplen):
+    def __init__(self, local_capacities, provider_capacities, eplen):
         self.action_space = Actions
-        self.local_domain_capacity  = local_capacity
-        self.provider_domain_capacity = provider_capacity
+        self.local_domain_capacities = local_capacities.copy()
+        self.provider_domain_capacities = provider_capacities.copy()
         self.episode_len = eplen
         self.events = []
 
@@ -223,8 +236,8 @@ class Env:
         if verbose:
             debug("------------- env start ---------------")
         
-        self.current_local_capacity = self.local_domain_capacity
-        self.current_provider_capacity = self.provider_domain_capacity
+        self.current_local_capacities = self.local_domain_capacities.copy()
+        self.current_provider_capacities = self.provider_domain_capacities.copy()
 
         self.local_alives = [0 for i in range(total_classes)]
         self.provider_alives = [0 for i in range(total_classes)]
@@ -281,14 +294,13 @@ class Env:
         if verbose:
             debug("============= env step: start  ================")
             debug("s = ", state, ", a = ", action)
+            debug("local_capacities = ", self.current_local_capacities)
+            debug("provider_capacities = ", self.current_provider_capacities)
         
         current_local_alives = state.domains_alives[0]
         current_provider_alives = state.domains_alives[1]
         current_requests = state.arrivals_departures
 
-        self.current_local_capacity = compute_capacity(0, state.domains_alives)
-        self.current_provider_capacity = compute_capacity(1, state.domains_alives)
-        
         if action == Actions.no_action:
             error("no_action")
             sys.exit()
@@ -321,7 +333,7 @@ class Env:
             if verbose:
                 debug("Try to federate: req = ", req)
             
-            if self.current_provider_capacity < req.w:
+            if not check_feasible_deployment(req, self.current_provider_capacities):
                 if verbose:
                     debug("\t There is not sufficient resource --> overcharging")
                 
@@ -334,7 +346,7 @@ class Env:
  
                 provider_domain = providers[1] # in this version, there is only one provider
                 reward = req.rev - provider_domain.federation_costs[traffic_loads[req.class_id].service]
-                self.current_provider_capacity -= req.w
+                update_capacities(req, self.current_provider_capacities, -1)
                 self.provider_alives[req.class_id] += 1
                 req.deployed = 1
                 event = Event(0, req.dt, req) #add the departure event
@@ -344,13 +356,18 @@ class Env:
             if verbose:
                 debug("Try to accept: req = ", req)
             
-            if self.current_local_capacity < req.w:
+            if not check_feasible_deployment(req, self.current_local_capacities):
                 #cannot accept
                 
                 if verbose:
                     debug("\t cannot accept")
                 
-                error("Erro in valid actions, cannot accept")
+                error("Error in valid actions, cannot accept")
+                error("req = ", req)
+                error("current_local_capacities = ", self.current_local_capacities)
+                error("state = ", state)
+                error("valid actions = ", get_valid_actions(state))
+
                 sys.exit()
             
             else:
@@ -358,7 +375,7 @@ class Env:
                     debug("\t accepted")
                 
                 reward = req.rev
-                self.current_local_capacity -= req.w
+                update_capacities(req, self.current_local_capacities, -1)
                 self.local_alives[req.class_id] += 1
                 req.deployed = 0
                 event = Event(0, req.dt, req) #add the departure event
@@ -396,10 +413,10 @@ class Env:
                 debug("Departure event")
            
             if event.req.deployed == 0:
-                self.current_local_capacity += event.req.w
+                update_capacities(event.req, self.current_local_capacities, 1)
                 self.local_alives[event.req.class_id] -= 1
             elif event.req.deployed == 1:
-                self.current_provider_capacity += event.req.w
+                update_capacities(event.req, self.current_provider_capacities, 1)
                 self.provider_alives[event.req.class_id] -= 1
             else:
                 error("Wrong deployment")
@@ -427,11 +444,6 @@ class Env:
                 debug("event.req.class_id = ", event.req.class_id)
 
   
-        if compute_capacity(0, [self.local_alives]) != self.current_local_capacity or compute_capacity(1, [0,self.provider_alives]) != self.current_provider_capacity:
-            error("capacity error")
-            error("compute local = ", compute_capacity(0, [self.local_alives]), ", self.local = ", self.current_local_capacity, ", compute provider = ", compute_capacity(1, [0,self.provider_alives]), ", self.provider = ", self.current_provider_capacity)
-            sys.exit()
-
         self.arriaved_demand = None
         next_state = None
         done = 0
@@ -446,8 +458,10 @@ class Env:
 
         if verbose:
             debug("next_state = ", next_state)
+            debug("local_capacities = ", self.current_local_capacities)
+            debug("provider_capacities = ", self.current_provider_capacities)
             debug("************  env step: end *************")
-        
+
         return next_state, reward, done
 
 
@@ -484,23 +498,11 @@ def get_valid_actions(state):
     else:
         actions.append(Actions.reject)
         
-        local_alives = [0] * len(all_domains_alives[State.local_domain])
-        for i in range(len(local_alives)):
-            local_alives[i] = all_domains_alives[State.local_domain][i] + events[i]
-        all_domains_alives[State.local_domain] = tuple(local_alives)
+        req_index = np.argmax(events)
        
-        if compute_capacity(State.local_domain, all_domains_alives) >= 0:
+        if can_be_deployed(1, req_index, State.local_domain, all_domains_alives):
             actions.append(Actions.accept)
 
-        '''
-        provider_alives = [0] * len(all_domains_alives[1]) #There is only one provider domain
-        for i in range(len(provider_alives)):
-            provider_alives[i] = all_domains_alives[1][i] + events[i]
-        all_domains_alives[1] = tuple(provider_alives)
-         
-        if compute_capacity(1, all_domains_alives) >= 0:
-            actions.append(Actions.federate)
-        '''
         # Federation is always possible
         actions.append(Actions.federate)
 
@@ -534,18 +536,40 @@ def print_events(events):
             debug("type = ", e.event_type ,", req = ", e.req)
 
 
-def compute_capacity(domain_index, all_domains_alives):
+def can_be_deployed(instance_num, req_index, domain_index, all_domains_alives):
     if domain_index == State.local_domain:
-        capacity = domain.total_cpu
+        capacities = domain.capacities.copy()
     else:
-        capacity = providers[domain_index].quota
+        capacities = providers[domain_index].quotas.copy()
+   
+    for index in range(len(all_domains_alives[domain_index])):
+        required_resources = traffic_loads[index].service.resources
+        for res_index in range(len(required_resources)):
+            capacities[res_index] -= required_resources[res_index] * all_domains_alives[domain_index][index]
 
-    alives = all_domains_alives[domain_index]
-    
-    for i in range(total_classes):
-        capacity -= alives[i] * traffic_loads[i].service.cpu
+    required_resources = traffic_loads[req_index].service.resources
+    for res_index in range(len(required_resources)):
+        capacities[res_index] -= required_resources[res_index] * instance_num
 
-    return capacity
+    for res_index in range(len(capacities)):
+        if capacities[res_index] < 0:
+            return False
+
+    return True
+
+
+def check_feasible_deployment(req, capacities):
+    for i in range(len(req.cap)):
+        if req.cap[i] > capacities[i]:
+            return False
+
+    return True
+
+
+def update_capacities(req, capacities, inc_dec):
+    for i in range(len(req.cap)):
+        capacities[i] += inc_dec * req.cap[i]
+
 
 
 if __name__ == "__main__":

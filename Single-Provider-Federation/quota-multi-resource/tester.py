@@ -12,27 +12,30 @@ import random
 import Environment
 import parser
 import DP
-from Environment import State, debug, error, warning, verbose
+from Environment import State, debug, error, warning, verbose, check_feasible_deployment, update_capacities
+
 
 def test_greedy_random_policy(demands, greediness):
     if verbose:
         debug("-------- test_greedy_random_policy -------")
+        Environment.print_reqs(demands)
     
     profit = 0
     accepted_num = 0
     federate_num = 0
     alive = []
-    local_capacity = Environment.domain.total_cpu
-    provider_capacity = Environment.providers[1].quota
+    local_capacities = Environment.domain.capacities.copy()
+    provider_capacities = Environment.providers[1].quotas.copy()
 
     for i in range(len(demands)):
         req = demands[i]
 
-        if local_capacity < 0 or local_capacity > Environment.domain.total_cpu or provider_capacity < 0 or provider_capacity > Environment.providers[1].quota:
-            error("local_capacity = ", local_capacity)
-            error("provider_capacity = ", provider_capacity)
-            error("Bug in capacity")
-            sys.exit()
+        for j in range(len(local_capacities)):
+            if local_capacities[j] < 0 or local_capacities[j] > Environment.domain.capacities[j] or provider_capacities[j] < 0 or provider_capacities[j] > Environment.providers[1].quotas[j]:
+                error("Bug in capacities")
+                error("local_capacity = ", local_capacities)
+                error("provider_capacity = ", provider_capacities)
+                sys.exit()
 
         t = req.st
        
@@ -41,9 +44,9 @@ def test_greedy_random_policy(demands, greediness):
             tmp_req = alive[j]
             if tmp_req.dt <= t:
                 if tmp_req.deployed == 0: #local domain
-                    local_capacity += tmp_req.w
+                    update_capacities(tmp_req, local_capacities, 1)
                 elif tmp_req.deployed == 1: #the provider # 1
-                    provider_capacity += tmp_req.w
+                    update_capacities(tmp_req, provider_capacities, 1)
                 else:
                     error("wrong deployment")
                     sys.exit(-1)
@@ -56,14 +59,14 @@ def test_greedy_random_policy(demands, greediness):
         if verbose:
             debug("\n")
             debug("current: ", req)
-            debug("local_capacity = ", local_capacity, "provider_capacity = ", provider_capacity)
+            debug("local_capacity = ", local_capacities, "provider_capacity = ", provider_capacities)
 
         action = None
         provider_domain = Environment.providers[1] # in this version, there is only one provider
     
-        if req.w <= local_capacity:
+        if check_feasible_deployment(req, local_capacities):
             action = Environment.Actions.accept
-        elif req.w <= provider_capacity:
+        elif check_feasible_deployment(req, provider_capacities):
             action = Environment.Actions.federate
         elif req.rev > provider_domain.overcharge*provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]:
             action = Environment.Actions.federate
@@ -79,32 +82,47 @@ def test_greedy_random_policy(demands, greediness):
             accepted_num += 1
             req.deployed = 0
             alive.append(req)
-            local_capacity -= req.w
+            update_capacities(req, local_capacities, -1)
 
         elif action == Environment.Actions.federate:
-            if req.w <= provider_capacity:
+            if check_feasible_deployment(req, provider_capacities):
                 profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
                 federate_num += 1
                 req.deployed = 1
                 alive.append(req)
-                provider_capacity -= req.w
+                update_capacities(req, provider_capacities, -1)
             else:
                 provider_domain = Environment.providers[1] # in this version, there is only one provider
                 profit += req.rev - provider_domain.overcharge * provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
+
  
+    while len(alive) > 0:
+        tmp_req = alive[0]
+        if tmp_req.deployed == 0: #local domain
+            update_capacities(tmp_req, local_capacities, 1)
+        elif tmp_req.deployed == 1: #the provider # 1
+            update_capacities(tmp_req, provider_capacities, 1)
+        else:
+            error("wrong deployment")
+            sys.exit(-1)
+
+        alive.remove(tmp_req)
+        tmp_req.deployed = -1
+
     return profit, accepted_num, federate_num
 
 
 def test_policy(demands, policy):
     if verbose:
         debug("--------- test_policy -------------")
+        Environment.print_reqs(demands)
     
     profit = 0
     accepted_num = 0
     federate_num = 0
     all_alives = []
-    local_capacity = Environment.domain.total_cpu
-    provider_capacity = Environment.providers[1].quota
+    local_capacities = Environment.domain.capacities.copy()
+    provider_capacities = Environment.providers[1].quotas.copy()
 
     for i in range(len(demands)):
         req = demands[i]
@@ -112,11 +130,12 @@ def test_policy(demands, policy):
         if verbose:
             debug("current: ", req)
 
-        if local_capacity < 0 or local_capacity > Environment.domain.total_cpu or provider_capacity < 0 or provider_capacity > Environment.providers[1].quota:
-            error("local_capacity = ", local_capacity)
-            error("provider_capacity = ", provider_capacity)
-            error("Bug in the capacity")
-            sys.exit()
+        for j in range(len(local_capacities)):
+            if local_capacities[j] < 0 or local_capacities[j] > Environment.domain.capacities[j] or provider_capacities[j] < 0 or provider_capacities[j] > Environment.providers[1].quotas[j]:
+                error("Bug in the capacity")
+                error("local_capacity = ", local_capacities)
+                error("provider_capacity = ", provider_capacities)
+                sys.exit()
 
         t = req.st
 
@@ -128,9 +147,9 @@ def test_policy(demands, policy):
             tmp_req = all_alives[j]
             if tmp_req.dt <= t:
                 if tmp_req.deployed == 0:
-                    local_capacity += tmp_req.w
+                    update_capacities(tmp_req, local_capacities, 1)
                 elif tmp_req.deployed == 1:
-                    provider_capacity += tmp_req.w
+                    update_capacities(tmp_req, provider_capacities, 1)
                 else:
                     error("wrong deployment")
                     sys.exit(-1)
@@ -147,7 +166,7 @@ def test_policy(demands, policy):
                 j += 1
        
         if verbose:
-            debug("local_capacity = ", local_capacity, "provider_capacity = ", provider_capacity)
+            debug("local_capacity = ", local_capacities, "provider_capacity = ", provider_capacities)
             debug("local_domain_alives = ", local_domain_alives)
             debug("provider_domain_alives = ", provider_domain_alives)
 
@@ -179,9 +198,9 @@ def test_policy(demands, policy):
             action = va[np.random.randint(0, len(va))]
 
         if action == Environment.Actions.accept:
-            if req.w > local_capacity:
+            if not check_feasible_deployment(req, local_capacities):
                 if random_action == False:
-                    error("Error: w = ", req.w, "local_capacity = ", local_capacity)
+                    error("Error: w = ", req.cap, "local_capacity = ", local_capacity)
                     sys.exit()
                 else:
                     error("Invalid random action")
@@ -194,12 +213,15 @@ def test_policy(demands, policy):
                 accepted_num += 1
                 req.deployed = 0
                 all_alives.append(req)
-                local_capacity -= req.w
+                update_capacities(req, local_capacities, -1)
 
         elif action == Environment.Actions.federate:
             provider_domain = Environment.providers[1] # in this version, there is only one provider
             
-            if req.w > provider_capacity:
+            if not check_feasible_deployment(req, provider_capacities):
+                if verbose:
+                    debug("overcharge")
+
                 profit += req.rev - provider_domain.overcharge * provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
 
             else:
@@ -210,7 +232,7 @@ def test_policy(demands, policy):
                 federate_num += 1
                 req.deployed = 1
                 all_alives.append(req)
-                provider_capacity -= req.w
+                update_capacities(req, provider_capacities, -1)
 
         elif action == Environment.Actions.reject:
             if verbose:
@@ -220,7 +242,22 @@ def test_policy(demands, policy):
             error("Error in Actions in Policy")
             error("action = ", action)
             sys.exit()
-        
+
+    while len(all_alives) > 0:
+        if verbose:
+            debug("all_alives = ", all_alives)
+
+        tmp_req = all_alives[0]
+        if tmp_req.deployed == 0:
+            update_capacities(tmp_req, local_capacities, 1)
+        elif tmp_req.deployed == 1:
+            update_capacities(tmp_req, provider_capacities, 1)
+        else:
+            error("wrong deployment")
+            sys.exit(-1)
+
+        all_alives.remove(tmp_req)
+        tmp_req.deployed = -1
 
     return profit, accepted_num, federate_num
 
@@ -249,7 +286,7 @@ def mdp_policy_result(demands, policy,  profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_time = 200
+    episode_len = 5000
     episode_num = 100
 
     best_QL_alpha   = 0.9
@@ -258,21 +295,20 @@ if __name__ == "__main__":
 
     best_RL_alpha   = 0.1
     best_RL_epsilon = 0.9
-    best_RL_beta    = 0.1
+    best_RL_beta    = 0.01
 
     parser.parse_config("config.json")
 
     
     init_size = 5
     step = 15
-    scale = 3
+    scale = 0
 
     iterations = 10
     
     i = 0
     
     while i <= scale:
-        Environment.domain.total_cpu = init_size + i * step
         i += 1
 
         #dp_policy_05 = DP.policy_iteration(0.005)
@@ -289,7 +325,7 @@ if __name__ == "__main__":
 
         for j in range(iterations):
             
-            env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
+            env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), episode_num)
             
             ql_09_policy = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, best_QL_gamma)
             print("---------- QL-0.9 --------------")
@@ -303,7 +339,7 @@ if __name__ == "__main__":
             print("---------- RL --------------")
             DP.print_policy(rl_policy)
 
-            demands = Environment.generate_req_set(sim_time)
+            demands = Environment.generate_req_set(episode_len)
             Environment.print_reqs(demands)
 
             #greedy_profit_00, greedy_accept_00, greedy_federate_00 = greedy_result(demands, 0.0, greedy_profit_00, greedy_accept_00, greedy_federate_00)
@@ -322,9 +358,7 @@ if __name__ == "__main__":
             
             rl_profit, rl_accept, rl_federate = mdp_policy_result(demands, rl_policy, rl_profit, rl_accept, rl_federate)
 
-
-
-        print("Capacity_Profit = ", Environment.domain.total_cpu)
+        #print("Capacity_Profit = ", Environment.domain.total_cpu)
         print("Greedy Profit 00  = ", greedy_profit_00 / iterations)
         print("Greedy Profit 50  = ", greedy_profit_50 / iterations)
         print("Greedy Profit 100 = ", greedy_profit_100 / iterations)
@@ -336,8 +370,8 @@ if __name__ == "__main__":
         print("QL_05 Profit = ", ql_05_profit / iterations)
         print("RL Profit = ", rl_profit / iterations)
         print("", flush=True)
-
-        print("Capacity_Accept = ", Environment.domain.total_cpu)
+        '''
+        #aprint("Capacity_Accept = ", Environment.domain.total_cpu)
         print("Greedy Accept 00 = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
         print("Greedy Accept 100 = ", greedy_accept_100 / iterations)
@@ -350,7 +384,7 @@ if __name__ == "__main__":
         print("RL Accept    = ", rl_accept / iterations)
         print("", flush=True)
 
-        print("Capacity_Federate = ", Environment.domain.total_cpu)
+        #print("Capacity_Federate = ", Environment.domain.total_cpu)
         print("Greedy Federate 00  = ", greedy_federate_00 / iterations)
         print("Greedy Federate 50  = ", greedy_federate_50 / iterations)
         print("Greedy Federate 100 = ", greedy_federate_100 / iterations)
@@ -362,7 +396,7 @@ if __name__ == "__main__":
         print("QL_05 Federate    = ", ql_05_federate / iterations)
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
-
+        '''
     print("DONE!!!")
 
 

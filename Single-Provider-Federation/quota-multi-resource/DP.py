@@ -129,12 +129,8 @@ def pr(state, action):
 
         req_index = np.argmax(events)
         domain_index = State.local_domain
-        capacity = Environment.compute_capacity(domain_index, current_domains_alives)
             
-        if verbose:
-            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
-
-        if capacity < Environment.traffic_loads[req_index].service.cpu:
+        if not Environment.can_be_deployed(1, req_index, domain_index, current_domains_alives):
             if verbose:
                 debug("Try to accept but no resource")
             
@@ -168,12 +164,7 @@ def pr(state, action):
         #In this version, there is only one provider
         domain_index = 1
 
-        capacity = Environment.compute_capacity(domain_index, current_domains_alives)
-            
-        if verbose:
-            debug("req_index = ", req_index, "capacity = ", capacity, "ws[req_index] = ", Environment.traffic_loads[req_index].service.cpu)
-        
-        if capacity < Environment.traffic_loads[req_index].service.cpu:
+        if not Environment.can_be_deployed(1, req_index, domain_index, current_domains_alives):
             if verbose:
                 debug("Try to federate but no resource, so overcharning")
             
@@ -264,17 +255,25 @@ def add_arrive_depart_events(all_domains_alives, domain_index, all_states):
                     all_states.append(state)
 
 
-def per_domain_state_generate(domain_capacity, domain_index, classes, current, all_domains_alives, all_states):
+def is_sufficient_resource(instance_num, service, domain_capacities):
+    for index in range(len(service.resources)):
+        if (service.resources[index] * instance_num) > domain_capacities[index]:
+            return False
+
+    return True
+
+
+def per_domain_state_generate(domain_capacities, domain_index, classes, current, all_domains_alives, all_states):
     if verbose:
         debug("------------------ per_domain_state_generate -----------------")
-        debug("Local capacity = ", domain_capacity)
+        debug("Local capacity = ", domain_capacities)
         debug("current = ", current)
         debug("alives   = ", all_domains_alives)
         debug("all_states = ", all_states)
    
     if current == len(classes) - 1:
         i = 0
-        while (classes[current].cpu * i <= domain_capacity):
+        while is_sufficient_resource(i, classes[current], domain_capacities):
             tmp_all_domains_alives = all_domains_alives.copy()
             alives_list = list(tmp_all_domains_alives[domain_index])
             alives_list[current] = i
@@ -285,30 +284,34 @@ def per_domain_state_generate(domain_capacity, domain_index, classes, current, a
         return
 
     i = 0
-    while classes[current].cpu * i <= domain_capacity:
+    while is_sufficient_resource(i, classes[current], domain_capacities):
         tmp_all_domains_alives = all_domains_alives.copy()
         alives_list = list(tmp_all_domains_alives[domain_index])
         alives_list[current] = i
         tmp_all_domains_alives[domain_index] = tuple(alives_list)
- 
-        per_domain_state_generate(domain_capacity - classes[current].cpu * i, domain_index, classes, current + 1, tmp_all_domains_alives, all_states)
+        tmp_domain_capacities = domain_capacities.copy()
+        Environment.deploy_service(i, classes[current], tmp_domain_capacities)
+        per_domain_state_generate(tmp_domain_capacities, domain_index, classes, current + 1, tmp_all_domains_alives, all_states)
         i += 1
 
 
-def all_possible_alives(classes, capacity, index, alives, result):
+def all_possible_alives(classes, capacities, index, alives, result):
     if index == len(classes) - 1:
         i = 0
-        while classes[index].cpu * i <= capacity:
+        while is_sufficient_resource(i, classes[index], capacities):
             tmp_alives = alives + (i,)
             result.append(tmp_alives)
             i += 1
         return
 
     i = 0
-    while classes[index].cpu * i <= capacity:
+    while is_sufficient_resource(i, classes[index], capacities):
         temp_alives = alives + (i,)
-        all_possible_alives(classes, capacity - classes[index].cpu * i, index + 1, temp_alives, result)
+        tmp_capacities = capacities.copy()
+        Environment.deploy_service(i, classes[index], tmp_capacities)
+        all_possible_alives(classes, tmp_capacities, index + 1, temp_alives, result)
         i += 1
+
 
 def rec_state_generate(all_domains_capacities, all_domains_alives, current_domain, classes, all_states):
     if verbose:
@@ -339,12 +342,12 @@ def generate_all_states():
     all_states = []
     
     all_domains_capacities = [None] * (Environment.providers_num + 1)
-    all_domains_capacities[0] = Environment.domain.capacities
+    all_domains_capacities[0] = Environment.domain.capacities.copy()
     for i in range (Environment.providers_num + 1):
         if i == 0:
             pass
         else:
-            all_domains_capacities[i] = Environment.providers[i].quotas
+            all_domains_capacities[i] = Environment.providers[i].quotas.copy()
 
     all_domains_alives = [()] * (Environment.providers_num + 1)
     for i in range(Environment.providers_num + 1):
@@ -543,50 +546,29 @@ if __name__ == "__main__":
     gamma = 0.995
     parser.parse_config("config.json")
    
-    all_possible_state = generate_all_states()
-    
-    #pi_policy = policy_iteration(gamma)
-    
-    ''' 
-    init_size = 10
-    step = 50
-    scale = 1
+    demand_num = 200
+    iterations = 1
+    scale = 0
 
     i = 0
-    sim_time = 100
     while i <= scale:
-        Environment.domain.total_cpu = init_size + i * step
         i += 1
        
         pi_policy = policy_iteration(gamma)
         print("------------- PI Policy -----------------")
         print_policy(pi_policy)
         
-        env = Environment.Env(Environment.domain.total_cpu, sim_time)
-        ql_policy = QL.qLearning(env, 100, 1)
-        print("------------- QL Policy -----------------")
-        print_policy(ql_policy)
-
-
         pi_profit = ql_profit = gr_profit = 0
-        iterations = 20
         for j in range(iterations):
         
-            demands = Environment.generate_req_set(5 * sim_time)
-            Environment.print_reqs(demands)
+            demands = Environment.generate_req_set(demand_num)
 
             p, a, f = test_policy(demands, pi_policy)
             pi_profit += p / float(len(demands))
 
-            p, a, f = test_policy(demands, ql_policy)
-            ql_profit += p / float(len(demands))
-
             p, a, f =  test_greedy_random_policy(demands, 1.0)
             gr_profit += p / float(len(demands))
 
-        print("Profit CPU = ", Environment.domain.total_cpu)
         print("PI Profit  = ", pi_profit / iterations)
-        print("QL Profit  = ", ql_profit / iterations)
         print("Gr Profit  = ", gr_profit / iterations) 
         print("", flush=True)
-    '''
