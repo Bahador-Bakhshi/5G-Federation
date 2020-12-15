@@ -53,12 +53,12 @@
 	"loads":[
 		{
 			"catalog_id": 0,
-			"lambda": 1,
+			"lambda": 0.001,
 			"mu": 0.002
 		},
 		{
 			"catalog_id": 1,
-			"lambda": 1,
+			"lambda": 0.001,
 			"mu": 20
 		}
 	]

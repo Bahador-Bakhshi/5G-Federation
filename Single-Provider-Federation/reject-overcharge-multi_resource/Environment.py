@@ -332,27 +332,32 @@ class Env:
             reward = 0
         
         elif action == Actions.federate: #federate
+            
             if verbose:
                 debug("Try to federate: req = ", req)
             
-            if not check_feasible_deployment(req, self.current_provider_capacities):
-                if verbose:
-                    debug("\t There is not sufficient resource --> overcharging")
-                
-                provider_domain = providers[1] # in this version, there is only one provider
-                reward = req.rev - (provider_domain.overcharge * provider_domain.federation_costs[traffic_loads[req.class_id].service])
+            provider_domain = providers[1] # in this version, there is only one provider
             
-            else:
+            if check_feasible_deployment(req, self.current_provider_capacities, 1):
                 if verbose:
                     debug("\t federated")
  
-                provider_domain = providers[1] # in this version, there is only one provider
                 reward = req.rev - provider_domain.federation_costs[traffic_loads[req.class_id].service]
                 update_capacities(req, self.current_provider_capacities, -1)
                 self.provider_alives[req.class_id] += 1
                 req.deployed = 1
                 event = Event(0, req.dt, req) #add the departure event
                 heapq.heappush(self.events, event)
+
+            elif check_feasible_deployment(req, self.current_provider_capacities, provider_domain.reject_threshold):
+                if verbose:
+                    debug("\t There is not sufficient resource --> overcharging")
+                
+                reward = req.rev - (provider_domain.overcharge * provider_domain.federation_costs[traffic_loads[req.class_id].service])
+            else:
+                error("Invalid federation, there is not any resource")
+                sys.exit(-1)
+
 
         elif action == Actions.accept: #accept
             if verbose:

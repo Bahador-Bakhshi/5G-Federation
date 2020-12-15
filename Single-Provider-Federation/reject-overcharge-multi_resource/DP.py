@@ -163,6 +163,33 @@ def pr(state, action):
 
         #In this version, there is only one provider
         domain_index = 1
+        provider_domain = Environment.providers[domain_index]
+
+        if Environment.can_be_deployed(1, req_index, domain_index, provider_domain.reject_threshold, current_domains_alives):
+            if verbose:
+                debug("Try to federate")
+            
+            federation_cost_scale = 0
+
+            if Environment.can_be_deployed(1, req_index, domain_index, 1, current_domains_alives):
+                federation_cost_scale = 1
+            else:
+                federation_cost_scale = provider_domain.overcharning
+            
+            reward = Environment.traffic_loads[req_index].service.revenue - provider_domain.federation_costs[Environment.traffic_loads[req_index].service] * federation_cost_scale
+
+            new_domains_alives = current_domains_alives.copy()
+            domain_state_alives = new_domains_alives[domain_index]
+            domain_state_alives = tuple(map(add, domain_state_alives, events))
+            new_domains_alives[domain_index] = domain_state_alives
+
+            domains_alives_list.append(new_domains_alives)
+            domains_alives_rate.append(1.0)
+        else:
+            error("Invalid federation, there is not any resource for federation")
+            sys.exit(-1)
+
+        '''
 
         if not Environment.can_be_deployed(1, req_index, domain_index, Environment.providers[domain_index].reject_threshold, current_domains_alives):
             error("Invalid action: cannot federate beyond the reject_threshold")
@@ -191,7 +218,7 @@ def pr(state, action):
 
             domains_alives_list.append(new_domains_alives)
             domains_alives_rate.append(1.0)
-
+        '''
     else:
         error("Error: Unknown action")
         sys.exit()
