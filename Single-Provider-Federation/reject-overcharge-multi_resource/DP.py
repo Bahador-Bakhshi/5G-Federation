@@ -586,17 +586,17 @@ if __name__ == "__main__":
     while i <= scale:
         i += 1
        
-        pi_policy = policy_iteration(gamma)
-        print("------------- PI Policy -----------------")
-        print_policy(pi_policy)
+        #pi_policy = policy_iteration(gamma)
+        #print("------------- PI Policy -----------------")
+        #print_policy(pi_policy)
         
         pi_profit = ql_profit = gr_profit = 0
         for j in range(iterations):
         
             demands = Environment.generate_req_set(demand_num)
 
-            p, a, f = test_policy(demands, pi_policy)
-            pi_profit += p / float(len(demands))
+            #p, a, f = test_policy(demands, pi_policy)
+            #pi_profit += p / float(len(demands))
 
             p, a, f =  test_greedy_random_policy(demands, 1.0)
             gr_profit += p / float(len(demands))

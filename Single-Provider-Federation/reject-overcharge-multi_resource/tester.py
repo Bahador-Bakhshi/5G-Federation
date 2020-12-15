@@ -15,6 +15,13 @@ import parser
 from Environment import State, debug, error, warning, verbose, check_feasible_deployment, update_capacities
 
 
+def should_not_overcharge(req, current_capacities, quotas, reject_threshold):
+    for i in range(len(req.cap)):
+        if current_capacities[i] - req.cap[i] < (reject_threshold - 1) * quotas[i]:
+            return False
+
+    return True
+
 def test_greedy_random_policy(demands, greediness):
     if verbose:
         debug("-------- test_greedy_random_policy -------")
@@ -24,14 +31,16 @@ def test_greedy_random_policy(demands, greediness):
     accepted_num = 0
     federate_num = 0
     alive = []
+    provider_domain = Environment.providers[1]
     local_capacities = Environment.domain.capacities.copy()
-    provider_capacities = Environment.providers[1].quotas.copy()
+    provider_capacities = provider_domain.quotas.copy()
+    provider_capacities = [x * provider_domain.reject_threshold for x in provider_capacities]
 
     for i in range(len(demands)):
         req = demands[i]
 
         for j in range(len(local_capacities)):
-            if local_capacities[j] < 0 or local_capacities[j] > Environment.domain.capacities[j] or provider_capacities[j] < 0 or provider_capacities[j] > Environment.providers[1].quotas[j]:
+            if local_capacities[j] < 0 or local_capacities[j] > Environment.domain.capacities[j] or provider_capacities[j] < 0 or provider_capacities[j] > provider_domain.quotas[j] * provider_domain.reject_threshold:
                 error("Bug in capacities")
                 error("local_capacity = ", local_capacities)
                 error("provider_capacity = ", provider_capacities)
@@ -64,13 +73,13 @@ def test_greedy_random_policy(demands, greediness):
         action = None
         provider_domain = Environment.providers[1] # in this version, there is only one provider
     
-        overcharging = 0
-        if check_feasible_deployment(req, local_capacities, 1):
+        overcharging = -1
+        if check_feasible_deployment(req, local_capacities):
             action = Environment.Actions.accept
-        elif check_feasible_deployment(req, provider_capacities, 1):
+        elif should_not_overcharge(req, provider_capacities, provider_domain.quotas, provider_domain.reject_threshold):
             action = Environment.Actions.federate
             overcharging = 0
-        elif check_feasible_deployment(req, provider_capacities,  provider_domain.reject_threshold):
+        elif check_feasible_deployment(req, provider_capacities):
             action = Environment.Actions.federate
             overcharging = 1
         else:
@@ -78,6 +87,7 @@ def test_greedy_random_policy(demands, greediness):
 
         if verbose:
             debug("action = ", action)
+            debug("overcharging = ", overcharging)
 
         if action == Environment.Actions.accept:
             #debug("accept")
@@ -88,15 +98,20 @@ def test_greedy_random_policy(demands, greediness):
             update_capacities(req, local_capacities, -1)
 
         elif action == Environment.Actions.federate:
-            if not overcharging:
-                profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
-                federate_num += 1
-                req.deployed = 1
-                alive.append(req)
-                update_capacities(req, provider_capacities, -1)
+            provider_domain = Environment.providers[1] # in this version, there is only one provider
+            federation_cost_scale = 0
+            
+            if overcharging:
+                federation_cost_scale = provider_domain.overcharge
             else:
-                provider_domain = Environment.providers[1] # in this version, there is only one provider
-                profit += req.rev - provider_domain.overcharge * provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
+                federation_cost_scale = 1
+
+            profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service] * federation_cost_scale
+            federate_num += 1
+            req.deployed = 1
+            alive.append(req)
+            update_capacities(req, provider_capacities, -1)
+        
         else: #reject
             pass
  
@@ -222,22 +237,23 @@ def test_policy(demands, policy):
         elif action == Environment.Actions.federate:
             provider_domain = Environment.providers[1] # in this version, there is only one provider
             
-            if check_feasible_deployment(req, provider_capacities, 1):
+            if check_feasible_deployment(req, provider_capacities, provider_domain.reject_threshold):
                 if verbose:
                     debug("federate")
+
+                federation_cost_scale = 0
+                if check_feasible_deployment(req, provider_capacities, 1):
+                    federation_cost_scale = 1
+                else:
+                    federation_cost_scale = provider_domain.overcharge
+
                 
-                profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
+                profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service] * federation_cost_scale
                 federate_num += 1
                 req.deployed = 1
                 all_alives.append(req)
                 update_capacities(req, provider_capacities, -1)
 
-            elif check_feasible_deployment(req, provider_capacities, provider_domain.reject_threshold):
-                if verbose:
-                    debug("overcharge")
-
-                profit += req.rev - provider_domain.overcharge * provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
-            
             else:
                 error("Invalid federation")
                 sys.exit(-1)

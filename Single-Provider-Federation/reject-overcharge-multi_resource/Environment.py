@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = False
+verbose = True
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print
@@ -568,9 +568,9 @@ def can_be_deployed(instance_num, req_index, domain_index, scale, all_domains_al
     return True
 
 
-def check_feasible_deployment(req, capacities, scale):
+def check_feasible_deployment(req, capacities):
     for i in range(len(req.cap)):
-        if req.cap[i] > capacities[i] * scale:
+        if req.cap[i] > capacities[i]:
             return False
 
     return True

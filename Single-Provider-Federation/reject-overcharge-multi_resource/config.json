@@ -35,8 +35,8 @@
 				2,
 				2
 			],
-			"overcharge": 4,
-			"reject_threshold": 1,
+			"overcharge": 1,
+			"reject_threshold": 3,
 			"federation_costs":[
 				{
 					"nsid": 0,
@@ -53,13 +53,13 @@
 	"loads":[
 		{
 			"catalog_id": 0,
-			"lambda": 0.001,
-			"mu": 0.002
+			"lambda": 10,
+			"mu": 0.2
 		},
 		{
 			"catalog_id": 1,
-			"lambda": 0.001,
-			"mu": 20
+			"lambda": 10,
+			"mu": 2
 		}
 	]
 }
