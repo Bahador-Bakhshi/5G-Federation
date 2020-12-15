@@ -14,7 +14,7 @@ import itertools
 import Environment
 import parser
 from Environment import debug, error, warning, verbose, State
-#from tester import test_policy, test_greedy_random_policy
+from tester import test_policy, test_greedy_random_policy
 
 def arrival_events(all_domains_alives, arrival_index, base_prob):
     arrivals = [0] * len(Environment.traffic_loads)
@@ -551,13 +551,8 @@ if __name__ == "__main__":
     gamma = 0.995
     parser.parse_config("config.json")
    
-    pi_policy = policy_iteration(gamma)
-    print("------------- PI Policy -----------------")
-    print_policy(pi_policy)
-        
-    '''
-    demand_num = 200
-    iterations = 1
+    demand_num = 2000
+    iterations = 10
     scale = 0
 
     i = 0
@@ -582,4 +577,3 @@ if __name__ == "__main__":
         print("PI Profit  = ", pi_profit / iterations)
         print("Gr Profit  = ", gr_profit / iterations) 
         print("", flush=True)
-    '''

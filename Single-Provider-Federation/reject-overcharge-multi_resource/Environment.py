@@ -563,9 +563,9 @@ def can_be_deployed(instance_num, req_index, domain_index, scale, all_domains_al
     return True
 
 
-def check_feasible_deployment(req, capacities):
+def check_feasible_deployment(req, capacities, scale):
     for i in range(len(req.cap)):
-        if req.cap[i] > capacities[i]:
+        if req.cap[i] > capacities[i] * scale:
             return False
 
     return True

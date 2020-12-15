@@ -11,7 +11,7 @@ import itertools
 import random
 import Environment
 import parser
-import DP
+#import DP
 from Environment import State, debug, error, warning, verbose, check_feasible_deployment, update_capacities
 
 
@@ -64,12 +64,15 @@ def test_greedy_random_policy(demands, greediness):
         action = None
         provider_domain = Environment.providers[1] # in this version, there is only one provider
     
-        if check_feasible_deployment(req, local_capacities):
+        overcharging = 0
+        if check_feasible_deployment(req, local_capacities, 1):
             action = Environment.Actions.accept
-        elif check_feasible_deployment(req, provider_capacities):
+        elif check_feasible_deployment(req, provider_capacities, 1):
             action = Environment.Actions.federate
-        elif req.rev > provider_domain.overcharge*provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]:
+            overcharging = 0
+        elif check_feasible_deployment(req, provider_capacities,  provider_domain.reject_threshold):
             action = Environment.Actions.federate
+            overcharging = 1
         else:
             action = Environment.Actions.reject
 
@@ -85,7 +88,7 @@ def test_greedy_random_policy(demands, greediness):
             update_capacities(req, local_capacities, -1)
 
         elif action == Environment.Actions.federate:
-            if check_feasible_deployment(req, provider_capacities):
+            if not overcharging:
                 profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
                 federate_num += 1
                 req.deployed = 1
@@ -94,7 +97,8 @@ def test_greedy_random_policy(demands, greediness):
             else:
                 provider_domain = Environment.providers[1] # in this version, there is only one provider
                 profit += req.rev - provider_domain.overcharge * provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
-
+        else: #reject
+            pass
  
     while len(alive) > 0:
         tmp_req = alive[0]
@@ -198,7 +202,7 @@ def test_policy(demands, policy):
             action = va[np.random.randint(0, len(va))]
 
         if action == Environment.Actions.accept:
-            if not check_feasible_deployment(req, local_capacities):
+            if not check_feasible_deployment(req, local_capacities, 1):
                 if random_action == False:
                     error("Error: w = ", req.cap, "local_capacity = ", local_capacity)
                     sys.exit()
@@ -218,22 +222,26 @@ def test_policy(demands, policy):
         elif action == Environment.Actions.federate:
             provider_domain = Environment.providers[1] # in this version, there is only one provider
             
-            if not check_feasible_deployment(req, provider_capacities):
-                if verbose:
-                    debug("overcharge")
-
-                profit += req.rev - provider_domain.overcharge * provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
-
-            else:
+            if check_feasible_deployment(req, provider_capacities, 1):
                 if verbose:
                     debug("federate")
-            
+                
                 profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
                 federate_num += 1
                 req.deployed = 1
                 all_alives.append(req)
                 update_capacities(req, provider_capacities, -1)
 
+            elif check_feasible_deployment(req, provider_capacities, provider_domain.reject_threshold):
+                if verbose:
+                    debug("overcharge")
+
+                profit += req.rev - provider_domain.overcharge * provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
+            
+            else:
+                error("Invalid federation")
+                sys.exit(-1)
+ 
         elif action == Environment.Actions.reject:
             if verbose:
                 debug("reject")
