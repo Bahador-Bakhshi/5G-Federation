@@ -14,7 +14,7 @@ import itertools
 import Environment
 import parser
 from Environment import debug, error, warning, verbose, State
-from tester import test_policy, test_greedy_random_policy
+#from tester import test_policy, test_greedy_random_policy
 
 def arrival_events(all_domains_alives, arrival_index, base_prob):
     arrivals = [0] * len(Environment.traffic_loads)
@@ -131,15 +131,9 @@ def pr(state, action):
         domain_index = State.local_domain
             
         if not Environment.can_be_deployed(1, req_index, domain_index, 1, current_domains_alives):
-            if verbose:
-                debug("Try to accept but no resource")
-            
-            #cannot be accepted, it is like reject but -inf for reward
-            reward = -1 * np.inf
+            error("Invalid accept action")
+            sys.exit(-1)
 
-            domains_alives_list.append(current_domains_alives)
-            domains_alives_rate.append(1.0)
-        
         else:
             if verbose:
                 debug("Accepting")
@@ -174,7 +168,7 @@ def pr(state, action):
             if Environment.can_be_deployed(1, req_index, domain_index, 1, current_domains_alives):
                 federation_cost_scale = 1
             else:
-                federation_cost_scale = provider_domain.overcharning
+                federation_cost_scale = provider_domain.overcharge
             
             reward = Environment.traffic_loads[req_index].service.revenue - provider_domain.federation_costs[Environment.traffic_loads[req_index].service] * federation_cost_scale
 
@@ -189,36 +183,6 @@ def pr(state, action):
             error("Invalid federation, there is not any resource for federation")
             sys.exit(-1)
 
-        '''
-
-        if not Environment.can_be_deployed(1, req_index, domain_index, Environment.providers[domain_index].reject_threshold, current_domains_alives):
-            error("Invalid action: cannot federate beyond the reject_threshold")
-            sys.exit(-1)
-
-        elif not Environment.can_be_deployed(1, req_index, domain_index, 1, current_domains_alives):
-            if verbose:
-                debug("Try to federate but no resource, so overcharning")
-            
-            provider_domain = Environment.providers[domain_index] # in this version, there is only one provider
-            reward = Environment.traffic_loads[req_index].service.revenue - (provider_domain.federation_costs[Environment.traffic_loads[req_index].service] * provider_domain.overcharge)
-            domains_alives_list.append(current_domains_alives)
-            domains_alives_rate.append(1.0)
-
-        else:
-            if verbose:
-                debug("Federating")
- 
-            provider_domain = Environment.providers[domain_index] # in this version, there is only one provider
-            reward = Environment.traffic_loads[req_index].service.revenue - provider_domain.federation_costs[Environment.traffic_loads[req_index].service]
-
-            new_domains_alives = current_domains_alives.copy()
-            domain_state_alives = new_domains_alives[domain_index]
-            domain_state_alives = tuple(map(add, domain_state_alives, events))
-            new_domains_alives[domain_index] = domain_state_alives
-
-            domains_alives_list.append(new_domains_alives)
-            domains_alives_rate.append(1.0)
-        '''
     else:
         error("Error: Unknown action")
         sys.exit()
@@ -578,7 +542,7 @@ if __name__ == "__main__":
     gamma = 0.995
     parser.parse_config("config.json")
    
-    demand_num = 2000
+    demand_num = 20
     iterations = 10
     scale = 0
 
@@ -586,17 +550,17 @@ if __name__ == "__main__":
     while i <= scale:
         i += 1
        
-        #pi_policy = policy_iteration(gamma)
-        #print("------------- PI Policy -----------------")
-        #print_policy(pi_policy)
+        pi_policy = policy_iteration(gamma)
+        print("------------- PI Policy -----------------")
+        print_policy(pi_policy)
         
         pi_profit = ql_profit = gr_profit = 0
         for j in range(iterations):
         
             demands = Environment.generate_req_set(demand_num)
 
-            #p, a, f = test_policy(demands, pi_policy)
-            #pi_profit += p / float(len(demands))
+            p, a, f = test_policy(demands, pi_policy)
+            pi_profit += p / float(len(demands))
 
             p, a, f =  test_greedy_random_policy(demands, 1.0)
             gr_profit += p / float(len(demands))

@@ -141,17 +141,17 @@ def rLearning(env, num_episodes, dynamic, alpha,  epsilon, beta):
 
 if __name__ == "__main__":
 
-    sim_time = 100
+    demand_num = 20
 
     parser.parse_config("config.json")
-
+    
     pi_policy = policy_iteration(0.995)
-    print("------------- PI Policy -----------------")
+    print("********* DP Policy ***********")
     print_policy(pi_policy)
- 
 
-    env = Environment.Env(Environment.domain.total_cpu, sim_time)
-    rl_policy = rLearning(env, 10, 1)
+    env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), demand_num)
+    rl_policy = rLearning(env, 1, 1, 0.9, 0.9, 0.9)
+
     print("********* RL Policy ***********")
     print_policy(rl_policy)
 

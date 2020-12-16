@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = True
+verbose = False
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print
@@ -240,6 +240,8 @@ class Env:
         
         self.current_local_capacities = self.local_domain_capacities.copy()
         self.current_provider_capacities = self.provider_domain_capacities.copy()
+        provider_domain = providers[1]
+        self.current_provider_capacities = [x * provider_domain.reject_threshold for x in self.current_provider_capacities]
 
         self.local_alives = [0 for i in range(total_classes)]
         self.provider_alives = [0 for i in range(total_classes)]
@@ -337,27 +339,27 @@ class Env:
                 debug("Try to federate: req = ", req)
             
             provider_domain = providers[1] # in this version, there is only one provider
+            federation_cost_scale = -1
             
-            if check_feasible_deployment(req, self.current_provider_capacities, 1):
-                if verbose:
-                    debug("\t federated")
+            if should_not_overcharge(req, self.current_provider_capacities, provider_domain.quotas, provider_domain.reject_threshold):
+                federation_cost_scale = 1
+            
+            elif check_feasible_deployment(req, self.current_provider_capacities):
+                federation_cost_scale = provider_domain.overcharge
  
-                reward = req.rev - provider_domain.federation_costs[traffic_loads[req.class_id].service]
-                update_capacities(req, self.current_provider_capacities, -1)
-                self.provider_alives[req.class_id] += 1
-                req.deployed = 1
-                event = Event(0, req.dt, req) #add the departure event
-                heapq.heappush(self.events, event)
-
-            elif check_feasible_deployment(req, self.current_provider_capacities, provider_domain.reject_threshold):
-                if verbose:
-                    debug("\t There is not sufficient resource --> overcharging")
-                
-                reward = req.rev - (provider_domain.overcharge * provider_domain.federation_costs[traffic_loads[req.class_id].service])
             else:
-                error("Invalid federation, there is not any resource")
+                error("invalid federation")
                 sys.exit(-1)
 
+            if verbose:
+                debug("federation_cost_scale = ", federation_cost_scale)
+
+            reward = req.rev - provider_domain.federation_costs[traffic_loads[req.class_id].service] * federation_cost_scale
+            update_capacities(req, self.current_provider_capacities, -1)
+            self.provider_alives[req.class_id] += 1
+            req.deployed = 1
+            event = Event(0, req.dt, req) #add the departure event
+            heapq.heappush(self.events, event)
 
         elif action == Actions.accept: #accept
             if verbose:
@@ -579,6 +581,13 @@ def check_feasible_deployment(req, capacities):
 def update_capacities(req, capacities, inc_dec):
     for i in range(len(req.cap)):
         capacities[i] += inc_dec * req.cap[i]
+
+def should_not_overcharge(req, current_capacities, quotas, reject_threshold):
+    for i in range(len(req.cap)):
+        if current_capacities[i] - req.cap[i] < (reject_threshold - 1) * quotas[i]:
+            return False
+
+    return True
 
 
 

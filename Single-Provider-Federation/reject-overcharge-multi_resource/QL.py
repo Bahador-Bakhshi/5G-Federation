@@ -153,7 +153,7 @@ def qLearning(env, num_episodes, dynamic, alpha,  epsilon, gamma):
 
 if __name__ == "__main__":
 
-    demand_num = 1000
+    demand_num = 20
 
     parser.parse_config("config.json")
     
@@ -162,7 +162,7 @@ if __name__ == "__main__":
     print_policy(pi_policy)
 
     env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), demand_num)
-    ql_policy = qLearning(env, 1, 50, 0.9, 0.9, 0.9)
+    ql_policy = qLearning(env, 1, 1, 0.9, 0.9, 0.9)
 
     print("********* QL Policy ***********")
     print_policy(ql_policy)
