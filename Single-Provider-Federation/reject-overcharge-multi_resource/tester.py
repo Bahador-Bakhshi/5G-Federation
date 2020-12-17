@@ -216,6 +216,7 @@ def test_policy(demands, policy):
                     sys.exit()
                 else:
                     error("Invalid random action")
+                    continue
             else:
                 
                 if verbose:
@@ -235,8 +236,12 @@ def test_policy(demands, policy):
             elif check_feasible_deployment(req, provider_capacities):
                 overcharging = 1
             else:
-                error("Invalid federation, not enough resource")
-                sys.exit(-1)
+                if random_action:
+                    error("Invalid random action")
+                    continue
+                else:
+                    error("Invalid federation, not enough resource")
+                    sys.exit(-1)
             
             if verbose:
                 debug("federating")
@@ -322,7 +327,7 @@ if __name__ == "__main__":
     step = 15
     scale = 0
 
-    iterations = 10
+    iterations = 1
     
     i = 0
     

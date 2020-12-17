@@ -1,9 +1,9 @@
 {
 	"local":{
 		"capacities":[
+			8,
 			10,
-			12,
-			15
+			12
 		],
 		"ns_catalog":[
 			{
@@ -11,7 +11,7 @@
 				"resources":[
 					1,
 					1,
-					2
+					3
 				],
 				"revenue": 10
 			},
@@ -19,7 +19,7 @@
 				"id": 1,
 				"resources":[
 					1,
-					2,
+					3,
 					1
 				],
 				"revenue": 20
@@ -27,7 +27,7 @@
 			{
 				"id": 2,
 				"resources":[
-					2,
+					3,
 					1,
 					1
 				],
@@ -40,9 +40,9 @@
 		{
 			"provider_id": 0,
 			"quotas": [
-				5,
+				4,
 				7,
-				9
+				8
 			],
 			"overcharge": 3,
 			"reject_threshold": 2,

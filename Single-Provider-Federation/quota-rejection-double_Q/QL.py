@@ -14,13 +14,13 @@ from DP import policy_iteration, print_policy
 
 
 def print_Q(Q):
-    debug("---------------------")
+    print("---------------------")
     for s, s_a in Q.items():
-        debug("{}: {}".format(s, s_a))
-    debug("*********************")
+        print("{}: {}".format(s, s_a))
+    print("*********************")
 
 
-def e_greedy_exploration(Q_state, env, state, epsilon): 
+def e_greedy_exploration(Q1, Q2, env, state, epsilon): 
     va = Environment.get_valid_actions(state)
     num_actions = len(va)
 
@@ -31,11 +31,12 @@ def e_greedy_exploration(Q_state, env, state, epsilon):
                 v_flag = True
 
         if v_flag == False:
-            Q_state[a] = -1 * np.inf
-
+            Q1[state][a] = -1 * np.inf
+            Q2[state][a] = -1 * np.inf
 
     Action_probabilities = np.ones(len(env.action_space), dtype = float) * epsilon / num_actions 
 				
+    Q_state= [sum(x) for x in zip(Q1[state], Q2[state])]
     best_action = np.argmax(Q_state) 
     Action_probabilities[best_action] += (1.0 - epsilon) 
        
@@ -50,7 +51,8 @@ def e_greedy_exploration(Q_state, env, state, epsilon):
 
         if v_flag == False:
             Action_probabilities[a] = 0
-            Q_state[a] = -1 * np.inf
+            Q1[state][a] = -1 * np.inf
+            Q2[state][a] = -1 * np.inf
         
     if verbose:
         debug("Action_probabilities after: ", Action_probabilities)
@@ -60,8 +62,8 @@ def e_greedy_exploration(Q_state, env, state, epsilon):
 
 def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0.5):
 
-    Q1 = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
-    Q2 = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
+    Q1 = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
+    Q2 = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
     
     discount_factor = 0.0
 
@@ -85,9 +87,8 @@ def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0
                 debug("Q2:")
                 print_Q(Q2)
             
-            Q_state= [sum(x) for x in zip(Q1[state], Q2[state])]
             
-            action_probabilities = e_greedy_exploration(Q_state, env, state, epsilon)
+            action_probabilities = e_greedy_exploration(Q1, Q2, env, state, epsilon)
             
             if verbose:
                 debug("action_probabilities = ", action_probabilities)
@@ -152,7 +153,12 @@ def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0
         final_policy[i] = Environment.Actions(np.argmax(Q[i]))
 
     if verbose:
-        print(final_policy)
+        print("Q1")
+        print_Q(Q1)
+        print("Q2")
+        print_Q(Q2)
+        print("Q")
+        print_Q(Q)
     
     return final_policy
 
