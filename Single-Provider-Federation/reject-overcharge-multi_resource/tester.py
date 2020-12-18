@@ -309,8 +309,8 @@ def mdp_policy_result(demands, policy,  profit, accept, federate):
 
 if __name__ == "__main__":
 
-    episode_len = 5000
-    episode_num = 100
+    episode_len = 10000
+    episode_num = 200
 
     best_QL_alpha   = 0.9
     best_QL_epsilon = 0.9
@@ -327,7 +327,7 @@ if __name__ == "__main__":
     step = 15
     scale = 0
 
-    iterations = 1
+    iterations = 5
     
     i = 0
     

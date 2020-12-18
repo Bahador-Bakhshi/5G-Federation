@@ -57,7 +57,7 @@
 				},
 				{
 					"nsid": 2,
-					"cost": 6
+					"cost": 2
 				}
 			]
 		}
@@ -66,18 +66,18 @@
 	"loads":[
 		{
 			"catalog_id": 0,
-			"lambda": 10,
+			"lambda": 20,
 			"mu": 1
 		},
 		{
 			"catalog_id": 1,
-			"lambda": 12,
-			"mu": 0.8
+			"lambda": 5,
+			"mu": 1
 		},
 		{
 			"catalog_id": 2,
 			"lambda": 15,
-			"mu": 2
+			"mu": 1
 		}
 	]
 }
