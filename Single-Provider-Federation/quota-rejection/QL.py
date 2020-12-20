@@ -129,6 +129,7 @@ def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0
                     pass #FIXME!!!!!!!!!!!!!!!!!
 
                 else:
+
                     if next_state in seen_states:
                         td_target = reward + discount_factor * Q[next_state][best_next_action]
                     else:

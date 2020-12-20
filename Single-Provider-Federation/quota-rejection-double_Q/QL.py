@@ -14,12 +14,13 @@ from DP import policy_iteration, print_policy
 
 
 def print_Q(Q):
-    debug("---------------------")
+    print("---------------------")
     for s, s_a in Q.items():
-        debug("{}: {}".format(s, s_a))
-    debug("*********************")
+        print("{}: {}".format(s, s_a))
+    print("*********************")
 
-def e_greedy_exploration(Q, env, state, epsilon): 
+
+def e_greedy_exploration(Q1, Q2, env, state, epsilon): 
     va = Environment.get_valid_actions(state)
     num_actions = len(va)
 
@@ -30,13 +31,15 @@ def e_greedy_exploration(Q, env, state, epsilon):
                 v_flag = True
 
         if v_flag == False:
-            Q[state][a] = -1 * np.inf
+            Q1[state][a] = -1 * np.inf
+            Q2[state][a] = -1 * np.inf
 
     Action_probabilities = np.ones(len(env.action_space), dtype = float) * epsilon / num_actions 
 				
-    best_action = np.argmax(Q[state]) 
+    Q_state= [sum(x) for x in zip(Q1[state], Q2[state])]
+    best_action = np.argmax(Q_state) 
     Action_probabilities[best_action] += (1.0 - epsilon) 
-        
+       
     if verbose:
         debug("Action_probabilities before: ", Action_probabilities)
         
@@ -48,19 +51,20 @@ def e_greedy_exploration(Q, env, state, epsilon):
 
         if v_flag == False:
             Action_probabilities[a] = 0
-            Q[state][a] = -1 * np.inf
+            Q1[state][a] = -1 * np.inf
+            Q2[state][a] = -1 * np.inf
         
     if verbose:
-           debug("Action_probabilities after: ", Action_probabilities)
+        debug("Action_probabilities after: ", Action_probabilities)
         
     return Action_probabilities 
 
+
 def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0.5):
 
-    Q = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
+    Q1 = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
+    Q2 = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
     
-    seen_states = set()
-
     discount_factor = 0.0
 
     # For every episode
@@ -78,14 +82,15 @@ def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0
         for t in itertools.count():
             if verbose:
                 debug("\nt =", t, "sate =", state)
-                print_Q(Q)
+                debug("Q1:")
+                print_Q(Q1)
+                debug("Q2:")
+                print_Q(Q2)
             
-            seen_states.add(state)
             
-            if verbose:
-                debug("seen_states = ", seen_states)
-
-            action_probabilities = e_greedy_exploration(Q, env, state, epsilon)
+            #action_probabilities = e_greedy_exploration(Q1, Q2, env, state, epsilon)
+            action_probabilities = e_greedy_exploration(Q1, Q1, env, state, epsilon)
+            
             if verbose:
                 debug("action_probabilities = ", action_probabilities)
 
@@ -104,64 +109,68 @@ def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0
             
             if done:
                 break
+
+            Q_target = None
+            Q_estimator = None
+            discount_factor = gamma
             
-            '''
-            if Environment.is_active_state(state):
-                discount_factor = gamma
+            rand = np.random.uniform(0, 1)
+            if rand < 0.5:
+                Q_target = Q1
+                #Q_estimator = Q2
+                Q_estimator = Q1
             else:
-                discount_factor = 1.0
-            '''
+                #Q_target = Q2
+                Q_target = Q1
+                Q_estimator = Q1
 
-            if Q[state][action] != -1 * np.inf:
-                # TD Update
-                best_next_action = np.argmax(Q[next_state])
+            best_next_action = np.argmax(Q_target[next_state])
                 
-                if verbose:
-                    debug("best_next_action = ", best_next_action)
-                
-                '''
-                if state == next_state:
-                    pass #FIXME!!!!!!!!!!!!!!!!!
+            if verbose:
+                debug("best_next_action = ", best_next_action)
 
-                else:
-                '''
-                if True:
+            td_target = reward + discount_factor * Q_estimator[next_state][best_next_action]
+
+            if verbose:
+                debug("td_target = ", td_target)
                 
-                    if next_state in seen_states:
-                        td_target = reward + discount_factor * Q[next_state][best_next_action]
-                    else:
-                        td_target = reward
+            td_delta = td_target - Q_target[state][action]
                     
-                    if verbose:
-                        debug("td_target = ", td_target)
-                
-                    td_delta = td_target - Q[state][action]
-                    
-                    if verbose:
-                        debug("td_delta = ", td_delta)
+            if verbose:
+                debug("td_delta = ", td_delta)
 
-                    Q[state][action] += alpha * td_delta
+            Q_target[state][action] += alpha * td_delta
             
-            else:
-                if reward != -1 * np.inf:
-                    error("Error in invalid actions!!!")
-                    sys.exit()
-
             state = next_state
-    
+   
+
     final_policy = {}
+    keys1 = set(Q1.keys())
+    #keys2 = set(Q2.keys())
+    keys2 = set(Q1.keys())
+    keys = keys1.union(keys2)
+    Q = {}
+    for k in keys:
+        #Q[k] = [sum(x) for x in zip(Q1[k], Q2[k])]
+        Q[k] = [sum(x) for x in zip(Q1[k], Q1[k])]
+
     for i in Q:
         final_policy[i] = Environment.Actions(np.argmax(Q[i]))
 
     if verbose:
-        print(final_policy)
+        print("Q1")
+        print_Q(Q1)
+        print("Q2")
+        print_Q(Q2)
+        print("Q")
+        print_Q(Q)
     
     return final_policy
 
 
 if __name__ == "__main__":
 
-    sim_time = 100
+    sim_time = 1
 
     parser.parse_config("config.json")
 
@@ -170,8 +179,8 @@ if __name__ == "__main__":
     print_policy(pi_policy)
 
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
-    ql_policy = qLearning(env, 20, 1)
 
+    ql_policy = qLearning(env, 20, 1)
     print("********* QL Policy ***********")
     print_policy(ql_policy)
 
