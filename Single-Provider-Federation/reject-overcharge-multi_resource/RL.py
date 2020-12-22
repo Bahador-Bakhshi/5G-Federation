@@ -31,6 +31,12 @@ def createEpsilonGreedyPolicy(Q, env):
         Action_probabilities = np.ones(len(env.action_space), dtype = float) * epsilon / num_actions 
 				
         best_action = np.argmax(Q[state]) 
+        
+        if verbose:
+            debug("Q[state] = ", Q[state])
+            debug("best_action = ", best_action)
+            debug("epsilon = ", epsilon)
+
         Action_probabilities[best_action] += (1.0 - epsilon) 
         
         if verbose:
@@ -54,7 +60,7 @@ def createEpsilonGreedyPolicy(Q, env):
     return policyFunction 
 
 
-def rLearning(env, num_episodes, dynamic, alpha,  epsilon, beta):
+def rLearning(env, num_episodes, dynamic, alpha0, epsilon0, beta0):
     
     Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
 
@@ -64,15 +70,20 @@ def rLearning(env, num_episodes, dynamic, alpha,  epsilon, beta):
     seen_states = set()
 
     rho = 1.0
-    decay = 0.0005
+    decay = 0.05
 
     # For every episode
     for ith_episode in range(num_episodes):
 
         if(dynamic == 1):
+            '''
             alpha = alpha * 0.97
             epsilon = epsilon * 0.97
             beta = beta * 0.97
+            '''
+            alpha = alpha0 / (1.0 + ith_episode * decay)
+            epsilon = epsilon0 / (1.0 + ith_episode * decay)
+            beta = beta0 / (1.0 + ith_episode * decay)
 
         if verbose:
             debug("alpha = ", alpha, "epsilon = ", epsilon)

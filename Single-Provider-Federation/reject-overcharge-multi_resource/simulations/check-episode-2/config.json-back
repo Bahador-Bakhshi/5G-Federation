@@ -1,25 +1,25 @@
 {
 	"local":{
 		"capacities":[
-			3,
-			3,
-			3
+			20,
+			25,
+			30
 		],
 		"ns_catalog":[
 			{
 				"id": 0,
 				"resources":[
-					1,
-					1,
-					1
+					4,
+					2,
+					2
 				],
 				"revenue": 10
 			},
 			{
 				"id": 1,
 				"resources":[
-					1,
 					2,
+					4,
 					1
 				],
 				"revenue": 20
@@ -27,11 +27,11 @@
 			{
 				"id": 2,
 				"resources":[
-					2,
 					1,
-					1
+					2,
+					5
 				],
-				"revenue": 30
+				"revenue": 5
 			}
 		]
 	},
@@ -40,9 +40,9 @@
 		{
 			"provider_id": 0,
 			"quotas": [
-				2,
-				2,
-				2
+				10,
+				10,
+				15
 			],
 			"overcharge": 3,
 			"reject_threshold": 2,
@@ -57,7 +57,7 @@
 				},
 				{
 					"nsid": 2,
-					"cost": 2
+					"cost": 1
 				}
 			]
 		}
@@ -66,9 +66,20 @@
 	"loads":[
 		{
 			"catalog_id": 0,
-			"lambda": 20,
-			"mu": 1
+			"lambda": 10,
+			"mu": 2
+		},
+		{
+			"catalog_id": 0,
+			"lambda": 15,
+			"mu": 7
+		},
+		{
+			"catalog_id": 0,
+			"lambda": 5,
+			"mu": 0.5
 		}
+
 	]
 }
 
