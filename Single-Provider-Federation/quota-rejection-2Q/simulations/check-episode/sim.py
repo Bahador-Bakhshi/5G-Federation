@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     sim_time = 250
 
-    best_QL_alpha   = 0.9
+    best_QL_alpha   = 0.1
     best_QL_epsilon = 0.9
     best_QL_gamma   = 0.9
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     
     init_size = 10
-    step = 20
+    step = 30
     scale = 10
 
     iterations = 1

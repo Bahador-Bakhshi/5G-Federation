@@ -393,7 +393,7 @@ if __name__ == "__main__":
         print("QL_05 Profit = ", ql_05_profit / iterations)
         print("RL Profit = ", rl_profit / iterations)
         print("", flush=True)
-        '''
+        
         #aprint("Capacity_Accept = ", Environment.domain.total_cpu)
         print("Greedy Accept 00 = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
@@ -419,7 +419,7 @@ if __name__ == "__main__":
         print("QL_05 Federate    = ", ql_05_federate / iterations)
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
-        '''
+        
     print("DONE!!!")
 
 

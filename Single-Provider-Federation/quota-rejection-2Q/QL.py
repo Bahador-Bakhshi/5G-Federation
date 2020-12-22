@@ -62,8 +62,10 @@ def e_greedy_exploration(Q1, Q2, env, state, epsilon):
 
 def qLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 0.8, gamma = 0.5):
 
-    Q1 = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
-    Q2 = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
+    #Q1 = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
+    #Q2 = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
+    Q1 = defaultdict(lambda: [10, 0, 0, 0])
+    Q2 = defaultdict(lambda: [10, 0, 0, 0])
     
     discount_factor = 0.0
 

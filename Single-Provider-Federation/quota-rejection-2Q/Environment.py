@@ -110,10 +110,10 @@ class Providers:
 
 
 class Actions(IntEnum):
-    no_action = 0
-    reject    = 1
-    accept    = 2
-    federate  = 3
+    no_action = 3
+    reject    = 2
+    accept    = 0
+    federate  = 1
 
 # Global Variables
 

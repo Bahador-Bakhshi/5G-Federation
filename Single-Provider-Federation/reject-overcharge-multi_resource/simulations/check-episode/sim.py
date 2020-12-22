@@ -20,22 +20,22 @@ if __name__ == "__main__":
 
     sim_num = 4000
 
-    best_QL_alpha   = 0.9
-    best_QL_epsilon = 0.9
-    best_QL_gamma   = 0.9
+    best_QL_alpha   = 0.75
+    best_QL_epsilon = 0.75
+    best_QL_gamma   = 0.75
 
-    best_RL_alpha   = 0.1
-    best_RL_epsilon = 0.9
+    best_RL_alpha   = 0.5
+    best_RL_epsilon = 0.1
     best_RL_beta    = 0.1
 
     parser.parse_config("config.json")
 
     
     init_size = 10
-    step = 25
+    step = 30
     scale = 10
 
-    iterations = 7
+    iterations = 10
     
     i = 0
     
@@ -54,16 +54,16 @@ if __name__ == "__main__":
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_09_profit = ql_05_profit = rl_profit = 0
         greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_09_accept = ql_05_accept = rl_accept = 0
         greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_09_federate = ql_05_federate = rl_federate = 0
-
+        greedy_reject_00 = greedy_reject_50 = greedy_reject_100 = dp_reject_05 = dp_reject_30 = dp_reject_60 = dp_reject_95 = ql_09_reject = ql_05_reject = rl_reject = 0
         for j in range(iterations):
             
-            env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_num)
+            env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), episode_num)
             
             ql_09_policy = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, best_QL_gamma)
             print("---------- QL-0.9 --------------")
             DP.print_policy(ql_09_policy)
         
-            ql_05_policy = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, 0.5)
+            ql_05_policy = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, 0.4)
             print("---------- QL-0.5 --------------")
             DP.print_policy(ql_05_policy)
         
@@ -113,8 +113,8 @@ if __name__ == "__main__":
         print("DP_30 Accept = ", dp_accept_30 / iterations)
         print("DP_60 Accept = ", dp_accept_60 / iterations)
         print("DP_95 Accept = ", dp_accept_95 / iterations)
-        print("QL_09 Accept    = ", ql_09_accept / iterations)
-        print("QL_05 Accept    = ", ql_05_accept / iterations)
+        print("QL_09 Accept = ", ql_09_accept / iterations)
+        print("QL_05 Accept = ", ql_05_accept / iterations)
         print("RL Accept    = ", rl_accept / iterations)
         print("", flush=True)
 
@@ -126,9 +126,22 @@ if __name__ == "__main__":
         print("DP_30 Federate = ", dp_federate_30 / iterations)
         print("DP_60 Federate = ", dp_federate_60 / iterations)
         print("DP_95 Federate = ", dp_federate_95 / iterations)
-        print("QL_09 Federate    = ", ql_09_federate / iterations)
-        print("QL_05 Federate    = ", ql_05_federate / iterations)
+        print("QL_09 Federate = ", ql_09_federate / iterations)
+        print("QL_05 Federate = ", ql_05_federate / iterations)
         print("RL Federate    = ", rl_federate / iterations)
+        print("", flush=True)
+
+        print("Episode_Reject = ", episode_num)
+        print("Greedy Reject 00  = ", 1.0 - ((greedy_federate_00 + greedy_accept_00)/ iterations))
+        print("Greedy Reject 50  = ", 1.0 - ((greedy_federate_50 + greedy_accept_50)/ iterations))
+        print("Greedy Reject 100 = ", 1.0 - ((greedy_federate_100+ greedy_accept_100) / iterations))
+        print("DP_05 Reject = ", 1.0 - ((dp_federate_05 + dp_accept_05) / iterations))
+        print("DP_30 Reject = ", 1.0 - ((dp_federate_30 + dp_accept_30) / iterations))
+        print("DP_60 Reject = ", 1.0 - ((dp_federate_60 + dp_accept_60) / iterations))
+        print("DP_95 Reject = ", 1.0 - ((dp_federate_95 + dp_accept_95) / iterations))
+        print("QL_09 Reject = ", 1.0 - ((ql_09_federate + ql_09_accept) / iterations))
+        print("QL_05 Reject = ", 1.0 - ((ql_05_federate + ql_05_accept) / iterations))
+        print("RL Reject    = ", 1.0 - ((rl_federate + rl_accept) / iterations))
         print("", flush=True)
 
 print("DONE!!!")

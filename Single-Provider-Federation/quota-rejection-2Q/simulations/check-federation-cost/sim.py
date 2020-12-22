@@ -19,9 +19,9 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 if __name__ == "__main__":
 
     sim_time = 250
-    episode_num = 100
+    episode_num = 300
 
-    best_QL_alpha   = 0.9
+    best_QL_alpha   = 0.1
     best_QL_epsilon = 0.9
     best_QL_gamma   = 0.9
 
