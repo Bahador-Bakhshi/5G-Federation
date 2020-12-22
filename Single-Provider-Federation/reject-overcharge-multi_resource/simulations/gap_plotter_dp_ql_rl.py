@@ -46,7 +46,7 @@ plt.grid(linestyle="--", linewidth=0.5)
 plt.ylabel("Gap")
 plt.xlabel(x_label)
 axes = plt.gca()
-axes.set_ylim([-0.01,0.25])
+#axes.set_ylim([-0.01,0.25])
 
 plt.plot(x, DP_95, label='DP', color='C4', linestyle='solid', linewidth=1)
 
