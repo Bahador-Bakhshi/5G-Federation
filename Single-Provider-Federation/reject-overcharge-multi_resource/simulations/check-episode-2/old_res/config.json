@@ -45,7 +45,7 @@
 				15
 			],
 			"overcharge": 3,
-			"reject_threshold": 1,
+			"reject_threshold": 2,
 			"federation_costs":[
 				{
 					"nsid": 0,
