@@ -18,21 +18,21 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_num = 4000
+    sim_num = 5000
 
     best_QL_alpha   = 0.75
     best_QL_epsilon = 0.75
     best_QL_gamma   = 0.75
 
-    best_RL_alpha   = 0.5
-    best_RL_epsilon = 0.1
-    best_RL_beta    = 0.1
+    best_RL_alpha   = 0.8
+    best_RL_epsilon = 1.0
+    best_RL_beta    = 0.3
 
     parser.parse_config("config.json")
 
     
-    init_size = 10
-    step = 30
+    init_size = 20
+    step = 50
     scale = 10
 
     iterations = 10

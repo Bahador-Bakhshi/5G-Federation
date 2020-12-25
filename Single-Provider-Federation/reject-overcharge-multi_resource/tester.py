@@ -198,7 +198,7 @@ def test_policy(demands, policy):
             action = policy[state]
         else:
             warning("Unknown state: ", state)
-            action = 1 + int(np.random.uniform(0, Environment.total_actions - 1.00001))
+            action = np.random.randint(Environment.Actions.accept, Environment.Actions.no_action)
             random_action = True
         
         if verbose:
@@ -206,8 +206,7 @@ def test_policy(demands, policy):
 
         if action == None:
             print("None Action!!!!")
-            va = Environment.get_valid_actions(state)
-            action = va[np.random.randint(0, len(va))]
+            sys.exit(-1)
 
         if action == Environment.Actions.accept:
             if not check_feasible_deployment(req, local_capacities):

@@ -190,8 +190,6 @@ def test_policy(demands, policy):
 
         if action == None:
             print("None Action!!!!")
-            va = Environment.get_valid_actions(state)
-            action = va[np.random.randint(0, len(va))]
             sys.exit(-1)
 
         if action == Environment.Actions.accept:
