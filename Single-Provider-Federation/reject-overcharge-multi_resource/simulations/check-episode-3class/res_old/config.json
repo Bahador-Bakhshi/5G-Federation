@@ -67,19 +67,18 @@
 		{
 			"catalog_id": 0,
 			"lambda": 10,
-			"mu": 3
+			"mu": 2
 		},
 		{
-			"catalog_id": 0,
+			"catalog_id": 1,
 			"lambda": 15,
-			"mu": 10
+			"mu": 5
 		},
 		{
-			"catalog_id": 0,
-			"lambda": 5,
-			"mu": 1
+			"catalog_id": 2,
+			"lambda": 10,
+			"mu": 10
 		}
-
 	]
 }
 
