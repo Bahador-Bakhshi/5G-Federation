@@ -70,15 +70,16 @@ def qLearning(env, num_episodes, dynamic, alpha,  epsilon, gamma):
     seen_states = set()
 
     discount_factor = 0.0
-    decay = 0.0005
+    decay = 0.025
 
     # For every episode
     for ith_episode in range(num_episodes):
 
         if(dynamic == 1):
-            alpha = alpha * 0.97
-            epsilon = epsilon * 0.97
-        
+            #alpha = alpha * 0.97
+            #epsilon = epsilon * 0.97
+            alpha = alpha0 / (1.0 + ith_episode * decay)
+            epsilon = epsilon0 / (1.0 + ith_episode * decay)
         if verbose:
             debug("alpha = ", alpha, "epsilon = ", epsilon, "gamma = ", gamma)
         

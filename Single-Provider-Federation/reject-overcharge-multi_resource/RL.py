@@ -70,7 +70,7 @@ def rLearning(env, num_episodes, dynamic, alpha0, epsilon0, beta0):
     seen_states = set()
 
     rho = 1.0
-    decay = 0.05
+    decay = 0.025
 
     # For every episode
     for ith_episode in range(num_episodes):

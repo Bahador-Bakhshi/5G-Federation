@@ -18,7 +18,7 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_num = 2000
+    sim_num = 3000
 
     best_QL_alpha   = 0.75
     best_QL_epsilon = 0.75
@@ -31,8 +31,8 @@ if __name__ == "__main__":
     parser.parse_config("config.json")
 
     
-    init_size = 20
-    step = 100
+    init_size = 50
+    step = 200
     scale = 10
 
     iterations = 10
