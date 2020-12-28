@@ -307,7 +307,7 @@ def mdp_policy_result(demands, policy,  profit, accept, federate):
 
 
 if __name__ == "__main__":
-
+#def tester_main():
     episode_len = 5000
     episode_num = 400
 
@@ -326,7 +326,7 @@ if __name__ == "__main__":
     step = 15
     scale = 0
 
-    iterations = 5
+    iterations = 1
     
     i = 0
  

@@ -36,6 +36,7 @@ class State:
         return res
 
     def __eq__(self, other):
+        '''
         for i in range(len(self.domains_alives)):
             for j in range(len(self.domains_alives[i])):
                 if self.domains_alives[i][j] != other.domains_alives[i][j]:
@@ -45,14 +46,20 @@ class State:
                 return False
         
         return True
+        '''
+        return ((self.domains_alives == other.domains_alives) and (self.arrivals_departures == other.arrivals_departures))
 
     def __hash__(self):
+        t = tuple(self.domains_alives)
+        return hash((t, self.arrivals_departures))
+
+    '''
         res = 0
         for a in self.domains_alives:
             res += hash(a)
         res += hash(self.arrivals_departures)
         return res
-
+    '''
 
 class NFV_NS:
     nsid = 0
