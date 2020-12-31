@@ -12,7 +12,7 @@ import itertools
 import random
 import Environment
 import parser
-from Environment import State, debug, error, warning, verbose, check_feasible_deployment, update_capacities, should_not_overcharge
+from Environment import State, debug, error, warning, verbose, check_feasible_deployment, update_capacities, should_overcharge
 
 
 def test_greedy_random_policy(demands, greediness):
@@ -68,12 +68,12 @@ def test_greedy_random_policy(demands, greediness):
         overcharging = -1
         if check_feasible_deployment(req, local_capacities):
             action = Environment.Actions.accept
-        elif should_not_overcharge(req, provider_capacities, provider_domain.quotas, provider_domain.reject_threshold):
-            action = Environment.Actions.federate
-            overcharging = 0
         elif check_feasible_deployment(req, provider_capacities):
             action = Environment.Actions.federate
-            overcharging = 1
+            if should_overcharge(req, provider_capacities, provider_domain.quotas, provider_domain.reject_threshold):
+                overcharging = 1
+            else:
+                overcharging = 0
         else:
             action = Environment.Actions.reject
 
@@ -143,7 +143,7 @@ def test_policy(demands, policy):
             debug("current: ", req)
 
         for j in range(len(local_capacities)):
-            if local_capacities[j] < 0 or local_capacities[j] > Environment.domain.capacities[j] or provider_capacities[j] < 0 or provider_capacities[j] > Environment.providers[1].quotas[j] * provider_domain.reject_threshold:
+            if local_capacities[j] < 0 or local_capacities[j] > Environment.domain.capacities[j] or provider_capacities[j] < 0 or provider_capacities[j] > provider_domain.quotas[j] * provider_domain.reject_threshold:
                 error("Bug in the capacity")
                 error("local_capacity = ", local_capacities)
                 error("provider_capacity = ", provider_capacities)
@@ -230,10 +230,11 @@ def test_policy(demands, policy):
         elif action == Environment.Actions.federate:
             overcharging = -1
 
-            if should_not_overcharge(req, provider_capacities, provider_domain.quotas, provider_domain.reject_threshold):
-                overcharging = 0
-            elif check_feasible_deployment(req, provider_capacities):
-                overcharging = 1
+            if check_feasible_deployment(req, provider_capacities):
+                if should_overcharge(req, provider_capacities, provider_domain.quotas, provider_domain.reject_threshold):
+                    overcharging = 1
+                else:
+                    overcharging = 0
             else:
                 if random_action:
                     error("Invalid random action")
@@ -246,11 +247,14 @@ def test_policy(demands, policy):
                 debug("federating")
                 debug("overcharging = ", overcharging)
             
+            federation_cost_scale = 0
             if overcharging:
-                profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service] * provider_domain.overcharge
+                federation_cost_scale = provider_domain.overcharge
             else:
-                profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service]
+                federation_cost_scale = 1
 
+            profit += req.rev - provider_domain.federation_costs[Environment.traffic_loads[req.class_id].service] * federation_cost_scale
+ 
             federate_num += 1
             req.deployed = 1
             all_alives.append(req)
@@ -309,7 +313,7 @@ def mdp_policy_result(demands, policy,  profit, accept, federate):
 if __name__ == "__main__":
 #def tester_main():
     episode_len = 5000
-    episode_num = 400
+    episode_num = 0
 
     best_QL_alpha   = 0.75
     best_QL_epsilon = 0.75
@@ -330,18 +334,6 @@ if __name__ == "__main__":
     
     i = 0
  
-    '''
-    dp_policy_95 = DP.policy_iteration(0.99)
-    print("------------ DP -------------")
-    DP.print_policy(dp_policy_95)
-
-
-    env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), episode_num)
-    rl_policy = RL.rLearning(env, episode_num, 1, best_RL_alpha, best_RL_epsilon, best_RL_beta)
-    print("---------- RL --------------")
-    DP.print_policy(rl_policy)
-    '''
-
     while i <= scale:
         i += 1
 
@@ -352,15 +344,15 @@ if __name__ == "__main__":
         print("------------ DP -------------")
         DP.print_policy(dp_policy_95)
     
-        
         greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_09_profit = ql_05_profit = rl_profit = 0
         greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_09_accept = ql_05_accept = rl_accept = 0
         greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_09_federate = ql_05_federate = rl_federate = 0
 
         for j in range(iterations):
             
+            '''
             env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), episode_num)
-            
+           
             ql_09_policy = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, best_QL_gamma)
             print("---------- QL-0.9 --------------")
             DP.print_policy(ql_09_policy)
@@ -372,6 +364,7 @@ if __name__ == "__main__":
             rl_policy = RL.rLearning(env, episode_num, 1, best_RL_alpha, best_RL_epsilon, best_RL_beta)
             print("---------- RL --------------")
             DP.print_policy(rl_policy)
+            '''
 
             demands = Environment.generate_req_set(episode_len)
             Environment.print_reqs(demands)
@@ -386,11 +379,11 @@ if __name__ == "__main__":
             #dp_profit_60, dp_accept_60, dp_federate_60 = mdp_policy_result(demands, dp_policy_60, dp_profit_60, dp_accept_60, dp_federate_60)
             dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
             
-            ql_09_profit, ql_09_accept, ql_09_federate = mdp_policy_result(demands, ql_09_policy, ql_09_profit, ql_09_accept, ql_09_federate)
+            #ql_09_profit, ql_09_accept, ql_09_federate = mdp_policy_result(demands, ql_09_policy, ql_09_profit, ql_09_accept, ql_09_federate)
             
-            ql_05_profit, ql_05_accept, ql_05_federate = mdp_policy_result(demands, ql_05_policy, ql_05_profit, ql_05_accept, ql_05_federate)
+            #ql_05_profit, ql_05_accept, ql_05_federate = mdp_policy_result(demands, ql_05_policy, ql_05_profit, ql_05_accept, ql_05_federate)
             
-            rl_profit, rl_accept, rl_federate = mdp_policy_result(demands, rl_policy, rl_profit, rl_accept, rl_federate)
+            #rl_profit, rl_accept, rl_federate = mdp_policy_result(demands, rl_policy, rl_profit, rl_accept, rl_federate)
 
         #print("Capacity_Profit = ", Environment.domain.total_cpu)
         print("Greedy Profit 00  = ", greedy_profit_00 / iterations)

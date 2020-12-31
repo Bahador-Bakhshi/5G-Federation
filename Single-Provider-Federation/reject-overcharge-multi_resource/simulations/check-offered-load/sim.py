@@ -18,30 +18,31 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_num = 5000
-    episode_num = 100
+    sim_num = 3000
+    episode_num = 1000
 
-    best_QL_alpha   = 0.9
-    best_QL_epsilon = 0.9
-    best_QL_gamma   = 0.9
+    best_QL_alpha   = 0.75
+    best_QL_epsilon = 0.75
+    best_QL_gamma   = 0.75
 
-    best_RL_alpha   = 0.1
-    best_RL_epsilon = 0.9
-    best_RL_beta    = 0.1
+    best_RL_alpha   = 0.8
+    best_RL_epsilon = 1.0
+    best_RL_beta    = 0.3
 
     parser.parse_config("config.json")
+ 
 
-    
-    init_size = 0.4
-    step = 0.4
+    init_size = 0.5
+    step = 0.15
     scale = 10
 
-    iterations = 7
+    iterations = 10
     
     i = 0
     
     lambda0 = Environment.traffic_loads[0].lam
     lambda1 = Environment.traffic_loads[1].lam
+    lambda2 = Environment.traffic_loads[2].lam
     
     while i <= scale:
         load = init_size + i * step
@@ -49,6 +50,7 @@ if __name__ == "__main__":
 
         Environment.traffic_loads[0].lam = lambda0 * load
         Environment.traffic_loads[1].lam = lambda1 * load
+        Environment.traffic_loads[2].lam = lambda2 * load
         
         #dp_policy_05 = DP.policy_iteration(0.005)
         #dp_policy_30 = DP.policy_iteration(0.300)
@@ -64,13 +66,13 @@ if __name__ == "__main__":
 
         for j in range(iterations):
             
-            env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_num)
+            env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), episode_num)
             
             ql_policy_09 = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, best_QL_gamma)
             #print("---------- QL-0.9 --------------")
             #DP.print_policy(ql_policy_09)
         
-            ql_policy_05 = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, 0.5)
+            ql_policy_05 = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, 0.4)
             #print("---------- QL-0.5 --------------")
             #DP.print_policy(ql_policy_05)
         
@@ -136,6 +138,20 @@ if __name__ == "__main__":
         print("QL_05 Federate    = ", ql_federate_05 / iterations)
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
+
+        print("Load_Reject = ", load)
+        print("Greedy Reject 00  = ", 1.0 - ((greedy_federate_00 + greedy_accept_00)/ iterations))
+        print("Greedy Reject 50  = ", 1.0 - ((greedy_federate_50 + greedy_accept_50)/ iterations))
+        print("Greedy Reject 100 = ", 1.0 - ((greedy_federate_100+ greedy_accept_100) / iterations))
+        print("DP_05 Reject = ", 1.0 - ((dp_federate_05 + dp_accept_05) / iterations))
+        print("DP_30 Reject = ", 1.0 - ((dp_federate_30 + dp_accept_30) / iterations))
+        print("DP_60 Reject = ", 1.0 - ((dp_federate_60 + dp_accept_60) / iterations))
+        print("DP_95 Reject = ", 1.0 - ((dp_federate_95 + dp_accept_95) / iterations))
+        print("QL_09 Reject = ", 1.0 - ((ql_federate_09 + ql_accept_09) / iterations))
+        print("QL_05 Reject = ", 1.0 - ((ql_federate_05 + ql_accept_05) / iterations))
+        print("RL Reject    = ", 1.0 - ((rl_federate + rl_accept) / iterations))
+        print("", flush=True)
+
 
 print("DONE!!!")
 

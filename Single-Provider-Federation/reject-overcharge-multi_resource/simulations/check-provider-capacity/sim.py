@@ -18,30 +18,32 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_num = 4000
-    episode_num = 100
+    sim_num = 3000
+    episode_num = 1000
 
-    best_QL_alpha   = 0.9
-    best_QL_epsilon = 0.9
-    best_QL_gamma   = 0.9
+    best_QL_alpha   = 0.75
+    best_QL_epsilon = 0.75
+    best_QL_gamma   = 0.75
 
-    best_RL_alpha   = 0.1
-    best_RL_epsilon = 0.9
-    best_RL_beta    = 0.1
+    best_RL_alpha   = 0.8
+    best_RL_epsilon = 1.0
+    best_RL_beta    = 0.3
 
     parser.parse_config("config.json")
-
     
     init_size = 0
-    step = 8
+    step = 0.2
     scale = 10
 
-    iterations = 7
+    iterations = 10
+
+    org_provider_quotas = Environment.providers[1].quotas.copy()
     
     i = 0
     
     while i <= scale:
-        Environment.providers[1].quota = init_size + i * step
+        capacity_scale = init_size + i * step
+        Environment.providers[1].quotas = [int(x * capacity_scale) for x in org_provider_quotas]
         i += 1
 
         #dp_policy_05 = DP.policy_iteration(0.005)
@@ -52,19 +54,19 @@ if __name__ == "__main__":
         DP.print_policy(dp_policy_95)
     
         
-        greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_09_profit = ql_05_profit = rl_profit = 0
-        greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_09_accept = ql_05_accept = rl_accept = 0
-        greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_09_federate = ql_05_federate = rl_federate = 0
+        greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit_09 = ql_profit_05 = rl_profit = 0
+        greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_accept_09 = ql_accept_05 = rl_accept = 0
+        greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate_09 = ql_federate_05 = rl_federate = 0
 
         for j in range(iterations):
             
-            env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_num)
+            env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), episode_num)
             
             ql_09_policy = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, best_QL_gamma)
             print("---------- QL-0.9 --------------")
             DP.print_policy(ql_09_policy)
         
-            ql_05_policy = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, 0.5)
+            ql_05_policy = QL.qLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, 0.4)
             print("---------- QL-0.5 --------------")
             DP.print_policy(ql_05_policy)
         
@@ -85,15 +87,14 @@ if __name__ == "__main__":
             #dp_profit_60, dp_accept_60, dp_federate_60 = mdp_policy_result(demands, dp_policy_60, dp_profit_60, dp_accept_60, dp_federate_60)
             dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
             
-            ql_09_profit, ql_09_accept, ql_09_federate = mdp_policy_result(demands, ql_09_policy, ql_09_profit, ql_09_accept, ql_09_federate)
+            ql_profit_09, ql_accept_09, ql_federate_09 = mdp_policy_result(demands, ql_09_policy, ql_profit_09, ql_accept_09, ql_federate_09)
             
-            ql_05_profit, ql_05_accept, ql_05_federate = mdp_policy_result(demands, ql_05_policy, ql_05_profit, ql_05_accept, ql_05_federate)
+            ql_profit_05, ql_accept_05, ql_federate_05 = mdp_policy_result(demands, ql_05_policy, ql_profit_05, ql_accept_05, ql_federate_05)
             
             rl_profit, rl_accept, rl_federate = mdp_policy_result(demands, rl_policy, rl_profit, rl_accept, rl_federate)
 
 
-
-        print("Capacity_Profit = ", Environment.providers[1].quota)
+        print("Capacity_Profit = ", capacity_scale)
         print("Greedy Profit 00  = ", greedy_profit_00 / iterations)
         print("Greedy Profit 50  = ", greedy_profit_50 / iterations)
         print("Greedy Profit 100 = ", greedy_profit_100 / iterations)
@@ -101,12 +102,12 @@ if __name__ == "__main__":
         print("DP_30 Profit = ", dp_profit_30 / iterations)
         print("DP_60 Profit = ", dp_profit_60 / iterations)
         print("DP_95 Profit = ", dp_profit_95 / iterations)
-        print("QL_09 Profit = ", ql_09_profit / iterations)
-        print("QL_05 Profit = ", ql_05_profit / iterations)
+        print("QL_09 Profit = ", ql_profit_09 / iterations)
+        print("QL_05 Profit = ", ql_profit_05 / iterations)
         print("RL Profit = ", rl_profit / iterations)
         print("", flush=True)
 
-        print("Capacity_Accept = ", Environment.providers[1].quota) 
+        print("Capacity_Accept = ", capacity_scale) 
         print("Greedy Accept 00 = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
         print("Greedy Accept 100 = ", greedy_accept_100 / iterations)
@@ -114,12 +115,12 @@ if __name__ == "__main__":
         print("DP_30 Accept = ", dp_accept_30 / iterations)
         print("DP_60 Accept = ", dp_accept_60 / iterations)
         print("DP_95 Accept = ", dp_accept_95 / iterations)
-        print("QL_09 Accept    = ", ql_09_accept / iterations)
-        print("QL_05 Accept    = ", ql_05_accept / iterations)
+        print("QL_09 Accept    = ", ql_accept_09 / iterations)
+        print("QL_05 Accept    = ", ql_accept_05 / iterations)
         print("RL Accept    = ", rl_accept / iterations)
         print("", flush=True)
 
-        print("Capacity_Federate = ", Environment.providers[1].quota)
+        print("Capacity_Federate = ", capacity_scale)
         print("Greedy Federate 00  = ", greedy_federate_00 / iterations)
         print("Greedy Federate 50  = ", greedy_federate_50 / iterations)
         print("Greedy Federate 100 = ", greedy_federate_100 / iterations)
@@ -127,10 +128,24 @@ if __name__ == "__main__":
         print("DP_30 Federate = ", dp_federate_30 / iterations)
         print("DP_60 Federate = ", dp_federate_60 / iterations)
         print("DP_95 Federate = ", dp_federate_95 / iterations)
-        print("QL_09 Federate    = ", ql_09_federate / iterations)
-        print("QL_05 Federate    = ", ql_05_federate / iterations)
+        print("QL_09 Federate    = ", ql_federate_09 / iterations)
+        print("QL_05 Federate    = ", ql_federate_05 / iterations)
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
+
+        print("Scale_Reject = ", capacity_scale)
+        print("Greedy Reject 00  = ", 1.0 - ((greedy_federate_00 + greedy_accept_00)/ iterations))
+        print("Greedy Reject 50  = ", 1.0 - ((greedy_federate_50 + greedy_accept_50)/ iterations))
+        print("Greedy Reject 100 = ", 1.0 - ((greedy_federate_100+ greedy_accept_100) / iterations))
+        print("DP_05 Reject = ", 1.0 - ((dp_federate_05 + dp_accept_05) / iterations))
+        print("DP_30 Reject = ", 1.0 - ((dp_federate_30 + dp_accept_30) / iterations))
+        print("DP_60 Reject = ", 1.0 - ((dp_federate_60 + dp_accept_60) / iterations))
+        print("DP_95 Reject = ", 1.0 - ((dp_federate_95 + dp_accept_95) / iterations))
+        print("QL_09 Reject = ", 1.0 - ((ql_federate_09 + ql_accept_09) / iterations))
+        print("QL_05 Reject = ", 1.0 - ((ql_federate_05 + ql_accept_05) / iterations))
+        print("RL Reject    = ", 1.0 - ((rl_federate + rl_accept) / iterations))
+        print("", flush=True)
+
 
 print("DONE!!!")
 

@@ -3,14 +3,14 @@
 		"capacities":[
 			3,
 			3,
-			3
+			4
 		],
 		"ns_catalog":[
 			{
 				"id": 0,
 				"resources":[
 					1,
-					1,
+					2,
 					1
 				],
 				"revenue": 10
@@ -18,9 +18,9 @@
 			{
 				"id": 1,
 				"resources":[
+					3,
 					1,
-					2,
-					1
+					2
 				],
 				"revenue": 20
 			},
@@ -28,7 +28,7 @@
 				"id": 2,
 				"resources":[
 					2,
-					1,
+					0,
 					1
 				],
 				"revenue": 30
@@ -42,10 +42,10 @@
 			"quotas": [
 				2,
 				2,
-				2
+				1
 			],
 			"overcharge": 3,
-			"reject_threshold": 2,
+			"reject_threshold": 3,
 			"federation_costs":[
 				{
 					"nsid": 0,
@@ -66,9 +66,20 @@
 	"loads":[
 		{
 			"catalog_id": 0,
-			"lambda": 20,
+			"lambda": 200,
 			"mu": 1
+		},
+		{
+			"catalog_id": 1,
+			"lambda": 200,
+			"mu": 0.5
+		}, 
+		{
+			"catalog_id": 2,
+			"lambda": 200,
+			"mu": 0.5
 		}
+
 	]
 }
 

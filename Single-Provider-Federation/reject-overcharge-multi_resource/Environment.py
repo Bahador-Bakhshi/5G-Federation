@@ -348,12 +348,11 @@ class Env:
             provider_domain = providers[1] # in this version, there is only one provider
             federation_cost_scale = -1
             
-            if should_not_overcharge(req, self.current_provider_capacities, provider_domain.quotas, provider_domain.reject_threshold):
-                federation_cost_scale = 1
-            
-            elif check_feasible_deployment(req, self.current_provider_capacities):
-                federation_cost_scale = provider_domain.overcharge
- 
+            if check_feasible_deployment(req, self.current_provider_capacities):
+                if should_overcharge(req, self.current_provider_capacities, provider_domain.quotas, provider_domain.reject_threshold):
+                    federation_cost_scale = provider_domain.overcharge
+                else:
+                    federation_cost_scale = 1
             else:
                 error("invalid federation")
                 sys.exit(-1)
@@ -589,13 +588,12 @@ def update_capacities(req, capacities, inc_dec):
     for i in range(len(req.cap)):
         capacities[i] += inc_dec * req.cap[i]
 
-def should_not_overcharge(req, current_capacities, quotas, reject_threshold):
+def should_overcharge(req, current_capacities, quotas, reject_threshold):
     for i in range(len(req.cap)):
-        if current_capacities[i] - req.cap[i] < (reject_threshold - 1) * quotas[i]:
-            return False
+        if (current_capacities[i] - req.cap[i]) < ((reject_threshold - 1) * quotas[i]):
+            return True
 
-    return True
-
+    return False
 
 
 if __name__ == "__main__":
