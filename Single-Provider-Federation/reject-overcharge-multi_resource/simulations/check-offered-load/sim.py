@@ -19,7 +19,7 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 if __name__ == "__main__":
 
     sim_num = 3000
-    episode_num = 1000
+    episode_num = 2000
 
     best_QL_alpha   = 0.75
     best_QL_epsilon = 0.75
@@ -55,14 +55,14 @@ if __name__ == "__main__":
         #dp_policy_05 = DP.policy_iteration(0.005)
         #dp_policy_30 = DP.policy_iteration(0.300)
         #dp_policy_60 = DP.policy_iteration(0.600)
-        dp_policy_95 = DP.policy_iteration(0.99)
+        dp_policy_99 = DP.policy_iteration(0.99)
         #print("------------ DP -------------")
-        #DP.print_policy(dp_policy_95)
+        #DP.print_policy(dp_policy_99)
     
         
-        greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit_09 = ql_profit_05 = rl_profit = 0
-        greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_accept_09 = ql_accept_05 = rl_accept = 0
-        greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate_09 = ql_federate_05= rl_federate = 0
+        greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_99 = ql_profit_09 = ql_profit_05 = rl_profit = 0
+        greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_99 = ql_accept_09 = ql_accept_05 = rl_accept = 0
+        greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_99 = ql_federate_09 = ql_federate_05= rl_federate = 0
 
         for j in range(iterations):
             
@@ -91,7 +91,7 @@ if __name__ == "__main__":
             #dp_profit_05, dp_accept_05, dp_federate_05 = mdp_policy_result(demands, dp_policy_05, dp_profit_05, dp_accept_05, dp_federate_05)
             #dp_profit_30, dp_accept_30, dp_federate_30 = mdp_policy_result(demands, dp_policy_30, dp_profit_30, dp_accept_30, dp_federate_30)
             #dp_profit_60, dp_accept_60, dp_federate_60 = mdp_policy_result(demands, dp_policy_60, dp_profit_60, dp_accept_60, dp_federate_60)
-            dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
+            dp_profit_99, dp_accept_99, dp_federate_99 = mdp_policy_result(demands, dp_policy_99, dp_profit_99, dp_accept_99, dp_federate_99)
             
             ql_profit_09, ql_accept_09, ql_federate_09 = mdp_policy_result(demands, ql_policy_09, ql_profit_09, ql_accept_09, ql_federate_09)
             ql_profit_05, ql_accept_05, ql_federate_05 = mdp_policy_result(demands, ql_policy_05, ql_profit_05, ql_accept_05, ql_federate_05)
@@ -107,7 +107,7 @@ if __name__ == "__main__":
         print("DP_05 Profit = ", dp_profit_05 / iterations)
         print("DP_30 Profit = ", dp_profit_30 / iterations)
         print("DP_60 Profit = ", dp_profit_60 / iterations)
-        print("DP_95 Profit = ", dp_profit_95 / iterations)
+        print("DP_99 Profit = ", dp_profit_99 / iterations)
         print("QL_09 Profit = ", ql_profit_09 / iterations)
         print("QL_05 Profit = ", ql_profit_05 / iterations)
         print("RL Profit = ", rl_profit / iterations)
@@ -120,7 +120,7 @@ if __name__ == "__main__":
         print("DP_05 Accept = ", dp_accept_05 / iterations)
         print("DP_30 Accept = ", dp_accept_30 / iterations)
         print("DP_60 Accept = ", dp_accept_60 / iterations)
-        print("DP_95 Accept = ", dp_accept_95 / iterations)
+        print("DP_99 Accept = ", dp_accept_99 / iterations)
         print("QL_09 Accept    = ", ql_accept_09 / iterations)
         print("QL_05 Accept    = ", ql_accept_05 / iterations)
         print("RL Accept    = ", rl_accept / iterations)
@@ -133,7 +133,7 @@ if __name__ == "__main__":
         print("DP_05 Federate = ", dp_federate_05 / iterations)
         print("DP_30 Federate = ", dp_federate_30 / iterations)
         print("DP_60 Federate = ", dp_federate_60 / iterations)
-        print("DP_95 Federate = ", dp_federate_95 / iterations)
+        print("DP_99 Federate = ", dp_federate_99 / iterations)
         print("QL_09 Federate    = ", ql_federate_09 / iterations)
         print("QL_05 Federate    = ", ql_federate_05 / iterations)
         print("RL Federate    = ", rl_federate / iterations)
@@ -146,7 +146,7 @@ if __name__ == "__main__":
         print("DP_05 Reject = ", 1.0 - ((dp_federate_05 + dp_accept_05) / iterations))
         print("DP_30 Reject = ", 1.0 - ((dp_federate_30 + dp_accept_30) / iterations))
         print("DP_60 Reject = ", 1.0 - ((dp_federate_60 + dp_accept_60) / iterations))
-        print("DP_95 Reject = ", 1.0 - ((dp_federate_95 + dp_accept_95) / iterations))
+        print("DP_99 Reject = ", 1.0 - ((dp_federate_99 + dp_accept_99) / iterations))
         print("QL_09 Reject = ", 1.0 - ((ql_federate_09 + ql_accept_09) / iterations))
         print("QL_05 Reject = ", 1.0 - ((ql_federate_05 + ql_accept_05) / iterations))
         print("RL Reject    = ", 1.0 - ((rl_federate + rl_accept) / iterations))
