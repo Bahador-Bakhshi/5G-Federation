@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     best_RL_alpha   = 0.8
     best_RL_epsilon = 1.0
-    best_RL_beta    = 0.5
+    best_RL_beta    = 0.3
 
     parser.parse_config("config.json")
 
