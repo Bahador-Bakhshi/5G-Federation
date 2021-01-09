@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     
     init_size = 100
-    step = 250
+    step = 300
     scale = 10
 
     iterations = 20
