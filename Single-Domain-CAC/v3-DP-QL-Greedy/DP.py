@@ -5,15 +5,16 @@ import math
 from collections import defaultdict
 import sys
 import plotting
-import QL
 import heapq
 import itertools 
 import matplotlib 
 import matplotlib.style 
+import QL
+import DQL
 
 matplotlib.style.use('ggplot') 
 
-server_size = 21
+server_size = 10
 total_classes = 2
 total_actions = 2
 
@@ -24,13 +25,13 @@ rs   = [0] * total_classes
 
 lams[0] = 5.0
 mus[0] = 2.0
-ws[0] = 5.0
-rs[0] = 20.0
+ws[0] = 3.0
+rs[0] = 2000.0
 
 lams[1] = 10.0
-mus[1] = 0.1
-ws[1]= 10.0
-rs[1] = 1000.0
+mus[1] = 1.0
+ws[1]= 5.0
+rs[1] = 10.0
 
 
 reject = 0
@@ -38,7 +39,7 @@ accept = 1
 no_request = 0
 with_request = 1
 
-gamma = 0.9 #TODO  FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
+gamma = 0.999 #TODO  FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 class Actions:
     n = 0
@@ -159,7 +160,8 @@ def pr(state, action):
         if active == 0:
             print("Accept for no demand!!!")
             # cannot be accepted, it is like reject but -inf for reward
-            reward = -1 * np.inf
+            #reward = -1 * np.inf
+            reward = -1000
 
             for j in range(total_classes):
                 prob.update(arrival_after_reject(state, j, total_rates))
@@ -178,7 +180,8 @@ def pr(state, action):
                 print("Try to accept but no resource")
                 #cannot be accepted, it is like reject but -inf for reward
 
-                reward = -1 * np.inf
+                #reward = -1 * np.inf
+                reward = -1000
 
                 for j in range(total_classes):
                     prob.update(arrival_after_reject(state, j, total_rates))
@@ -287,7 +290,20 @@ def DP():
 
 
     print("Optimal Policy: ", policy)
-    return policy
+
+    def final_policy_function(state):
+        random_action = False
+        if state in policy:
+            action = policy[state]
+        else:
+            print("Unknown state")
+            action = int(np.random.uniform(0,1.9999))
+            random_action = True
+        
+        return action, random_action
+
+    return final_policy_function
+
 
 class Request:
     w   = 0
@@ -410,13 +426,8 @@ def test_policy(demands, policy):
         
         state = (capacity, tuple(alives_list), tuple(arrival_list))
         print("State = ", state)
-        random_action = False
-        if state in policy:
-            action = policy[state]
-        else:
-            print("Unknown state")
-            action = int(np.random.uniform(0,1.9999))
-            random_action = True
+
+        action, random_action = policy(state)
         print("Action = ", action)
 
         if action == 1:
@@ -553,17 +564,19 @@ class Environment:
 
             if count == 0: #there is no requst to accept
                 print("accepting no demand !!!!")
-                reward = -1 * np.inf
+                #reward = -1 * np.inf
+                reward = -1000
             else:
                 req = self.arriaved_demand
                 self.arriaved_demand = None
 
                 print("Try to accept: req = ", req)
 
-                if self.capacity < req.w:
+                if req == None or self.capacity < req.w:
                     #cannot accept
                     print("\t cannot accept")
-                    reward = -1 * np.inf
+                    #reward = -1 * np.inf
+                    reward = -1000
                 else:
                     print("\t accepted")
                     reward = req.rev
@@ -608,15 +621,26 @@ class Environment:
         return state, reward, done
 
 
+def print_policy_function(policy):
+    all_possible_state = generate_all_states(server_size, ws)
+    for s in all_possible_state:
+        print(s,": ", policy(s))
 
 if __name__ == "__main__":
-    sim_time = 100
+    sim_time = 50
 
     dp_policy = DP()
+    print("------------ DP ----------")
+    print_policy_function(dp_policy)
+
     env = Environment(server_size, sim_time)
-    ql_policy = QL.qLearning(env, 25)
+    #ql_policy = QL.qLearning(env, 100)
+    dql_policy = DQL.dqLearning(env, 100)
+    print("------------ DQL ----------")
+    print_policy_function(dql_policy)
  
-    for i in range(10):
+    '''
+    for i in range(1):
 
         demands = generate_req_set(total_classes, sim_time)
         #print_reqs(demands)
@@ -629,5 +653,7 @@ if __name__ == "__main__":
         ql_profit = test_policy(demands, ql_policy)
         print("QL Profit = ", ql_profit)
 
+        dql_profit = test_policy(demands, dql_policy)
+        print("DQL Profit = ", dql_profit)
 
-
+    '''

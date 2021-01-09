@@ -18,8 +18,8 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_num = 3000
-    episode_num = 2000
+    sim_num = 4000
+    episode_num = 2500
 
     best_QL_alpha   = 0.75
     best_QL_epsilon = 0.75
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     step = 0.2
     scale = 10
 
-    iterations = 10
+    iterations = 20
 
     org_domain_capacity = Environment.domain.capacities.copy()
 

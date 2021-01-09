@@ -144,6 +144,17 @@ def qLearning(env, num_episodes, discount_factor = 0.9,	alpha = 0.5, epsilon = 0
     for i in Q:
         final_policy[i] = np.argmax(Q[i])
 
+    def final_policy_function(state):
+        random_action = False
+        if state in final_policy:
+            action = final_policy[state]
+        else:
+            print("Unknown state")
+            action = int(np.random.uniform(0,1.9999))
+            random_action = True
+        
+        return action, random_action
+
     #print(final_policy)
-    return final_policy
+    return final_policy_function
 
