@@ -148,7 +148,7 @@ if __name__ == "__main__":
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
 
-        print("Scale_Federate = ", cost_scale)
+        print("Scale_Reject = ", cost_scale)
         print("Greedy Reject 00  = ", 1.0 - ((greedy_federate_00 + greedy_accept_00)/ iterations))
         print("Greedy Reject 50  = ", 1.0 - ((greedy_federate_50 + greedy_accept_50)/ iterations))
         print("Greedy Reject 100 = ", 1.0 - ((greedy_federate_100+ greedy_accept_100) / iterations))
