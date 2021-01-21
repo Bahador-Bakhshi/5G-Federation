@@ -1,5 +1,5 @@
 { "x_label":"zeta",
-"y_label":"Acceptance Rate",
+"y_label":"Rejection Rate",
  "results":[
 { "x":  0.0,
 "greedy000":  1.0,

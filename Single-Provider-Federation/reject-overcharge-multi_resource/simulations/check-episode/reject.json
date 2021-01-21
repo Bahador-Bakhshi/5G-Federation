@@ -1,5 +1,5 @@
 { "x_label":"episode",
-"y_label":"Acceptance Rate",
+"y_label":"Rejection Rate",
  "results":[
 { "x":  100,
 "greedy000":  1.0,
