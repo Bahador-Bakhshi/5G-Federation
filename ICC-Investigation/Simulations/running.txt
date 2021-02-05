@@ -1,3 +1,0 @@
-dict-table-int-verify 
-dict-table-verify
-dict-int-multi-1000

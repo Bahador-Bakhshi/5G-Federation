@@ -1,8 +1,0 @@
-*.swp
-*.swo
-*.pyc
-*.pc
-*.pdf
-graphs/*
-ns-chains/*
-tests/vnfsMapping/out/*
