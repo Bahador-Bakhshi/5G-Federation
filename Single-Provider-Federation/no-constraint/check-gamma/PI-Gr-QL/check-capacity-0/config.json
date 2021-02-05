@@ -1,0 +1,47 @@
+{
+	"local":{
+		"total_cpu": 1,
+		"ns_catalog":[
+			{
+				"id": 0,
+				"cpu": 1,
+				"revenue": 50
+			},
+			{
+				"id": 1,
+				"cpu": 2,
+				"revenue": 40
+			}
+		]
+	},
+
+	"providers":[
+		{
+			"provider_id": 0,
+			"federation_costs":[
+				{
+					"nsid": 0,
+					"cost": 40
+				},
+				{
+					"nsid": 1,
+					"cost": 4
+				}
+			]
+		}	
+	],
+
+	"loads":[
+		{
+			"catalog_id": 0,
+			"lambda": 5,
+			"mu": 5
+
+		},
+		{
+			"catalog_id": 1,
+			"lambda": 5,
+			"mu": 2
+		}
+	]
+}
