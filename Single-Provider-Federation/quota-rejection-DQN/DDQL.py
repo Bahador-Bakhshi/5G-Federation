@@ -29,8 +29,8 @@ def print_deque(q):
 
 class DQNAgent:
     def __init__(self, state_size, action_size, learning_rate):
-        self.fit_individual = True
-        self.epochs = 1
+        self.fit_individual = False
+        self.epochs = 100
         self.state_size = state_size
         self.lr = learning_rate
         self.action_size = action_size
@@ -264,7 +264,7 @@ def ddqLearning(env, num_episodes, gamma0 = 0.9, epsilon0 = 0.8):
         agent.reset_importance()
 
         epsilon = max(epsilon0 - episode / 500, 0.01)
-        gamma = max(gamma0 - episode / 500, 0.01)
+        gamma = gamma0
 
         for iteration in itertools.count():
             print("t =", iteration, "sate =", state)
@@ -285,11 +285,12 @@ def ddqLearning(env, num_episodes, gamma0 = 0.9, epsilon0 = 0.8):
 
             state = next_state
     
-        if episode > 20:
+        if episode > 10:
             agent.train(batch_size, gamma)
-
-        if episode % 50 == 0:
-            agent.target.set_weights(agent.model.get_weights()) 
+    
+            if episode % 10 == 0:
+                print("setting target weights in episode = ", episode)
+                agent.target.set_weights(agent.model.get_weights()) 
    
 
         loss_sum = 0

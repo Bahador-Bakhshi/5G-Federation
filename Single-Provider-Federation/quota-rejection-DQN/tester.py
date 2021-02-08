@@ -264,7 +264,7 @@ def print_policy_function(policy):
 if __name__ == "__main__":
 
 
-    sim_time = 200
+    sim_time = 100
     episode_num = 1000
 
     parser.parse_config("config.json")
