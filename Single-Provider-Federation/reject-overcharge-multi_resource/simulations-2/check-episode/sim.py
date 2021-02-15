@@ -35,11 +35,11 @@ if __name__ == "__main__":
     
     init_size = 100
     step = 300
-    scale = 10
+    scale = 15
 
     iterations = 20
     
-    i = 0
+    i = 11
  
     #dp_policy_05 = DP.policy_iteration(0.005)
     #dp_policy_30 = DP.policy_iteration(0.300)

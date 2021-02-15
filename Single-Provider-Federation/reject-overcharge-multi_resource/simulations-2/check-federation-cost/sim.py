@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
 
 
-        print("Scale_Profit = ", episode_num)
+        print("Scale_Profit = ", cost_scale)
         print("Greedy Profit 00  = ", greedy_profit_00 / iterations)
         print("Greedy Profit 50  = ", greedy_profit_50 / iterations)
         print("Greedy Profit 100 = ", greedy_profit_100 / iterations)
@@ -132,7 +132,7 @@ if __name__ == "__main__":
         print("RL Profit = ", rl_profit / iterations)
         print("", flush=True)
 
-        print("Scale_Accept = ", episode_num)
+        print("Scale_Accept = ", cost_scale)
         print("Greedy Accept 00 = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
         print("Greedy Accept 100 = ", greedy_accept_100 / iterations)
@@ -146,7 +146,7 @@ if __name__ == "__main__":
         print("RL Accept    = ", rl_accept / iterations)
         print("", flush=True)
 
-        print("Scale_Federate = ", episode_num)
+        print("Scale_Federate = ", cost_scale)
         print("Greedy Federate 00  = ", greedy_federate_00 / iterations)
         print("Greedy Federate 50  = ", greedy_federate_50 / iterations)
         print("Greedy Federate 100 = ", greedy_federate_100 / iterations)
@@ -160,7 +160,7 @@ if __name__ == "__main__":
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
 
-        print("Scale_Reject = ", episode_num)
+        print("Scale_Reject = ", cost_scale)
         print("Greedy Reject 00  = ", 1.0 - ((greedy_federate_00 + greedy_accept_00)/ iterations))
         print("Greedy Reject 50  = ", 1.0 - ((greedy_federate_50 + greedy_accept_50)/ iterations))
         print("Greedy Reject 100 = ", 1.0 - ((greedy_federate_100+ greedy_accept_100) / iterations))
