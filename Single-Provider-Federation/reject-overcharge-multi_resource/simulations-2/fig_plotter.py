@@ -5,7 +5,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import sys
 
-def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_30, DP_60, DP_99, QL_95, QL_55, QL_20, RL, output):
+def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_30, DP_60, DP_99, QL_95, QL_55, QL_20, RL, output, no_greedy):
 
     font = {
             'weight' : 'bold',
@@ -20,7 +20,7 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
 
     plt.grid(linestyle="--", linewidth=0.5)
 
-    if x_label == "episode":
+    if x_label == "Episode":
         plt.xlabel(r'$n$')
     elif x_label == "LC":
         plt.xlabel(r'$\eta_{C^{l}}$')
@@ -48,7 +48,8 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
 
     plt.plot(x, RL, label='RL', color='r', linestyle='-.', linewidth=1.25, marker = 'D')
 
-    plt.plot(x, greedy_100, label='Greedy', color='y', linestyle='dashdot', linewidth=1.25, marker = '+')
+    if no_greedy == False:
+        plt.plot(x, greedy_100, label='Greedy', color='y', linestyle='dashdot', linewidth=1.25, marker = '+')
 
     plt.legend(loc='best', handlelength=3, prop={'size': 9.5})
 

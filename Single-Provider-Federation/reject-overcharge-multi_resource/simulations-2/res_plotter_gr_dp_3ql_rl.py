@@ -12,6 +12,11 @@ if len(sys.argv) < 2:
     print("Usage: ", str(sys.argv[0]), "input_file")
     sys.exit()
 
+no_greedy = False
+if len(sys.argv) == 3:
+    if str(sys.argv[2]) == "NO_GREEDY":
+        no_greedy = True
+
 res_file_handler = open(str(sys.argv[1])+".json")
 res = json.load(res_file_handler)
 res_file_handler.close()
@@ -47,6 +52,6 @@ for data in results:
     QL_20.append(data["QL_20"])
     RL.append(data["RL"])
 
-fig_plotter.plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_30, DP_60, DP_99, QL_95, QL_55, QL_20, RL, str(sys.argv[1]))
+fig_plotter.plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_30, DP_60, DP_99, QL_95, QL_55, QL_20, RL, str(sys.argv[1]), no_greedy)
 
 

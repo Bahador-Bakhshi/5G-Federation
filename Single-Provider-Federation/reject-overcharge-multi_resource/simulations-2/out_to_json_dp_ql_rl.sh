@@ -5,5 +5,5 @@ if [ "$#" -ne 4 ]; then
    exit  
 fi
 
-cat res.out | grep $1 -A 10 | gawk -v x_label="$2" -v y_label="$3" -f ../out_to_json_dp_ql_rl.awk > $4
+cat res.out | grep $1 -A 11 | gawk -v x_label="$2" -v y_label="$3" -f ../out_to_json_dp_ql_rl.awk > $4
 

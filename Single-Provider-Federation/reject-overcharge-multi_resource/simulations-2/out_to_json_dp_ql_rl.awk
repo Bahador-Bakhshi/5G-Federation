@@ -28,12 +28,14 @@ BEGIN{
 		else if (cnt == 7) 
 			print "\"DP_60\":" $2","; 
 		else if (cnt == 8) 
-			print "\"DP_95\":" $2","; 
+			print "\"DP_99\":" $2","; 
 		else if (cnt == 9) 
-			print "\"QL_09\":" $2","; 
+			print "\"QL_95\":" $2","; 
 		else if (cnt == 10) 
-			print "\"QL_05\":" $2","; 
-		else if (cnt == 11) {
+			print "\"QL_55\":" $2","; 
+		else if (cnt == 11) 
+			print "\"QL_20\":" $2","; 
+		else if (cnt == 12) {
 			print "\"RL\":" $2"}"; 
 			cnt = 0
 			first_data = 0
