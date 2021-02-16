@@ -14,7 +14,7 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
 
     matplotlib.rc('font', **font)
     plt.rcParams["axes.labelweight"] = "bold"
-    plt.rcParams["axes.labelsize"] = "13"
+    plt.rcParams["axes.labelsize"] = "15"
 
     fig, ax = plt.subplots()
 
