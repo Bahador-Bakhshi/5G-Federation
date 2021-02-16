@@ -42,9 +42,9 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
 
     plt.plot(x, DP_99, label='DP', color='k', linestyle='solid', linewidth=1.25, marker = '*')
 
-    plt.plot(x, QL_95, label='QL-0.95', color='b', linestyle='dashed', linewidth=1.25, marker = '^')
-    plt.plot(x, QL_55, label='QL-0.55', color='c', linestyle='dashed', linewidth=1.25, marker = '>')
-    plt.plot(x, QL_20, label='QL-0.20', color='g', linestyle='dashed', linewidth=1.25, marker = 'v')
+    plt.plot(x, QL_95, label='QL-95', color='b', linestyle='dashed', linewidth=1.25, marker = '^')
+    plt.plot(x, QL_55, label='QL-55', color='c', linestyle='dashed', linewidth=1.25, marker = '>')
+    plt.plot(x, QL_20, label='QL-20', color='g', linestyle='dashed', linewidth=1.25, marker = 'v')
 
     plt.plot(x, RL, label='RL', color='r', linestyle='-.', linewidth=1.25, marker = 'D')
 
