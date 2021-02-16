@@ -62,7 +62,7 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
 
     if step_y < 1:
         min_y = max(0, round(min_y - step_y / 3, 2))
-        step_y = round(step_y, 2)
+        step_y = max(round(step_y, 2), 0.015)
         y_ticks = [min_y + i * step_y for i in range(max_yticks + 1)]
     else:
         min_y = max(0, int(min_y - step_y / 3))

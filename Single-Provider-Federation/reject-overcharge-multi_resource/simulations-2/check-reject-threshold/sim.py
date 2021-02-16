@@ -99,7 +99,7 @@ if __name__ == "__main__":
 
 
 
-        print("Threshold_Profit = ", episode_num)
+        print("Threshold_Profit = ", threshold)
         print("Greedy Profit 00  = ", greedy_profit_00 / iterations)
         print("Greedy Profit 50  = ", greedy_profit_50 / iterations)
         print("Greedy Profit 100 = ", greedy_profit_100 / iterations)
@@ -113,7 +113,7 @@ if __name__ == "__main__":
         print("RL Profit = ", rl_profit / iterations)
         print("", flush=True)
 
-        print("Threshold_Accept = ", episode_num)
+        print("Threshold_Accept = ", threshold)
         print("Greedy Accept 00 = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
         print("Greedy Accept 100 = ", greedy_accept_100 / iterations)
@@ -127,7 +127,7 @@ if __name__ == "__main__":
         print("RL Accept    = ", rl_accept / iterations)
         print("", flush=True)
 
-        print("Threshold_Federate = ", episode_num)
+        print("Threshold_Federate = ", threshold)
         print("Greedy Federate 00  = ", greedy_federate_00 / iterations)
         print("Greedy Federate 50  = ", greedy_federate_50 / iterations)
         print("Greedy Federate 100 = ", greedy_federate_100 / iterations)
@@ -141,7 +141,7 @@ if __name__ == "__main__":
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
 
-        print("Threshold_Reject = ", episode_num)
+        print("Threshold_Reject = ", threshold)
         print("Greedy Reject 00  = ", 1.0 - ((greedy_federate_00 + greedy_accept_00)/ iterations))
         print("Greedy Reject 50  = ", 1.0 - ((greedy_federate_50 + greedy_accept_50)/ iterations))
         print("Greedy Reject 100 = ", 1.0 - ((greedy_federate_100+ greedy_accept_100) / iterations))
