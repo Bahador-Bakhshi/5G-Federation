@@ -29,8 +29,8 @@ def print_deque(q):
 
 class DQNAgent:
     def __init__(self, state_size, action_size, learning_rate):
-        self.fit_individual = False
-        self.epochs = 100
+        self.fit_individual = True
+        self.epochs = 1
         self.state_size = state_size
         self.lr = learning_rate
         self.action_size = action_size
@@ -42,7 +42,7 @@ class DQNAgent:
         self.state_importance = None
     
     def reset_importance(self):
-        self.state_importance = defaultdict(lambda: 0)
+        self.state_importance = defaultdict(lambda: 1)
 
     def _build_model(self):  # Neural Net for Deep-Q learning Model
 
@@ -68,7 +68,7 @@ class DQNAgent:
         try:
             index = self.memory.index(new_entry) 
         except ValueError:
-            print("Adding new_entry")
+            #print("Adding new_entry")
             self.memory.append(new_entry)
         except:
             print("Error")
@@ -100,7 +100,7 @@ class DQNAgent:
             if not (a in va):
                 act_values[0][a] = -1 * np.inf
 
-        print("2) state = ", state, ", act_values = ", act_values)
+        #print("2) state = ", state, ", act_values = ", act_values)
 
         return np.argmax(act_values[0]), False
 
@@ -110,30 +110,32 @@ class DQNAgent:
         #    print("pair = ", p, ", importance = ", self.state_importance[p])
 
         for i in range(len(states)):
-            for j in range(len(states)):
+            for j in range(i+1, len(states)):
+                if np.all(states[i] -  states[j] == 0): 
+                    updated_target_Q_values[j] = updated_target_Q_values[i]
+
+                '''
                 if i != j:
-                    '''
                     print("states[",i,"] = ", states[i])
                     print("states[",j,"] = ", states[j])
                     print("Q[",i,"] = ", updated_target_Q_values[i])
                     print("Q[",j,"] = ", updated_target_Q_values[j])
-                    '''
 
                     if np.all(states[i] -  states[j] == 0): 
-                        '''
+                        
                         print("Equal")
                         print("actions[",i,"] = ", actions[i])
                         print("actions[",j,"] = ", actions[j])
-                        '''
+                        
                         if actions[i] != actions[j]:
                             updated_target_Q_values[i][actions[j]] = updated_target_Q_values[j][actions[j]]
                             updated_target_Q_values[j][actions[i]] = updated_target_Q_values[i][actions[i]]
                         else:
                             pair_i = tuple(zip(tuple(states[i]), tuple(next_states[i])))
-                            importance_i = self.state_importance[pair_i]
+                            importance_i = 1 + self.state_importance[pair_i]
 
                             pair_j = tuple(zip(tuple(states[j]), tuple(next_states[j])))
-                            importance_j = self.state_importance[pair_j]
+                            importance_j = 1 + self.state_importance[pair_j]
 
                             weighted_average = (importance_i * updated_target_Q_values[i][actions[i]] + importance_j * updated_target_Q_values[j][actions[j]]) / (1.0 * importance_i + importance_j)
 
@@ -142,12 +144,12 @@ class DQNAgent:
                         for k in range(len(updated_target_Q_values[i])):
                             if k != actions[i] and k != actions[j]:
                                 updated_target_Q_values[i][k] = updated_target_Q_values[j][k] = 0.5 * (updated_target_Q_values[i][k] + updated_target_Q_values[j][k])
-                    '''
+                    
                     print("Q[",i,"] = ", updated_target_Q_values[i])
                     print("Q[",j,"] = ", updated_target_Q_values[j])
                     '''
 
-    def train(self, batch_size, discount_rate):
+    def train(self, batch_size, discount_rate, use_target):
         experiences = self.sample(batch_size)
         states, actions, rewards, next_states = experiences
         updated_target_Q_values = np.zeros(shape=(batch_size, self.action_size))
@@ -156,33 +158,36 @@ class DQNAgent:
 
         for i in range(batch_size):
             print("train: experience = ")
-            print("\t", states[i], actions[i], rewards[i], next_states[i])
+            print("\t (s, a, r, s') = ", states[i], actions[i], rewards[i], next_states[i])
    
             next_Q_values = self.model.predict(next_states[i][np.newaxis])
             va = Environment.get_valid_actions(array_to_object_state(next_states[i]))
             for a in Environment.Actions:
                 if not (a in va):
                     next_Q_values[0][a] = -1 * np.inf
-            print("train: online next_Q_values = ", next_Q_values)
+            print("\t Q_online [s', .] = ", next_Q_values)
             
             best_next_actions = np.argmax(next_Q_values, axis=1)
-            print("train: best_next_actions = ", best_next_actions)
-            
+            print("\t a' = argmax(Q_online[s',a]) = ", best_next_actions)
+          
+            next_best_Q_values_target_predict = 0
+            if use_target:
+                next_best_Q_values_target_predict = self.target.predict(next_states[i][np.newaxis])
+            print("\t Q_target [s', .] = ", next_best_Q_values_target_predict)
+
             next_mask = tf.one_hot(best_next_actions, self.action_size).numpy()
-            next_best_Q_values = (self.target.predict(next_states[i][np.newaxis]) * next_mask).sum(axis=1)
-            print("train: traget next_best_Q_values = ", next_best_Q_values)
+            next_best_Q_values = ((next_best_Q_values_target_predict) * next_mask).sum(axis=1)
+            print("\t Q_target [s', a'] = ", next_best_Q_values)
 
             observed_target_Q_values = (rewards[i] + discount_rate * next_best_Q_values)
-            print("train: observed_target_Q_values = ", observed_target_Q_values)
+            print("\t r + gamma * Q_target [s', a'] = ", observed_target_Q_values)
  
             old_Q_values = self.model.predict(states[i][np.newaxis])
-            print("train: old_Q_values = ", old_Q_values)
-            
             updated_target_Q_values[i] = old_Q_values
-            #print("train: updated_target_Q_values = ", updated_target_Q_values)
+            print("\t Q_online [s, .] = ", updated_target_Q_values[i])
             
             updated_target_Q_values[i][actions[i]] = observed_target_Q_values[0]
-            print("train: updated_target_Q_values = ", updated_target_Q_values)
+            print("\t UPDATED Q_online [s, .] = ", updated_target_Q_values[i])
             
             if self.fit_individual:
                 hist = self.model.fit(states[i][np.newaxis], updated_target_Q_values[i][np.newaxis], epochs=self.epochs, verbose=0)
@@ -192,17 +197,17 @@ class DQNAgent:
             self.history.append(individual_history)
 
         else:
-            print("------------------------------------")
-            print("states = ", states)
-            print("actions= ", actions)
-            print("before unifying: updated_target_Q_values = ", updated_target_Q_values)
+            #print("------------------------------------")
+            #print("states = ", states)
+            #print("actions= ", actions)
+            #print("before unifying: updated_target_Q_values = ", updated_target_Q_values)
             self.unify_q_values(states, actions, next_states, updated_target_Q_values)
-            print("after unifying: updated_target_Q_values = ", updated_target_Q_values)
+            #print("after unifying: updated_target_Q_values = ", updated_target_Q_values)
 
             hist = self.model.fit(states, updated_target_Q_values, epochs=self.epochs, verbose=0)
-            print("after fit: ")
-            for s in states:
-                print(self.model.predict(s[np.newaxis]))
+            #print("after fit: ")
+            #for s in states:
+            #    print(self.model.predict(s[np.newaxis]))
 
             self.history.append(hist)
 
@@ -248,13 +253,15 @@ def array_to_object_state(state):
 
     res.arrivals_departures = tuple(tmp_list)
     
-    print("array --> state: array = ", state, ", state = ", res)
+    #print("array --> state: array = ", state, ", state = ", res)
     return res
 
 
-def ddqLearning(env, num_episodes, gamma0 = 0.9, epsilon0 = 0.8):
+def ddqLearning(env, num_episodes, gamma0 = 0.99, epsilon0 = 0.8):
     batch_size   = 32
     learning_rate= 0.005
+    use_target = False
+    visited_states = []
 
     agent = DQNAgent(3 * Environment.total_classes, len(Environment.Actions), learning_rate)
 
@@ -267,30 +274,31 @@ def ddqLearning(env, num_episodes, gamma0 = 0.9, epsilon0 = 0.8):
         gamma = gamma0
 
         for iteration in itertools.count():
-            print("t =", iteration, "sate =", state)
+            #print("t =", iteration, "sate =", state)
 
             action, random = agent.act(state, epsilon)
-            print("action = ", action, ", random = ", random)
+            #print("action = ", action, ", random = ", random)
             next_state, reward, done = env.step(state, action)
         
             if done:
                 break
 
-            print("next_state =", next_state, "reward =", reward, ", done =", done)
+            #print("next_state =", next_state, "reward =", reward, ", done =", done)
            
             agent.remember(state, action, reward, next_state)
-            state_pair = tuple(zip(tuple(object_to_array_state(state)), tuple(object_to_array_state(next_state))))
-
-            agent.state_importance[state_pair] = agent.state_importance[state_pair] + 1
 
             state = next_state
+
+            if not(state in visited_states):
+                visited_states.append(state)
     
-        if episode > 10:
-            agent.train(batch_size, gamma)
+        if episode > 1:
+            agent.train(batch_size, gamma, use_target)
     
-            if episode % 10 == 0:
-                print("setting target weights in episode = ", episode)
-                agent.target.set_weights(agent.model.get_weights()) 
+        if episode % 5 == 0:
+            print("setting target weights in episode = ", episode)
+            agent.target.set_weights(agent.model.get_weights()) 
+            use_target = True
    
 
         loss_sum = 0
@@ -307,6 +315,10 @@ def ddqLearning(env, num_episodes, gamma0 = 0.9, epsilon0 = 0.8):
 
         agent.history = []
         print("loss = ", loss_sum / 1000.0)
+
+    print("Total Visited States = ", len(visited_states))
+    for i in range(len(visited_states)):
+        print(visited_states[i])
 
     def policy_function(state):
         action, random = agent.act(state, epsilon=0.05)
