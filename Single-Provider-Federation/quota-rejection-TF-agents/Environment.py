@@ -15,7 +15,7 @@ class State:
     local_domain = 0
     domains_alives= []
     arrivals_departures = ()
-    state_fields_num = 6
+    state_fields_num = 0
 
     def __init__(self, tc_num):
         self.domains_alives = [None] * (1 + providers_num) #1 for the local domain

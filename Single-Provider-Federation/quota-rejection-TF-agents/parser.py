@@ -64,6 +64,7 @@ def parse_config(config_file):
         Environment.traffic_loads.append(Traffic_Load(load["catalog_id"], load["lambda"], load["mu"]))
 
     Environment.total_classes = len(Environment.traffic_loads)
+    Environment.State.state_fields_num = 3 * Environment.total_classes
     print_loads(Environment.traffic_loads)
 
 
