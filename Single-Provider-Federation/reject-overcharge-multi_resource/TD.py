@@ -17,6 +17,21 @@ def print_Q(Q):
     debug("*********************")
 
 
+def get_q_values_stat(Q):
+    min_q = np.inf
+    max_q = 0
+    avg_q = 0.0
+    num   = 0
+
+    for i, (k, v) in enumerate(Q.items()):
+        min_q = min(min_q, max(v))
+        max_q = max(max_q, max(v))
+        avg_q += max(v)
+        num += 1
+
+    return min_q, avg_q / num, max_q 
+
+
 def createEpsilonGreedyPolicy(Q, env): 
     def policyFunction(state, epsilon, seen_states): 
         va = Environment.get_valid_actions(state)

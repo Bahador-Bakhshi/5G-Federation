@@ -2,7 +2,7 @@
 
 from TD import *
 
-def rLearning(env, num_episodes, dynamic, alpha0, epsilon0, beta0):
+def rLearning(env, num_episodes, dynamic, alpha0, epsilon0, beta0, prefix):
     
     Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
 
@@ -88,6 +88,7 @@ def rLearning(env, num_episodes, dynamic, alpha0, epsilon0, beta0):
     for i in Q:
         final_policy[i] = Environment.Actions(np.argmax(Q[i]))
 
+    print(prefix, " ", num_episodes, get_q_values_stat(Q), rho)
     return final_policy
 
 

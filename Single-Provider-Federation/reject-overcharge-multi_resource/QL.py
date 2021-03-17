@@ -2,7 +2,8 @@
 
 from TD import *
 
-def qLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0):
+
+def qLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0, prefix):
 
     Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
     
@@ -91,23 +92,25 @@ def qLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0):
     if verbose:
         print(final_policy)
     
+    print(prefix, " ", num_episodes, get_q_values_stat(Q))
     return final_policy
 
 
 if __name__ == "__main__":
 
-    demand_num = 20
+    demand_num = 200
 
     parser.parse_config("config.json")
     
-    pi_policy = policy_iteration(0.995)
-    print("********* DP Policy ***********")
-    print_policy(pi_policy)
+    #pi_policy = policy_iteration(0.995)
+    #print("********* DP Policy ***********")
+    #print_policy(pi_policy)
 
-    env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), demand_num)
-    ql_policy = qLearning(env, 1, 1, 0.9, 0.9, 0.9)
+    for i in range(1,5):
+        env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), demand_num)
+        ql_policy = qLearning(env, i * 100, 1, 0.9, 0.9, 0.9, "XYX")
 
-    print("********* QL Policy ***********")
-    print_policy(ql_policy)
+    #print("********* QL Policy ***********")
+    #print_policy(ql_policy)
 
 
