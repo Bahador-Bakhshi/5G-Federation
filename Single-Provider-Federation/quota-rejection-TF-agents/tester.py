@@ -276,9 +276,9 @@ if __name__ == "__main__":
     
     while i <= scale:
         i += 1     
-        dp_policy_95 = DP.policy_iteration(0.99)
-        print("------------ DP -------------")
-        print_policy_function(dp_policy_95)
+        #dp_policy_95 = DP.policy_iteration(0.99)
+        #print("------------ DP -------------")
+        #print_policy_function(dp_policy_95)
         
         for j in range(iterations):
             '''
@@ -296,7 +296,8 @@ if __name__ == "__main__":
             greedy_profit_100, greedy_accept_100, greedy_federate_100 = greedy_result(demands, 1.0, greedy_profit_100, greedy_accept_100, greedy_federate_100)
 
             
-            dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
+            #dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
+         
             agent = TF_Agent.main()
             ql_profit, ql_accept, ql_federate = TF_Agent.evaluate_agent(agent, demands)
             
