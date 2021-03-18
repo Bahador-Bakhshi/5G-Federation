@@ -1,0 +1,79 @@
+{
+	"local":{
+		"total_cpu": 40,
+		"ns_catalog":[
+			{
+				"id": 0,
+				"cpu": 2,
+				"revenue": 100
+			},
+			{
+				"id": 1,
+				"cpu": 5,
+				"revenue": 50
+			},
+			{
+				"id": 2,
+				"cpu": 3,
+				"revenue": 60
+			},
+			{
+				"id": 3,
+				"cpu": 1,
+				"revenue": 10
+			}
+
+
+		]
+	},
+
+	"providers":[
+		{
+			"provider_id": 0,
+			"quota": 30,
+			"federation_costs":[
+				{
+					"nsid": 0,
+					"cost": 80
+				},
+				{
+					"nsid": 1,
+					"cost": 15
+				},
+				{
+					"nsid": 2,
+					"cost": 40
+				},
+				{
+					"nsid": 3,
+					"cost": 5
+				}
+
+
+			]
+		}
+	],
+
+	"loads":[
+		{
+			"catalog_id": 0,
+			"lambda": 8,
+			"mu": 1.5
+		},
+		{
+			"catalog_id": 1,
+			"lambda": 7,
+			"mu": 0.5
+		},
+		{
+			"catalog_id": 2,
+			"lambda": 7,
+			"mu": 0.4
+		},
+		{
+			"catalog_id": 3,
+			"lambda": 7,
+			"mu": 1.0
+		}
+	]
+}
