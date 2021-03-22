@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import gpu
 
 import numpy as np
 import math
@@ -266,10 +267,10 @@ def print_policy_function(policy):
 if __name__ == "__main__":
 
 
-    sim_num = 20
+    sim_num = 5000
 
     parser.parse_config("config.json")
-
+   
     scale = 0
     iterations = 20
     i = 0

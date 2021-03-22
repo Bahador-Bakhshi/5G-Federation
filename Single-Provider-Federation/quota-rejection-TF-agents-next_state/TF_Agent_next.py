@@ -33,8 +33,8 @@ import Environment
 
 
 # ## Hyperparameters
-sim_num = 1000
-num_iterations = 40000 # @param {type:"integer"}
+sim_num = 3000
+num_iterations = 10000 # @param {type:"integer"}
 
 initial_collect_steps = 5000 # @param {type:"integer"}
 collection_per_train = 10
