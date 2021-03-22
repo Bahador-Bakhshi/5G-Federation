@@ -309,7 +309,7 @@ if __name__ == "__main__":
             print("DP_60 Profit = ", dp_profit_60 / 1)
             print("DP_95 Profit = ", dp_profit_95 / 1)
             print("QL Profit = ", ql_profit / 1)
-            print("RL Profit = ", ql_next_profit / 1)
+            print("QL_Next Profit = ", ql_next_profit / 1)
             print("", flush=True)
 
             print("Capacity_Accept = ", Environment.domain.total_cpu)
@@ -321,7 +321,7 @@ if __name__ == "__main__":
             print("DP_60 Accept = ", dp_accept_60 / 1)
             print("DP_95 Accept = ", dp_accept_95 / 1)
             print("QL Accept    = ", ql_accept / 1)
-            print("RL Accept    = ", ql_next_accept / 1)
+            print("QL_Next Accept    = ", ql_next_accept / 1)
             print("", flush=True)
 
             print("Capacity_Federate = ", Environment.domain.total_cpu)
@@ -333,7 +333,7 @@ if __name__ == "__main__":
             print("DP_60 Federate = ", dp_federate_60 / 1)
             print("DP_95 Federate = ", dp_federate_95 / 1)
             print("QL Federate    = ", ql_federate / 1)
-            print("RL Federate    = ", ql_next_federate / 1)
+            print("QL_Next Federate    = ", ql_next_federate / 1)
             print("", flush=True)
     
     print("DONE!!!")
