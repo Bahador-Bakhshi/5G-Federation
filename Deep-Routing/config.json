@@ -1,0 +1,33 @@
+{
+	"max_sfc_num": 5,
+	"max_vnf_types": 10,
+
+	"min_vnf_per_sfc": 5,
+	"max_vnf_per_sfc": 10,
+	
+	"min_vnf_cpu": 1,
+	"max_vnf_cpu": 4,
+	"vnf_cpu_scale": 2,
+	
+	"min_vnf_ram": 4,
+	"max_vnf_ram": 8,
+	"vnf_ram_scale": 500,
+	
+	"min_sfc_bw": 1,
+	"max_sfc_bw": 4,
+	"sfc_bw_scale": 1000,
+	
+	"max_src_dst_pairs": 2,
+	"request_num": 20,
+	"traffic_rates":[
+		{
+		"lambda": 1,
+		"mu": 1
+		},
+		{
+		"lambda": 1,
+		"mu": 1
+		}
+
+	]
+}
