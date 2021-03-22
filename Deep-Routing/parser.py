@@ -62,7 +62,7 @@ def parse_sfc_config(filename):
 
 def main():
 
-    topo = generate_topo("topo_3_1.json")
+    topo = generate_topo("topo_10_1.json")
     print(topo.edges(data = True))
 
     parse_sfc_config("config.json")
