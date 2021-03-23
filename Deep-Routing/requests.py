@@ -52,6 +52,11 @@ class Request:
         self.sfc = sfc
         self.t_start = t_start
         self.t_end   = t_end
+        self.path = None
+        self.placement = None
+
+    def __str__(self):
+        return "src = "+ str(self.src) +", dst = "+ str(self.dst) +", sfc = "+ str(self.sfc.sfc_id) +", t_start = "+ str(self.t_start) +", t_end = "+ str(self.t_end)
 
 
 def generate_vnfs():

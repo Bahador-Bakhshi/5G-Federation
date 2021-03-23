@@ -48,9 +48,9 @@ def generate_topo(filename):
         dst = links[i]["destination_id"]
         bwd = bandwidth(src, dst, links, channels)
         bwd = int(bwd)
-        topo.add_edge(src, dst, bw = bwd)
+        topo.add_edge(src, dst, bw = bwd, org_bw = bwd)
         if not ((dst, src) in topo.edges):
-            topo.add_edge(dst, src, bw = bwd)
+            topo.add_edge(dst, src, bw = bwd, org_bw = bwd)
   
     return topo
 
@@ -64,7 +64,7 @@ def parse_sfc_config(filename):
 
 def main():
 
-    topo = generate_topo("topo_10_1.json")
+    topo = generate_topo("topo_03_1.json")
     print(topo.edges(data = True))
 
     parse_sfc_config("config.json")
@@ -76,7 +76,8 @@ def main():
 
     graph.test_max_flow(topo)
 
-    print("Shortest path 2 --> 8: \n \t", graph.shortest_path(topo, 2, 8, graph.link_weight_one))
+    print("Shortest path 1 --> 3: \n \t", graph.shortest_path(topo, 1, 3, graph.link_weight_one))
+    print("Shortest path 1 --> 3: \n \t", graph.shortest_path(topo, 1, 3, graph.link_weight_capacity))
 
 
 if __name__ == "__main__":

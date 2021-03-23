@@ -15,24 +15,24 @@
     ],
     "connections": [
         {
-            "channel_id": 2,
-            "destination_id": 3,
+            "channel_id": 3,
+            "destination_id": 2,
             "destination_interface": 1,
             "source_id": 1,
             "source_interface": 1
         },
         {
             "channel_id": 3,
-            "destination_id": 1,
+            "destination_id": 3,
             "destination_interface": 1,
-            "source_id": 3,
+            "source_id": 2,
             "source_interface": 1
         },
 	{
-            "channel_id": 3,
-            "destination_id": 2,
+            "channel_id": 2,
+            "destination_id": 1,
             "destination_interface": 1,
-            "source_id": 1,
+            "source_id": 3,
             "source_interface": 1
         }
     ],
