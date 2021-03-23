@@ -3,7 +3,7 @@
 	"plot": "True",
 	"dimensions": "1000x1000",
 	"routers": "10",
-	"router-links": "1-5",
+	"router-links": "5-8",
 	"clients": "0",
 	"client-links": "0",
 	"servers": "0",

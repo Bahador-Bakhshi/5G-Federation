@@ -1,347 +1,634 @@
 {
     "channels": [
         {
-            "channel_id": "1",
-            "data_rate": " 20"
+            "channel_id": 1,
+            "data_rate": 20
         },
         {
-            "channel_id": "2",
-            "data_rate": "10"
+            "channel_id": 2,
+            "data_rate": 10
         },
         {
-            "channel_id": "3",
-            "data_rate": " 40"
+            "channel_id": 3,
+            "data_rate": 40
         }
     ],
     "connections": [
         {
-            "channel_id": "3",
-            "destination_id": "9",
-            "destination_interface": "1",
-            "source_id": "1",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 8,
+            "destination_interface": 1,
+            "source_id": 1,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "4",
-            "destination_interface": "1",
-            "source_id": "1",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 7,
+            "destination_interface": 1,
+            "source_id": 1,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "8",
-            "destination_interface": "1",
-            "source_id": "1",
-            "source_interface": "1"
+            "channel_id": 1,
+            "destination_id": 2,
+            "destination_interface": 1,
+            "source_id": 1,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "7",
-            "destination_interface": "1",
-            "source_id": "1",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 6,
+            "destination_interface": 1,
+            "source_id": 1,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "6",
-            "destination_interface": "1",
-            "source_id": "2",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 4,
+            "destination_interface": 1,
+            "source_id": 1,
+            "source_interface": 1
         },
         {
-            "channel_id": "3",
-            "destination_id": "7",
-            "destination_interface": "1",
-            "source_id": "2",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 9,
+            "destination_interface": 1,
+            "source_id": 1,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "5",
-            "destination_interface": "1",
-            "source_id": "3",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 5,
+            "destination_interface": 1,
+            "source_id": 1,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "1",
-            "destination_interface": "1",
-            "source_id": "4",
-            "source_interface": "1"
+            "channel_id": 1,
+            "destination_id": 1,
+            "destination_interface": 1,
+            "source_id": 2,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "8",
-            "destination_interface": "1",
-            "source_id": "4",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 8,
+            "destination_interface": 1,
+            "source_id": 2,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "9",
-            "destination_interface": "1",
-            "source_id": "4",
-            "source_interface": "1"
+            "channel_id": 1,
+            "destination_id": 10,
+            "destination_interface": 1,
+            "source_id": 2,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "10",
-            "destination_interface": "1",
-            "source_id": "4",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 4,
+            "destination_interface": 1,
+            "source_id": 2,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "3",
-            "destination_interface": "1",
-            "source_id": "4",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 7,
+            "destination_interface": 1,
+            "source_id": 2,
+            "source_interface": 1
         },
         {
-            "channel_id": "3",
-            "destination_id": "3",
-            "destination_interface": "1",
-            "source_id": "5",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 9,
+            "destination_interface": 1,
+            "source_id": 2,
+            "source_interface": 1
         },
         {
-            "channel_id": "3",
-            "destination_id": "10",
-            "destination_interface": "1",
-            "source_id": "5",
-            "source_interface": "1"
+            "channel_id": 1,
+            "destination_id": 6,
+            "destination_interface": 1,
+            "source_id": 2,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "8",
-            "destination_interface": "1",
-            "source_id": "5",
-            "source_interface": "1"
+            "channel_id": 1,
+            "destination_id": 5,
+            "destination_interface": 1,
+            "source_id": 2,
+            "source_interface": 1
         },
         {
-            "channel_id": "3",
-            "destination_id": "2",
-            "destination_interface": "1",
-            "source_id": "5",
-            "source_interface": "1"
+            "channel_id": 1,
+            "destination_id": 9,
+            "destination_interface": 1,
+            "source_id": 3,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "2",
-            "destination_interface": "1",
-            "source_id": "6",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 5,
+            "destination_interface": 1,
+            "source_id": 3,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "7",
-            "destination_interface": "1",
-            "source_id": "6",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 6,
+            "destination_interface": 1,
+            "source_id": 3,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "6",
-            "destination_interface": "1",
-            "source_id": "7",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 4,
+            "destination_interface": 1,
+            "source_id": 3,
+            "source_interface": 1
         },
         {
-            "channel_id": "3",
-            "destination_id": "2",
-            "destination_interface": "1",
-            "source_id": "7",
-            "source_interface": "1"
+            "channel_id": 1,
+            "destination_id": 8,
+            "destination_interface": 1,
+            "source_id": 3,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "10",
-            "destination_interface": "1",
-            "source_id": "7",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 9,
+            "destination_interface": 1,
+            "source_id": 4,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "9",
-            "destination_interface": "1",
-            "source_id": "7",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 8,
+            "destination_interface": 1,
+            "source_id": 4,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "3",
-            "destination_interface": "1",
-            "source_id": "8",
-            "source_interface": "1"
+            "channel_id": 1,
+            "destination_id": 3,
+            "destination_interface": 1,
+            "source_id": 4,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "4",
-            "destination_interface": "1",
-            "source_id": "8",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 10,
+            "destination_interface": 1,
+            "source_id": 4,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "10",
-            "destination_interface": "1",
-            "source_id": "8",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 6,
+            "destination_interface": 1,
+            "source_id": 4,
+            "source_interface": 1
         },
         {
-            "channel_id": "3",
-            "destination_id": "5",
-            "destination_interface": "1",
-            "source_id": "8",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 5,
+            "destination_interface": 1,
+            "source_id": 4,
+            "source_interface": 1
         },
         {
-            "channel_id": "1",
-            "destination_id": "1",
-            "destination_interface": "1",
-            "source_id": "9",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 1,
+            "destination_interface": 1,
+            "source_id": 4,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "3",
-            "destination_interface": "1",
-            "source_id": "10",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 7,
+            "destination_interface": 1,
+            "source_id": 4,
+            "source_interface": 1
         },
         {
-            "channel_id": "2",
-            "destination_id": "7",
-            "destination_interface": "1",
-            "source_id": "10",
-            "source_interface": "1"
+            "channel_id": 1,
+            "destination_id": 6,
+            "destination_interface": 1,
+            "source_id": 5,
+            "source_interface": 1
         },
         {
-            "channel_id": "3",
-            "destination_id": "8",
-            "destination_interface": "1",
-            "source_id": "10",
-            "source_interface": "1"
+            "channel_id": 2,
+            "destination_id": 3,
+            "destination_interface": 1,
+            "source_id": 5,
+            "source_interface": 1
         },
         {
-            "channel_id": "3",
-            "destination_id": "5",
-            "destination_interface": "1",
-            "source_id": "10",
-            "source_interface": "1"
+            "channel_id": 3,
+            "destination_id": 7,
+            "destination_interface": 1,
+            "source_id": 5,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 9,
+            "destination_interface": 1,
+            "source_id": 5,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 4,
+            "destination_interface": 1,
+            "source_id": 5,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 8,
+            "destination_interface": 1,
+            "source_id": 5,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 5,
+            "destination_interface": 1,
+            "source_id": 6,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 3,
+            "destination_interface": 1,
+            "source_id": 6,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 7,
+            "destination_interface": 1,
+            "source_id": 6,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 9,
+            "destination_interface": 1,
+            "source_id": 6,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 4,
+            "destination_interface": 1,
+            "source_id": 6,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 8,
+            "destination_interface": 1,
+            "source_id": 6,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 1,
+            "destination_interface": 1,
+            "source_id": 6,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 10,
+            "destination_interface": 1,
+            "source_id": 6,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 6,
+            "destination_interface": 1,
+            "source_id": 7,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 5,
+            "destination_interface": 1,
+            "source_id": 7,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 1,
+            "destination_interface": 1,
+            "source_id": 7,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 8,
+            "destination_interface": 1,
+            "source_id": 7,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 3,
+            "destination_interface": 1,
+            "source_id": 7,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 9,
+            "destination_interface": 1,
+            "source_id": 7,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 4,
+            "destination_interface": 1,
+            "source_id": 7,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 10,
+            "destination_interface": 1,
+            "source_id": 7,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 4,
+            "destination_interface": 1,
+            "source_id": 8,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 9,
+            "destination_interface": 1,
+            "source_id": 8,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 10,
+            "destination_interface": 1,
+            "source_id": 8,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 1,
+            "destination_interface": 1,
+            "source_id": 8,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 6,
+            "destination_interface": 1,
+            "source_id": 8,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 3,
+            "destination_interface": 1,
+            "source_id": 8,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 7,
+            "destination_interface": 1,
+            "source_id": 8,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 5,
+            "destination_interface": 1,
+            "source_id": 8,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 4,
+            "destination_interface": 1,
+            "source_id": 9,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 3,
+            "destination_interface": 1,
+            "source_id": 9,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 6,
+            "destination_interface": 1,
+            "source_id": 9,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 8,
+            "destination_interface": 1,
+            "source_id": 9,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 5,
+            "destination_interface": 1,
+            "source_id": 9,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 10,
+            "destination_interface": 1,
+            "source_id": 9,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 7,
+            "destination_interface": 1,
+            "source_id": 9,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 4,
+            "destination_interface": 1,
+            "source_id": 10,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 8,
+            "destination_interface": 1,
+            "source_id": 10,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 9,
+            "destination_interface": 1,
+            "source_id": 10,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 1,
+            "destination_id": 1,
+            "destination_interface": 1,
+            "source_id": 10,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 3,
+            "destination_id": 2,
+            "destination_interface": 1,
+            "source_id": 10,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 3,
+            "destination_interface": 1,
+            "source_id": 10,
+            "source_interface": 1
+        },
+        {
+            "channel_id": 2,
+            "destination_id": 6,
+            "destination_interface": 1,
+            "source_id": 10,
+            "source_interface": 1
         }
     ],
     "nodes": [
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "1",
+            "node_id": 1,
             "node_type": "router",
-            "x-coord": "831.98",
-            "y-coord": "693.86"
+            "x-coord": 726.24,
+            "y-coord": 476.84
         },
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "2",
+            "node_id": 2,
             "node_type": "router",
-            "x-coord": "260.02",
-            "y-coord": "846.57"
+            "x-coord": 884.8,
+            "y-coord": 767.72
         },
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "3",
+            "node_id": 3,
             "node_type": "router",
-            "x-coord": "390.82",
-            "y-coord": "243.84"
+            "x-coord": 242.69,
+            "y-coord": 390.16
         },
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "4",
+            "node_id": 4,
             "node_type": "router",
-            "x-coord": "800.52",
-            "y-coord": "524.31"
+            "x-coord": 331.14,
+            "y-coord": 597.89
         },
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "5",
+            "node_id": 5,
             "node_type": "router",
-            "x-coord": "205.52",
-            "y-coord": "280.23"
+            "x-coord": 347.16,
+            "y-coord": 265.52
         },
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "6",
+            "node_id": 6,
             "node_type": "router",
-            "x-coord": "275.79",
-            "y-coord": "866.81"
+            "x-coord": 403.68,
+            "y-coord": 324.68
         },
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "7",
+            "node_id": 7,
             "node_type": "router",
-            "x-coord": "383.74",
-            "y-coord": "843.58"
+            "x-coord": 590.41,
+            "y-coord": 242.35
         },
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "8",
+            "node_id": 8,
             "node_type": "router",
-            "x-coord": "616.83",
-            "y-coord": "337.39"
+            "x-coord": 515.85,
+            "y-coord": 597.22
         },
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "9",
+            "node_id": 9,
             "node_type": "router",
-            "x-coord": "843.39",
-            "y-coord": "793.87"
+            "x-coord": 303.49,
+            "y-coord": 509.38
         },
         {
             "interfaces": [
                 {
-                    "interface_id": "1"
+                    "interface_id": 1
                 }
             ],
-            "node_id": "10",
+            "node_id": 10,
             "node_type": "router",
-            "x-coord": "382.7",
-            "y-coord": "541.68"
+            "x-coord": 423.99,
+            "y-coord": 819.7
         }
     ]
 }

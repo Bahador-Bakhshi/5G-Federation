@@ -184,8 +184,8 @@ def main(argv):
         # Add channels.
         for ch in range(1, channels + 1):
             topology["channels"].append({
-                "channel_id": str(ch),
-                "data_rate": str(channelRates[random.randint(
+                "channel_id": int(ch),
+                "data_rate": int(channelRates[random.randint(
                     0, len(channelRates) - 1)])})
 
         # Add routers.
@@ -201,11 +201,11 @@ def main(argv):
                                           maxYCoord - 0.1 * maxYCoord), 
                            2)
             topology["nodes"].append({
-                "node_id": str(r),
+                "node_id": int(r),
                 "node_type": "router",
-                "x-coord": str(xCoord),
-                "y-coord": str(yCoord),
-                "interfaces": [{"interface_id": "1"}]})
+                "x-coord": float(xCoord),
+                "y-coord": float(yCoord),
+                "interfaces": [{"interface_id": 1}]})
             routersDict[r] = [xCoord, yCoord]
             nodes[r] = [xCoord, yCoord, "router"]
 
@@ -221,11 +221,11 @@ def main(argv):
                 tmp = str(r) + "-" + str(nearest[i][0])
                 if tmp not in routersConnections:
                     topology["connections"].append({
-                        "source_id": str(r),
-                        "source_interface": "1",
-                        "destination_id": str(nearest[i][0]),
-                        "destination_interface": "1",
-                        "channel_id": str(random.randint(1, channels))})
+                        "source_id": int(r),
+                        "source_interface": 1,
+                        "destination_id": int(nearest[i][0]),
+                        "destination_interface": 1,
+                        "channel_id": int(random.randint(1, channels))})
                     routersConnections.append(tmp)
                     connections.append([r, nearest[i][0]])
 
@@ -260,11 +260,11 @@ def main(argv):
             if yCoord > routerMinY:
                 yCoord = yCoord + routersAreaY
             topology["nodes"].append({
-                "node_id": str(c),
+                "node_id": int(c),
                 "node_type": "client",
-                "x-coord": str(xCoord),
-                "y-coord": str(yCoord),
-                "interfaces": [{"interface_id": "1"}]})
+                "x-coord": int(xCoord),
+                "y-coord": int(yCoord),
+                "interfaces": [{"interface_id": 1}]})
             nodes[c] = [xCoord, yCoord, "client"]
 
             # Connect client to nearest N routers.
@@ -274,12 +274,11 @@ def main(argv):
                                               maxClientLinks))
             for i in range(0, len(nearest)):
                 topology["connections"].append({
-                    "source_id": str(c),
+                    "source_id": int(c),
                     "source_interface": "1",
-                    "destination_id": str(nearest[i][0]),
+                    "destination_id": int(nearest[i][0]),
                     "destination_interface": "1",
-                    "channel_id": + str(random.randint(
-                        1, channels))})
+                    "channel_id": + int(random.randint(1, channels))})
                 connections.append([nearest[i][0], c])
 
         # Add servers outside routers area.
@@ -295,11 +294,11 @@ def main(argv):
             if yCoord > routerMinY:
                 yCoord = yCoord + routersAreaY
             topology["nodes"].append({
-                "node_id": str(p),
+                "node_id": int(p),
                 "node_type": "server",
-                "x-coord": str(xCoord),
-                "y-coord": str(yCoord),
-                "interfaces": [{"interface_id": "1"}]})
+                "x-coord": int(xCoord),
+                "y-coord": int(yCoord),
+                "interfaces": [{"interface_id": 1}]})
             nodes[p] = [xCoord, yCoord, "server"]
 
             # Connect server to nearest N routers.
@@ -309,12 +308,11 @@ def main(argv):
                                               maxServerLinks))
             for i in range(0, len(nearest)):
                 topology["connections"].append({
-                    "source_id": str(p),
+                    "source_id": int(p),
                     "source_interface": "1",
-                    "destination_id": str(nearest[i][0]),
+                    "destination_id": int(nearest[i][0]),
                     "destination_interface": "1",
-                    "channel_id": str(random.randint(
-                        1, channels))})
+                    "channel_id": int(random.randint(1, channels))})
                 connections.append([nearest[i][0], p])
 
         # Verify that the graph has a single component.

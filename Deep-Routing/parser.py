@@ -49,6 +49,8 @@ def generate_topo(filename):
         bwd = bandwidth(src, dst, links, channels)
         bwd = int(bwd)
         topo.add_edge(src, dst, bw = bwd)
+        if not ((dst, src) in topo.edges):
+            topo.add_edge(dst, src, bw = bwd)
   
     return topo
 
@@ -74,6 +76,7 @@ def main():
 
     graph.test_max_flow(topo)
 
+    print("Shortest path 2 --> 8: \n \t", graph.shortest_path(topo, 2, 8, graph.link_weight_one))
 
 
 if __name__ == "__main__":
