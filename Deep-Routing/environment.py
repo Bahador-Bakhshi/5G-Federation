@@ -34,15 +34,19 @@ def print_events(events):
 
 class Environment:
 
-    def __init__(self, topology, observation_maker, episode_len = 0, test_requests = None):
+    def __init__(self, topology, observation_maker, src_dst_list = None, req_num = 0, sfcs_list = 0):
         self.topology = topology
         self.observer = observation_maker
-        self.episode_len = episode_len
+        self.episode_len = req_num
         self.events = []
         self.in_test_mode = False
-        if test_requests != None:
-            self.all_requests = test_requests
-            self.in_test_mode = True
+        self.src_dst_list = src_dst_list
+        self.req_num = req_num
+        self.sfcs_list = sfcs_list
+    
+    def set_test_requests(self, test_requests):
+        self.all_requests = test_requests
+        self.in_test_mode = True
 
     def stop(self):
         print("Environment stop")
@@ -55,11 +59,8 @@ class Environment:
 
     def start(self):
         print("Environment start: begin ---------------->>>>>")
-
         if self.in_test_mode == False:
-            src_dst_list, req_num, sfcs_list = requests.generate_traffic_load_config(self.topology)
-
-            self.all_requests = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
+            self.all_requests = requests.generate_all_requests(self.src_dst_list, self.req_num, self.sfcs_list)
 
         for req in self.all_requests:
             self.events.append(Event(1, req.t_start, req))
@@ -77,8 +78,8 @@ class Environment:
         return observation
 
     
-    def step(self, action):
-        print("Environment step: *************** >>>>>")
+    def step(self, state, action):
+        print("Environment step: start **************>>>>")
         print("action = ", action)
         
         reward = 0

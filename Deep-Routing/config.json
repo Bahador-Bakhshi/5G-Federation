@@ -15,14 +15,14 @@
 	
 	"min_sfc_bw": 1,
 	"max_sfc_bw": 1,
-	"sfc_bw_scale": 20,
+	"sfc_bw_scale": 5,
 	
 	"max_src_dst_pairs": 1,
-	"request_num": 3,
+	"request_num": 5,
 	"traffic_rates":[
 		{
 		"lambda": 1,
-		"mu": 0.01
+		"mu": 0.05
 		},
 		{
 		"lambda": 1,

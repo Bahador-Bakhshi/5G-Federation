@@ -43,17 +43,20 @@ def generate_topo(filename):
     nx.set_node_attributes(topo, x_coord, "xcoord")
     nx.set_node_attributes(topo, y_coord, "ycoord")
 
+    max_bw = 0
     for i in range(len(links)):
         src = links[i]["source_id"]
         dst = links[i]["destination_id"]
         bwd = bandwidth(src, dst, links, channels)
         bwd = int(bwd)
+        if bwd > max_bw:
+            max_bw = bwd
         topo.add_edge(src, dst, bw = bwd, org_bw = bwd)
         if not ((dst, src) in topo.edges):
             topo.add_edge(dst, src, bw = bwd, org_bw = bwd)
-  
+ 
+    topo.max_bw = max_bw
     return topo
-
 
 
 def parse_sfc_config(filename):
