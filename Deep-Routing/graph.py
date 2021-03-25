@@ -49,7 +49,6 @@ def get_path_weight(topology, path):
 
 
 def get_path_bw(topology, path):
-    print("get_path_bw: path = ", path)
     e2e_bw = np.inf
     for i in range(len(path) - 1):
         link_bw = topology.edges[path[i], path[i+1]]["bw"]

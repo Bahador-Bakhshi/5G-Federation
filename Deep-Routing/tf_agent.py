@@ -33,11 +33,11 @@ import environment
 
 
 # ## Hyperparameters
-sim_num = 10
-num_iterations = 40000 # @param {type:"integer"}
+req_num = 0
+num_iterations = 1 # @param {type:"integer"}
 
-initial_collect_steps = 5000  # @param {type:"integer"}
-collection_per_train = 10
+initial_collect_steps = 1  # @param {type:"integer"}
+collection_per_train = 1
 replay_buffer_max_length = 100000  # @param {type:"integer"}
 
 batch_size = 32  # @param {type:"integer"}
@@ -75,9 +75,9 @@ def check_env(env):
 def create_env(topology, src_dst_list, sfcs_list):
     env_validation_episodes = 5
 
-    train_py_env = tf_environment.TF_Agent_Env_Wrapper(topology, src_dst_list, sfcs_list, sim_num =  sim_num)
+    train_py_env = tf_environment.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num =  req_num)
     #utils.validate_py_environment(train_py_env, episodes = env_validation_episodes)
-    eval_py_env = tf_environment.TF_Agent_Env_Wrapper(topology, src_dst_list, sfcs_list, sim_num = sim_num)
+    eval_py_env = tf_environment.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
     #utils.validate_py_environment(eval_py_env, episodes= env_validation_episodes)
 
     train_env = tf_py_environment.TFPyEnvironment(train_py_env)
@@ -310,12 +310,11 @@ def main(topology, src_dst_list, sfcs_list):
 
 
 def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
-    print("\n\n\n\n\n\n")
     print("------------- Evaluating -------------")
-    test_py_env = tf_environment.TF_Agent_Env_Wrapper(topology, src_dst_list, sfcs_list, sim_num = sim_num, requests = demands)
+    test_py_env = tf_environment.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num=req_num, requests=demands)
     test_env = tf_py_environment.TFPyEnvironment(test_py_env)
 
-    num_episodes = 10
+    num_episodes = 2
     total_return = 0.0
     for _ in range(num_episodes):
         time_step = test_env.reset()
@@ -335,11 +334,9 @@ def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
     return avg_return, 0, 0
 
 
-
-
 if __name__ == "__main__":
     parser.parse_config("config.json")
     agent = main()
-    demands = Environment.generate_req_set(sim_num)
+    demands = Environment.generate_req_set(req_num)
     evaluate_agent(agent, demands)
 

@@ -36,9 +36,9 @@ class WidestKpath:
 
 
 class FixKpathSinglePair:
-    k = 4
+    k = 5
 
-    obs_fields_num = k + 2 + 1 
+    obs_fields_num = k + 2 + 1  # kpath_bw src dst sfc_id
 
     all_pairs_kpaths = {}
 
@@ -61,7 +61,7 @@ class FixKpathSinglePair:
             self.request   = request
 
         def __str__(self):
-            return "req = "+ str(self.request) + "kpaths_bw = "+ str(self.kpaths_bw)
+            return "req = "+ str(self.request) +", kpaths_bw = "+ str(self.kpaths_bw)
 
     def observer(topology, request):
         print("observer:  request = ", request)

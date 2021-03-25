@@ -5,16 +5,25 @@ import sys
 import graph
 import requests
 
+topo_max_bw = 0
 
 def instantiate_vnfs(topology, placement):
     if placement == None or len(placement) == 0:
-        return
+        return True
     else:
         print("Placement is not implemented yet")
         sys.exit(-1)
 
 
 def route_path(topology, path, sfc):
+    print("route_path: ")
+    print("\t", topology.edges(data=True))
+    print("\t path   = ", path)
+    print("\t sfc.bw = ", sfc.bw)
+
+    if graph.get_path_bw(topology, path) < sfc.bw:
+        return False
+
     for i in range(len(path) - 1):
         bw = int(topology.edges[path[i], path[i+1]]["bw"]) - sfc.bw
         if bw < 0:
@@ -22,11 +31,22 @@ def route_path(topology, path, sfc):
             sys.exit(-1)
 
         topology.edges[path[i], path[i+1]]["bw"] = bw
-
+    
+    print("\t", topology.edges(data=True))
+    print("-------------------------------------")
+    
+    return True 
 
 def deploy_request(topology, request):
-    instantiate_vnfs(topology, request.placement)
-    route_path(topology, request.path, request.sfc)
+    feasible_placement = instantiate_vnfs(topology, request.placement)
+    feasible_routing = route_path(topology, request.path, request.sfc)
+    
+    #FIXME
+    #XXX
+    #FIXME
+    # Undo if onw of them is not feasible !!!!
+
+    return feasible_placement and feasible_routing
 
 
 def free_vnfs(topology, placement):
@@ -38,6 +58,11 @@ def free_vnfs(topology, placement):
 
 
 def free_path(topology, path, sfc):
+    print("free_path: ")
+    print("\t", topology.edges(data=True))
+    print("\t path   = ", path)
+    print("\t sfc.bw = ", sfc.bw)
+
     for i in range(len(path) - 1):
         bw = int(topology.edges[path[i], path[i+1]]["bw"]) + sfc.bw
         if bw > topology.edges[path[i], path[i+1]]["org_bw"]:
@@ -46,6 +71,8 @@ def free_path(topology, path, sfc):
 
         topology.edges[path[i], path[i+1]]["bw"] = bw
 
+    print("\t", topology.edges(data=True))
+    print("-------------------------------------")
 
 def free(topology, request):
     free_vnfs(topology, request.placement)

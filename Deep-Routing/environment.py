@@ -89,12 +89,11 @@ class Environment:
             #no thing to do
             pass
         elif action == Actions.accept:
-            network.deploy_request(self.topology, self.current_event.req)
-            reward = 1
-
-            event = Event(0, self.current_event.req.t_end, self.current_event.req)
-            heapq.heappush(self.events, event)
-
+            feasible = network.deploy_request(self.topology, self.current_event.req)
+            if feasible:
+                reward = 1
+                event = Event(0, self.current_event.req.t_end, self.current_event.req)
+                heapq.heappush(self.events, event)
 
         else:
             print("Unknown action")
@@ -103,10 +102,12 @@ class Environment:
 
         if len(self.events) > 0:
             self.current_event = heapq.heappop(self.events)
+            print_events([self.current_event])
             while self.current_event.event_type == 0:
                 network.free(self.topology, self.current_event.req)
                 if len(self.events) > 0:
                     self.current_event = heapq.heappop(self.events)
+                    print_events([self.current_event])
                 else:
                     break
 

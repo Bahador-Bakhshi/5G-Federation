@@ -6,6 +6,7 @@ import networkx as nx
 
 import requests
 import graph
+import network
 
 def bandwidth(src, dst, links, channels):
     #print("----------------------------------------------\n")
@@ -55,7 +56,7 @@ def generate_topo(filename):
         if not ((dst, src) in topo.edges):
             topo.add_edge(dst, src, bw = bwd, org_bw = bwd)
  
-    topo.max_bw = max_bw
+    network.topo_max_bw = max_bw
     return topo
 
 
