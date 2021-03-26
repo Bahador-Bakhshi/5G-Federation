@@ -3,19 +3,23 @@ from itertools import islice
 import networkx as nx
 import numpy as np
 
+debug = 1
+
 def get_max_flow(topology, src, dst):
     flow_value, flow_dict = nx.maximum_flow(topology, src, dst, capacity="bw")
     return flow_value, flow_dict
 
 
 def test_max_flow(topology):
-    print(topology.nodes)
+    if debug > 2:
+        print(topology.nodes)
+    
     for u in range(len(topology.nodes)):
         for v in range(len(topology.nodes)):
             if u != v:
                 flow_value, flow_dict = get_max_flow(topology, u + 1, v + 1)
-                #print("maxflow: src = ", u + 1, ", dst = ", v + 1, ", flow_value = ", flow_value, ", flow_dict = ", flow_dict)
-                print("maxflow: src = ", u + 1, ", dst = ", v + 1, ", flow_value = ", flow_value)
+                if debug > 1:
+                    print("maxflow: src = ", u + 1, ", dst = ", v + 1, ", flow_value = ", flow_value)
 
 
 WEIGHT_BIG_M = 1000000000.00
@@ -23,9 +27,9 @@ def link_weight_one(topology, sfc, feasibility_check):
     for e in topology.edges:
         topology.edges[e[0],e[1]]["routing_weight"] = 1 if feasibility_check(topology, e, sfc) else WEIGHT_BIG_M
 
-
-    print("link_weight_one: sfc.bw = ", sfc.bw)
-    print(topology.edges(data = True))
+    if debug > 2:
+        print("link_weight_one: sfc.bw = ", sfc.bw)
+        print(topology.edges(data = True))
 
 
 def link_weight_capacity(topology, sfc, feasibility_check):
@@ -33,7 +37,8 @@ def link_weight_capacity(topology, sfc, feasibility_check):
         bw = topology.edges[e[0],e[1]]["bw"]
         topology.edges[e[0],e[1]]["routing_weight"] = 1.0 / bw if feasibility_check(topology, e, sfc) else WEIGHT_BIG_M
     
-    print(topology.edges(data=True))
+    if debug > 2:
+        print(topology.edges(data=True))
 
 
 def bw_feasibility(topology, e, sfc):
@@ -62,7 +67,8 @@ def shortest_path(topology, request, feasibility_check_function, weight_function
     weight_function(topology, request.sfc, feasibility_check_function)
     path = nx.shortest_path(topology, source=request.src, target=request.dst, weight="routing_weight")
 
-    print("shortest_path: path = ", path)
+    if debug > 2:
+        print("shortest_path: path = ", path)
 
     total_weight = get_path_weight(topology, path)
     if total_weight >= WEIGHT_BIG_M:
@@ -75,17 +81,19 @@ def k_shortest_paths(topology, request, k, feasibility_check_function, weight_fu
     weight_function(topology, request.sfc, feasibility_check_function)
     kpaths = list(islice(nx.shortest_simple_paths(topology, request.src, request.dst, weight="routing_weight"), k))
 
-    print("k_shortest_paths: kpaths = ", kpaths)
+    if debug > 2:
+        print("k_shortest_paths: kpaths = ", kpaths)
     res = []
 
     for path in kpaths:
-        print("k_shortest_paths: path = ", path)
-        total_weight = get_path_weight(topology, path)
-        print("\t total_weight = ", total_weight)
+        if debug > 2:
+            print("k_shortest_paths: path = ", path)
         
-        #bw = get_path_bw(topology, path)
-        #print("\t bw = ", bw)
-
+        total_weight = get_path_weight(topology, path)
+        
+        if debug> 2:
+            print("\t total_weight = ", total_weight)
+        
         if total_weight >= WEIGHT_BIG_M:
             '''Path is not feasible '''
             pass

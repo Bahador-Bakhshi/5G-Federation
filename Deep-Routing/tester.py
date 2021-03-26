@@ -10,6 +10,8 @@ import parser
 import kpath
 import tf_agent
 
+from graph import debug
+
 class Tester_Agent:
 
     def __init__(self, topology, policy, observer):
@@ -35,7 +37,8 @@ class Tester_Agent:
 
 def main():
     topology = parser.generate_topo("topo_10_1.json")
-    print(topology.edges(data = True))
+    if debug > 3:
+        print(topology.edges(data = True))
     parser.parse_sfc_config("config.json")
 
     src_dst_list, req_num, sfcs_list = requests.generate_traffic_load_config(topology)
@@ -48,7 +51,6 @@ def main():
     total_reward = tf_agent.evaluate_agent(topology, src_dst_list, sfcs_list, agent, all_requests)
     print("Total reward = ", total_reward)
 
-    '''
     min_hop_count_tester = Tester_Agent(topology, traditionals.MinHopCount.policy, traditionals.MinHopCount.observer)
     total_reward = min_hop_count_tester.test(all_requests)
     print("Total reward = ", total_reward)
@@ -56,7 +58,6 @@ def main():
     k_widest_tester = Tester_Agent(topology, kpath.WidestKpath.policy, kpath.WidestKpath.observer)
     total_reward = k_widest_tester.test(all_requests)
     print("Total reward = ", total_reward)
-    '''
 
 if __name__ == "__main__":
     main()

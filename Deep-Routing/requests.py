@@ -1,6 +1,6 @@
 
 import numpy as np
-
+from graph import debug
 
 traffic_config = None
 

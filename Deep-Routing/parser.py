@@ -8,6 +8,8 @@ import requests
 import graph
 import network
 
+from graph import debug 
+
 def bandwidth(src, dst, links, channels):
     #print("----------------------------------------------\n")
     #print("src: ", src, ", dst: ", dst)

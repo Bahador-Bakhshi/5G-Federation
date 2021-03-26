@@ -5,6 +5,8 @@ import sys
 import graph
 import requests
 
+from graph import debug
+
 topo_max_bw = 0
 
 def instantiate_vnfs(topology, placement):
@@ -16,10 +18,11 @@ def instantiate_vnfs(topology, placement):
 
 
 def route_path(topology, path, sfc):
-    print("route_path: ")
-    print("\t", topology.edges(data=True))
-    print("\t path   = ", path)
-    print("\t sfc.bw = ", sfc.bw)
+    if debug > 2:
+        print("route_path: ")
+        print("\t", topology.edges(data=True))
+        print("\t path   = ", path)
+        print("\t sfc.bw = ", sfc.bw)
 
     if graph.get_path_bw(topology, path) < sfc.bw:
         return False
@@ -32,8 +35,9 @@ def route_path(topology, path, sfc):
 
         topology.edges[path[i], path[i+1]]["bw"] = bw
     
-    print("\t", topology.edges(data=True))
-    print("-------------------------------------")
+    if debug > 2:
+        print("\t", topology.edges(data=True))
+        print("-------------------------------------")
     
     return True 
 
@@ -58,10 +62,11 @@ def free_vnfs(topology, placement):
 
 
 def free_path(topology, path, sfc):
-    print("free_path: ")
-    print("\t", topology.edges(data=True))
-    print("\t path   = ", path)
-    print("\t sfc.bw = ", sfc.bw)
+    if debug > 2:
+        print("free_path: ")
+        print("\t", topology.edges(data=True))
+        print("\t path   = ", path)
+        print("\t sfc.bw = ", sfc.bw)
 
     for i in range(len(path) - 1):
         bw = int(topology.edges[path[i], path[i+1]]["bw"]) + sfc.bw
@@ -71,8 +76,9 @@ def free_path(topology, path, sfc):
 
         topology.edges[path[i], path[i+1]]["bw"] = bw
 
-    print("\t", topology.edges(data=True))
-    print("-------------------------------------")
+    if debug > 2:
+        print("\t", topology.edges(data=True))
+        print("-------------------------------------")
 
 def free(topology, request):
     free_vnfs(topology, request.placement)

@@ -1,5 +1,5 @@
 {
-	"max_sfc_num": 2,
+	"max_sfc_num": 4,
 	"max_vnf_types": 1,
 
 	"min_vnf_per_sfc": 1,
@@ -15,18 +15,18 @@
 	
 	"min_sfc_bw": 1,
 	"max_sfc_bw": 1,
-	"sfc_bw_scale": 5,
+	"sfc_bw_scale": 10,
 	
 	"max_src_dst_pairs": 2,
-	"request_num": 10,
+	"request_num": 7,
 	"traffic_rates":[
 		{
 		"lambda": 1,
-		"mu": 0.5
+		"mu": 0.05
 		},
 		{
 		"lambda": 1,
-		"mu": 1.7
+		"mu": 0.07
 		}
 
 	]

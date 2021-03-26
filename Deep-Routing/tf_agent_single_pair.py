@@ -30,7 +30,7 @@ from tf_agents.environments import utils
 import tf_environment
 import parser
 import environment
-from graph import debug
+
 
 # ## Hyperparameters
 req_num = 0
@@ -257,24 +257,19 @@ def train(agent, train_env, eval_env):
         pass
 
     replay_buffer = create_replay_buffer(agent, train_env)
-    if debug > 1:
-        print("replay_buffer is created ")
+    print("replay_buffer is created ")
     
     init_driver = create_init_collect_driver(train_env, agent, replay_buffer)
-    if debug > 1:
-        print("init_driver is created")
+    print("init_driver is created")
     
     init_driver.run()
-    if debug > 1:
-        print("init_driver run")
+    print("init_driver run")
     
     iterator = create_iterator(replay_buffer)
-    if debug > 1:
-        print("iterator is created")
+    print("iterator is created")
 
     collect_driver = create_collect_driver(train_env, agent, replay_buffer)
-    if debug > 1:
-        print("collect_driver is created")
+    print("collect_driver is created")
 
     agent.train = common.function(agent.train)
     collect_driver.run = common.function(collect_driver.run)
@@ -283,10 +278,9 @@ def train(agent, train_env, eval_env):
     agent.train_step_counter.assign(0)
 
     # Evaluate the agent's policy once before training.
-    #avg_return = compute_avg_return(eval_env, agent.policy, num_eval_episodes)
-    #print("avg_return at begging = ", avg_return)
-    #returns = [avg_return]
-    returns = []
+    avg_return = compute_avg_return(eval_env, agent.policy, num_eval_episodes)
+    print("avg_return at begging = ", avg_return)
+    returns = [avg_return]
 
     for _ in range(num_iterations):
     
@@ -320,11 +314,11 @@ def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
     test_py_env = tf_environment.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num=req_num, requests=demands)
     test_env = tf_py_environment.TFPyEnvironment(test_py_env)
 
-    num_episodes = 10
-    total_return = 0
+    num_episodes = 2
+    total_return = 0.0
     for _ in range(num_episodes):
         time_step = test_env.reset()
-        episode_return = 0
+        episode_return = 0.0
 
         while not time_step.is_last():
             action_step = agent.policy.action(time_step)
@@ -332,13 +326,12 @@ def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
             episode_return += time_step.reward
         
         total_return += episode_return
-    
 
-    #aavg_return = total_return / num_episodes
-    #avg_return = avg_return.numpy()[0] / len(demands)
-    #return avg_return, 0, 0
-    
-    return (total_return.numpy()[0])/num_episodes
+    avg_return = total_return / num_episodes
+    avg_return = avg_return.numpy()[0] / len(demands)
+    print("Total Return = ", avg_return)
+
+    return avg_return, 0, 0
 
 
 if __name__ == "__main__":

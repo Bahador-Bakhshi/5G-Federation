@@ -6,8 +6,7 @@ from enum import IntEnum
 
 import requests
 import network
-
-debug = True
+from graph import debug
 
 class Actions(IntEnum):
     reject    = 0
@@ -49,16 +48,20 @@ class Environment:
         self.in_test_mode = True
 
     def stop(self):
-        print("Environment stop")
+        if debug > 2:
+            print("Environment stop")
         return
 
     def reset(self):
-        print("Environment reset")
+        if debug > 2:
+            print("Environment reset")
         self.stop()
         return self.start()
 
     def start(self):
-        print("Environment start: begin ---------------->>>>>")
+        if debug > 1:
+            print("Environment start: begin ---------------->>>>>")
+        
         if self.in_test_mode == False:
             self.all_requests = requests.generate_all_requests(self.src_dst_list, self.req_num, self.sfcs_list)
 
@@ -66,21 +69,23 @@ class Environment:
             self.events.append(Event(1, req.t_start, req))
         
         heapq.heapify(self.events)
-        if debug:
+        if debug > 2:
             print_events(self.events)
 
         self.current_event = heapq.heappop(self.events)
         
         observation = self.observer(self.topology, self.current_event.req)
 
-        print("Environment start: <<<<-----------------  end")
+        if debug > 1:
+            print("Environment start: <<<<-----------------  end")
 
         return observation
 
     
-    def step(self, state, action):
-        print("Environment step: start **************>>>>")
-        print("action = ", action)
+    def step(self, action):
+        if debug > 1:
+            print("Environment step: start **************>>>>")
+            print("action = ", action)
         
         reward = 0
         done   = 0
@@ -102,12 +107,15 @@ class Environment:
 
         if len(self.events) > 0:
             self.current_event = heapq.heappop(self.events)
-            print_events([self.current_event])
+            if debug > 2:
+                print_events([self.current_event])
+            
             while self.current_event.event_type == 0:
                 network.free(self.topology, self.current_event.req)
                 if len(self.events) > 0:
                     self.current_event = heapq.heappop(self.events)
-                    print_events([self.current_event])
+                    if debug > 2:
+                        print_events([self.current_event])
                 else:
                     break
 
@@ -120,7 +128,8 @@ class Environment:
         
         observation = self.observer(self.topology, self.current_event.req)
         
-        print("Environment step: <<<<************** end")
+        if debug > 1:
+            print("Environment step: <<<<************** end")
         
         return observation, reward, done
 
