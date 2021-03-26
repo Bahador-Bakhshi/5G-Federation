@@ -7,7 +7,7 @@ import requests
 from graph import debug 
 
 class WidestKpath:
-    k = 10
+    k = 5
     class Observation:
         def __init__(self, topology, request):
             self.topology = topology
@@ -88,7 +88,7 @@ class FixKpathSinglePair:
 
 
 class FixKpathAllPairs:
-    k = 2
+    k = 5
 
     obs_fields_num = 0
 

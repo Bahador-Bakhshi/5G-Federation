@@ -53,7 +53,7 @@ class Environment:
         return
 
     def reset(self):
-        if debug > 2:
+        if debug > -1:
             print("Environment reset")
         self.stop()
         return self.start()

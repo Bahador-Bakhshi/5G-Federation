@@ -34,18 +34,18 @@ from graph import debug
 
 # ## Hyperparameters
 req_num = 0
-num_iterations = 1 # @param {type:"integer"}
+num_iterations = 100000
 
-initial_collect_steps = 1  # @param {type:"integer"}
-collection_per_train = 1
+initial_collect_steps = 10000
+collection_per_train = 4000
 replay_buffer_max_length = 100000  # @param {type:"integer"}
 
 batch_size = 32  # @param {type:"integer"}
 learning_rate = 1e-3  # @param {type:"number"}
-log_interval = 200  # @param {type:"integer"}
+log_interval = 250  # @param {type:"integer"}
 
 num_eval_episodes = 10 # @param {type:"integer"}
-eval_interval = 100 # @param {type:"integer"}
+eval_interval = 500 # @param {type:"integer"}
 
 
 def check_env(env):
@@ -88,8 +88,7 @@ def create_env(topology, src_dst_list, sfcs_list):
 
 def create_DQN_agent(train_env):
 
-
-    fc_layer_params = (100, 50)
+    fc_layer_params = (32, 64, 128, 64, 32)
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
@@ -300,7 +299,7 @@ def train(agent, train_env, eval_env):
         step = agent.train_step_counter.numpy()
 
         if step % log_interval == 0:
-            print('step = {0}: loss = {1}'.format(step, train_loss))
+            print('step = {0}: loss = {1}'.format(step, train_loss), flush = True)
 
         if step % eval_interval == 0:
             avg_return = compute_avg_return(eval_env, agent.policy, num_eval_episodes)
