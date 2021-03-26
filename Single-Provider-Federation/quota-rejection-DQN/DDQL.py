@@ -60,6 +60,8 @@ class DQNAgent:
         print("Model Summary:")
         print(model.summary())
 
+        sys.exit(-1)
+
         return model
 
 

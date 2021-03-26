@@ -33,8 +33,8 @@ import Environment
 
 
 # ## Hyperparameters
-sim_num = 3000
-num_iterations = 10000 # @param {type:"integer"}
+sim_num = 5000
+num_iterations = 100000 # @param {type:"integer"}
 
 initial_collect_steps = 5000 # @param {type:"integer"}
 collection_per_train = 10
@@ -89,7 +89,7 @@ def create_env():
 def create_DQN_agent(train_env):
 
 
-    fc_layer_params = (100, 50)
+    fc_layer_params = (64, 64, 32, 32, 16)
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
