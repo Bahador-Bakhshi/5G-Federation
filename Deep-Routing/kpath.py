@@ -50,7 +50,7 @@ class FixKpathSinglePair:
             dst = src_dst[1]
 
             dummy_sfc = requests.SFC_e2e_bw(0, [], 0)
-            dummy_req = requests.Request(src, dst, dummy_sfc, 0, 0)
+            dummy_req = requests.Request(src, dst, 0, dummy_sfc, 0, 0)
         
             is_path, kpaths = graph.k_shortest_paths(topology, dummy_req, FixKpathSinglePair.k, graph.bw_feasibility, graph.link_weight_one)
             FixKpathSinglePair.all_pairs_kpaths[(src, dst)] = kpaths.copy()
@@ -100,7 +100,7 @@ class FixKpathAllPairs:
             dst = src_dst[1]
 
             dummy_sfc = requests.SFC_e2e_bw(0, [], 0)
-            dummy_req = requests.Request(src, dst, dummy_sfc, 0, 0)
+            dummy_req = requests.Request(src, dst, 0, dummy_sfc, 0, 0)
         
             is_path, kpaths = graph.k_shortest_paths(topology, dummy_req, FixKpathAllPairs.k, graph.bw_feasibility, graph.link_weight_one)
             FixKpathAllPairs.all_pairs_kpaths[(src, dst)] = kpaths.copy()

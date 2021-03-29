@@ -1,6 +1,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+import sys
 import base64
 import imageio
 import IPython
@@ -38,12 +39,12 @@ num_iterations = 100000
 
 initial_collect_steps = 10000
 collection_per_train = 200
-replay_buffer_max_length = 50000  
+replay_buffer_max_length = 50000 
 
 batch_size = 32  
 learning_rate = 1e-3  
 
-log_interval = 250  
+log_interval = 250
 eval_interval = 500 
 num_eval_episodes = 10 
 
@@ -86,9 +87,13 @@ def create_env(topology, src_dst_list, sfcs_list):
     return train_env, eval_env
 
 
+def observation_and_action_constraint_splitter(obs):
+	return obs['observations'], obs['valid_actions']
+
+
 def create_DQN_agent(train_env):
 
-    fc_layer_params = (128, 128, 128, 64)
+    fc_layer_params = (64, 64, 64, 64)
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
@@ -148,7 +153,8 @@ def create_DQN_agent(train_env):
                 optimizer=optimizer,
                 td_errors_loss_fn=common.element_wise_squared_loss,
                 train_step_counter=train_step_counter,
-                epsilon_greedy=lambda: epsilon_fn(train_step_counter)
+                epsilon_greedy=lambda: epsilon_fn(train_step_counter), 
+                observation_and_action_constraint_splitter=observation_and_action_constraint_splitter
             )
 
     agent.initialize()
@@ -173,7 +179,8 @@ def create_policies():
 def create_random_policy(train_env):
     random_policy = random_tf_policy.RandomTFPolicy(
                                     train_env.time_step_spec(),
-                                    train_env.action_spec()
+                                    train_env.action_spec(),
+                                    observation_and_action_constraint_splitter=observation_and_action_constraint_splitter
                                 )
 
     return random_policy
@@ -314,6 +321,10 @@ def train(agent, train_env, eval_env):
 
 def main(topology, src_dst_list, sfcs_list):
     train_env, eval_env = create_env(topology, src_dst_list, sfcs_list)
+
+    #check_env(train_env)
+    #sys.exit(-1)
+
     agent = create_DQN_agent(train_env)
     train(agent, train_env, eval_env)
     return agent

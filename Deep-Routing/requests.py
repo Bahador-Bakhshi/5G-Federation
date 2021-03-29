@@ -46,9 +46,10 @@ class SFC_e2e_bw:
 
 class Request:
 
-    def __init__(self, src, dst, sfc, t_start, t_end):
+    def __init__(self, src, dst, src_dst_index, sfc, t_start, t_end):
         self.src = src
         self.dst = dst
+        self.src_dst_index = src_dst_index
         self.sfc = sfc
         self.t_start = t_start
         self.t_end   = t_end
@@ -56,7 +57,7 @@ class Request:
         self.placement = None
 
     def __str__(self):
-        return "src = "+ str(self.src) +", dst = "+ str(self.dst) +", sfc = "+ str(self.sfc.sfc_id) +", t_start = "+ str(self.t_start) +", t_end = "+ str(self.t_end)
+        return "src = "+ str(self.src) +", dst = "+ str(self.dst) +", index = "+ str(self.src_dst_index) +", sfc = "+ str(self.sfc.sfc_id) +", t_start = "+ str(self.t_start) +", t_end = "+ str(self.t_end)
 
 
 def generate_vnfs():
@@ -130,7 +131,7 @@ def generate_per_pair_requests(src, dst, pair_index, num, sfcs):
         t += np.random.exponential(1.0 / lam)
         life = np.random.exponential(1.0 / mu)
         sfc = sfcs[np.random.choice(len(sfcs))]
-        req = Request(src, dst, sfc, t, t + life)
+        req = Request(src, dst, pair_index, sfc, t, t + life)
         reqs.append(req)
     
     return reqs
