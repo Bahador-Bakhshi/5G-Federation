@@ -44,21 +44,23 @@ def main():
     parser.parse_sfc_config("config.json")
 
     src_dst_list, req_num, sfcs_list = requests.generate_traffic_load_config(topology)
-    all_requests = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
   
     tf_agent.req_num = req_num
     agent = tf_agent.main(topology, src_dst_list, sfcs_list)
 
-    total_reward = tf_agent.evaluate_agent(topology, src_dst_list, sfcs_list, agent, all_requests)
-    print("Total reward = ", total_reward)
+    for i in range(20):
+        all_requests = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
+    
+        total_reward = tf_agent.evaluate_agent(topology, src_dst_list, sfcs_list, agent, all_requests)
+        print("Total reward - Deep = ", total_reward)
 
-    min_hop_count_tester = Tester_Agent(topology, traditionals.MinHopCount.policy, traditionals.MinHopCount.observer)
-    total_reward = min_hop_count_tester.test(all_requests)
-    print("Total reward = ", total_reward)
+        min_hop_count_tester = Tester_Agent(topology, traditionals.MinHopCount.policy, traditionals.MinHopCount.observer)
+        total_reward = min_hop_count_tester.test(all_requests)
+        print("Total reward - MHC  = ", total_reward)
 
-    k_widest_tester = Tester_Agent(topology, kpath.WidestKpath.policy, kpath.WidestKpath.observer)
-    total_reward = k_widest_tester.test(all_requests)
-    print("Total reward = ", total_reward)
+        k_widest_tester = Tester_Agent(topology, kpath.WidestKpath.policy, kpath.WidestKpath.observer)
+        total_reward = k_widest_tester.test(all_requests)
+        print("Total reward - KPath= ", total_reward)
 
 if __name__ == "__main__":
     main()

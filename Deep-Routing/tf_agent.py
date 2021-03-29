@@ -37,15 +37,15 @@ req_num = 0
 num_iterations = 100000
 
 initial_collect_steps = 10000
-collection_per_train = 4000
-replay_buffer_max_length = 100000  # @param {type:"integer"}
+collection_per_train = 200
+replay_buffer_max_length = 50000  
 
-batch_size = 32  # @param {type:"integer"}
-learning_rate = 1e-3  # @param {type:"number"}
-log_interval = 250  # @param {type:"integer"}
+batch_size = 32  
+learning_rate = 1e-3  
 
-num_eval_episodes = 10 # @param {type:"integer"}
-eval_interval = 500 # @param {type:"integer"}
+log_interval = 250  
+eval_interval = 500 
+num_eval_episodes = 10 
 
 
 def check_env(env):
@@ -73,7 +73,7 @@ def check_env(env):
 
 
 def create_env(topology, src_dst_list, sfcs_list):
-    env_validation_episodes = 5
+    #env_validation_episodes = 5
 
     train_py_env = tf_environment.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num =  req_num)
     #utils.validate_py_environment(train_py_env, episodes = env_validation_episodes)
@@ -88,7 +88,7 @@ def create_env(topology, src_dst_list, sfcs_list):
 
 def create_DQN_agent(train_env):
 
-    fc_layer_params = (32, 64, 128, 64, 32)
+    fc_layer_params = (128, 128, 128, 64)
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
@@ -123,7 +123,6 @@ def create_DQN_agent(train_env):
     q_net = sequential.Sequential(dense_layers + [q_values_layer])
 
     '''
-    
     fc_layer_params = (100,)
 
     q_net = q_network.QNetwork(
@@ -137,13 +136,19 @@ def create_DQN_agent(train_env):
 
     train_step_counter = tf.Variable(0)
 
+    epsilon_fn = tf.keras.optimizers.schedules.PolynomialDecay(
+                initial_learning_rate=1.0, 
+                decay_steps= int (0.8 * num_iterations),
+                end_learning_rate=0.01)
+    
     agent = dqn_agent.DqnAgent(
                 train_env.time_step_spec(),
                 train_env.action_spec(),
                 q_network=q_net,
                 optimizer=optimizer,
                 td_errors_loss_fn=common.element_wise_squared_loss,
-                train_step_counter=train_step_counter
+                train_step_counter=train_step_counter,
+                epsilon_greedy=lambda: epsilon_fn(train_step_counter)
             )
 
     agent.initialize()
@@ -174,7 +179,7 @@ def create_random_policy(train_env):
     return random_policy
 
 
-def compute_avg_return(environment, policy, num_episodes=5):
+def compute_avg_return(environment, policy, num_episodes=3):
 
   total_return = 0.0
   for _ in range(num_episodes):
