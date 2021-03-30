@@ -37,16 +37,16 @@ from graph import debug
 req_num = 0
 num_iterations = 100000
 
-initial_collect_steps = 10000
+initial_collect_steps = 5000
 collection_per_train = 200
 replay_buffer_max_length = 50000 
 
-batch_size = 32  
+batch_size = 32
 learning_rate = 1e-3  
 
-log_interval = 250
-eval_interval = 500 
-num_eval_episodes = 10 
+log_interval = 50
+eval_interval = 500
+num_eval_episodes = 5 
 
 
 def check_env(env):
@@ -93,12 +93,13 @@ def observation_and_action_constraint_splitter(obs):
 
 def create_DQN_agent(train_env):
 
-    fc_layer_params = (64, 64, 64, 64)
+    fc_layer_params = [64, 64, 64]
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
     # Define a helper function to create Dense layers configured with the right
-    # activation and kernel initializer.
+    # activation and kernel initializer.a
+    '''
     def dense_layer(num_units):
         return tf.keras.layers.Dense(
                     num_units,
@@ -109,6 +110,19 @@ def create_DQN_agent(train_env):
                         distribution='truncated_normal'
                     )
                 )
+    '''
+    def dense_layer(num_units):
+        return tf.keras.layers.Dense(
+                    num_units,
+                    activation=tf.keras.activations.elu,
+                    #kernel_initializer=tf.keras.initializers.VarianceScaling(
+                    #    scale=2.0, 
+                    #    mode='fan_in', 
+                    #    distribution='truncated_normal'
+                    #),
+                    name = "dense_"+str(num_units)
+                )
+ 
 
     # QNetwork consists of a sequence of Dense layers followed by a dense layer
     # with `num_actions` units to generate one q_value per available action as
@@ -118,11 +132,12 @@ def create_DQN_agent(train_env):
     q_values_layer = tf.keras.layers.Dense(
                         num_actions,
                         activation=None,
-                        kernel_initializer=tf.keras.initializers.RandomUniform(
-                                                minval=-0.03, 
-                                                maxval=0.03
-                                    ),
-                        bias_initializer=tf.keras.initializers.Constant(-0.2)
+                        #kernel_initializer=tf.keras.initializers.RandomUniform(
+                        #                        minval=-0.03, 
+                        #                        maxval=0.03
+                        #            ),
+                        #bias_initializer=tf.keras.initializers.Constant(-0.2)
+                        name = "output"
                     )
 
     q_net = sequential.Sequential(dense_layers + [q_values_layer])
@@ -137,7 +152,10 @@ def create_DQN_agent(train_env):
         )
     '''
 
-    optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+    optimizer = tf.keras.optimizers.Adam(
+            learning_rate=learning_rate
+            #, clipvalue=1.0
+            )
 
     train_step_counter = tf.Variable(0)
 
@@ -146,7 +164,7 @@ def create_DQN_agent(train_env):
                 decay_steps= int (0.8 * num_iterations),
                 end_learning_rate=0.01)
     
-    agent = dqn_agent.DqnAgent(
+    agent = dqn_agent.DdqnAgent(
                 train_env.time_step_spec(),
                 train_env.action_spec(),
                 q_network=q_net,
@@ -154,6 +172,7 @@ def create_DQN_agent(train_env):
                 td_errors_loss_fn=common.element_wise_squared_loss,
                 train_step_counter=train_step_counter,
                 epsilon_greedy=lambda: epsilon_fn(train_step_counter), 
+                target_update_period = 100,
                 observation_and_action_constraint_splitter=observation_and_action_constraint_splitter
             )
 
@@ -256,7 +275,7 @@ def create_iterator(replay_buffer):
                 sample_batch_size=batch_size, 
                 num_steps=2
             ).prefetch(3)
-    
+
     iterator = iter(dataset)
     return iterator
 
@@ -284,7 +303,7 @@ def train(agent, train_env, eval_env):
         print("iterator is created")
 
     collect_driver = create_collect_driver(train_env, agent, replay_buffer)
-    if debug > 1:
+    if debug > -1:
         print("collect_driver is created")
 
     agent.train = common.function(agent.train)
@@ -306,6 +325,7 @@ def train(agent, train_env, eval_env):
 
         time_step, policy_state = collect_driver.run(time_step, policy_state)
         trajectories, buffer_info = next(iterator)
+        
         train_loss = agent.train(trajectories)
 
         step = agent.train_step_counter.numpy()
