@@ -51,6 +51,7 @@ font = {
 
 matplotlib.rc('font', **font)
 plt.rcParams["axes.labelweight"] = "bold"
+plt.rcParams["axes.labelsize"] = "15"
 
 fig, ax = plt.subplots()
 plt.grid(linestyle="--", linewidth=0.5)
