@@ -69,11 +69,11 @@ for data in results:
 
 font = {
         'weight' : 'bold',
-        'size'   : 12}
+        'size'   : 15}
 
 matplotlib.rc('font', **font)
 plt.rcParams["axes.labelweight"] = "bold"
-plt.rcParams["axes.labelsize"] = "15"
+plt.rcParams["axes.labelsize"] = "20"
 
 fig, ax = plt.subplots()
 plt.grid(linestyle="--", linewidth=0.5)
@@ -102,6 +102,6 @@ plt.plot(x, greedy_100, label='Greedy', color='y', linestyle='dashdot', linewidt
 
 plt.legend(loc='best', handlelength=4)
 
-plt.savefig("gap_"+str(sys.argv[1])+".png")
+plt.savefig("gap_"+str(sys.argv[1])+".png", bbox_inches='tight')
 
 
