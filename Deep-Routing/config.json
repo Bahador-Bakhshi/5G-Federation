@@ -17,7 +17,7 @@
 	"max_sfc_bw": 4,
 	"sfc_bw_scale": 2,
 	
-	"max_src_dst_pairs": 1,
+	"max_src_dst_pairs": 2,
 	"request_num": 5000,
 	"traffic_rates":[
 		{
@@ -31,3 +31,4 @@
 
 	]
 }
+

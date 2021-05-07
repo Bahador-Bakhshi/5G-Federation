@@ -38,7 +38,7 @@ class WidestKpath:
 
 
 class FixKpathSinglePair:
-    k = 5
+    k = 10
 
     obs_fields_num = k + 2 + 1  # kpath_bw src dst sfc_id
 
@@ -88,7 +88,7 @@ class FixKpathSinglePair:
 
 
 class FixKpathAllPairs:
-    k = 2
+    k = 10
 
     obs_fields_num = 0
 

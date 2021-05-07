@@ -44,8 +44,8 @@ replay_buffer_max_length = 50000
 batch_size = 32
 learning_rate = 1e-3  
 
-log_interval = 50
-eval_interval = 500
+log_interval = 200
+eval_interval = 1000
 num_eval_episodes = 5 
 
 
@@ -93,7 +93,7 @@ def observation_and_action_constraint_splitter(obs):
 
 def create_DQN_agent(train_env):
 
-    fc_layer_params = [64, 64, 64]
+    fc_layer_params = [128, 128, 128, 128, 128, 128]
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
@@ -355,7 +355,7 @@ def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
     test_py_env = tf_environment.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num=req_num, requests=demands)
     test_env = tf_py_environment.TFPyEnvironment(test_py_env)
 
-    num_episodes = 10
+    num_episodes = 1
     total_return = 0
     for _ in range(num_episodes):
         time_step = test_env.reset()
