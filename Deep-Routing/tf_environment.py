@@ -126,7 +126,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
 
         res[(req.src_dst_index + 1) * (kpath.FixKpathAllPairs.k + 1) - 1] = True #the last one is reject
 
-        if debug > 2:
+        if debug > 3:
             print("get_valid_actions_masks: req = ", req ,", res = ", res)
         
         return np.array(res)
