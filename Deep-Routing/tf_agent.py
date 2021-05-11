@@ -35,17 +35,17 @@ from graph import debug
 
 # ## Hyperparameters
 req_num = 0
-num_iterations = 100000
+num_iterations = 1000
 
-initial_collect_steps = 5000
-collection_per_train = 200
+initial_collect_steps = 500
+collection_per_train = 20
 replay_buffer_max_length = 50000 
 
-batch_size = 32
-learning_rate = 1e-3  
+batch_size = 8
+learning_rate = 1e-5  
 
-log_interval = 200
-eval_interval = 1000
+log_interval = 10
+eval_interval = 20
 num_eval_episodes = 5 
 
 
@@ -93,7 +93,7 @@ def observation_and_action_constraint_splitter(obs):
 
 def create_DQN_agent(train_env):
 
-    fc_layer_params = [128, 128, 128, 128, 128, 128]
+    fc_layer_params = [64, 64, 64, 64]
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
@@ -154,7 +154,7 @@ def create_DQN_agent(train_env):
 
     optimizer = tf.keras.optimizers.Adam(
             learning_rate=learning_rate
-            #, clipvalue=1.0
+            #, clipvalue=1.0emit_log_probability
             )
 
     train_step_counter = tf.Variable(0)
@@ -172,8 +172,9 @@ def create_DQN_agent(train_env):
                 td_errors_loss_fn=common.element_wise_squared_loss,
                 train_step_counter=train_step_counter,
                 epsilon_greedy=lambda: epsilon_fn(train_step_counter), 
-                target_update_period = 100,
-                observation_and_action_constraint_splitter=observation_and_action_constraint_splitter
+                target_update_period = 10,
+                observation_and_action_constraint_splitter=observation_and_action_constraint_splitter,
+                emit_log_probability = True
             )
 
     agent.initialize()
@@ -199,6 +200,7 @@ def create_random_policy(train_env):
     random_policy = random_tf_policy.RandomTFPolicy(
                                     train_env.time_step_spec(),
                                     train_env.action_spec(),
+                                    emit_log_probability = True,
                                     observation_and_action_constraint_splitter=observation_and_action_constraint_splitter
                                 )
 
@@ -215,6 +217,7 @@ def compute_avg_return(environment, policy, num_episodes=3):
 
     while not time_step.is_last():
       action_step = policy.action(time_step)
+      print("action = ", action_step.action, ", time_step = ", time_step)
       time_step = environment.step(action_step.action)
       episode_return += time_step.reward
     total_return += episode_return
@@ -325,6 +328,10 @@ def train(agent, train_env, eval_env):
 
         time_step, policy_state = collect_driver.run(time_step, policy_state)
         trajectories, buffer_info = next(iterator)
+
+        if debug > 1:
+            print("trajectories = ", trajectories)
+            print("buffer_info  = ", buffer_info)
         
         train_loss = agent.train(trajectories)
 

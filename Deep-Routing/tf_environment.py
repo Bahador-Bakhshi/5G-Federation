@@ -119,10 +119,11 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         for i in range(req.src_dst_index * (kpath.FixKpathAllPairs.k + 1), (req.src_dst_index + 1) * (kpath.FixKpathAllPairs.k + 1) - 1):
             path_index = i - req.src_dst_index * (kpath.FixKpathAllPairs.k + 1)
 
-            if debug > 2:
-                print("get_valid_actions_masks: path = ", kpaths[path_index], ", bw = ", graph.get_path_bw(self.topology, kpaths[path_index]))
-            if (path_index < len(kpaths)) and (graph.get_path_bw(self.topology, kpaths[path_index]) >= req.sfc.bw):
-                res[i] = True
+            if path_index < len(kpaths):
+                if debug > 2:
+                    print("get_valid_actions_masks: path = ", kpaths[path_index], ", bw = ", graph.get_path_bw(self.topology, kpaths[path_index]))
+                if (path_index < len(kpaths)) and (graph.get_path_bw(self.topology, kpaths[path_index]) >= req.sfc.bw):
+                    res[i] = True
 
         res[(req.src_dst_index + 1) * (kpath.FixKpathAllPairs.k + 1) - 1] = True #the last one is reject
 
@@ -179,7 +180,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         observation = self._state
         kpaths = kpath.FixKpathAllPairs.all_pairs_kpaths[(observation.request.src, observation.request.dst)]
         
-        if debug > 0:
+        if debug > -1000:
             print("TF_Env_Wrapper:")
             print("\t action = ", action)
             print("\t request = ", observation.request)
@@ -190,7 +191,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
             sys.exit(-1)
         else:
             req = observation.request
-            path_index = action - req.src_dst_index * kpath.FixKpathAllPairs.k
+            path_index = action - req.src_dst_index * (kpath.FixKpathAllPairs.k + 1)
             if path_index < kpath.FixKpathAllPairs.k:
                 observation.request.path = kpaths[path_index]
                 real_action = environment.Actions.accept

@@ -38,7 +38,7 @@ class Tester_Agent:
 
 
 def main():
-    topology = parser.generate_topo("topo_10_1.json")
+    topology = parser.generate_topo("topo_02_1.json")
     if debug > 3:
         print(topology.edges(data = True))
     parser.parse_sfc_config("config.json")
@@ -52,7 +52,7 @@ def main():
     for index in requests.traffic_config["traffic_rates"]:
         org_lambdas.append(index["lambda"])
 
-    for i in range(5):
+    for i in range(10):
         scale = 0.2 + i * 0.2
         for index in range(len(requests.traffic_config["traffic_rates"])):
             requests.traffic_config["traffic_rates"][index]["lambda"] = org_lambdas[index] * scale

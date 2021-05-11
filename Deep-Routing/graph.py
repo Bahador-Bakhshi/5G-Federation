@@ -3,7 +3,7 @@ from itertools import islice
 import networkx as nx
 import numpy as np
 
-debug = 0
+debug = -1000
 
 def get_max_flow(topology, src, dst):
     flow_value, flow_dict = nx.maximum_flow(topology, src, dst, capacity="bw")

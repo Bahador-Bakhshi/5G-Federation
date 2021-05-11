@@ -1,0 +1,49 @@
+{
+    "channels": [
+        {
+            "channel_id": 1,
+            "data_rate": 20
+        },
+        {
+            "channel_id": 2,
+            "data_rate": 10
+        },
+        {
+            "channel_id": 3,
+            "data_rate": 40
+        }
+    ],
+    "connections": [
+        {
+            "channel_id": 3,
+            "destination_id": 2,
+            "destination_interface": 1,
+            "source_id": 1,
+            "source_interface": 1
+        }
+    ],
+    "nodes": [
+        {
+            "interfaces": [
+                {
+                    "interface_id": 1
+                }
+            ],
+            "node_id": 1,
+            "node_type": "router",
+            "x-coord": 84.82,
+            "y-coord": 82.53
+        },
+        {
+            "interfaces": [
+                {
+                    "interface_id": 1
+                }
+            ],
+            "node_id": 2,
+            "node_type": "router",
+            "x-coord": 60.93,
+            "y-coord": 41.04
+        }
+    ]
+}

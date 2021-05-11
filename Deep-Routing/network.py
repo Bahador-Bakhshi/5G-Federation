@@ -35,11 +35,12 @@ def route_path(topology, path, sfc):
 
         topology.edges[path[i], path[i+1]]["bw"] = bw
     
-    if debug > 2:
+    if debug > -20:
         print("\t", topology.edges(data=True))
         print("-------------------------------------")
     
     return True 
+
 
 def deploy_request(topology, request):
     feasible_placement = instantiate_vnfs(topology, request.placement)
@@ -48,7 +49,7 @@ def deploy_request(topology, request):
     #FIXME
     #XXX
     #FIXME
-    # Undo if onw of them is not feasible !!!!
+    # Undo if one of them is not feasible !!!!
 
     return feasible_placement and feasible_routing
 
