@@ -99,9 +99,15 @@ def generate_sfcs(vnfs_list):
     '''
 
     sfcs_list.append(SFC_e2e_bw(0, [vnfs_list[0]], 1))
-    sfcs_list.append(SFC_e2e_bw(1, [vnfs_list[0]], 10))
+    #sfcs_list.append(SFC_e2e_bw(100, [vnfs_list[0]], 9))
 
     return sfcs_list
+
+def sfc_id_to_index(id):
+    if id == 100:
+        return 1
+
+    return id
 
 def print_vlinks(vlinks):
     for vl in vlinks:

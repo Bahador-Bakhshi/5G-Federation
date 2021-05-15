@@ -131,5 +131,5 @@ class Environment:
         if debug > 1:
             print("Environment step: <<<<************** end")
         
-        return observation, reward, done
+        return observation, 1 * reward, done
 

@@ -1,5 +1,5 @@
 {
-	"max_sfc_num": 2,
+	"max_sfc_num": 1,
 	"max_vnf_types": 1,
 
 	"min_vnf_per_sfc": 1,
@@ -21,7 +21,7 @@
 	"request_num": 1000,
 	"traffic_rates":[
 	    {
-		"lambda": 9,
+		"lambda": 4,
 		"mu": 1
 	    }
 	]

@@ -12,6 +12,7 @@ import PIL.Image
 import pyvirtualdisplay
 
 import tensorflow as tf
+import tf_agents 
 
 from tf_agents.agents.dqn import dqn_agent
 from tf_agents.drivers import dynamic_step_driver
@@ -35,14 +36,14 @@ from graph import debug
 
 # ## Hyperparameters
 req_num = 0
-num_iterations = 1000
+num_iterations = 10000
 
 initial_collect_steps = 500
 collection_per_train = 20
-replay_buffer_max_length = 50000 
+replay_buffer_max_length = int(0.3 * collection_per_train * num_iterations) 
 
 batch_size = 8
-learning_rate = 1e-5  
+learning_rate = 1e-5
 
 log_interval = 10
 eval_interval = 20
@@ -93,7 +94,7 @@ def observation_and_action_constraint_splitter(obs):
 
 def create_DQN_agent(train_env):
 
-    fc_layer_params = [64, 64, 64, 64]
+    fc_layer_params = [32, 32, 32, 32, 32]
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
@@ -142,18 +143,17 @@ def create_DQN_agent(train_env):
 
     q_net = sequential.Sequential(dense_layers + [q_values_layer])
 
-    '''
-    fc_layer_params = (100,)
 
-    q_net = q_network.QNetwork(
-            train_env.observation_spec(),
-            train_env.action_spec(),
-            fc_layer_params=fc_layer_params
-        )
     '''
-
+    alpha_fn = tf.keras.optimizers.schedules.PolynomialDecay(
+                initial_learning_rate=learning_rate * 10 * 5, 
+                decay_steps= int (0.1 * num_iterations),
+                end_learning_rate=(learning_rate / (10 * 5))
+                )
+    '''
     optimizer = tf.keras.optimizers.Adam(
-            learning_rate=learning_rate
+            #learning_rate = alpha_fn
+            learning_rate = learning_rate
             #, clipvalue=1.0emit_log_probability
             )
 
@@ -162,9 +162,9 @@ def create_DQN_agent(train_env):
     epsilon_fn = tf.keras.optimizers.schedules.PolynomialDecay(
                 initial_learning_rate=1.0, 
                 decay_steps= int (0.8 * num_iterations),
-                end_learning_rate=0.01)
+                end_learning_rate=0.1)
     
-    agent = dqn_agent.DdqnAgent(
+    agent = dqn_agent.DqnAgent(
                 train_env.time_step_spec(),
                 train_env.action_spec(),
                 q_network=q_net,
@@ -172,7 +172,7 @@ def create_DQN_agent(train_env):
                 td_errors_loss_fn=common.element_wise_squared_loss,
                 train_step_counter=train_step_counter,
                 epsilon_greedy=lambda: epsilon_fn(train_step_counter), 
-                target_update_period = 10,
+                #target_update_period = 10,
                 observation_and_action_constraint_splitter=observation_and_action_constraint_splitter,
                 emit_log_probability = True
             )
@@ -329,11 +329,46 @@ def train(agent, train_env, eval_env):
         time_step, policy_state = collect_driver.run(time_step, policy_state)
         trajectories, buffer_info = next(iterator)
 
-        if debug > 1:
-            print("trajectories = ", trajectories)
-            print("buffer_info  = ", buffer_info)
-        
+        #print("trajectories = ", trajectories)
+        print("trajectories = ", trajectories)
+
+        tmp_time_step = []
+        q_values_0_before = []
+        q_values_0_after  = []
+        q_values_1_before = []
+        q_values_1_after  = []
+
+        for i in range(batch_size):
+
+            tmp_observation = {}
+            tmp_observation['observations']  = tf.convert_to_tensor([trajectories.observation['observations'][i][0]])
+            tmp_observation['valid_actions'] = tf.convert_to_tensor([trajectories.observation['valid_actions'][i][0]])
+
+            tmp_time_step.append(tf_agents.trajectories.time_step.TimeStep(
+                            step_type = tf.convert_to_tensor([trajectories.step_type[i][0]]), 
+                            reward = tf.convert_to_tensor([trajectories.reward[i][0]]),
+                            discount = tf.convert_to_tensor([trajectories.discount[i][0]]),
+                            observation = tmp_observation
+                        ))
+            
+        for i in range(batch_size):
+            q_values_0_before.append(agent._compute_q_values(tmp_time_step[i], [0]))
+            q_values_1_before.append(agent._compute_q_values(tmp_time_step[i], [1]))
+            
         train_loss = agent.train(trajectories)
+        
+        for i in range(batch_size):
+            q_values_0_after.append(agent._compute_q_values(tmp_time_step[i], [0]))
+            q_values_1_after.append(agent._compute_q_values(tmp_time_step[i], [1]))
+
+
+        for i in range(batch_size):
+            print("tmp_time_step = ", tmp_time_step[i])
+            print("q_values_0_before = ", q_values_0_before[i])
+            print("q_values_0_after  = ", q_values_0_after[i])
+            print("q_values_1_before = ", q_values_1_before[i])
+            print("q_values_1_after  = ", q_values_1_after[i])
+       
 
         step = agent.train_step_counter.numpy()
 

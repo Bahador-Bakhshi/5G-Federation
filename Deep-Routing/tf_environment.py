@@ -65,7 +65,7 @@ def object_to_array_state(observation):
 
 
 class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
-    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.99, req_num = 0, requests = None):
+    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.95, req_num = 0, requests = None):
         super().__init__()
 
         self.the_first_action = 1
@@ -85,7 +85,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                              dtype = np.int32, 
                              name = "action", 
                              minimum = 0, 
-                             maximum = len(self.src_dst_list) * (kpath.FixKpathAllPairs.k  + 1) - 1) #kpaths + reject action
+                             maximum = len(self.src_dst_list) * len(sfcs_list) * (kpath.FixKpathAllPairs.k  + 1) - 1) #kpaths + reject action
        
         self.obs_len = kpath.FixKpathAllPairs.obs_fields_num
 
@@ -98,7 +98,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                                         maximum = network.topo_max_bw
                                     ), 
                                 'valid_actions': array_spec.ArraySpec(
-                                            shape = (((kpath.FixKpathAllPairs.k + 1) * len(src_dst_list)), ), 
+                                            shape = (((kpath.FixKpathAllPairs.k + 1) * len(sfcs_list) * len(src_dst_list)), ), 
                                             dtype = np.bool_,
                                             name  = "valid_actions"
                                     )
@@ -108,6 +108,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
 
 
     def get_valid_actions_masks(self, obs):
+        sfcs_num = requests.traffic_config["max_sfc_num"]
         req = obs.request
         res = [False] * (self._action_spec.maximum + 1)
 
@@ -115,9 +116,12 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
             return np.array(res)
         
         kpaths = kpath.FixKpathAllPairs.all_pairs_kpaths[(req.src, req.dst)]
+
+        start_index = (req.src_dst_index * (sfcs_num * (kpath.FixKpathAllPairs.k + 1))) + (requests.sfc_id_to_index(req.sfc.sfc_id) * (kpath.FixKpathAllPairs.k + 1))
+        end_index = start_index + (kpath.FixKpathAllPairs.k + 1) - 1
         
-        for i in range(req.src_dst_index * (kpath.FixKpathAllPairs.k + 1), (req.src_dst_index + 1) * (kpath.FixKpathAllPairs.k + 1) - 1):
-            path_index = i - req.src_dst_index * (kpath.FixKpathAllPairs.k + 1)
+        for i in range(start_index, end_index):
+            path_index = i - start_index
 
             if path_index < len(kpaths):
                 if debug > 2:
@@ -125,7 +129,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                 if (path_index < len(kpaths)) and (graph.get_path_bw(self.topology, kpaths[path_index]) >= req.sfc.bw):
                     res[i] = True
 
-        res[(req.src_dst_index + 1) * (kpath.FixKpathAllPairs.k + 1) - 1] = True #the last one is reject
+        res[end_index] = True #the last one is reject
 
         if debug > 3:
             print("get_valid_actions_masks: req = ", req ,", res = ", res)
@@ -134,9 +138,14 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
 
 
     def check_action_validity(self, action, obs):
+        sfcs_num = requests.traffic_config["max_sfc_num"]
         req = obs.request
+        
+        start_index = (req.src_dst_index * (sfcs_num * (kpath.FixKpathAllPairs.k + 1))) + (requests.sfc_id_to_index(req.sfc.sfc_id) * (kpath.FixKpathAllPairs.k + 1))
+        end_index = start_index + (kpath.FixKpathAllPairs.k + 1) - 1
+        
         mask = self.get_valid_actions_masks(obs)
-        res = (action < (req.src_dst_index * (kpath.FixKpathAllPairs.k + 1))) or (action >= ((req.src_dst_index + 1) * (kpath.FixKpathAllPairs.k + 1))) or (not mask[action])
+        res = (action < start_index) or (action > end_index) or (not mask[action])
 
         return (not res)
 
@@ -191,7 +200,9 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
             sys.exit(-1)
         else:
             req = observation.request
-            path_index = action - req.src_dst_index * (kpath.FixKpathAllPairs.k + 1)
+            sfcs_num = requests.traffic_config["max_sfc_num"]
+            start_index = (req.src_dst_index * (sfcs_num * (kpath.FixKpathAllPairs.k + 1))) + (requests.sfc_id_to_index(req.sfc.sfc_id) * (kpath.FixKpathAllPairs.k + 1))
+            path_index = action - start_index
             if path_index < kpath.FixKpathAllPairs.k:
                 observation.request.path = kpaths[path_index]
                 real_action = environment.Actions.accept
