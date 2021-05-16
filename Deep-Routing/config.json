@@ -21,7 +21,7 @@
 	"request_num": 1000,
 	"traffic_rates":[
 	    {
-		"lambda": 4,
+		"lambda": 2,
 		"mu": 1
 	    }
 	]

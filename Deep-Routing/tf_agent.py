@@ -164,7 +164,7 @@ def create_DQN_agent(train_env):
                 decay_steps= int (0.8 * num_iterations),
                 end_learning_rate=0.1)
     
-    agent = dqn_agent.DqnAgent(
+    agent = dqn_agent.DdqnAgent(
                 train_env.time_step_spec(),
                 train_env.action_spec(),
                 q_network=q_net,
@@ -172,7 +172,7 @@ def create_DQN_agent(train_env):
                 td_errors_loss_fn=common.element_wise_squared_loss,
                 train_step_counter=train_step_counter,
                 epsilon_greedy=lambda: epsilon_fn(train_step_counter), 
-                #target_update_period = 10,
+                target_update_period = 10,
                 observation_and_action_constraint_splitter=observation_and_action_constraint_splitter,
                 emit_log_probability = True
             )
@@ -333,10 +333,8 @@ def train(agent, train_env, eval_env):
         print("trajectories = ", trajectories)
 
         tmp_time_step = []
-        q_values_0_before = []
-        q_values_0_after  = []
-        q_values_1_before = []
-        q_values_1_after  = []
+        q_values_before = []
+        q_values_after  = []
 
         for i in range(batch_size):
 
@@ -350,24 +348,39 @@ def train(agent, train_env, eval_env):
                             discount = tf.convert_to_tensor([trajectories.discount[i][0]]),
                             observation = tmp_observation
                         ))
+
+        for action in range(len(trajectories.observation['valid_actions'][0][0])):
+            q_values_before.append([])
             
-        for i in range(batch_size):
-            q_values_0_before.append(agent._compute_q_values(tmp_time_step[i], [0]))
-            q_values_1_before.append(agent._compute_q_values(tmp_time_step[i], [1]))
-            
+            for i in range(batch_size):
+                if trajectories.observation['valid_actions'][i][0][action]:
+                    q_values_before[action].append(agent._compute_q_values(tmp_time_step[i], [action]))
+                else:
+                    q_values_before[action].append(0)
+
+
         train_loss = agent.train(trajectories)
-        
-        for i in range(batch_size):
-            q_values_0_after.append(agent._compute_q_values(tmp_time_step[i], [0]))
-            q_values_1_after.append(agent._compute_q_values(tmp_time_step[i], [1]))
 
 
-        for i in range(batch_size):
-            print("tmp_time_step = ", tmp_time_step[i])
-            print("q_values_0_before = ", q_values_0_before[i])
-            print("q_values_0_after  = ", q_values_0_after[i])
-            print("q_values_1_before = ", q_values_1_before[i])
-            print("q_values_1_after  = ", q_values_1_after[i])
+        for action in range(len(trajectories.observation['valid_actions'][0][0])):
+            q_values_after.append([])
+            
+            for i in range(batch_size):
+                if trajectories.observation['valid_actions'][i][0][action]:
+                    q_values_after[action].append(agent._compute_q_values(tmp_time_step[i], [action]))
+                else:
+                    q_values_after[action].append(0)
+ 
+
+        for action in range(len(trajectories.observation['valid_actions'][0][0])):
+            before_average = 0
+            after_average  = 0
+            
+            for i in range(batch_size):
+                before_average += q_values_before[action][i]
+                after_average  += q_values_after[action][i]
+
+            print("q_values: action = ", action, ", before = ", before_average / batch_size, ", after = ", after_average / batch_size)
        
 
         step = agent.train_step_counter.numpy()

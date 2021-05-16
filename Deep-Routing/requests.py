@@ -99,7 +99,7 @@ def generate_sfcs(vnfs_list):
     '''
 
     sfcs_list.append(SFC_e2e_bw(0, [vnfs_list[0]], 1))
-    #sfcs_list.append(SFC_e2e_bw(100, [vnfs_list[0]], 9))
+    sfcs_list.append(SFC_e2e_bw(1, [vnfs_list[0]], 9))
 
     return sfcs_list
 
