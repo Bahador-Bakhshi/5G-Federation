@@ -65,7 +65,8 @@ def object_to_array_state(observation):
 
 
 class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
-    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.80, req_num = 0, requests = None):
+    
+    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.60, req_num = 0, requests = None):
         super().__init__()
 
         self.the_first_action = 1
@@ -104,7 +105,10 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                                     )
                                 }
         
-        self.discount = discount
+        self.min_gamma = 0.2
+        self.max_gamma = 0.9
+        self.gamma_steps = 1500
+        self.discount = self.min_gamma
 
 
     def get_valid_actions_masks(self, obs):
@@ -167,7 +171,10 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         return self._observation_spec
 
     def _reset(self):
-      
+     
+        self.discount += (self.max_gamma - self.min_gamma) / self.gamma_steps
+        self.discount = min(self.max_gamma, self.discount)
+
         self.the_first_action = 0 
 
         s = self.env.reset()
@@ -175,7 +182,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         self._state = s
 
         obs = self.get_observation_actions(s)
-        print("_reset: obs = ", obs)
+        print("_reset: gamma = ",self.discount,", obs = ", obs)
         
         return tf_agents.trajectories.time_step.restart(obs)
 

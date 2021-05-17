@@ -36,7 +36,7 @@ from graph import debug
 
 # ## Hyperparameters
 req_num = 0
-num_iterations = 10000
+num_iterations = 5000
 
 initial_collect_steps = 500
 collection_per_train = 20
@@ -217,7 +217,7 @@ def compute_avg_return(environment, policy, num_episodes=3):
 
     while not time_step.is_last():
       action_step = policy.action(time_step)
-      print("action = ", action_step.action, ", time_step = ", time_step)
+      #print("action = ", action_step.action, ", time_step = ", time_step)
       time_step = environment.step(action_step.action)
       episode_return += time_step.reward
     total_return += episode_return
