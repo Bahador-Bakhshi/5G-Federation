@@ -62,6 +62,14 @@ def get_path_bw(topology, path):
 
     return e2e_bw
 
+def get_path_org_bw(topology, path):
+    e2e_bw = np.inf
+    for i in range(len(path) - 1):
+        link_bw = topology.edges[path[i], path[i+1]]["org_bw"]
+        if link_bw < e2e_bw:
+            e2e_bw = link_bw
+
+    return e2e_bw
 
 def shortest_path(topology, request, feasibility_check_function, weight_function):
     weight_function(topology, request.sfc, feasibility_check_function)

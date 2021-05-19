@@ -74,12 +74,12 @@ class Environment:
 
         self.current_event = heapq.heappop(self.events)
         
-        observation = self.observer(self.topology, self.current_event.req)
+        observation, discount = self.observer(self.topology, self.current_event.req)
 
         if debug > 1:
             print("Environment start: <<<<-----------------  end")
 
-        return observation
+        return observation, discount
 
     
     def step(self, action):
@@ -126,10 +126,10 @@ class Environment:
             done = 1
 
         
-        observation = self.observer(self.topology, self.current_event.req)
+        observation, discount = self.observer(self.topology, self.current_event.req)
         
         if debug > 1:
             print("Environment step: <<<<************** end")
         
-        return observation, 1 * reward, done
+        return observation, 1 * reward, done, discount
 

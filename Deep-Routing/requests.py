@@ -83,7 +83,6 @@ def generate_sfcs(vnfs_list):
     sfcs_num = traffic_config["max_sfc_num"]
     sfcs_list = []
     
-    '''
     for i in range(sfcs_num):
         vnfs_num = np.random.choice(np.arange(traffic_config["min_vnf_per_sfc"], traffic_config["max_vnf_per_sfc"] + 1))
             
@@ -96,17 +95,19 @@ def generate_sfcs(vnfs_list):
         sfc = SFC_e2e_bw(i, sfc_vnfs, bw)
 
         sfcs_list.append(sfc)
-    '''
 
+    '''
     sfcs_list.append(SFC_e2e_bw(0, [vnfs_list[0]], 1))
     sfcs_list.append(SFC_e2e_bw(1, [vnfs_list[0]], 39))
+    '''
 
     return sfcs_list
 
 def sfc_id_to_index(id):
+    '''
     if id == 100:
         return 1
-
+    '''
     return id
 
 def print_vlinks(vlinks):
@@ -122,15 +123,18 @@ def print_sfcs_list(sfcs_list):
 
 def generate_src_dst_list(nodes_num, pairs_num):
     src_dst_list = []
-    '''
+    
     for i in range(pairs_num):
         src = 1 + np.random.choice(nodes_num)
         dst = src
         while src == dst:
             dst = 1 + np.random.choice(nodes_num)
         src_dst_list.append((src, dst))
+    
     '''
     src_dst_list.append((1,2))
+    '''
+    
     return src_dst_list
    
 

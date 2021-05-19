@@ -42,7 +42,6 @@ def object_to_array_state(observation):
         if debug > 3:
             print("object_to_array_state: (src, dst) = ", src, dst)
             print("object_to_array_state: observation = ", observation)
-            print("object_to_array_state: kpaths_bw[(src,dst)] = ", observation.kpaths_bw[(src,dst)])
         
         src_dst_bws = (observation.kpaths_bw[(src,dst)]).copy()
         for i in range(len(src_dst_bws)):
@@ -66,11 +65,12 @@ def object_to_array_state(observation):
 
 class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
     
-    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.60, req_num = 0, requests = None):
+    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.75, req_num = 0, requests = None):
         super().__init__()
 
         self.the_first_action = 1
 
+        self.discount = discount
         self.topology = topology
         self.requests = requests
         self.src_dst_list = src_dst_list
@@ -104,12 +104,18 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                                             name  = "valid_actions"
                                     )
                                 }
-        
-        self.min_gamma = 0.2
-        self.max_gamma = 0.9
-        self.gamma_steps = 1500
+       
+        '''
+        self.min_gamma = 0.5
+        self.max_gamma = 0.99
+        self.gamma_steps = 1000
         self.discount = self.min_gamma
-
+        '''
+        
+        '''
+        self.last_discount = 0
+        self.discount = 0
+        '''
 
     def get_valid_actions_masks(self, obs):
         sfcs_num = requests.traffic_config["max_sfc_num"]
@@ -171,13 +177,15 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         return self._observation_spec
 
     def _reset(self):
-     
+    
+        '''
         self.discount += (self.max_gamma - self.min_gamma) / self.gamma_steps
         self.discount = min(self.max_gamma, self.discount)
+        '''
 
         self.the_first_action = 0 
 
-        s = self.env.reset()
+        s, tmp_discount = self.env.reset()
 
         self._state = s
 
@@ -217,10 +225,12 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                 observation.request.path = None
                 real_action = environment.Actions.reject
         
-        next_state, reward, done = self.env.step(real_action)
+        #self.last_discount = self.discount
+        next_state, reward, done, tmp_discount = self.env.step(real_action)
+        #self.discount = tmp_discount 
         
         if debug > 2:
-            print("\t s' = ", next_state, ", r = ", reward, ", done = ", done)
+            print("\t s' = ", next_state, ", r = ", reward, ", done = ", done, ", disc = ", self.discount)
        
         self._state = next_state
 

@@ -14,7 +14,7 @@ class WidestKpath:
             self.request  = request
 
     def observer(topology, request):
-        return WidestKpath.Observation(topology, request)
+        return WidestKpath.Observation(topology, request), 0
 
     def policy(observation):
         topology = observation.topology
@@ -88,7 +88,7 @@ class FixKpathSinglePair:
 
 
 class FixKpathAllPairs:
-    k = 1
+    k = 10
 
     obs_fields_num = 0
 
@@ -125,6 +125,8 @@ class FixKpathAllPairs:
             print("observer:  request = ", request)
 
         all_kpaths_bw = {}
+        all_kpaths_util = {}
+
         for (src, dst) in FixKpathAllPairs.all_pairs_kpaths.keys():
             kpaths = FixKpathAllPairs.all_pairs_kpaths[(src, dst)]
             
@@ -132,18 +134,39 @@ class FixKpathAllPairs:
                 print("observer: (src, dst) = ", src, dst, " kpaths = ", kpaths)
             
             kpaths_bw = []
+            kpaths_org_bw = []
             for path in kpaths:
                 bw = graph.get_path_bw(topology, path)
                 kpaths_bw.append(bw)
 
+                org_bw = graph.get_path_org_bw(topology, path)
+                kpaths_org_bw.append(org_bw)
+
             all_kpaths_bw[(src,dst)] = kpaths_bw.copy()
+
+            util = 0.0
+            for i in range(len(kpaths_bw)):
+                util += (1.0 * kpaths_bw[i]) / kpaths_org_bw[i]
+            util /= len(kpaths_bw)
+
+            all_kpaths_util[(src, dst)] = util
 
         observation = FixKpathAllPairs.Observation(all_kpaths_bw, request)
         
         if debug > 2:
             print("observer: observation = ", observation)
         
-        return observation
+        discount = 0
+        '''
+        for (src, dst) in all_kpaths_util.keys():
+            discount += all_kpaths_util[(src,dst)]
+        discount /= len(all_kpaths_util)
+        
+        discount = 1.0 - discount 
+        print("observer: discount = ", discount)
+        '''
+
+        return observation, discount
 
     def policy(observation):
         pass

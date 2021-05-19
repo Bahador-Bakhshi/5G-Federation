@@ -36,17 +36,17 @@ from graph import debug
 
 # ## Hyperparameters
 req_num = 0
-num_iterations = 5000
+num_iterations = 20000
 
-initial_collect_steps = 500
+initial_collect_steps = 1000
 collection_per_train = 20
-replay_buffer_max_length = int(0.3 * collection_per_train * num_iterations) 
+replay_buffer_max_length = int(0.1 * collection_per_train * num_iterations) 
 
 batch_size = 8
-learning_rate = 1e-5
+learning_rate = 5e-5
 
-log_interval = 10
-eval_interval = 20
+log_interval = 100
+eval_interval = 200
 num_eval_episodes = 5 
 
 
@@ -94,7 +94,7 @@ def observation_and_action_constraint_splitter(obs):
 
 def create_DQN_agent(train_env):
 
-    fc_layer_params = [32, 32, 32, 32, 32]
+    fc_layer_params = [64, 64, 64, 64, 64, 64]
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
@@ -329,8 +329,8 @@ def train(agent, train_env, eval_env):
         time_step, policy_state = collect_driver.run(time_step, policy_state)
         trajectories, buffer_info = next(iterator)
 
-        #print("trajectories = ", trajectories)
-        print("trajectories = ", trajectories)
+        if debug > 3:
+            print("trajectories = ", trajectories)
 
         tmp_time_step = []
         q_values_before = []
@@ -349,6 +349,7 @@ def train(agent, train_env, eval_env):
                             observation = tmp_observation
                         ))
 
+        '''
         for action in range(len(trajectories.observation['valid_actions'][0][0])):
             q_values_before.append([])
             
@@ -357,11 +358,11 @@ def train(agent, train_env, eval_env):
                     q_values_before[action].append(agent._compute_q_values(tmp_time_step[i], [action]))
                 else:
                     q_values_before[action].append(0)
-
+        '''
 
         train_loss = agent.train(trajectories)
 
-
+        ''''
         for action in range(len(trajectories.observation['valid_actions'][0][0])):
             q_values_after.append([])
             
@@ -370,8 +371,9 @@ def train(agent, train_env, eval_env):
                     q_values_after[action].append(agent._compute_q_values(tmp_time_step[i], [action]))
                 else:
                     q_values_after[action].append(0)
- 
-
+        '''
+        
+        '''
         for action in range(len(trajectories.observation['valid_actions'][0][0])):
             before_average = 0
             after_average  = 0
@@ -381,7 +383,7 @@ def train(agent, train_env, eval_env):
                 after_average  += q_values_after[action][i]
 
             print("q_values: action = ", action, ", before = ", before_average / batch_size, ", after = ", after_average / batch_size)
-       
+       '''
 
         step = agent.train_step_counter.numpy()
 
@@ -406,7 +408,6 @@ def main(topology, src_dst_list, sfcs_list):
 
 
 def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
-    print("------------- Evaluating -------------")
     test_py_env = tf_environment.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num=req_num, requests=demands)
     test_env = tf_py_environment.TFPyEnvironment(test_py_env)
 
@@ -423,7 +424,6 @@ def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
         
         total_return += episode_return
     
-
     #aavg_return = total_return / num_episodes
     #avg_return = avg_return.numpy()[0] / len(demands)
     #return avg_return, 0, 0

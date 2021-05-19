@@ -10,15 +10,12 @@ class MinHopCount:
             self.request  = request
 
     def observer(topology, request):
-        return MinHopCount.Observation(topology, request)
+        return MinHopCount.Observation(topology, request), 0
 
     def policy(observation):
         topology = observation.topology
         request  = observation.request
 
-        if request.sfc.bw > 1:
-            return environment.Actions.reject
-        
         is_path, path = graph.shortest_path(topology, request, graph.bw_feasibility, graph.link_weight_one)
 
         if is_path:

@@ -24,21 +24,21 @@ class Tester_Agent:
 
     def test(self, requests):
         self.env.set_test_requests(requests)
-        observation = self.env.reset()
+        observation, _ = self.env.reset()
 
         done = 0
         total_reward = 0
 
         while done == 0:
             action = self.policy(observation)
-            observation, reward, done = self.env.step(action)
+            observation, reward, done, _ = self.env.step(action)
             total_reward += reward
 
         return total_reward
 
 
 def main():
-    topology = parser.generate_topo("topo_02_1.json")
+    topology = parser.generate_topo("topo_10_1.json")
     if debug > 3:
         print(topology.edges(data = True))
     parser.parse_sfc_config("config.json")
@@ -52,7 +52,7 @@ def main():
     for index in requests.traffic_config["traffic_rates"]:
         org_lambdas.append(index["lambda"])
 
-    for i in range(10):
+    for i in range(4,5):
         scale = 0.2 + i * 0.2
         for index in range(len(requests.traffic_config["traffic_rates"])):
             requests.traffic_config["traffic_rates"][index]["lambda"] = org_lambdas[index] * scale
