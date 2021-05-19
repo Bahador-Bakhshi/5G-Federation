@@ -36,14 +36,15 @@ from graph import debug
 
 # ## Hyperparameters
 req_num = 0
-num_iterations = 20000
+num_iterations = 10000
 
-initial_collect_steps = 1000
 collection_per_train = 20
-replay_buffer_max_length = int(0.1 * collection_per_train * num_iterations) 
+replay_buffer_max_length = int(0.3 * collection_per_train * num_iterations) 
+#initial_collect_steps = int(0.25 * replay_buffer_max_length)
+initial_collect_steps = 1000
 
 batch_size = 8
-learning_rate = 5e-5
+learning_rate = 1e-5
 
 log_interval = 100
 eval_interval = 200
@@ -172,6 +173,7 @@ def create_DQN_agent(train_env):
                 td_errors_loss_fn=common.element_wise_squared_loss,
                 train_step_counter=train_step_counter,
                 epsilon_greedy=lambda: epsilon_fn(train_step_counter), 
+                #epsilon_greedy= 0.95,
                 target_update_period = 10,
                 observation_and_action_constraint_splitter=observation_and_action_constraint_splitter,
                 emit_log_probability = True

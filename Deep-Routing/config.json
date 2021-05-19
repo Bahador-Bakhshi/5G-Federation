@@ -21,12 +21,12 @@
 	"request_num": 10000,
 	"traffic_rates":[
 	    {
-		"lambda": 3,
-		"mu": 1
+		"lambda": 2,
+		"mu": 4
 	    },
 	    {
-		"lambda": 10,
-		"mu": 2
+		"lambda": 4,
+		"mu": 4
 	    }
 	]
 }
