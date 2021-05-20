@@ -36,7 +36,7 @@ from graph import debug
 
 # ## Hyperparameters
 req_num = 0
-num_iterations = 10000
+num_iterations = 30000
 
 collection_per_train = 20
 replay_buffer_max_length = int(0.3 * collection_per_train * num_iterations) 
