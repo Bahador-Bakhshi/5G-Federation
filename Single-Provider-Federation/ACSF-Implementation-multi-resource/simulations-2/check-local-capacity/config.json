@@ -1,0 +1,66 @@
+{
+	"local":{
+		"capacities":[
+			12,
+			32,
+			1000
+		],
+		"ns_catalog":[
+			{
+				"id": 0,
+				"resources":[
+					2,
+					2,
+					20
+				],
+				"revenue": 95
+			},
+			{
+				"id": 1,
+				"resources":[
+					1,
+					1,
+					15
+				],
+				"revenue": 40
+			}
+		]
+	},
+
+	"providers":[
+		{
+			"provider_id": 0,
+			"quotas": [
+				6,
+				12,
+				1000
+			],
+			"overcharge": 0,
+			"reject_threshold": 1,
+			"federation_costs":[
+				{
+					"nsid": 0,
+					"cost": 90
+				},
+				{
+					"nsid": 1,
+					"cost": 10
+				}
+			]
+		}
+	],
+
+	"loads":[
+		{
+			"catalog_id": 0,
+			"lambda": 2,
+			"mu": 0.75
+		},
+		{
+			"catalog_id": 1,
+			"lambda": 1.75,
+			"mu": 0.125
+		}
+	]
+}
+
