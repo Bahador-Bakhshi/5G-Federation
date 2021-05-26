@@ -40,7 +40,7 @@ def object_to_array_state(observation):
     
     for (src, dst) in kpath.FixKpathAllPairs.all_pairs_kpaths.keys():
         if debug > 3:
-            print("object_to_array_state: (src, dst) = ", src, dst)
+            print("object_to_array_state: (src, dst)  = ", src, dst)
             print("object_to_array_state: observation = ", observation)
         
         src_dst_bws = (observation.kpaths_bw[(src,dst)]).copy()
@@ -65,7 +65,7 @@ def object_to_array_state(observation):
 
 class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
     
-    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.75, req_num = 0, requests = None):
+    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.95, req_num = 0, requests = None):
         super().__init__()
 
         self.the_first_action = 1

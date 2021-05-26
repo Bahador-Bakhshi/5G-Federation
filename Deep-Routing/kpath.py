@@ -88,7 +88,7 @@ class FixKpathSinglePair:
 
 
 class FixKpathAllPairs:
-    k = 20
+    k = 40
 
     obs_fields_num = 0
 
@@ -133,23 +133,27 @@ class FixKpathAllPairs:
             if debug > 2:
                 print("observer: (src, dst) = ", src, dst, " kpaths = ", kpaths)
             
-            kpaths_bw = []
-            kpaths_org_bw = []
+            kpaths_bw = [0] * FixKpathAllPairs.k
+            index = 0
+            #kpaths_org_bw = [] it was tried to adjust gamma according to load!!!!!
             for path in kpaths:
                 bw = graph.get_path_bw(topology, path)
-                kpaths_bw.append(bw)
+                kpaths_bw[index] = bw
+                index += 1
 
-                org_bw = graph.get_path_org_bw(topology, path)
-                kpaths_org_bw.append(org_bw)
+                #org_bw = graph.get_path_org_bw(topology, path)
+                #kpaths_org_bw.append(org_bw)
 
             all_kpaths_bw[(src,dst)] = kpaths_bw.copy()
 
+            '''
             util = 0.0
             for i in range(len(kpaths_bw)):
                 util += (1.0 * kpaths_bw[i]) / kpaths_org_bw[i]
             util /= len(kpaths_bw)
 
             all_kpaths_util[(src, dst)] = util
+            '''
 
         observation = FixKpathAllPairs.Observation(all_kpaths_bw, request)
         

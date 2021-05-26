@@ -95,7 +95,7 @@ def observation_and_action_constraint_splitter(obs):
 
 def create_DQN_agent(train_env):
 
-    fc_layer_params = [64, 64, 64, 64, 64, 64]
+    fc_layer_params = [128, 128, 128, 128, 128, 128]
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
