@@ -10,7 +10,7 @@ import environment
 import traditionals
 import parser
 import kpath
-import tf_agent
+import tf_agent_ppo
 
 from graph import debug
 
@@ -38,15 +38,15 @@ class Tester_Agent:
 
 
 def main():
-    topology = parser.generate_topo("topo_10_1.json")
+    topology = parser.generate_topo("topo_02_1.json")
     if debug > 3:
         print(topology.edges(data = True))
     parser.parse_sfc_config("config.json")
 
     src_dst_list, req_num, sfcs_list = requests.generate_traffic_load_config(topology)
   
-    tf_agent.req_num = req_num
-    agent = tf_agent.main(topology, src_dst_list, sfcs_list)
+    tf_agent_ppo.req_num = req_num
+    agent = tf_agent_ppo.main(topology, src_dst_list, sfcs_list)
 
     org_lambdas = []
     for index in requests.traffic_config["traffic_rates"]:
@@ -63,7 +63,7 @@ def main():
         for _ in range(20):
             all_requests = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
     
-            total_reward_ddqn += tf_agent.evaluate_agent(topology, src_dst_list, sfcs_list, agent, all_requests)
+            total_reward_ddqn += tf_agent_ppo.evaluate_agent(topology, src_dst_list, sfcs_list, agent, all_requests)
             #print("Total reward - Deep = ", total_reward)
 
             min_hop_count_tester = Tester_Agent(topology, traditionals.MinHopCount.policy, traditionals.MinHopCount.observer)

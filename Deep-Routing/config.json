@@ -17,16 +17,12 @@
 	"max_sfc_bw": 4,
 	"sfc_bw_scale": 2,
 	
-	"max_src_dst_pairs": 2,
-	"request_num": 10000,
+	"max_src_dst_pairs": 1,
+	"request_num":  5000,
 	"traffic_rates":[
 	    {
-		"lambda": 4,
-		"mu": 1
-	    },
-	    {
-		"lambda": 13,
-		"mu": 2
+		"lambda": 10,
+		"mu": 0.3
 	    }
 	]
 }

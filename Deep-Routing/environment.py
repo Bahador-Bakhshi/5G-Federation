@@ -96,14 +96,14 @@ class Environment:
         elif action == Actions.accept:
             feasible = network.deploy_request(self.topology, self.current_event.req)
             if feasible:
-                reward = 1
+                #reward = self.current_event.req.sfc.bw
+                reward = 1.0
                 event = Event(0, self.current_event.req.t_end, self.current_event.req)
                 heapq.heappush(self.events, event)
 
         else:
             print("Unknown action")
             sys.exit(-1)
-
 
         if len(self.events) > 0:
             self.current_event = heapq.heappop(self.events)

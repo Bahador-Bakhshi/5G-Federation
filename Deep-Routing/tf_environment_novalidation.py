@@ -35,7 +35,7 @@ import graph
 from graph import debug
 
 def object_to_array_state(observation):
-    res = np.zeros(kpath.FixKpathAllPairs.obs_fields_num, dtype=np.dtype('int32'))
+    res = np.zeros(kpath.FixKpathAllPairs.obs_fields_num, dtype=np.dtype('float32'))
     index = 0
     
     for (src, dst) in kpath.FixKpathAllPairs.all_pairs_kpaths.keys():
@@ -60,7 +60,7 @@ def object_to_array_state(observation):
     if debug > 2:
         print("state --> array: state = ", observation, ", array = ", res)
     
-    return res
+    return np.array([res])
 
 
 class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
@@ -90,20 +90,13 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
        
         self.obs_len = kpath.FixKpathAllPairs.obs_fields_num
 
-        self._observation_spec = {
-                                'observations': tf_agents.specs.BoundedArraySpec(
-                                        shape = (self.obs_len, ), 
-                                        dtype = np.int32, 
+        self._observation_spec = tf_agents.specs.BoundedArraySpec(
+                                        shape = (1, self.obs_len), 
+                                        dtype = np.float32, 
                                         name = "observation", 
                                         minimum = 0, 
                                         maximum = network.topo_max_bw
-                                    ), 
-                                'valid_actions': array_spec.ArraySpec(
-                                            shape = (((kpath.FixKpathAllPairs.k + 1) * len(sfcs_list) * len(src_dst_list)), ), 
-                                            dtype = np.bool_,
-                                            name  = "valid_actions"
                                     )
-                                }
        
         '''
         self.min_gamma = 0.5
@@ -159,8 +152,8 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
 
         return (not res)
 
-
     def get_observation_actions(self, obs):
+        '''
         res = {'observation' : None, 'valid_actions' : None}
         res['observation'] = object_to_array_state(obs)
         res['valid_actions'] = self.get_valid_actions_masks(obs)
@@ -169,6 +162,9 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
             print("get_observation_actions: shape(valid_actions) = ", np.shape(res['valid_actions']))
        
         return res
+        '''
+        return object_to_array_state(obs)
+
 
     def action_spec(self):
         return self._action_spec
@@ -200,7 +196,6 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         if self.the_first_action == 1:
             return self.reset()
 
-
         observation = self._state
         kpaths = kpath.FixKpathAllPairs.all_pairs_kpaths[(observation.request.src, observation.request.dst)]
         
@@ -211,8 +206,12 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
             print("\t kpaths = ", kpaths)
 
         if not self.check_action_validity(action, observation):
-            print("Invalid action = ", action, ", observation = ", observation)
-            sys.exit(-1)
+            
+            if debug > 1:
+                print("Invalid action = ", action, ", observation = ", observation)
+            #next_state = self._state
+            next_state, reward, done, tmp_discount = self.env.step(environment.Actions.reject)
+            reward = 0
         else:
             req = observation.request
             sfcs_num = requests.traffic_config["max_sfc_num"]
@@ -225,9 +224,9 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                 observation.request.path = None
                 real_action = environment.Actions.reject
         
-        #self.last_discount = self.discount
-        next_state, reward, done, tmp_discount = self.env.step(real_action)
-        #self.discount = tmp_discount 
+             #self.last_discount = self.discount
+            next_state, reward, done, tmp_discount = self.env.step(real_action)
+            #self.discount = tmp_discount 
         
         if debug > 2:
             print("\t s' = ", next_state, ", r = ", reward, ", done = ", done, ", disc = ", self.discount)
