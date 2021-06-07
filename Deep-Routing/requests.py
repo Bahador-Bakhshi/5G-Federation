@@ -82,7 +82,7 @@ def print_vnfs_list(vnfs_list):
 def generate_sfcs(vnfs_list):
     sfcs_num = traffic_config["max_sfc_num"]
     sfcs_list = []
-    ''' 
+    '''
     for i in range(sfcs_num):
         vnfs_num = np.random.choice(np.arange(traffic_config["min_vnf_per_sfc"], traffic_config["max_vnf_per_sfc"] + 1))
             
@@ -98,7 +98,7 @@ def generate_sfcs(vnfs_list):
 
     '''
     sfcs_list.append(SFC_e2e_bw(0, [vnfs_list[0]], 1))
-    sfcs_list.append(SFC_e2e_bw(1, [vnfs_list[0]], 39))
+    sfcs_list.append(SFC_e2e_bw(1, [vnfs_list[0]], 10))
 
     return sfcs_list
 

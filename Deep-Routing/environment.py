@@ -61,6 +61,8 @@ class Environment:
     def start(self):
         if debug > 1:
             print("Environment start: begin ---------------->>>>>")
+            print("in_test_mode = ", self.in_test_mode)
+            print("req_num = ", self.req_num)
         
         if self.in_test_mode == False:
             self.all_requests = requests.generate_all_requests(self.src_dst_list, self.req_num, self.sfcs_list)

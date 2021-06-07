@@ -39,7 +39,7 @@ from graph import debug
 
 # ## Hyperparameters
 req_num = 0
-num_iterations = 800
+num_iterations = 2000
 
 collection_per_train = 20
 replay_buffer_max_length = int(0.3 * collection_per_train * num_iterations) 
@@ -49,7 +49,7 @@ initial_collect_steps = 1000
 batch_size = 8
 learning_rate = 5e-5
 
-log_interval = 100
+log_interval = 400
 eval_interval = 1000
 num_eval_episodes = 3
 
@@ -101,11 +101,12 @@ def create_PPO_agent(train_env):
     action_tensor_spec = tensor_spec.from_spec(train_env.action_spec())
     num_actions = action_tensor_spec.maximum - action_tensor_spec.minimum + 1
 
-    fc_layer=(64,64)
+    fc_layer=(128,128,128,128,128)
     value_net = value_network.ValueNetwork(
             (train_env.observation_spec()),
             fc_layer_params = fc_layer
         )
+
 
     actor_net = actor_distribution_network.ActorDistributionNetwork(
             (train_env.observation_spec()),
@@ -115,11 +116,10 @@ def create_PPO_agent(train_env):
 
     agent = ppo_agent.PPOAgent(
             train_env.time_step_spec(),
-            (train_env.action_spec()),
+            train_env.action_spec(),
             actor_net = actor_net,
             value_net = value_net,
-
-            optimizer = tf.keras.optimizers.Adam()
+            optimizer = tf.compat.v1.train.AdamOptimizer()
         )
 
     agent.initialize()

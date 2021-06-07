@@ -65,7 +65,7 @@ def object_to_array_state(observation):
 
 class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
     
-    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.75, req_num = 0, requests = None):
+    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.95, req_num = 0, requests = None):
         super().__init__()
 
         self.the_first_action = 1
