@@ -101,8 +101,8 @@ class Environment:
         elif action == Actions.accept:
             feasible = network.deploy_request(self.topology, self.current_event.req)
             if feasible:
-                #reward = self.current_event.req.sfc.bw
-                reward = 1.0
+                reward = self.current_event.req.sfc.bw
+                #reward = 1.0
                 event = Event(0, self.current_event.req.t_end, self.current_event.req)
                 heapq.heappush(self.events, event)
 

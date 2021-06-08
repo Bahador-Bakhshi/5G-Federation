@@ -40,8 +40,8 @@ replay_buffer_capacity = 10000
 collect_episodes_per_iteration = 1
 
 learning_rate  = 1e-4
-training_steps = 500
-training_eval_interval = 10
+training_steps = 1501
+training_eval_interval = 20
 
 '''
 def train_agent(
