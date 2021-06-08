@@ -7,6 +7,7 @@ from tf_agents.agents.ppo import ppo_clip_agent
 from tf_agents.drivers import dynamic_episode_driver
 from tf_agents.environments import suite_pybullet
 from tf_agents.environments import tf_py_environment
+from tf_agents.environments import parallel_py_environment
 from tf_agents.eval import metric_utils
 from tf_agents.metrics import tf_metrics
 from tf_agents.networks import actor_distribution_network
@@ -25,15 +26,15 @@ import environment
 import requests
 from graph import debug
 
-
 return_evaluation_demands = None
 use_rnns = False
 lstm_size = (20,)
 
-actor_fc_layers = (64, 64)
-value_fc_layers = (64, 64)
+actor_fc_layers = (64, 64, 64)
+value_fc_layers = (64, 64, 64)
 
-batch_size = 1
+num_parallel_environments = 8
+batch_size = num_parallel_environments
 sample_batch_size = 8
 replay_buffer_capacity = 10000
 collect_episodes_per_iteration = 1
@@ -42,14 +43,21 @@ learning_rate  = 1e-4
 training_steps = 500
 training_eval_interval = 10
 
+'''
 def train_agent(
         topology = None, 
         src_dst_list = None, 
         sfcs_list = None):
+'''
 
-    train_py_env = tf_environment_novalidation.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num =  req_num)
+#def train_agent(_):
+def train_agent(*args, **kwargs):
     eval_py_env = tf_environment_novalidation.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
-
+    
+    def env_generator():
+        return tf_environment_novalidation.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
+    train_py_env = parallel_py_environment.ParallelPyEnvironment([lambda: env_generator()] * num_parallel_environments)
+    
     tf_env = tf_py_environment.TFPyEnvironment(train_py_env)
     eval_tf_env = tf_py_environment.TFPyEnvironment(eval_py_env)
 
@@ -81,7 +89,7 @@ def train_agent(
     
     global_step = tf.compat.v1.train.get_or_create_global_step()
     
-    agent = tf_agent = ppo_clip_agent.PPOClipAgent(
+    tf_agent = ppo_clip_agent.PPOClipAgent(
         tf_env.time_step_spec(),
         tf_env.action_spec(),
         optimizer,
@@ -129,17 +137,19 @@ def train_agent(
     while training_counter < training_steps:
     
         collect_driver.run()
-        #trajectories = replay_buffer.gather_all()
-        trajectories, buffer_info = next(iterator)
+        trajectories = replay_buffer.gather_all()
+        #trajectories, buffer_info = next(iterator)
         total_loss, _ = tf_agent.train(experience=trajectories)
-        #replay_buffer.clear()
+        replay_buffer.clear()
 
         if training_counter % training_eval_interval == 0:
             print("step = ", training_counter," Return = ", evaluate_agent(topology, src_dst_list, sfcs_list, tf_agent, return_evaluation_demands))
+            print("step = ", training_counter," Loss   = ", total_loss, flush=True)
 
         training_counter += 1
 
-    return tf_agent
+    global agent
+    agent = tf_agent
 
 
 def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
@@ -166,21 +176,32 @@ def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
     
     return (total_return.numpy()[0])/num_episodes
 
-def main(topology, src_dst_list, sfcs_list):
-    return_evaluation_demands = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
+
+def main(this_topology, this_src_dst_list, this_sfcs_list):
+    global topology, src_dst_list, sfcs_list, return_evaluation_demands
+    global agent 
     
-    agent = train_agent(topology, src_dst_list, sfcs_list)
+    topology = this_topology
+    src_dst_list = this_src_dst_list
+    sfcs_list = this_sfcs_list
+
+    return_evaluation_demands = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
+   
+    multiprocessing.handle_test_main(train_agent)
+
+    print("\n\n\n\n-------------------------------------")
 
     return agent
 
 
 if __name__ == '__main__':
+    global topology, src_dst_list, sfcs_list, req_num
+
     topology = parser.generate_topo("topo_02_1.json")
     parser.parse_sfc_config("config_02.json")
     src_dst_list, req_num, sfcs_list = requests.generate_traffic_load_config(topology)
     
     return_evaluation_demands = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
     
-    train_agent(topology, src_dst_list, sfcs_list)
-
+    multiprocessing.handle_main(train_agent)
 

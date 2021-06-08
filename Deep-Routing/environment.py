@@ -48,6 +48,8 @@ class Environment:
         self.in_test_mode = True
 
     def stop(self):
+        self.events.clear()
+        network.reset_topology(self.topology)
         if debug > 2:
             print("Environment stop")
         return
@@ -59,6 +61,7 @@ class Environment:
         return self.start()
 
     def start(self):
+        self.events.clear()
         if debug > 1:
             print("Environment start: begin ---------------->>>>>")
             print("in_test_mode = ", self.in_test_mode)

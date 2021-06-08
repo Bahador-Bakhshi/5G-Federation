@@ -93,3 +93,7 @@ def is_empty(topology):
 
     return True
 
+def reset_topology(topology):
+    for e in topology.edges:
+        topology.edges[e[0],e[1]]["bw"] = topology.edges[e[0],e[1]]["org_bw"]
+

@@ -186,7 +186,8 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         self._state = s
 
         obs = self.get_observation_actions(s)
-        print("_reset: gamma = ",self.discount,", obs = ", obs)
+        if debug > 2:
+            print("_reset: self = ",self,", env = ",self.env,", obs = ",obs)
         
         return tf_agents.trajectories.time_step.restart(obs)
 
