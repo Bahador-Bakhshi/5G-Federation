@@ -88,7 +88,7 @@ class FixKpathSinglePair:
 
 
 class FixKpathAllPairs:
-    k = 1
+    k = 30
 
     obs_fields_num = 0
 

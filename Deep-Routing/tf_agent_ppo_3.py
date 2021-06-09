@@ -30,8 +30,8 @@ return_evaluation_demands = None
 use_rnns = False
 lstm_size = (20,)
 
-actor_fc_layers = (64, 64, 64)
-value_fc_layers = (64, 64, 64)
+actor_fc_layers = (128, 128, 128, 128, 128)
+value_fc_layers = (128, 128, 128, 128, 128)
 
 num_parallel_environments = 8
 batch_size = num_parallel_environments
@@ -40,8 +40,8 @@ replay_buffer_capacity = 10000
 collect_episodes_per_iteration = 1
 
 learning_rate  = 1e-4
-training_steps = 1501
-training_eval_interval = 20
+training_steps = 300
+training_eval_interval = 10
 
 '''
 def train_agent(
