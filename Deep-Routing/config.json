@@ -1,5 +1,5 @@
 {
-	"max_sfc_num": 2,
+	"max_sfc_num": 3,
 	"max_vnf_types": 1,
 
 	"min_vnf_per_sfc": 1,
@@ -14,7 +14,7 @@
 	"vnf_ram_scale": 500,
 	
 	"min_sfc_bw": 1,
-	"max_sfc_bw": 4,
+	"max_sfc_bw": 5,
 	"sfc_bw_scale": 2,
 	
 	"max_src_dst_pairs": 2,
@@ -25,8 +25,12 @@
 		"mu": 0.2
 	    },
 	    {
-		"lambda": 10,
+		"lambda": 3,
 		"mu": 1
+	    },
+	    {
+		"lambda": 2,
+		"mu": 2
 	    }
 
 	]
