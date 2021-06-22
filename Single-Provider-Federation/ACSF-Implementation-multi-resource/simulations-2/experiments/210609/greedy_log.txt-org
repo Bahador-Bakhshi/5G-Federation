@@ -1,0 +1,227 @@
+2021-06-10 09:52:49,794 WARNING:  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-06-10 09:52:49,795 INFO:  * Running on http://172.17.0.2:8080/ (Press CTRL+C to quit)
+2021-06-10 10:03:34,024 CRITICAL: AC: request type = NS1, request id = fgt-cb13321-cedc-4c00-b870-a6116bc183a2, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 10:03:34,024 INFO: 172.17.0.1 - - [10/Jun/2021 10:03:34] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:03:51,252 CRITICAL: AC: request type = NS2, request id = fgt-51efbf4-d2e2-4bca-af62-9d0b03007464, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 10:03:51,252 INFO: 172.17.0.1 - - [10/Jun/2021 10:03:51] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:08:25,434 CRITICAL: AC: request type = NS1, request id = fgt-ccc67f3-571c-462b-bab3-e387d4d40adb, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 10:08:25,434 INFO: 172.17.0.1 - - [10/Jun/2021 10:08:25] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:10:05,533 CRITICAL: AC: request type = NS2, request id = fgt-9c05242-4c76-4c51-be57-bde56331c723, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 10:10:05,533 INFO: 172.17.0.1 - - [10/Jun/2021 10:10:05] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:13:44,541 CRITICAL: AC: request type = NS1, request id = fgt-fb23eec-4402-4f11-8e31-6d6359f21b60, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 10:13:44,542 INFO: 172.17.0.1 - - [10/Jun/2021 10:13:44] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:15:45,004 CRITICAL: AC: request type = NS2, request id = fgt-986789a-250c-4594-a77e-59fa95985fd9, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 10:15:45,004 INFO: 172.17.0.1 - - [10/Jun/2021 10:15:45] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:18:23,265 CRITICAL: AC: request type = NS1, request id = fgt-b3feff6-4d76-467c-912a-d2fc4543732f, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 10:18:23,266 INFO: 172.17.0.1 - - [10/Jun/2021 10:18:23] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:21:26,754 CRITICAL: AC: request type = NS2, request id = fgt-7a32ba2-706e-42ca-acea-ecb06f37a578, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 10:21:26,754 INFO: 172.17.0.1 - - [10/Jun/2021 10:21:26] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:23:27,276 CRITICAL: AC: request type = NS1, request id = fgt-7b08f53-0949-41e4-906d-ed93b7c650e7, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 10:23:27,277 INFO: 172.17.0.1 - - [10/Jun/2021 10:23:27] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:26:44,295 CRITICAL: AC: request type = NS2, request id = fgt-b2673ea-9e30-4279-8988-0b30da96590d, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 10:26:44,295 INFO: 172.17.0.1 - - [10/Jun/2021 10:26:44] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:28:02,639 CRITICAL: AC: request type = NS1, request id = fgt-97196fa-926a-4d38-ad23-816bacb3e961, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 10:28:02,639 INFO: 172.17.0.1 - - [10/Jun/2021 10:28:02] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:32:35,396 CRITICAL: AC: request type = NS1, request id = fgt-00b98be-a846-4d8f-bcc7-f2d638019d83, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 10:32:35,397 INFO: 172.17.0.1 - - [10/Jun/2021 10:32:35] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:32:38,257 CRITICAL: AC: request type = NS2, request id = fgt-868d20a-0396-4160-8c17-a619b46af385, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 10:32:38,257 INFO: 172.17.0.1 - - [10/Jun/2021 10:32:38] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:37:43,010 CRITICAL: AC: request type = NS1, request id = fgt-e3c8d94-a9df-4cd6-9ac3-a056a6ad74a3, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 10:37:43,011 INFO: 172.17.0.1 - - [10/Jun/2021 10:37:43] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:38:46,931 CRITICAL: AC: request type = NS2, request id = fgt-11e142b-e5c6-4571-b1c6-af23a745c79d, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 10:38:46,931 INFO: 172.17.0.1 - - [10/Jun/2021 10:38:46] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:42:31,575 CRITICAL: AC: request type = NS1, request id = fgt-953e58b-de8a-4047-bc38-36fc6bef1ec7, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 10:42:31,575 INFO: 172.17.0.1 - - [10/Jun/2021 10:42:31] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:44:26,644 CRITICAL: AC: request type = NS2, request id = fgt-8c7cc4e-e1b3-4c94-a80d-2669f169fb54, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 10:44:26,645 INFO: 172.17.0.1 - - [10/Jun/2021 10:44:26] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:47:21,604 CRITICAL: AC: request type = NS1, request id = fgt-17259b7-cadd-45c0-8c74-e5b770edca45, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 10:47:21,604 INFO: 172.17.0.1 - - [10/Jun/2021 10:47:21] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:50:21,737 CRITICAL: AC: request type = NS2, request id = fgt-38723cf-dd88-4c79-9ecc-75cbc39604db, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 10:50:21,737 INFO: 172.17.0.1 - - [10/Jun/2021 10:50:21] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:52:10,735 CRITICAL: AC: request type = NS1, request id = fgt-0041f1f-e76d-4e32-bad4-984401fb8818, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 10:52:10,736 INFO: 172.17.0.1 - - [10/Jun/2021 10:52:10] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:56:07,852 CRITICAL: AC: request type = NS2, request id = fgt-5ed4e82-f7a3-4317-bab1-429a9e0ab5a0, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 10:56:07,853 INFO: 172.17.0.1 - - [10/Jun/2021 10:56:07] "POST /AC HTTP/1.1" 200 -
+2021-06-10 10:57:22,563 CRITICAL: AC: request type = NS1, request id = fgt-02ae316-4003-4741-a984-f7f48059b145, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 10:57:22,563 INFO: 172.17.0.1 - - [10/Jun/2021 10:57:22] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:01:59,839 CRITICAL: AC: request type = NS1, request id = fgt-24c78b2-cad8-4137-8cff-0f4c01b8a240, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 11:01:59,839 INFO: 172.17.0.1 - - [10/Jun/2021 11:01:59] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:02:01,816 CRITICAL: AC: request type = NS2, request id = fgt-399f5b3-581d-49a2-93f5-e19c2e8754f7, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 11:02:01,816 INFO: 172.17.0.1 - - [10/Jun/2021 11:02:01] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:06:41,952 CRITICAL: AC: request type = NS1, request id = fgt-375d857-ffac-4e89-8e58-6000b1dd6355, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 11:06:41,952 INFO: 172.17.0.1 - - [10/Jun/2021 11:06:41] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:08:01,290 CRITICAL: AC: request type = NS2, request id = fgt-9b7f0b4-c52b-4242-a8a9-6f5e2853ae71, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 11:08:01,290 INFO: 172.17.0.1 - - [10/Jun/2021 11:08:01] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:11:19,865 CRITICAL: AC: request type = NS1, request id = fgt-f487adb-d15a-4438-9d38-deb01c83dd66, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 11:11:19,866 INFO: 172.17.0.1 - - [10/Jun/2021 11:11:19] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:13:43,333 CRITICAL: AC: request type = NS2, request id = fgt-2742545-3345-4730-88f7-2ca2f41e930f, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 11:13:43,334 INFO: 172.17.0.1 - - [10/Jun/2021 11:13:43] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:16:05,220 CRITICAL: AC: request type = NS1, request id = fgt-467ecaa-fffc-4a7d-94a2-10b5a07af3da, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 11:16:05,220 INFO: 172.17.0.1 - - [10/Jun/2021 11:16:05] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:19:51,232 CRITICAL: AC: request type = NS2, request id = fgt-2518ecd-e36e-42b2-bad9-25dd3a6f8efd, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 11:19:51,233 INFO: 172.17.0.1 - - [10/Jun/2021 11:19:51] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:20:40,465 CRITICAL: AC: request type = NS1, request id = fgt-97679fe-8152-47b1-a3f8-54c9778d1776, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 11:20:40,466 INFO: 172.17.0.1 - - [10/Jun/2021 11:20:40] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:26:01,744 CRITICAL: AC: request type = NS1, request id = fgt-7d57608-4a22-47af-9ea9-e2cc90808502, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 11:26:01,744 INFO: 172.17.0.1 - - [10/Jun/2021 11:26:01] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:26:05,895 CRITICAL: AC: request type = NS2, request id = fgt-aff31e9-2827-4c9f-901a-e4729da00f5c, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 11:26:05,896 INFO: 172.17.0.1 - - [10/Jun/2021 11:26:05] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:30:50,350 CRITICAL: AC: request type = NS1, request id = fgt-385c2d6-c308-4c66-b5de-573a19b330c6, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 11:30:50,351 INFO: 172.17.0.1 - - [10/Jun/2021 11:30:50] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:31:17,880 CRITICAL: AC: request type = NS2, request id = fgt-ffd4e9a-7f06-48b0-8590-b88ea52caa32, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 11:31:17,881 INFO: 172.17.0.1 - - [10/Jun/2021 11:31:17] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:35:46,968 CRITICAL: AC: request type = NS1, request id = fgt-142d46e-9425-4b67-8273-57f41183de2e, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 11:35:46,968 INFO: 172.17.0.1 - - [10/Jun/2021 11:35:46] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:36:50,790 CRITICAL: AC: request type = NS2, request id = fgt-6e95e67-219c-4995-b413-4b9c8ee6af5b, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 11:36:50,790 INFO: 172.17.0.1 - - [10/Jun/2021 11:36:50] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:40:27,855 CRITICAL: AC: request type = NS1, request id = fgt-4029f17-ae0e-45bd-8ee3-47db31fec49b, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 11:40:27,856 INFO: 172.17.0.1 - - [10/Jun/2021 11:40:27] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:43:02,888 CRITICAL: AC: request type = NS2, request id = fgt-1e07b68-94f8-4d90-8509-ceff6c572280, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 11:43:02,889 INFO: 172.17.0.1 - - [10/Jun/2021 11:43:02] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:45:37,454 CRITICAL: AC: request type = NS1, request id = fgt-a2e8a47-f4d8-4ee3-b448-36cac0ca2240, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 11:45:37,454 INFO: 172.17.0.1 - - [10/Jun/2021 11:45:37] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:49:12,479 CRITICAL: AC: request type = NS2, request id = fgt-73ff8dd-6d2a-4115-bf88-6a7944483546, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 11:49:12,479 INFO: 172.17.0.1 - - [10/Jun/2021 11:49:12] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:50:29,774 CRITICAL: AC: request type = NS1, request id = fgt-bfa5e6a-55e2-4c86-a102-04fc1e56b1ab, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 11:50:29,774 INFO: 172.17.0.1 - - [10/Jun/2021 11:50:29] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:54:50,977 CRITICAL: AC: request type = NS2, request id = fgt-cebb60d-5c69-4c4d-8fb5-ef9686db0c45, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 11:54:50,978 INFO: 172.17.0.1 - - [10/Jun/2021 11:54:50] "POST /AC HTTP/1.1" 200 -
+2021-06-10 11:55:24,253 CRITICAL: AC: request type = NS1, request id = fgt-ba603a9-21ee-4471-917b-4daa081c42ea, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 11:55:24,253 INFO: 172.17.0.1 - - [10/Jun/2021 11:55:24] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:00:04,320 CRITICAL: AC: request type = NS1, request id = fgt-09145b4-2f5b-4458-9247-2024c01710ca, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 12:00:04,320 INFO: 172.17.0.1 - - [10/Jun/2021 12:00:04] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:00:43,684 CRITICAL: AC: request type = NS2, request id = fgt-7be78ea-6693-488f-91d2-4d9d127c729f, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 12:00:43,684 INFO: 172.17.0.1 - - [10/Jun/2021 12:00:43] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:04:58,295 CRITICAL: AC: request type = NS1, request id = fgt-8c65524-2cf4-4916-8920-eae9e0fbc9cd, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 12:04:58,295 INFO: 172.17.0.1 - - [10/Jun/2021 12:04:58] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:07:00,431 CRITICAL: AC: request type = NS2, request id = fgt-77ff998-f6f2-424d-b7c5-2437fe878f71, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 12:07:00,431 INFO: 172.17.0.1 - - [10/Jun/2021 12:07:00] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:09:40,115 CRITICAL: AC: request type = NS1, request id = fgt-abd5b2f-d4d2-4a4a-938d-76a1f3b1edf3, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 12:09:40,115 INFO: 172.17.0.1 - - [10/Jun/2021 12:09:40] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:12:34,608 CRITICAL: AC: request type = NS2, request id = fgt-3036596-a1f3-43b4-b3fb-ac2891bd6e15, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 12:12:34,609 INFO: 172.17.0.1 - - [10/Jun/2021 12:12:34] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:14:52,958 CRITICAL: AC: request type = NS1, request id = fgt-83a1329-796b-495e-b054-ad5379805fcd, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 12:14:52,959 INFO: 172.17.0.1 - - [10/Jun/2021 12:14:52] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:17:53,519 CRITICAL: AC: request type = NS2, request id = fgt-613140a-ea62-4700-9d53-f7c172d18d8a, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 12:17:53,519 INFO: 172.17.0.1 - - [10/Jun/2021 12:17:53] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:20:11,065 CRITICAL: AC: request type = NS1, request id = fgt-8a845ab-c1d6-478a-8c51-d78bbec1cf70, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 12:20:11,066 INFO: 172.17.0.1 - - [10/Jun/2021 12:20:11] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:23:10,909 CRITICAL: AC: request type = NS2, request id = fgt-0f88954-13ca-4178-be88-2ffc485b3617, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 12:23:10,910 INFO: 172.17.0.1 - - [10/Jun/2021 12:23:10] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:25:13,634 CRITICAL: AC: request type = NS1, request id = fgt-23423eb-1ba0-450d-b2da-1f6136a844a0, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 12:25:13,634 INFO: 172.17.0.1 - - [10/Jun/2021 12:25:13] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:29:15,803 CRITICAL: AC: request type = NS2, request id = fgt-6a507c1-4ab0-45d5-88a8-fe9ae6848d9e, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 12:29:15,804 INFO: 172.17.0.1 - - [10/Jun/2021 12:29:15] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:30:07,027 CRITICAL: AC: request type = NS1, request id = fgt-fcdd4bd-5ce1-4865-9c30-91a097908e61, decision = reject, revenue = 0, federation_cost = 0, profit = 0
+2021-06-10 12:30:07,028 INFO: 172.17.0.1 - - [10/Jun/2021 12:30:07] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:34:48,756 CRITICAL: AC: request type = NS2, request id = fgt-49c741e-80bd-4e5b-98c4-5bb7a1641fb7, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 12:34:48,756 INFO: 172.17.0.1 - - [10/Jun/2021 12:34:48] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:35:19,935 CRITICAL: AC: request type = NS1, request id = fgt-f1762d7-d0c6-40c0-8468-68d9b8749ff3, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 12:35:19,936 INFO: 172.17.0.1 - - [10/Jun/2021 12:35:19] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:40:12,623 CRITICAL: AC: request type = NS2, request id = fgt-0026d36-9271-45bd-abab-8241800cecb3, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 12:40:12,623 INFO: 172.17.0.1 - - [10/Jun/2021 12:40:12] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:40:16,444 CRITICAL: AC: request type = NS1, request id = fgt-1037841-c170-400b-ad3d-8a9e24856ae9, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 12:40:16,444 INFO: 172.17.0.1 - - [10/Jun/2021 12:40:16] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:45:37,105 CRITICAL: AC: request type = NS2, request id = fgt-d449942-994e-4b0a-af47-0bb3817eba19, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 12:45:37,105 INFO: 172.17.0.1 - - [10/Jun/2021 12:45:37] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:45:39,825 CRITICAL: AC: request type = NS1, request id = fgt-440d44d-28ca-42c8-8ed5-2fed4c86fd5c, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 12:45:39,825 INFO: 172.17.0.1 - - [10/Jun/2021 12:45:39] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:50:54,497 CRITICAL: AC: request type = NS1, request id = fgt-f126d79-638e-486f-8a56-21ca7b8576cd, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 12:50:54,497 INFO: 172.17.0.1 - - [10/Jun/2021 12:50:54] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:51:25,688 CRITICAL: AC: request type = NS2, request id = fgt-fe62a36-1d49-4ef4-84db-76566161bfb8, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 12:51:25,688 INFO: 172.17.0.1 - - [10/Jun/2021 12:51:25] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:56:06,488 CRITICAL: AC: request type = NS1, request id = fgt-067da8d-7986-4a33-ae90-46d4815b3255, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 12:56:06,488 INFO: 172.17.0.1 - - [10/Jun/2021 12:56:06] "POST /AC HTTP/1.1" 200 -
+2021-06-10 12:57:29,216 CRITICAL: AC: request type = NS2, request id = fgt-3997361-3a8e-4d90-b85d-d88f6bc9a610, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 12:57:29,217 INFO: 172.17.0.1 - - [10/Jun/2021 12:57:29] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:01:02,256 CRITICAL: AC: request type = NS1, request id = fgt-d590ad4-bf27-4dc8-af96-2a50aace1784, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 13:01:02,257 INFO: 172.17.0.1 - - [10/Jun/2021 13:01:02] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:02:46,886 CRITICAL: AC: request type = NS2, request id = fgt-0b6d3d2-1652-428d-82b7-67a0e7c3c401, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 13:02:46,886 INFO: 172.17.0.1 - - [10/Jun/2021 13:02:46] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:05:32,652 CRITICAL: AC: request type = NS1, request id = fgt-586b08e-04e0-4e50-9ba0-d41786b410c4, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 13:05:32,652 INFO: 172.17.0.1 - - [10/Jun/2021 13:05:32] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:08:20,037 CRITICAL: AC: request type = NS2, request id = fgt-8dd74c0-c8d1-4e2e-841a-f098f9c89780, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 13:08:20,037 INFO: 172.17.0.1 - - [10/Jun/2021 13:08:20] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:10:47,333 CRITICAL: AC: request type = NS1, request id = fgt-dd90327-45e4-4a53-94df-50f777861ce6, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 13:10:47,334 INFO: 172.17.0.1 - - [10/Jun/2021 13:10:47] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:14:05,631 CRITICAL: AC: request type = NS2, request id = fgt-aa03bc2-d9f5-408e-80c1-143c52699578, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 13:14:05,631 INFO: 172.17.0.1 - - [10/Jun/2021 13:14:05] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:16:03,879 CRITICAL: AC: request type = NS1, request id = fgt-ea4fff2-17bc-4236-8130-1b30f1811c8f, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 13:16:03,880 INFO: 172.17.0.1 - - [10/Jun/2021 13:16:03] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:20:11,425 CRITICAL: AC: request type = NS2, request id = fgt-8f1f76b-6b89-4562-b624-321d43f6b8a8, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 13:20:11,425 INFO: 172.17.0.1 - - [10/Jun/2021 13:20:11] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:21:28,364 CRITICAL: AC: request type = NS1, request id = fgt-a7b7aca-eccb-40c1-b34f-fcdf231a37e6, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 13:21:28,365 INFO: 172.17.0.1 - - [10/Jun/2021 13:21:28] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:26:08,582 CRITICAL: AC: request type = NS2, request id = fgt-7eb52ee-4b81-4ff7-9b23-c69c6c4748ac, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 13:26:08,583 INFO: 172.17.0.1 - - [10/Jun/2021 13:26:08] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:26:20,349 CRITICAL: AC: request type = NS1, request id = fgt-c771dd1-82d8-4a86-8bef-6d963a726e44, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 13:26:20,349 INFO: 172.17.0.1 - - [10/Jun/2021 13:26:20] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:31:41,664 CRITICAL: AC: request type = NS1, request id = fgt-787e9a6-33fd-423a-8e0b-34c31a5ad59a, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 13:31:41,665 INFO: 172.17.0.1 - - [10/Jun/2021 13:31:41] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:32:10,112 CRITICAL: AC: request type = NS2, request id = fgt-ecf17cd-a0fd-42a6-9ca9-aa23ccbe0480, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 13:32:10,112 INFO: 172.17.0.1 - - [10/Jun/2021 13:32:10] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:36:28,772 CRITICAL: AC: request type = NS1, request id = fgt-60a1061-2a51-49a3-87a3-000b1cf6e8f4, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 13:36:28,773 INFO: 172.17.0.1 - - [10/Jun/2021 13:36:28] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:38:05,542 CRITICAL: AC: request type = NS2, request id = fgt-d876da7-d13c-41a8-acc8-84007aff3aab, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 13:38:05,543 INFO: 172.17.0.1 - - [10/Jun/2021 13:38:05] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:41:52,288 CRITICAL: AC: request type = NS1, request id = fgt-f39a9d7-acc8-45c9-a2e0-aed0b7cf91ac, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 13:41:52,288 INFO: 172.17.0.1 - - [10/Jun/2021 13:41:52] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:43:52,867 CRITICAL: AC: request type = NS2, request id = fgt-a0a797b-7779-4cd1-8fc4-242edb616f04, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 13:43:52,867 INFO: 172.17.0.1 - - [10/Jun/2021 13:43:52] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:47:17,643 CRITICAL: AC: request type = NS1, request id = fgt-fb45c89-5362-412f-b22c-204a139d0700, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 13:47:17,644 INFO: 172.17.0.1 - - [10/Jun/2021 13:47:17] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:49:25,427 CRITICAL: AC: request type = NS2, request id = fgt-1070b4f-8e64-4573-81c6-e4cb92ba4f9c, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 13:49:25,428 INFO: 172.17.0.1 - - [10/Jun/2021 13:49:25] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:52:14,333 CRITICAL: AC: request type = NS1, request id = fgt-0cb2982-2a1e-4752-8697-73cc6ecee165, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 13:52:14,334 INFO: 172.17.0.1 - - [10/Jun/2021 13:52:14] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:55:16,512 CRITICAL: AC: request type = NS2, request id = fgt-963b652-ff4a-485c-a47c-376447b5de97, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 13:55:16,513 INFO: 172.17.0.1 - - [10/Jun/2021 13:55:16] "POST /AC HTTP/1.1" 200 -
+2021-06-10 13:56:48,360 CRITICAL: AC: request type = NS1, request id = fgt-00c2cc6-ba9b-403e-93df-befa70f9d163, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 13:56:48,361 INFO: 172.17.0.1 - - [10/Jun/2021 13:56:48] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:00:35,053 CRITICAL: AC: request type = NS2, request id = fgt-d816b43-bb13-4b97-a996-be7c0e529221, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 14:00:35,053 INFO: 172.17.0.1 - - [10/Jun/2021 14:00:35] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:01:42,728 CRITICAL: AC: request type = NS1, request id = fgt-9656fde-7119-4204-a136-04a3a3e2cdbb, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 14:01:42,728 INFO: 172.17.0.1 - - [10/Jun/2021 14:01:42] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:05:59,769 CRITICAL: AC: request type = NS2, request id = fgt-e8fede3-91ea-4576-b30b-2846344e58f5, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 14:05:59,769 INFO: 172.17.0.1 - - [10/Jun/2021 14:05:59] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:06:25,924 CRITICAL: AC: request type = NS1, request id = fgt-254a98b-8b64-4186-80a8-1196c50fd9b2, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 14:06:25,924 INFO: 172.17.0.1 - - [10/Jun/2021 14:06:25] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:11:25,773 CRITICAL: AC: request type = NS1, request id = fgt-957dd4a-d427-49a3-862d-162692e2639e, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 14:11:25,773 INFO: 172.17.0.1 - - [10/Jun/2021 14:11:25] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:12:12,043 CRITICAL: AC: request type = NS2, request id = fgt-696746d-1e87-48ef-9711-49c33659956d, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 14:12:12,043 INFO: 172.17.0.1 - - [10/Jun/2021 14:12:12] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:16:47,001 CRITICAL: AC: request type = NS1, request id = fgt-af6a80b-fa5d-47cf-b93a-dbbaffd4ff3e, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 14:16:47,002 INFO: 172.17.0.1 - - [10/Jun/2021 14:16:47] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:17:22,216 CRITICAL: AC: request type = NS2, request id = fgt-43ebd7b-9ee1-4c38-a695-3fbf74814f69, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 14:17:22,216 INFO: 172.17.0.1 - - [10/Jun/2021 14:17:22] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:21:19,624 CRITICAL: AC: request type = NS1, request id = fgt-31bd0c8-4de4-494a-8bcf-d10a4189918c, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 14:21:19,624 INFO: 172.17.0.1 - - [10/Jun/2021 14:21:19] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:23:31,575 CRITICAL: AC: request type = NS2, request id = fgt-ac07419-5a58-4697-8744-e93cbf53b7f5, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 14:23:31,575 INFO: 172.17.0.1 - - [10/Jun/2021 14:23:31] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:26:01,635 CRITICAL: AC: request type = NS1, request id = fgt-db78daf-631b-471c-8ccb-db4e6930dbec, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 14:26:01,636 INFO: 172.17.0.1 - - [10/Jun/2021 14:26:01] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:28:42,272 CRITICAL: AC: request type = NS2, request id = fgt-fe7fb86-3759-4eda-9cc6-4aac4770975b, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 14:28:42,272 INFO: 172.17.0.1 - - [10/Jun/2021 14:28:42] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:30:56,231 CRITICAL: AC: request type = NS1, request id = fgt-78c54ac-4d8b-4737-886d-125c0858ab34, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 14:30:56,231 INFO: 172.17.0.1 - - [10/Jun/2021 14:30:56] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:34:54,773 CRITICAL: AC: request type = NS2, request id = fgt-0383b3d-9616-417b-9897-5f015325c858, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 14:34:54,774 INFO: 172.17.0.1 - - [10/Jun/2021 14:34:54] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:36:03,971 CRITICAL: AC: request type = NS1, request id = fgt-13302f6-1315-4c1a-a1d3-c1aa8eb968b0, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 14:36:03,971 INFO: 172.17.0.1 - - [10/Jun/2021 14:36:03] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:40:33,492 CRITICAL: AC: request type = NS2, request id = fgt-7203b0b-e3a0-4af6-bdc9-4ecb16bf21dd, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 14:40:33,492 INFO: 172.17.0.1 - - [10/Jun/2021 14:40:33] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:40:49,115 CRITICAL: AC: request type = NS1, request id = fgt-424885b-f001-444e-8511-6eb2384aaf18, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 14:40:49,116 INFO: 172.17.0.1 - - [10/Jun/2021 14:40:49] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:45:27,859 CRITICAL: AC: request type = NS1, request id = fgt-56a482b-2d49-4ad7-8748-7682b637a7c6, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 14:45:27,859 INFO: 172.17.0.1 - - [10/Jun/2021 14:45:27] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:45:53,043 CRITICAL: AC: request type = NS2, request id = fgt-b514b0a-1830-494f-ac09-71f4482062cf, decision = federate, revenue = 40, federation_cost = 10.0, profit = 30.0
+2021-06-10 14:45:53,043 INFO: 172.17.0.1 - - [10/Jun/2021 14:45:53] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:50:02,103 CRITICAL: AC: request type = NS1, request id = fgt-48c5717-41ff-49fc-a3a2-29515c40b141, decision = federate, revenue = 95, federation_cost = 90.0, profit = 5.0
+2021-06-10 14:50:02,103 INFO: 172.17.0.1 - - [10/Jun/2021 14:50:02] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:51:38,368 CRITICAL: AC: request type = NS2, request id = fgt-807361a-65cd-48ca-b4f3-67e82cd88099, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 14:51:38,368 INFO: 172.17.0.1 - - [10/Jun/2021 14:51:38] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:54:47,277 CRITICAL: AC: request type = NS1, request id = fgt-5e8c556-fff5-4ee8-96c9-899feb407fa3, decision = accept, revenue = 95, federation_cost = 0, profit = 95.0
+2021-06-10 14:54:47,277 INFO: 172.17.0.1 - - [10/Jun/2021 14:54:47] "POST /AC HTTP/1.1" 200 -
+2021-06-10 14:57:41,173 CRITICAL: AC: request type = NS2, request id = fgt-f47c1ab-d48b-455f-b778-58f567937733, decision = accept, revenue = 40, federation_cost = 0, profit = 40.0
+2021-06-10 14:57:41,174 INFO: 172.17.0.1 - - [10/Jun/2021 14:57:41] "POST /AC HTTP/1.1" 200 -
