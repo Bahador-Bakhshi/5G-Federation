@@ -10,7 +10,7 @@ import environment
 import traditionals
 import parser
 import kpath
-import tf_agent_ppo_3
+import tf_agent_ppo_fe
 
 from graph import debug
 
@@ -45,8 +45,8 @@ def main():
 
     src_dst_list, req_num, sfcs_list = requests.generate_traffic_load_config(topology)
   
-    tf_agent_ppo_3.req_num = req_num
-    agent = tf_agent_ppo_3.main(topology, src_dst_list, sfcs_list)
+    tf_agent_ppo_fe.req_num = req_num
+    agent = tf_agent_ppo_fe.main(topology, src_dst_list, sfcs_list)
 
     org_lambdas = []
     for index in requests.traffic_config["traffic_rates"]:
@@ -63,7 +63,7 @@ def main():
         for _ in range(20):
             all_requests = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
     
-            total_reward_ddqn += tf_agent_ppo_3.evaluate_agent(topology, src_dst_list, sfcs_list, agent, all_requests)
+            total_reward_ddqn += tf_agent_ppo_fe.evaluate_agent(topology, src_dst_list, sfcs_list, agent, all_requests)
             #print("Total reward - Deep = ", total_reward)
 
             min_hop_count_tester = Tester_Agent(topology, traditionals.MinHopCount.policy, traditionals.MinHopCount.observer)

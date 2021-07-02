@@ -1,8 +1,9 @@
-
+import sys
 import network
 import graph
 import environment
 import requests
+import tensorflow as tf
 
 from graph import debug 
 
@@ -122,7 +123,7 @@ class FixKpathAllPairs:
     def observer(topology, request):
         
         if debug > 2:
-            print("observer:  request = ", request)
+            print("observer: request = ", request)
 
         all_kpaths_bw = {}
         all_kpaths_util = {}
@@ -170,6 +171,101 @@ class FixKpathAllPairs:
         print("observer: discount = ", discount)
         '''
 
+        return observation, discount
+
+    def policy(observation):
+        pass
+
+
+
+class FEkpath:
+    k = 4
+
+    obs_fields_num = 0
+
+    all_pairs_kpaths = {}
+
+    def find_all_pair_kpaths(topology, src_dst_list):
+        for src_dst in src_dst_list:
+            src = src_dst[0]
+            dst = src_dst[1]
+
+            dummy_sfc = requests.SFC_e2e_bw(0, [], 0)
+            dummy_req = requests.Request(src, dst, 0, dummy_sfc, 0, 0)
+        
+            is_path, kpaths = graph.k_shortest_paths(topology, dummy_req, FEkpath.k, graph.bw_feasibility, graph.link_weight_one)
+            FEkpath.all_pairs_kpaths[(src, dst)] = kpaths.copy()
+        
+        if debug > 2:
+            print("find_all_pair_kpaths: ", FEkpath.all_pairs_kpaths)
+
+        '''
+        Structure of the observation:
+        1) one_hot coding for src
+        2) one_hot coding for dst
+        3) one_hot coding for bw level
+        4) k * per action net state:
+            4-1) per src-dst pair:
+                4-1-1) k path bw
+        '''
+        src_dst_one_hot = tf.one_hot(0, topology.number_of_nodes() + 1)
+        bw_levels_one_hot = tf.one_hot(0, requests.traffic_config["max_sfc_bw"] + 1)
+        FEkpath.obs_fields_num =  2 * len(src_dst_one_hot) + len(bw_levels_one_hot) + FEkpath.k * (len(src_dst_list) * FEkpath.k)
+
+    class Observation:
+        def __init__(self, all_kpaths_bw_after_action, request, topology):
+            self.all_kpaths_bw_after_action = []
+            for kpaths_bw in all_kpaths_bw_after_action:
+                self.all_kpaths_bw_after_action.append(kpaths_bw)
+
+            self.request = request
+            self.topology = topology
+
+        def __str__(self):
+            return "req = "+ str(self.request) +", kpaths_bw = "+ str(self.all_kpaths_bw_after_action)
+
+    def observer(topology, request):
+        
+        if debug > 2:
+            print("observer: request = ", request)
+
+        all_kpaths_bw_after_action = []
+        this_request_kpaths = FEkpath.all_pairs_kpaths[(request.src, request.dst)]
+
+        for action in range(FEkpath.k):
+            # apply the action
+            is_feasible = network.route_path(topology, this_request_kpaths[action], request.sfc)
+
+            # get the k paths bw for all src-dst pairs
+            all_pairs_kpaths_bw = {}
+            for (src, dst) in FEkpath.all_pairs_kpaths.keys():
+                kpaths = FEkpath.all_pairs_kpaths[(src, dst)]
+            
+                if debug > 2:
+                    print("observer: (src, dst) = ", src, dst, " kpaths = ", kpaths)
+            
+                kpaths_bw = [0] * FEkpath.k
+                index = 0
+                for path in kpaths:
+                    bw = graph.get_path_bw(topology, path)
+                    kpaths_bw[index] = bw
+                    index += 1
+
+                all_pairs_kpaths_bw[(src,dst)] = kpaths_bw.copy()
+            all_kpaths_bw_after_action.append(all_pairs_kpaths_bw.copy())
+            
+            # undo action
+            if is_feasible:
+                network.free_path(topology, this_request_kpaths[action], request.sfc)
+            else:
+                pass
+
+        observation = FEkpath.Observation(all_kpaths_bw_after_action, request, topology)
+        
+        if debug > 2:
+            print("observer: observation = ", observation)
+        
+        discount = 0
         return observation, discount
 
     def policy(observation):

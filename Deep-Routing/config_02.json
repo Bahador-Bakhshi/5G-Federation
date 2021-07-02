@@ -18,7 +18,7 @@
 	"sfc_bw_scale": 2,
 	
 	"max_src_dst_pairs": 1,
-	"request_num": 1000,
+	"request_num": 10,
 	"traffic_rates":[
 	    {
 		"lambda": 5,
