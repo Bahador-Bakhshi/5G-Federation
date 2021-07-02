@@ -72,6 +72,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
 
         self.discount = discount
         self.topology = topology
+        network.reset_topology(self.topology)
         self.requests = requests
         self.src_dst_list = src_dst_list
        

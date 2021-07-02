@@ -179,7 +179,7 @@ class FixKpathAllPairs:
 
 
 class FEkpath:
-    k = 4
+    k = 20
 
     obs_fields_num = 0
 
@@ -216,13 +216,13 @@ class FEkpath:
         def __init__(self, all_kpaths_bw_after_action, request, topology):
             self.all_kpaths_bw_after_action = []
             for kpaths_bw in all_kpaths_bw_after_action:
-                self.all_kpaths_bw_after_action.append(kpaths_bw)
+                self.all_kpaths_bw_after_action.append(kpaths_bw.copy())
 
             self.request = request
             self.topology = topology
 
         def __str__(self):
-            return "req = "+ str(self.request) +", kpaths_bw = "+ str(self.all_kpaths_bw_after_action)
+            return "req = "+ str(self.request) +", all_kpaths_bw_after_action = "+ str(self.all_kpaths_bw_after_action)
 
     def observer(topology, request):
         
@@ -234,7 +234,9 @@ class FEkpath:
 
         for action in range(FEkpath.k):
             # apply the action
-            is_feasible = network.route_path(topology, this_request_kpaths[action], request.sfc)
+            is_feasible = False
+            if action < len(this_request_kpaths):
+                is_feasible = network.route_path(topology, this_request_kpaths[action], request.sfc)
 
             # get the k paths bw for all src-dst pairs
             all_pairs_kpaths_bw = {}

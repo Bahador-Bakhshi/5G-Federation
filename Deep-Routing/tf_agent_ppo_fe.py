@@ -19,11 +19,11 @@ from tf_agents.replay_buffers import tf_uniform_replay_buffer
 from tf_agents.system import system_multiprocessing as multiprocessing
 from tf_agents.utils import common
 
-
 import tf_environment_fe
 import parser
 import environment
 import requests
+import network
 from graph import debug
 
 return_evaluation_demands = None
@@ -40,22 +40,15 @@ replay_buffer_capacity = 10000
 collect_episodes_per_iteration = 1
 
 learning_rate  = 1e-4
-training_steps = 300
+training_steps = 500
 training_eval_interval = 10
 
-'''
-def train_agent(
-        topology = None, 
-        src_dst_list = None, 
-        sfcs_list = None):
-'''
-
-#def train_agent(_):
 def train_agent(*args, **kwargs):
     eval_py_env = tf_environment_fe.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
     
     def env_generator():
         return tf_environment_fe.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
+
     train_py_env = parallel_py_environment.ParallelPyEnvironment([lambda: env_generator()] * num_parallel_environments)
     
     tf_env = tf_py_environment.TFPyEnvironment(train_py_env)
@@ -108,9 +101,11 @@ def train_agent(*args, **kwargs):
     tf_agent.initialize()
 
     eval_policy = tf_agent.policy
+    agent_policy_saver = policy_saver.PolicySaver(eval_policy)
     collect_policy = tf_agent.collect_policy
 
-    print("tf_agent.collect_data_spec = ",  tf_agent.collect_data_spec)
+    if debug > 1:
+        print("tf_agent.collect_data_spec = ",  tf_agent.collect_data_spec)
 
     replay_buffer = tf_uniform_replay_buffer.TFUniformReplayBuffer(
         tf_agent.collect_data_spec,
@@ -136,6 +131,7 @@ def train_agent(*args, **kwargs):
     tf_agent.train = common.function(tf_agent.train, autograph=False)
 
     training_counter = 0
+    last_best_return = 0
     while training_counter < training_steps:
     
         collect_driver.run()
@@ -145,28 +141,34 @@ def train_agent(*args, **kwargs):
         replay_buffer.clear()
 
         if training_counter % training_eval_interval == 0:
-            print("step = ", training_counter," Return = ", evaluate_agent(topology, src_dst_list, sfcs_list, tf_agent, return_evaluation_demands))
+            current_return = evaluate_policy(topology, src_dst_list, sfcs_list, tf_agent.policy, return_evaluation_demands)
+            print("step = ", training_counter," Return = ", current_return)
             print("step = ", training_counter," Loss   = ", total_loss, flush=True)
+
+            if current_return > last_best_return:
+                last_best_return = current_return
+                agent_policy_saver.save("best_policy")
 
         training_counter += 1
 
-    global agent
-    agent = tf_agent
+    global the_best_policy
+    the_best_policy = tf.saved_model.load("best_policy")
 
 
-def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
-
+def evaluate_policy(topology, src_dst_list, sfcs_list, policy, demands):
+    test_topology = topology.copy()
+    network.reset_topology(test_topology)
     test_py_env = tf_environment_fe.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
     test_env = tf_py_environment.TFPyEnvironment(test_py_env)
 
-    num_episodes = 1
+    num_episodes = 10
     total_return = 0
     for _ in range(num_episodes):
         time_step = test_env.reset()
         episode_return = 0
 
         while not time_step.is_last():
-            action_step = agent.policy.action(time_step)
+            action_step = policy.action(time_step)
             time_step = test_env.step(action_step.action)
             episode_return += time_step.reward
         
@@ -181,7 +183,7 @@ def evaluate_agent(topology, src_dst_list, sfcs_list, agent, demands):
 
 def main(this_topology, this_src_dst_list, this_sfcs_list):
     global topology, src_dst_list, sfcs_list, return_evaluation_demands
-    global agent 
+    global the_best_policy
     
     topology = this_topology
     src_dst_list = this_src_dst_list
@@ -193,7 +195,7 @@ def main(this_topology, this_src_dst_list, this_sfcs_list):
 
     print("\n\n\n\n-------------------------------------")
 
-    return agent
+    return the_best_policy
 
 
 if __name__ == '__main__':
