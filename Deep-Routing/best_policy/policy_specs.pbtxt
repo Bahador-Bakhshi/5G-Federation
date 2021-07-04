@@ -25,7 +25,7 @@ dict_value {
                   size: 1
                 }
                 dim {
-                  size: 827
+                  size: 326
                 }
               }
               dtype: DT_FLOAT
@@ -62,7 +62,7 @@ dict_value {
                 dtype: DT_INT32
                 tensor_shape {
                 }
-                int_val: 83
+                int_val: 65
               }
             }
           }

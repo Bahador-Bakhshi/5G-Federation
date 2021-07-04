@@ -179,7 +179,7 @@ class FixKpathAllPairs:
 
 
 class FEkpath:
-    k = 20
+    k = 10
 
     obs_fields_num = 0
 

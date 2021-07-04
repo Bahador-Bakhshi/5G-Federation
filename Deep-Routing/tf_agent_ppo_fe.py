@@ -3,7 +3,8 @@ import numpy as np
 import sys
 
 import tensorflow as tf  # pylint: disable=g-explicit-tensorflow-version-import
-from tf_agents.agents.ppo import ppo_clip_agent
+#from tf_agents.agents.ppo import ppo_clip_agent
+from tf_agents.agents.ppo import ppo_agent
 from tf_agents.drivers import dynamic_episode_driver
 from tf_agents.environments import suite_pybullet
 from tf_agents.environments import tf_py_environment
@@ -35,7 +36,7 @@ value_fc_layers = (128, 128, 128, 128, 128)
 
 num_parallel_environments = 8
 batch_size = num_parallel_environments
-#sample_batch_size = 8
+sample_batch_size = 32 * num_parallel_environments
 replay_buffer_capacity = 10000
 collect_episodes_per_iteration = 1
 
@@ -80,8 +81,8 @@ def train_agent(*args, **kwargs):
                         fc_layer_params=value_fc_layers,
                         activation_fn=tf.keras.activations.tanh)
     
+    ''' 
     global_step = tf.compat.v1.train.get_or_create_global_step()
-    
     tf_agent = ppo_clip_agent.PPOClipAgent(
         tf_env.time_step_spec(),
         tf_env.action_spec(),
@@ -97,7 +98,16 @@ def train_agent(*args, **kwargs):
         #debug_summaries=debug_summaries,
         #summarize_grads_and_vars=summarize_grads_and_vars,
         train_step_counter=global_step)
-    
+    '''
+
+    tf_agent = ppo_agent.PPOAgent(
+            time_step_spec = tf_env.time_step_spec(),
+            action_spec = tf_env.action_spec(),
+            optimizer = optimizer,
+            actor_net = actor_net,
+            value_net = value_net
+    )
+
     tf_agent.initialize()
 
     eval_policy = tf_agent.policy
@@ -118,14 +128,12 @@ def train_agent(*args, **kwargs):
         observers=[replay_buffer.add_batch], # + train_metrics,
         num_episodes=collect_episodes_per_iteration)
     
-    '''
     dataset = replay_buffer.as_dataset(
                 sample_batch_size=sample_batch_size, 
                 num_steps=2
             ).prefetch(4)
 
     iterator = iter(dataset)
-    '''
 
     collect_driver.run = common.function(collect_driver.run, autograph=False)
     tf_agent.train = common.function(tf_agent.train, autograph=False)
@@ -135,8 +143,8 @@ def train_agent(*args, **kwargs):
     while training_counter < training_steps:
     
         collect_driver.run()
-        trajectories = replay_buffer.gather_all()
-        #trajectories, buffer_info = next(iterator)
+        #trajectories = replay_buffer.gather_all()
+        trajectories, buffer_info = next(iterator)
         total_loss, _ = tf_agent.train(experience=trajectories)
         replay_buffer.clear()
 

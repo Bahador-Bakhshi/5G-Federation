@@ -14,19 +14,23 @@
 	"vnf_ram_scale": 500,
 	
 	"min_sfc_bw": 1,
-	"max_sfc_bw": 4,
-	"sfc_bw_scale": 3,
+	"max_sfc_bw": 3,
+	"sfc_bw_scale": 2,
 	
-	"max_src_dst_pairs": 2,
+	"max_src_dst_pairs": 3,
 	"request_num": 1000,
 	"traffic_rates":[
 	    {
-		"lambda": 0.8,
+		"lambda": 0.05,
 		"mu": 3
 	    },
 	    {
-		"lambda": 3,
-		"mu": 1.2
+		"lambda": 2.5,
+		"mu": 4
+	    },
+	    {
+		"lambda": 4,
+		"mu": 8
 	    }
 	]
 }
