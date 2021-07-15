@@ -1,5 +1,5 @@
 {
-	"max_sfc_num": 3,
+	"max_sfc_num": 2,
 	"max_vnf_types": 1,
 
 	"min_vnf_per_sfc": 1,
@@ -14,25 +14,24 @@
 	"vnf_ram_scale": 500,
 	
 	"min_sfc_bw": 1,
-	"max_sfc_bw": 5,
+	"max_sfc_bw": 3,
 	"sfc_bw_scale": 2,
 	
-	"max_src_dst_pairs": 2,
-	"request_num": 5000,
+	"max_src_dst_pairs": 3,
+	"request_num": 1000,
 	"traffic_rates":[
 	    {
-		"lambda": 5,
-		"mu": 0.2
+		"lambda": 0.05,
+		"mu": 3
 	    },
 	    {
-		"lambda": 3,
-		"mu": 1
+		"lambda": 2.5,
+		"mu": 4
 	    },
 	    {
-		"lambda": 2,
-		"mu": 2
+		"lambda": 4,
+		"mu": 8
 	    }
-
 	]
 }
 
