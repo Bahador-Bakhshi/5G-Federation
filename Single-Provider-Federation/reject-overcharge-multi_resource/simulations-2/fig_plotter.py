@@ -9,12 +9,12 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
 
     font = {
             'weight' : 'bold',
-            'size'   : 10.5
+            'size'   : 15
         }
 
     matplotlib.rc('font', **font)
     plt.rcParams["axes.labelweight"] = "bold"
-    plt.rcParams["axes.labelsize"] = "15"
+    plt.rcParams["axes.labelsize"] = "18"
 
     fig, ax = plt.subplots()
 
@@ -40,7 +40,7 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
 
     plt.ylabel(y_label)
 
-    plt.plot(x, DP_99, label='DP', color='k', linestyle='solid', linewidth=1.25, marker = '*')
+    plt.plot(x, DP_99, label='PI', color='k', linestyle='solid', linewidth=1.25, marker = '*')
 
     plt.plot(x, QL_95, label='QL-95', color='b', linestyle='dashed', linewidth=1.25, marker = '^')
     plt.plot(x, QL_55, label='QL-55', color='c', linestyle='dashed', linewidth=1.25, marker = '>')
@@ -51,7 +51,7 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
     if no_greedy == False:
         plt.plot(x, greedy_100, label='Greedy', color='y', linestyle='dashdot', linewidth=1.25, marker = '+')
 
-    plt.legend(loc='best', handlelength=3, prop={'size': 9.5})
+    plt.legend(loc='best', handlelength=3, prop={'size': 12})
 
     x_ticks = [x[i] for i in range(0, len(x) + 1, 2)]
     ax.set_xticks(x_ticks)
@@ -72,5 +72,12 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
 
     ax.set_yticks(y_ticks)
 
-
-    plt.savefig(output+".png")
+    #plt.savefig(output+".eps", bbox_inches='tight')
+    
+    plt.savefig(output+".pdf", bbox_inches='tight', format="pdf",transparent=True)
+    
+    
+    
+    
+    
+    
