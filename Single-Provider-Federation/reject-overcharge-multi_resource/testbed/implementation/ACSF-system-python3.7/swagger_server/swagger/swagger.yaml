@@ -1,0 +1,439 @@
+openapi: 3.0.1
+info:
+  title: Admission Controller API
+  description: REST API for Admission Control
+  version: "1"
+servers:
+- url: /
+paths:
+  /AC:
+    get:
+      summary: ping the algorithm
+      description: Check the alive status of the algorithm
+      operationId: a_c_comp_get
+      responses:
+        "200":
+          description: AC is alive
+          content: {}
+      x-swagger-router-controller: swagger_server.controllers.default_controller
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+    post:
+      summary: Request for execution of the admission controller algorithm.
+      description: "By this API, the caller provides all the required information\
+        \ for the admission controller algorithm."
+      operationId: a_c_comp_post
+      requestBody:
+        description: Admission control request information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ACRequest'
+        required: true
+      responses:
+        "200":
+          description: AC request successfuly executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ACResponse'
+      x-swagger-router-controller: swagger_server.controllers.default_controller
+      x-codegen-request-body-name: ACRequest
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas:
+    ACRequest:
+      required:
+      - actives
+      - available
+      - nsd
+      type: object
+      properties:
+        nsd:
+          $ref: '#/components/schemas/NetworkService'
+        available:
+          $ref: '#/components/schemas/DomainsResources'
+        actives:
+          $ref: '#/components/schemas/DomainsActiveServices'
+    DomainsResources:
+      type: array
+      description: Array of domains available resources
+      example:
+      - domainid: consumer
+        cpu: 100
+        ram: 200
+      - domainid: provider
+        cpu: 20
+        ram: 50
+      items:
+        $ref: '#/components/schemas/DomainAvailableResources'
+    DomainAvailableResources:
+      required:
+      - cpu
+      - domainid
+      - ram
+      type: object
+      properties:
+        domainid:
+          type: string
+          description: The id of the domain
+        cpu:
+          type: number
+          description: The number of available CPUs
+        ram:
+          type: number
+          description: The amount of available RAM
+      example:
+        domainid: consumer
+        cpu: 10
+        ram: 50
+    DomainsActiveServices:
+      type: array
+      description: Array of active services in all domains
+      example:
+      - domainid: consumer
+      - activelist:
+        - service_id: s1
+          num: 1
+        - service_id: s2
+          num: 2
+      - domainid: provider
+      - activelist:
+        - service_id: s1
+          num: 10
+        - service_id: s2
+          num: 20
+      items:
+        $ref: '#/components/schemas/DomainActives'
+    DomainActives:
+      required:
+      - activelist
+      - domainid
+      type: object
+      properties:
+        domainid:
+          type: string
+          description: The id of the domain
+        activelist:
+          type: array
+          description: Array of active services in a domain
+          items:
+            $ref: '#/components/schemas/ActiveInstances'
+      example:
+      - domainid: consumer
+      - activelist:
+        - - service_id: s1
+          - num: 10
+        - - service_id: s2
+          - num: 20
+    ActiveInstances:
+      required:
+      - num
+      - service_id
+      type: object
+      properties:
+        service_id:
+          type: string
+          description: The id of the network service
+        num:
+          type: number
+          description: The number of of the active instances of this type
+      example:
+        service_id: s1
+        num: 5
+    NetworkService:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Network service identifier
+        name:
+          type: string
+          description: Name of the network service
+        VNFs:
+          type: array
+          description: VNFs composing the service
+          items:
+            $ref: '#/components/schemas/VNF'
+        VNFLinks:
+          type: array
+          description: Edges of the VNFFG
+          items:
+            $ref: '#/components/schemas/VNFLink'
+        SAP:
+          type: array
+          items:
+            $ref: '#/components/schemas/SAP'
+        max_latency:
+          type: number
+          description: End-to-end latency constraint.
+        target_availability:
+          type: number
+          description: Target service availability.
+        max_cost:
+          type: number
+          description: Cost/budget constraint
+      description: Description of a network service.
+      example:
+        id: id
+        max_cost: 6.878052220127876
+        SAP:
+        - location:
+            center:
+              longitude: 0.8008281904610115
+              latitude: 6.027456183070403
+            radius: 1.4658129805029452
+          CPid: CPid
+          VNFLink: VNFLink
+        - location:
+            center:
+              longitude: 0.8008281904610115
+              latitude: 6.027456183070403
+            radius: 1.4658129805029452
+          CPid: CPid
+          VNFLink: VNFLink
+        max_latency: 2.8841621266687802
+        name: name
+        target_availability: 6.778324963048013
+        VNFLinks:
+        - id: id
+          latency: 6.683562403749608
+          traversal_probability: 9.369310271410669
+          required_capacity: 9.965781217890562
+        - id: id
+          latency: 6.683562403749608
+          traversal_probability: 9.369310271410669
+          required_capacity: 9.965781217890562
+        VNFs:
+        - processing_latency: 1.284659006116532
+          failure_rate: 6.965117697638846
+          VNFid: VNFid
+          CP:
+          - cpId: cpId
+            VNFLink:
+              id: id
+              latency: 6.683562403749608
+              traversal_probability: 9.369310271410669
+              required_capacity: 9.965781217890562
+          - cpId: cpId
+            VNFLink:
+              id: id
+              latency: 6.683562403749608
+              traversal_probability: 9.369310271410669
+              required_capacity: 9.965781217890562
+          instances: 8.762042012749001
+          requirements:
+            ram: 6.438423552598547
+            cpu: 9.018348186070783
+            storage: 3.5571952270680973
+        - processing_latency: 1.284659006116532
+          failure_rate: 6.965117697638846
+          VNFid: VNFid
+          CP:
+          - cpId: cpId
+            VNFLink:
+              id: id
+              latency: 6.683562403749608
+              traversal_probability: 9.369310271410669
+              required_capacity: 9.965781217890562
+          - cpId: cpId
+            VNFLink:
+              id: id
+              latency: 6.683562403749608
+              traversal_probability: 9.369310271410669
+              required_capacity: 9.965781217890562
+          instances: 8.762042012749001
+          requirements:
+            ram: 6.438423552598547
+            cpu: 9.018348186070783
+            storage: 3.5571952270680973
+    ACResponse:
+      required:
+      - domain
+      - reject
+      type: object
+      properties:
+        reject:
+          type: boolean
+          description: "If this is true, the service request should be rejected"
+        domain:
+          type: string
+          description: "If the \"reject\" is false, this is the id of the domain to\
+            \ deploy this service"
+      example:
+        reject: false
+        domain: provider
+    VNF:
+      required:
+      - VNFid
+      - requirements
+      type: object
+      properties:
+        VNFid:
+          type: string
+          description: VNF identifier
+        CP:
+          type: array
+          items:
+            $ref: '#/components/schemas/CP'
+        instances:
+          type: number
+          description: Number of instances of this VNF to deploy
+        requirements:
+          $ref: '#/components/schemas/VNF_requirements'
+        failure_rate:
+          type: number
+          description: Probability that a VNF instance of this type fails.
+        processing_latency:
+          type: number
+          description: Latency for a VNF instance with the specific characteristics
+            to process a service request.
+      description: Information about a specific VNF.
+      example:
+        processing_latency: 1.284659006116532
+        failure_rate: 6.965117697638846
+        VNFid: VNFid
+        CP:
+        - cpId: cpId
+          VNFLink:
+            id: id
+            latency: 6.683562403749608
+            traversal_probability: 9.369310271410669
+            required_capacity: 9.965781217890562
+        - cpId: cpId
+          VNFLink:
+            id: id
+            latency: 6.683562403749608
+            traversal_probability: 9.369310271410669
+            required_capacity: 9.965781217890562
+        instances: 8.762042012749001
+        requirements:
+          ram: 6.438423552598547
+          cpu: 9.018348186070783
+          storage: 3.5571952270680973
+    VNFLink:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique Virtual Link identifier
+        required_capacity:
+          type: number
+          description: "Maximum volume of traffic/s expected between these two VNFs\
+            \ and along this direction, and thus required capacity for the underlying\
+            \ VL between the NFVIPoPs that the two VNFs will be placed."
+        traversal_probability:
+          type: number
+          description: "Probability that a request traverses this link. This allows\
+            \ for branchesin the VNFFG (e.g., for load  balancing, etc.). If this\
+            \ parameter is omitted, it is assumed equal to 1."
+        latency:
+          type: number
+          description: Maximum latency in ms
+      description: An edge between two VNFs in the VNFFG.
+      example:
+        id: id
+        latency: 6.683562403749608
+        traversal_probability: 9.369310271410669
+        required_capacity: 9.965781217890562
+    CP:
+      required:
+      - cpId
+      type: object
+      properties:
+        cpId:
+          type: string
+        VNFLink:
+          $ref: '#/components/schemas/VNFLink'
+      description: Information about a specific CP.
+      example:
+        cpId: cpId
+        VNFLink:
+          id: id
+          latency: 6.683562403749608
+          traversal_probability: 9.369310271410669
+          required_capacity: 9.965781217890562
+    SAP:
+      type: object
+      properties:
+        CPid:
+          type: string
+          description: Id of the associated CP
+        VNFLink:
+          type: string
+          description: ID of the associated VNFLink
+        location:
+          $ref: '#/components/schemas/location'
+      description: Information about a specific SAP.
+      example:
+        location:
+          center:
+            longitude: 0.8008281904610115
+            latitude: 6.027456183070403
+          radius: 1.4658129805029452
+        CPid: CPid
+        VNFLink: VNFLink
+    VNF_requirements:
+      required:
+      - cpu
+      - ram
+      - storage
+      type: object
+      properties:
+        cpu:
+          type: number
+          description: CPU requirements
+        ram:
+          type: number
+          description: Memory requirements (in MB)
+        storage:
+          type: number
+          description: Storage requirements (in MB)
+        mec:
+          type: boolean
+          description: Requirement that MEC is supported
+      description: VNF processing and other requirements
+      example:
+        ram: 6.438423552598547
+        cpu: 9.018348186070783
+        storage: 3.5571952270680973
+        mec: false
+    location:
+      required:
+      - radius
+      type: object
+      properties:
+        center:
+          $ref: '#/components/schemas/coordinate'
+        radius:
+          type: number
+          description: Location ball radius
+      description: Location expressed as a ball with a center coordinate and some
+        radius
+      example:
+        center:
+          longitude: 0.8008281904610115
+          latitude: 6.027456183070403
+        radius: 1.4658129805029452
+    coordinate:
+      required:
+      - latitude
+      - longitude
+      type: object
+      properties:
+        longitude:
+          type: number
+          description: coordinate longitude
+        latitude:
+          type: number
+          description: coordinate latitude
+      description: Coordinate expressed in longitude and latitude
+      example:
+        longitude: 0.8008281904610115
+        latitude: 6.027456183070403
+x-original-swagger-version: "2.0"
+

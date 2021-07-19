@@ -1,0 +1,27 @@
+• Local domain
+o CPU cores = 12
+o RAM = 32
+o Storage = 1000 (any large number)
+
+• Provider domain
+o CPU cores = 6
+o RAM = 12
+o Storage = 1000 (any large number)
+
+• Service type 1
+o CPU cores = 2
+o RAM = 2
+o Storage = 20
+o Revenue per instance = 95
+o Federation cost = 90
+o IAT = 300 sec
+o HT = 800 sec
+
+• Service type 2
+o CPU cores = 1
+o RAM = 1
+o Storage = 15
+o Revenue per instance = 40
+o Federation cost = 10
+o IAT = 343 sec
+o HT = 3000 sec
