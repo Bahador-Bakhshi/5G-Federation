@@ -54,6 +54,7 @@ class Request:
         self.t_start = t_start
         self.t_end   = t_end
         self.path = None
+        self.path_id = 0
         self.placement = None
 
     def __str__(self):
@@ -155,7 +156,6 @@ def generate_per_pair_requests(src, dst, pair_index, num, sfcs):
 
 
 def generate_all_requests(src_dst_list, num, sfcs):
-    
     all_requests = []
     index = 0
     for (src, dst) in src_dst_list:
@@ -167,7 +167,7 @@ def generate_all_requests(src_dst_list, num, sfcs):
 
     all_requests.sort(key=lambda x: x.t_start)
     result = all_requests[:num]
-
+    
     return result
 
 

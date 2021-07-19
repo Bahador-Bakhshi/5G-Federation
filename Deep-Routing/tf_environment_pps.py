@@ -13,7 +13,6 @@ import tf_agents
 
 from tf_agents.agents.dqn import dqn_agent
 from tf_agents.drivers import dynamic_step_driver
-from tf_agents.environments import suite_gym
 from tf_agents.environments import tf_py_environment
 from tf_agents.eval import metric_utils
 from tf_agents.metrics import tf_metrics
@@ -26,7 +25,7 @@ from tf_agents.specs import tensor_spec
 from tf_agents.specs import array_spec
 from tf_agents.utils import common
 
-import environment
+import environment_pps
 import kpath
 import requests
 import network
@@ -35,7 +34,7 @@ import graph
 from graph import debug
 
 def object_to_array_state(observation):
-    res = np.zeros(kpath.FEkpath.obs_fields_num, dtype=np.dtype('float32'))
+    res = np.zeros(kpath.PerKpathStat.obs_fields_num, dtype=np.dtype('float32'))
     index = 0
 
     src_one_hot = tf.one_hot(observation.request.src, observation.topology.number_of_nodes() + 1)
@@ -50,25 +49,17 @@ def object_to_array_state(observation):
         res[index] = dst_one_hot_numpy[i]
         index += 1
 
-    bw_level = int(observation.request.sfc.bw / requests.traffic_config["sfc_bw_scale"])
-    bw_level_one_hot = tf.one_hot(bw_level, (requests.traffic_config["max_sfc_bw"] + 1))
-    bw_level_one_hot_numpy = bw_level_one_hot.numpy()
-    for i in range(len(bw_level_one_hot_numpy)):
-        res[index] = bw_level_one_hot_numpy[i]
+    sfc_num_index = observation.request.sfc.sfc_id
+    sfc_index_one_hot = tf.one_hot(sfc_num_index, int(requests.traffic_config["max_sfc_num"]))
+    sfc_index_one_hot_numpy = sfc_index_one_hot.numpy()
+    for i in range(len(sfc_index_one_hot_numpy)):
+        res[index] = sfc_index_one_hot_numpy[i]
         index += 1
 
-    for action in range(kpath.FEkpath.k):
-
-        for (src, dst) in kpath.FEkpath.all_pairs_kpaths.keys():
-            if debug > 3:
-                print("object_to_array_state: (src, dst)  = ", src, dst)
-                print("object_to_array_state: observation = ", observation)
-                print("all_kpaths_bw_after_action[action] = ", observation.all_kpaths_bw_after_action[action])
-                print("type = ", type(observation.all_kpaths_bw_after_action[action]))
-            
-            src_dst_bws = (observation.all_kpaths_bw_after_action[action][(src,dst)]).copy()
-            for i in range(len(src_dst_bws)):
-                res[index] = src_dst_bws[i]
+    for (src, dst) in observation.pairs_paths_active_sfcs.keys():
+        for paths in observation.pairs_paths_active_sfcs[(src,dst)]:
+            for actives in paths:
+                res[index] = actives
                 index += 1
 
     if debug > 2:
@@ -79,7 +70,7 @@ def object_to_array_state(observation):
 
 class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
     
-    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.95, req_num = 0, requests = None, punish = True):
+    def __init__(self, topology, src_dst_list, sfcs_list, discount=0.95, req_num = 0, requests = None, punish = True, report_invalid_actions = False):
         super().__init__()
 
         self.the_first_action = 1
@@ -89,9 +80,15 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         self.requests = requests
         self.src_dst_list = src_dst_list
         self.invalid_action_punishment = punish
+        self.report_invalid_actions = report_invalid_actions
        
-        kpath.FEkpath.find_all_pair_kpaths(topology, src_dst_list)
-        self.env = environment.Environment(topology, kpath.FEkpath.observer, src_dst_list, req_num, sfcs_list)
+        kpath.PerKpathStat.find_all_pair_kpaths(topology, src_dst_list)
+        this_PerKpathStat = kpath.PerKpathStat()
+        self.env = environment_pps.Environment(topology, this_PerKpathStat.observer, src_dst_list, req_num, sfcs_list, kpath.PerKpathStat.k)
+        if debug > 3:
+            print("tf: env = ", self.env, "report_invalid_actions = ", report_invalid_actions)
+        
+        this_PerKpathStat.environment = self.env
        
         if self.requests != None:
             self.env.set_test_requests(self.requests)
@@ -101,9 +98,9 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                              dtype = np.int32, 
                              name = "action", 
                              minimum = 0, 
-                             maximum = len(self.src_dst_list) * len(sfcs_list) * (kpath.FEkpath.k + 1) - 1) #kpaths + reject action
+                             maximum = len(self.src_dst_list) * len(sfcs_list) * (kpath.PerKpathStat.k + 1) - 1) #kpaths + reject action
        
-        self.obs_len = kpath.FEkpath.obs_fields_num
+        self.obs_len = kpath.PerKpathStat.obs_fields_num
 
         self._observation_spec = tf_agents.specs.BoundedArraySpec(
                                         shape = (1, self.obs_len), 
@@ -122,10 +119,10 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         if req.src == 0 and req.dst == 0: #This is the dummy request in the termination step
             return np.array(res)
         
-        kpaths = kpath.FEkpath.all_pairs_kpaths[(req.src, req.dst)]
+        kpaths = kpath.PerKpathStat.all_pairs_kpaths[(req.src, req.dst)]
 
-        start_index = (req.src_dst_index * (sfcs_num * (kpath.FEkpath.k + 1))) + (requests.sfc_id_to_index(req.sfc.sfc_id) * (kpath.FEkpath.k + 1))
-        end_index = start_index + (kpath.FEkpath.k + 1) - 1
+        start_index = (req.src_dst_index * (sfcs_num * (kpath.PerKpathStat.k + 1))) + (requests.sfc_id_to_index(req.sfc.sfc_id) * (kpath.PerKpathStat.k + 1))
+        end_index = start_index + (kpath.PerKpathStat.k + 1) - 1
         
         for i in range(start_index, end_index):
             path_index = i - start_index
@@ -148,8 +145,8 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         sfcs_num = requests.traffic_config["max_sfc_num"]
         req = obs.request
         
-        start_index = (req.src_dst_index * (sfcs_num * (kpath.FEkpath.k + 1))) + (requests.sfc_id_to_index(req.sfc.sfc_id) * (kpath.FEkpath.k + 1))
-        end_index = start_index + (kpath.FEkpath.k + 1) - 1
+        start_index = (req.src_dst_index * (sfcs_num * (kpath.PerKpathStat.k + 1))) + (requests.sfc_id_to_index(req.sfc.sfc_id) * (kpath.PerKpathStat.k + 1))
+        end_index = start_index + (kpath.PerKpathStat.k + 1) - 1
         
         mask = self.get_valid_actions_masks(obs)
         res = (action < start_index) or (action > end_index) or (not mask[action])
@@ -202,7 +199,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
             return self.reset()
 
         observation = self._state
-        kpaths = kpath.FEkpath.all_pairs_kpaths[(observation.request.src, observation.request.dst)]
+        kpaths = kpath.PerKpathStat.all_pairs_kpaths[(observation.request.src, observation.request.dst)]
         
         if debug > -1000:
             print("TF_Env_Wrapper:")
@@ -214,24 +211,28 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
             
             if debug > 1:
                 print("Invalid action = ", action, ", observation = ", observation)
-            print("Invalid action = ", action , "(src,dst) = ", observation.request.src, observation.request.dst)
             
-            next_state, reward, done, tmp_discount = self.env.step(environment.Actions.reject)
+            if self.report_invalid_actions:
+                print("Invalid action = ", action , "(src,dst) = ", observation.request.src, observation.request.dst)
+            
+            next_state, reward, done, tmp_discount = self.env.step(environment_pps.Actions.reject)
             if self.invalid_action_punishment:
-                reward = -1000
+                #reward = -1000
+                reward = 0
             else:
                 reward = 0
         else:
             req = observation.request
             sfcs_num = requests.traffic_config["max_sfc_num"]
-            start_index = (req.src_dst_index * (sfcs_num * (kpath.FEkpath.k + 1))) + (requests.sfc_id_to_index(req.sfc.sfc_id) * (kpath.FEkpath.k + 1))
+            start_index = (req.src_dst_index * (sfcs_num * (kpath.PerKpathStat.k + 1))) + (requests.sfc_id_to_index(req.sfc.sfc_id) * (kpath.PerKpathStat.k + 1))
             path_index = action - start_index
-            if path_index < kpath.FEkpath.k:
+            if path_index < kpath.PerKpathStat.k:
                 observation.request.path = kpaths[path_index]
-                real_action = environment.Actions.accept
+                observation.request.path_id = path_index
+                real_action = environment_pps.Actions.accept
             else:
                 observation.request.path = None
-                real_action = environment.Actions.reject
+                real_action = environment_pps.Actions.reject
         
              #self.last_discount = self.discount
             next_state, reward, done, tmp_discount = self.env.step(real_action)
@@ -247,11 +248,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
 
             dummy_sfc = requests.SFC_e2e_bw(0, [], 0)
             dummy_req = requests.Request(0, 0, 0, dummy_sfc, 0, 0)
-            dummy_bws_after_action = []
-            for _ in range(kpath.FEkpath.k):
-                dummy_bws = {(src,dst):[] for (src,dst) in kpath.FEkpath.all_pairs_kpaths}
-                dummy_bws_after_action.append(dummy_bws)
-            dummy_obs = kpath.FEkpath.Observation(dummy_bws_after_action, dummy_req, self.topology)
+            dummy_obs = kpath.PerKpathStat.Observation(dummy_req, self.topology, self.src_dst_list, self.env.global_pairs_paths_actives)
 
             obs = self.get_observation_actions(dummy_obs)
             return tf_agents.trajectories.time_step.termination(obs, reward)

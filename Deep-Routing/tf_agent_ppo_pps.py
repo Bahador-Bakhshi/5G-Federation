@@ -20,14 +20,14 @@ from tf_agents.replay_buffers import tf_uniform_replay_buffer
 from tf_agents.system import system_multiprocessing as multiprocessing
 from tf_agents.utils import common
 
-import tf_environment_fe
+import tf_environment_pps
 import parser
 import environment
 import requests
 import network
 from graph import debug
 
-return_evaluation_demands = None
+#return_evaluation_demands = None
 use_rnns = False
 lstm_size = (20,)
 
@@ -41,19 +41,19 @@ replay_buffer_capacity = 10000
 collect_episodes_per_iteration = 1
 
 learning_rate  = 1e-4
-training_steps = 100
+training_steps = 500
 training_eval_interval = 10
 
 def train_agent(*args, **kwargs):
-    eval_py_env = tf_environment_fe.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
+    #eval_py_env = tf_environment_pps.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
+    #eval_tf_env = tf_py_environment.TFPyEnvironment(eval_py_env)
     
     def env_generator():
-        return tf_environment_fe.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
+        return tf_environment_pps.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num)
 
     train_py_env = parallel_py_environment.ParallelPyEnvironment([lambda: env_generator()] * num_parallel_environments)
     
     tf_env = tf_py_environment.TFPyEnvironment(train_py_env)
-    eval_tf_env = tf_py_environment.TFPyEnvironment(eval_py_env)
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
     
@@ -141,41 +141,42 @@ def train_agent(*args, **kwargs):
     training_counter = 0
     last_best_return = -1 * np.inf
     while training_counter < training_steps:
-        print("------------ 1 -------------") 
         collect_driver.run()
-        print("************ 2 *************")
+        
         #trajectories = replay_buffer.gather_all()
         trajectories, buffer_info = next(iterator)
-        print("############ 3 #############")
+        
         total_loss, _ = tf_agent.train(experience=trajectories)
-        print("************ 4 *************")
+        
         replay_buffer.clear()
-        print("************ 5 *************")
-
+        
         if training_counter % training_eval_interval == 0:
-            print("************ 6 *************")
-            current_return = evaluate_policy(topology, src_dst_list, sfcs_list, tf_agent.policy, return_evaluation_demands)
+            current_return = evaluate_policy(topology, src_dst_list, sfcs_list, tf_agent.policy, demands = None)
             print("step = ", training_counter," Return = ", current_return)
             print("step = ", training_counter," Loss   = ", total_loss, flush=True)
 
             if current_return > last_best_return:
                 last_best_return = current_return
                 agent_policy_saver.save("best_policy")
-
-        print("************ 7 *************")
+        
         training_counter += 1
 
     global the_best_policy
     the_best_policy = tf.saved_model.load("best_policy")
 
 
-def evaluate_policy(topology, src_dst_list, sfcs_list, policy, demands):
+def evaluate_policy(topology, src_dst_list, sfcs_list, policy, demands, report_invalid_actions = False):
     test_topology = topology.copy()
     network.reset_topology(test_topology)
-    test_py_env = tf_environment_fe.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num, punish = False)
-    test_env = tf_py_environment.TFPyEnvironment(test_py_env)
+    test_py_env = tf_environment_pps.TF_Agent_Env_Wrapper(topology.copy(), src_dst_list, sfcs_list, req_num = req_num, requests = demands, punish = False, report_invalid_actions = report_invalid_actions)
+    
+    if demands == None:
+        num_episodes = 10
+    else:
+        num_episodes = 1
+        test_py_env.env.set_test_requests(demands)
 
-    num_episodes = 10
+    test_env = tf_py_environment.TFPyEnvironment(test_py_env)
     total_return = 0
     for _ in range(num_episodes):
         time_step = test_env.reset()
@@ -196,14 +197,16 @@ def evaluate_policy(topology, src_dst_list, sfcs_list, policy, demands):
 
 
 def main(this_topology, this_src_dst_list, this_sfcs_list):
-    global topology, src_dst_list, sfcs_list, return_evaluation_demands
+    global topology, src_dst_list, sfcs_list
+    #, return_evaluation_demands
     global the_best_policy
     
     topology = this_topology
     src_dst_list = this_src_dst_list
     sfcs_list = this_sfcs_list
 
-    return_evaluation_demands = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
+    #requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
+    #return_evaluation_demands = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
    
     multiprocessing.handle_test_main(train_agent)
 
@@ -219,7 +222,8 @@ if __name__ == '__main__':
     parser.parse_sfc_config("config_02.json")
     src_dst_list, req_num, sfcs_list = requests.generate_traffic_load_config(topology)
     
-    return_evaluation_demands = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
+    requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
+    #return_evaluation_demands = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
     
     multiprocessing.handle_main(train_agent)
 

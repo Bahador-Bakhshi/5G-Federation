@@ -25,7 +25,7 @@ dict_value {
                   size: 1
                 }
                 dim {
-                  size: 326
+                  size: 84
                 }
               }
               dtype: DT_FLOAT

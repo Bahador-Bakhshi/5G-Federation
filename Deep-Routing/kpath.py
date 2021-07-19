@@ -14,7 +14,7 @@ class WidestKpath:
             self.topology = topology
             self.request  = request
 
-    def observer(topology, request):
+    def observer(topology, dummy, request):
         return WidestKpath.Observation(topology, request), 0
 
     def policy(observation):
@@ -177,7 +177,6 @@ class FixKpathAllPairs:
         pass
 
 
-
 class FEkpath:
     k = 10
 
@@ -264,6 +263,75 @@ class FEkpath:
 
         observation = FEkpath.Observation(all_kpaths_bw_after_action, request, topology)
         
+        if debug > 2:
+            print("observer: observation = ", observation)
+        
+        discount = 0
+        return observation, discount
+
+    def policy(observation):
+        pass
+
+
+class PerKpathStat:
+    k = 10
+
+    obs_fields_num = 0
+
+    all_pairs_kpaths = {}
+    
+    def __init__(self):
+        self.environment = None
+
+    def find_all_pair_kpaths(topology, src_dst_list):
+        for src_dst in src_dst_list:
+            src = src_dst[0]
+            dst = src_dst[1]
+
+            dummy_sfc = requests.SFC_e2e_bw(0, [], 0)
+            dummy_req = requests.Request(src, dst, 0, dummy_sfc, 0, 0)
+        
+            is_path, kpaths = graph.k_shortest_paths(topology, dummy_req, PerKpathStat.k, graph.bw_feasibility, graph.link_weight_one)
+            PerKpathStat.all_pairs_kpaths[(src, dst)] = kpaths.copy()
+        
+        if debug > 2:
+            print("find_all_pair_kpaths: ",PerKpathStat.all_pairs_kpaths)
+
+        '''
+        Structure of the observation:
+        1) one_hot coding for src
+        2) one_hot coding for dst
+        3) one_hot coding for sfc type
+        4) per src-dst pair
+            4-1) per paths
+                4-1-1) # of active requests per sfc type
+        '''
+        src_dst_one_hot = tf.one_hot(0, topology.number_of_nodes() + 1)
+        sfc_one_hot = tf.one_hot(0, requests.traffic_config["max_sfc_num"])
+        PerKpathStat.obs_fields_num =  2 * len(src_dst_one_hot) + len(sfc_one_hot) + len(src_dst_list) * PerKpathStat.k * requests.traffic_config["max_sfc_num"]
+
+    class Observation:
+        def __init__(self, request, topology, src_dst_list, pairs_paths_active_sfcs_info):
+            self.request = request
+            self.topology = topology
+            self.pairs_paths_active_sfcs = {}
+            for (src, dst) in src_dst_list:
+                paths_actives = []
+                for k in range(PerKpathStat.k):
+                    this_path_actives = pairs_paths_active_sfcs_info[(src,dst)][k].copy()
+                    paths_actives.append(this_path_actives.copy())
+                self.pairs_paths_active_sfcs[(src,dst)] = paths_actives.copy()
+
+        def __str__(self):
+            return "req = "+ str(self.request) +", active state = "+ str(self.pairs_paths_active_sfcs)
+
+    def observer(self, topology, src_dst_list, request):
+        
+        if debug > 2:
+            print("observer: request = ", request)
+
+        observation = self.Observation(request, topology, src_dst_list, self.environment.global_pairs_paths_actives)
+
         if debug > 2:
             print("observer: observation = ", observation)
         

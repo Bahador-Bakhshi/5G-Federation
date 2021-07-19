@@ -9,7 +9,7 @@ class MinHopCount:
             self.topology = topology
             self.request  = request
 
-    def observer(topology, request):
+    def observer(topology, dummy, request):
         return MinHopCount.Observation(topology, request), 0
 
     def policy(observation):

@@ -42,6 +42,7 @@ class Environment:
         self.src_dst_list = src_dst_list
         self.req_num = req_num
         self.sfcs_list = sfcs_list
+        self.number_of_paths = number_of_paths
 
         self.global_pairs_paths_actives = {}
         if number_of_paths > 0:
@@ -51,7 +52,10 @@ class Environment:
                     this_path_actives = [0] * len(sfcs_list)
                     paths_actives.append(this_path_actives.copy())
                 self.global_pairs_paths_actives[(src,dst)] = paths_actives.copy()
-    
+        
+        if debug > 3:
+            print("init env = ", self)
+
     def set_test_requests(self, test_requests):
         self.all_requests = test_requests
         self.in_test_mode = True
@@ -90,6 +94,11 @@ class Environment:
         self.current_event = heapq.heappop(self.events)
         
         observation, discount = self.observer(self.topology, self.src_dst_list, self.current_event.req)
+
+        if debug > 3:
+            print("start env = ", self)
+            print("start req = ")
+            requests.print_requests(self.all_requests)
         
         if debug > 1:
             print("Environment start: <<<<-----------------  end")
@@ -111,7 +120,8 @@ class Environment:
         elif action == Actions.accept:
             feasible = network.deploy_request(self.topology, self.current_event.req)
             if feasible:
-                self.global_pairs_paths_actives[(self.current_event.req.src, self.current_event.req.dst)][self.current_event.req.path_id][self.current_event.req.sfc.sfc_id] += 1
+                if self.number_of_paths > 0:
+                    self.global_pairs_paths_actives[(self.current_event.req.src, self.current_event.req.dst)][self.current_event.req.path_id][self.current_event.req.sfc.sfc_id] += 1
                 reward = self.current_event.req.sfc.bw
                 #reward = 1.0
                 event = Event(0, self.current_event.req.t_end, self.current_event.req)
@@ -127,7 +137,8 @@ class Environment:
                 print_events([self.current_event])
             
             while self.current_event.event_type == 0:
-                self.global_pairs_paths_actives[(self.current_event.req.src, self.current_event.req.dst)][self.current_event.req.path_id][self.current_event.req.sfc.sfc_id] -= 1
+                if self.number_of_paths > 0:
+                    self.global_pairs_paths_actives[(self.current_event.req.src, self.current_event.req.dst)][self.current_event.req.path_id][self.current_event.req.sfc.sfc_id] -= 1
                 network.free(self.topology, self.current_event.req)
                 if len(self.events) > 0:
                     self.current_event = heapq.heappop(self.events)
@@ -143,7 +154,7 @@ class Environment:
             done = 1
 
         
-        observation, discount = self.observer(self.topology, self.current_event.req)
+        observation, discount = self.observer(self.topology, self.src_dst_list, self.current_event.req)
         
         if debug > 1:
             print("Environment step: <<<<************** end")
