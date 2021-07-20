@@ -34,9 +34,9 @@ def print_domains(domains):
         debug("Name:", d.domain_name)
         debug("ID:", d.domain_id)
         debug("Quotas:", d.quotas)
-        debug("Overcharge: ", d.overcharge)
-        debug("reject_threshold: ", d.reject_threshold)
+        debug("reject_thresholds: ", d.reject_thresholds)
         debug("Costs: ", d.costs)
+        debug("Overcharges: ", d.overcharges)
         debug("-------------")
     
 
@@ -70,13 +70,11 @@ def parse_config(config_file):
         domain = Domain(d["name"], d["domain_id"], Environment.all_simple_ns)
         
         for q in d["quotas"]:
-            domain.add_quota(q)
+            domain.add_quota_threshold(q["capcity"], q["reject_threshold"])
 
-        domain.overcharge = d["overcharge"]
-        domain.reject_threshold = d["reject_threshold"]
-        
         for c in d["costs"]:
             domain.costs[c["sns_id"]] = c["cost"]
+            domain.overcharges[c["sns_id"]] = c["overcharge"]
         
         Environment.all_domains.append(domain)
 
@@ -84,10 +82,10 @@ def parse_config(config_file):
 
     # Config traffic loads
     for load in config["loads"]:
-        Environment.traffic_loads.append(Traffic_Load(load["cns_id"], load["lambda"], load["mu"]))
+        Environment.all_traffic_loads.append(Traffic_Load(load["cns_id"], load["lambda"], load["mu"]))
 
     if verbose:
-        print_loads(Environment.traffic_loads)
+        print_loads(Environment.all_traffic_loads)
 
 
 if __name__ == "__main__":

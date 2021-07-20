@@ -3,22 +3,32 @@ import numpy as np
 import sys 
 import heapq
 
-
-providers_num = 0
+# Global Variables
+all_domains = []
+all_simple_ns = []
+all_composite_ns = []
+all_traffic_loads = []
 
 class State:
-    local_domain = 0
-    domains_alives= []
+    domains_alives = []
+    domains_resources = []
     arrivals_departures = ()
 
-    def __init__(self, tc_num):
-        self.domains_alives = [None] * (1 + providers_num) #1 for the local domain
+    def __init__(self, alives, capacities, events):
+        self.domains_alives = [None] * len(all_domains)
         for i in range(len(self.domains_alives)):
-            alives_tuple= (0,) * tc_num
-            self.domains_alives[i]=alives_tuple
-        
-        arrivals_list = [0] * tc_num
-        self.arrivals_departures = tuple(arrivals_list)
+            this_alives = alives[i].copy()
+            alives_tuple = tuple(this_alives)
+            self.domains_alives[i] = alives_tuple
+
+        self.domains_resources = [None] * len(all_domains)
+        for i in range(len(self.domains_resources)):
+            free_resources = resources[i].copy()
+            resources_tuple = tuple(free_resources)
+            self.domains_alives[i] = resources_tuple
+
+        arrivals_departure_list = events.copy()
+        self.arrivals_departures = tuple(arrivals_departure_list)
 
     def __str__(self):
         res = ""
@@ -26,7 +36,13 @@ class State:
         for i in range(len(self.domains_alives)):
             res += str(self.domains_alives[i])
 
+        res += "], ["
+        
+        for i in range(len(self.domains_alives)):
+            res += str(self.domains_alives[i])
+
         res += "],"
+   
         res += str(self.arrivals_departures)
         return res
 
@@ -57,19 +73,9 @@ class State:
     '''
 
 class Actions(IntEnum):
-    no_action = 3
-    reject    = 2
-    accept    = 0
-    federate  = 1
-
-# Global Variables
-
-all_domains = []
-all_simple_ns = []
-all_composite_ns = []
-traffic_loads = []
-total_actions = len(Actions)
-total_classes = 0
+    # [0, ..., len(all_domains) - 1] for deployment
+    reject    = len(all_domains)
+    no_action = len(all_domains) + 1
 
 class Request:
     cap = None
@@ -151,22 +157,16 @@ def generate_req_set(num):
 
 
 class Env:
-    action_space = None
-    local_domain_capacities = None
-    provider_domain_capacities = None
+    original_domains_capacities = None
+    current_domains_capacities = None 
+    domains_alives = None
     episode_len = 0
-    current_local_capacities = None 
-    current_provider_capacities = None
-    local_alives = None
-    provider_alives = None
     demands = None
     events  = None
     arriaved_demand = None
 
-    def __init__(self, local_capacities, provider_capacities, eplen):
-        self.action_space = Actions
-        self.local_domain_capacities = local_capacities.copy()
-        self.provider_domain_capacities = provider_capacities.copy()
+    def __init__(self, capacities, eplen):
+        self.original_domains_capacities = capacities.copy()
         self.episode_len = eplen
         self.events = []
 
@@ -174,9 +174,7 @@ class Env:
         if verbose:
             debug("------------- env start ---------------")
         
-        self.current_local_capacities = self.local_domain_capacities.copy()
-        self.current_provider_capacities = self.provider_domain_capacities.copy()
-        provider_domain = providers[1]
+        self.current_domains_capacities = self.original_domain_capacities.copy()
         self.current_provider_capacities = [x * provider_domain.reject_threshold for x in self.current_provider_capacities]
 
         self.local_alives = [0 for i in range(total_classes)]
