@@ -3,6 +3,8 @@ import numpy as np
 import sys 
 import heapq
 
+from debuger import verbose, debug, warning, error
+
 # Global Variables
 all_domains = []
 all_simple_ns = []
@@ -15,6 +17,11 @@ class State:
     arrivals_departures = ()
 
     def __init__(self, alives, capacities, events):
+        
+        print("alives = ", alives)
+        print("capacities = ", capacities)
+        print("events = ", events)
+
         self.domains_alives = [None] * len(all_domains)
         for i in range(len(self.domains_alives)):
             this_alives = alives[i].copy()
@@ -23,9 +30,9 @@ class State:
 
         self.domains_resources = [None] * len(all_domains)
         for i in range(len(self.domains_resources)):
-            free_resources = resources[i].copy()
+            free_resources = capacities[i].copy()
             resources_tuple = tuple(free_resources)
-            self.domains_alives[i] = resources_tuple
+            self.domains_resources[i] = resources_tuple
 
         arrivals_departure_list = events.copy()
         self.arrivals_departures = tuple(arrivals_departure_list)
@@ -39,7 +46,7 @@ class State:
         res += "], ["
         
         for i in range(len(self.domains_alives)):
-            res += str(self.domains_alives[i])
+            res += str(self.domains_resources[i])
 
         res += "],"
    
@@ -78,25 +85,20 @@ class Actions(IntEnum):
     no_action = len(all_domains) + 1
 
 class Request:
-    cap = None
     st  = 0
     dt  = 0
-    rev = 0
     class_id = 0
+    cns_id = 0
     deployed = -1 # ID of the domain where the demand is deployed
 
-    def __init__(self, st, dt, rev, index):
-        self.cap = []
+    def __init__(self, st, dt, index, cns_id):
         self.st = st
         self.dt = dt
-        self.rev= rev
         self.class_id = index
-
-    def add_required_capacity(self, service):
-        self.cap = service.resources.copy()
+        self.cns_id = cns_id
 
     def __str__(self):
-        return "w = "+ str(self.cap) +" st = "+ str(self.st) +" dt = "+ str(self.dt) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed)
+        return " st = "+ str(self.st) +" dt = "+ str(self.dt) +", index = "+ str(self.class_id)+", cns_id = "+ str(self.cns_id) +", deployed = "+ str(self.deployed)
 
 
 def print_reqs(reqs):
@@ -114,7 +116,7 @@ def depart_demand(service, domain_capacities):
     for index in range(len(service.resources)):
         domain_capacities[index] += service.resources[index]
 
-def generate_class_req_set(service, load, num, class_id):
+def generate_class_req_set(service, load, num, class_id, cns_id):
     
     t = 0
     all_req = []
@@ -122,22 +124,20 @@ def generate_class_req_set(service, load, num, class_id):
     for i in range(num):
         t += np.random.exponential(1.0 / load.lam)
         life = np.random.exponential(1.0 / load.mu)
-        req = Request(t, t + life, service.revenue, class_id)
-        req.add_required_capacity(traffic_loads[class_id].service)
+        req = Request(t, t + life, class_id, cns_id)
         all_req.append(req)
 
     return all_req
-
 
 def generate_req_set(num):
     all_class_reqs = []
     
     total_n = 0
-    for service in domain.services:
+    for service in all_composite_ns:
         class_id = 0
-        for load in traffic_loads:
-            if service.nsid == load.service.nsid:
-                req_list = generate_class_req_set(service, load, num, class_id)
+        for load in all_traffic_loads:
+            if service.cns_id == load.cns_id:
+                req_list = generate_class_req_set(service, load, num, class_id, service.cns_id)
                 total_n += len(req_list)
                 all_class_reqs.append(req_list)
             class_id += 1
@@ -155,7 +155,6 @@ def generate_req_set(num):
 
     return result
 
-
 class Env:
     original_domains_capacities = None
     current_domains_capacities = None 
@@ -165,20 +164,22 @@ class Env:
     events  = None
     arriaved_demand = None
 
-    def __init__(self, capacities, eplen):
-        self.original_domains_capacities = capacities.copy()
+    def __init__(self, eplen):
+        self.original_domains_capacities = [[x for x in y.quotas] for y in all_domains]
         self.episode_len = eplen
         self.events = []
 
     def start(self):
         if verbose:
             debug("------------- env start ---------------")
-        
-        self.current_domains_capacities = self.original_domain_capacities.copy()
-        self.current_provider_capacities = [x * provider_domain.reject_threshold for x in self.current_provider_capacities]
+   
+        self.current_domains_capacities = [[0 for i in range(len(all_domains[0].quotas))] for j in range(len(all_domains))]
+        for i in range(len(all_domains)):
+            for j in range(len(all_domains[0].quotas)):
+                self.current_domains_capacities[i][j] = self.original_domains_capacities[i][j] * all_domains[i].reject_thresholds[j]
 
-        self.local_alives = [0 for i in range(total_classes)]
-        self.provider_alives = [0 for i in range(total_classes)]
+        self.domains_alives = [[0 for i in range(len(all_traffic_loads))] for j in range(len(all_domains))]
+
         
         self.demands = generate_req_set(self.episode_len)
         
@@ -196,22 +197,19 @@ class Env:
         # The first event
         event = heapq.heappop(self.events)
         
-        if verbose:
-            print_events(self.events)
 
-        requests = [0 for i in range(total_classes)]
+        requests = [0 for i in range(len(all_traffic_loads))]
         requests[event.req.class_id] = 1
         self.arriaved_demand = event.req
 
-        state = State(len(traffic_loads))
-        state.domains_alives = [tuple(self.local_alives), tuple(self.provider_alives)]
-        state.arrivals_departures = tuple(requests)
+        state = State(self.domains_alives, self.current_domains_capacities, requests)
         
         if verbose:
             print("The first state = ", state)
 
         return state
-
+    
+    '''
     def stop(self):
         if verbose:
             debug("env stop")
@@ -405,7 +403,7 @@ class Env:
             debug("************  env step: end *************")
 
         return next_state, reward, done
-
+        '''
 
 def is_active_state(state):
     events = state.arrivals_departures
