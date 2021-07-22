@@ -50,9 +50,9 @@
 			"name": "consumer",
 			"domain_id": 0,
 			"quotas": [
-				{"capcity": 1, "reject_threshold": 1.0},
-				{"capcity": 1, "reject_threshold": 1.0},
-				{"capcity": 1, "reject_threshold": 1.0}
+				{"capcity": 0, "reject_threshold": 1.0},
+				{"capcity": 0, "reject_threshold": 1.0},
+				{"capcity": 0, "reject_threshold": 1.0}
 			],
 			"costs":[
 				{
@@ -110,17 +110,17 @@
 			"costs":[
 				{
 					"sns_id": 1,
-					"cost": 30,
+					"cost": 5,
 					"overcharge": 3
 				},
 				{
 					"sns_id": 2,
-					"cost": 30,
+					"cost": 5,
 					"overcharge": 3
 				},
 				{
 					"sns_id": 3,
-					"cost": 30,
+					"cost": 5,
 					"overcharge": 3
 				}
 			]
@@ -136,17 +136,17 @@
 			"costs":[
 				{
 					"sns_id": 1,
-					"cost": 40,
+					"cost": 10,
 					"overcharge": 3
 				},
 				{
 					"sns_id": 2,
-					"cost": 40,
+					"cost": 5,
 					"overcharge": 3
 				},
 				{
 					"sns_id": 3,
-					"cost": 40,
+					"cost": 20,
 					"overcharge": 3
 				}
 			]
@@ -156,12 +156,12 @@
 	"loads":[
 		{
 			"cns_id": 0,
-			"lambda": 1,
+			"lambda": 2,
 			"mu": 1
 		},
 		{
 			"cns_id": 1,
-			"lambda": 2,
+			"lambda": 3,
 			"mu": 0.5
 		}
 	]

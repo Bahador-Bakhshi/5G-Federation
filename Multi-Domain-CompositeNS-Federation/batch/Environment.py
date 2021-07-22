@@ -186,10 +186,21 @@ class Env:
     demands = None
     events  = None
     arriaved_demand = None
+    evaluation_mode = False
 
-    def __init__(self, eplen):
+    def __init__(self, eplen=0, demands=None):
         self.original_domains_capacities = [[x for x in y.quotas] for y in all_domains]
-        self.episode_len = eplen
+        
+        if eplen > 0:
+            self.episode_len = eplen
+            self.demands = None
+            self.evaluation_mode = False
+
+        if demands != None:
+            self.demands = demands 
+            self.episode_len = len(self.demands)
+            self.evaluation_mode = True
+
         self.events = []
 
     def start(self):
@@ -204,8 +215,9 @@ class Env:
         self.domains_deployed_simples = [[0 for i in range(len(all_simple_ns))] for j in range(len(all_domains))]
         self.alive_composites = [0 for i in range(len(all_composite_ns))]
         self.alive_traffic_classes = [0 for i in range(len(all_traffic_loads))]
-        
-        self.demands = generate_req_set(self.episode_len)
+       
+        if self.evaluation_mode == False:
+            self.demands = generate_req_set(self.episode_len)
         
         if verbose:
             print_reqs(self.demands)
