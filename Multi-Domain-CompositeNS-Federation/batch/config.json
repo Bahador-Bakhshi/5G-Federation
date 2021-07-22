@@ -5,7 +5,7 @@
 				"sns_id": 0,
 				"resources":[
 					1,
-					2,
+					1,
 					1
 				]
 			},
@@ -50,9 +50,9 @@
 			"name": "consumer",
 			"domain_id": 0,
 			"quotas": [
-				{"capcity": 0, "reject_threshold": 1.0},
-				{"capcity": 0, "reject_threshold": 1.0},
-				{"capcity": 0, "reject_threshold": 1.0}
+				{"capcity": 1, "reject_threshold": 1.0},
+				{"capcity": 1, "reject_threshold": 1.0},
+				{"capcity": 1, "reject_threshold": 1.0}
 			],
 			"costs":[
 				{

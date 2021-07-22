@@ -1,4 +1,5 @@
 import numpy as np
+import debugger
 
 class Domain:
     def __init__(self, name, domain_id, all_simple_ns):
@@ -14,4 +15,9 @@ class Domain:
     def add_quota_threshold(self, q, t):
         self.quotas.append(q)
         self.reject_thresholds.append(t)
+
+        if debugger.check_points:
+            if len(self.quotas) != len(self.reject_thresholds):
+                print("Error: len(self.quotas) != len(self.reject_thresholds)")
+                sys.exit(-1)
 

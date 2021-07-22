@@ -1,6 +1,6 @@
 import json
 import Environment
-from debuger import verbose, debug, warning, error
+from debugger import verbose, debug, warning, error
 from Domain import Domain
 from NS import Simple_NFV_NS, Composite_NFV_NS, Traffic_Load
 
@@ -38,7 +38,6 @@ def print_domains(domains):
         debug("Costs: ", d.costs)
         debug("Overcharges: ", d.overcharges)
         debug("-------------")
-    
 
 def parse_config(config_file):
     config_file_handler = open(config_file)

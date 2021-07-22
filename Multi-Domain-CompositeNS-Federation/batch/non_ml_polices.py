@@ -1,7 +1,8 @@
 import numpy as np
 
 import Environment
-from debuger import verbose 
+import debugger
+from debugger import verbose 
 
 valid_actions_cache = {}
 
@@ -13,9 +14,17 @@ def update_valid_actions_cache(state):
         feasible_deployment = True
         for domain in deployment_domains:
             domain_index = deployment_domains.index(domain)
+            tmp_domain_resources = list(state.domains_resources[domain_index]).copy()
             for sns in domain:
-                if Environment.all_domains[domain_index].costs[sns] < np.inf and Environment.check_feasible_deployment(Environment.all_simple_ns[sns], state.domains_resources[domain_index]):
-                    pass
+                if Environment.all_domains[domain_index].costs[sns] < np.inf and Environment.check_feasible_deployment(Environment.all_simple_ns[sns], tmp_domain_resources):
+                    Environment.update_capacities(Environment.all_simple_ns[sns], tmp_domain_resources, -1)
+
+                    if debugger.check_points:
+                        for x in tmp_domain_resources:
+                            if x < 0:
+                                print("tmp_domain_resources < 0")
+                                sys.exit(-1)
+
                 else:
                     feasible_deployment = False
                     break
@@ -79,13 +88,15 @@ def greedy_policy(state):
             print("using action cache :-)")
     else:
         update_valid_actions_cache(state)
-
+    
     best_action = Environment.reject_action
     best_action_cost = np.inf
     for action in valid_actions_cache[state]:
         this_action_cost = get_deployment_cost(state, action)
+        if verbose:
+            print("action = ", action, ", cost = ", this_action_cost)
+        
         if this_action_cost < best_action_cost:
-            print("chaning best from ", best_action, "to ", action)
             best_action = action
             best_action_cost = this_action_cost 
 

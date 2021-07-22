@@ -3,7 +3,8 @@ import numpy as np
 import sys 
 import heapq
 
-from debuger import verbose, debug, warning, error
+from debugger import verbose, debug, warning, error
+import debugger
 
 # Global Variables
 all_domains = []
@@ -265,22 +266,24 @@ class Env:
         
         req = self.arriaved_demand
         current_requests = state.arrivals_departures
-        count = 0
-        for i in range(len(current_requests)):
-            if current_requests[i] == -1:
-                error("Invalid state, departure event!!!")
+
+        if debugger.check_points:
+            count = 0
+            for i in range(len(current_requests)):
+                if current_requests[i] == -1:
+                    error("Invalid state, departure event!!!")
+                    sys.exit()
+
+                if current_requests[i] == 1:
+                    count += 1
+            
+            if count > 1:
+                error("Error in requests = ", current_requests)
                 sys.exit()
 
-            if current_requests[i] == 1:
-                count += 1
-            
-        if count > 1:
-            error("Error in requests = ", current_requests)
-            sys.exit()
-
-        if count == 0: #there is no requst to accept
-            error("Invalid state, no event!!!")
-            sys.exit()
+            if count == 0: #there is no requst to accept
+                error("Invalid state, no event!!!")
+                sys.exit()
 
         if action == reject_action:
             if verbose:
@@ -375,11 +378,13 @@ class Env:
                 debug("self.alive_traffic_classes = ", self.alive_traffic_classes)
 
             if len(self.events) == 0:
-                for i in range(len(self.domains_deployed_simples)):
-                    for j in range(len(self.domains_deployed_simples[i])):
-                        if self.domains_deployed_simples[i][j] != 0:
-                            error("bug in the last state: ", self.domains_deployed_simples)
-                            sys.exit()
+
+                if debugger.check_points:
+                    for i in range(len(self.domains_deployed_simples)):
+                        for j in range(len(self.domains_deployed_simples[i])):
+                            if self.domains_deployed_simples[i][j] != 0:
+                                error("bug in the last state: ", self.domains_deployed_simples)
+                                sys.exit()
             
                 done = 1
                 return None, reward, done 
@@ -408,57 +413,15 @@ class Env:
             debug("next_state = ", next_state)
             debug("************  env step: end *************")
 
+        if debugger.check_points:
+            for i in range(len(self.current_domains_capacities)):
+                for j in range(len(self.current_domains_capacities[i])):
+                    if self.current_domains_capacities[i][j] < 0 or self.current_domains_capacities[i][j] > all_domains[i].quotas[j] * all_domains[i].reject_thresholds[j]:
+                        print("Error in current_domains_capacities")
+                        sys.exit(-1)
+
         return next_state, reward, done
 
-
-
-def is_active_state(state):
-    events = state.arrivals_departures
-
-    return True if (1 in events) else False
-
-
-seen_state_valid_actions = {}
-
-def get_valid_actions(state):
-
-    if state in seen_state_valid_actions:
-        return seen_state_valid_actions[state]
-
-    all_domains_alives = state.domains_alives.copy()
-    events = state.arrivals_departures 
-    actions = []
-
-    actives = 0
-    for i in range(len(events)):
-        actives += abs(events[i])
-
-    if actives != 1:
-        error("get_valid_actions: Error in state")
-        error("state = ", state)
-        sys.exit()
-
-    if -1 in events:
-        #agent cannot do anything
-        actions.append(Actions.no_action)
-
-    else:
-        actions.append(Actions.reject)
-        
-        req_index = np.argmax(events)
-       
-        if can_be_deployed(1, req_index, State.local_domain, 1, all_domains_alives):
-            actions.append(Actions.accept)
-
-        domain_index = 1
-        if can_be_deployed(1, req_index, domain_index, providers[domain_index].reject_threshold, all_domains_alives):
-            actions.append(Actions.federate)
-
-    if verbose:
-        debug("get_valid_actions: state =", state, ", Valid actions = ", actions)
-    
-    seen_state_valid_actions[state] = actions
-    return actions
 
 class Event:
     event_type = 0 # 0 for departure 1 for arrival
