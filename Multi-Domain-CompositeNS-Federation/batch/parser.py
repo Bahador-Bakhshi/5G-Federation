@@ -88,6 +88,7 @@ def parse_config(config_file):
         print_loads(Environment.all_traffic_loads)
 
     Environment.all_actions = Environment.enumerate_all_actions()
+    Environment.reject_action = len(Environment.all_actions)
     
     if verbose:
         print("All actions")

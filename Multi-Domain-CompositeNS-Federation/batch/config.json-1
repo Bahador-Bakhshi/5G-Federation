@@ -103,9 +103,9 @@
 			"name": "provider 2",
 			"domain_id": 2,
 			"quotas": [
-				{"capcity": 10, "reject_threshold": 2},
-				{"capcity": 13, "reject_threshold": 2},
-				{"capcity": 30, "reject_threshold": 2}
+				{"capcity": 3, "reject_threshold": 2},
+				{"capcity": 3, "reject_threshold": 2},
+				{"capcity": 3, "reject_threshold": 2}
 			],
 			"costs":[
 				{
@@ -129,9 +129,9 @@
 			"name": "provider 3",
 			"domain_id": 3,
 			"quotas": [
-				{"capcity": 5, "reject_threshold": 3},
-				{"capcity": 6, "reject_threshold": 3},
-				{"capcity": 7, "reject_threshold": 3}
+				{"capcity": 3, "reject_threshold": 3},
+				{"capcity": 3, "reject_threshold": 3},
+				{"capcity": 3, "reject_threshold": 3}
 			],
 			"costs":[
 				{

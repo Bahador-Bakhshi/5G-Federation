@@ -11,6 +11,7 @@ all_simple_ns = []
 all_composite_ns = []
 all_traffic_loads = []
 all_actions = []
+reject_action = 0
 
 class State:
     domains_deployed_simples = []
@@ -72,7 +73,7 @@ class State:
         return ((self.domains_deployed_simples == other.domains_deployed_simples) and (self.arrivals_departures == other.arrivals_departures)) and (self.alive_traffic_classes == other.alive_traffic_classes)
 
     def __hash__(self):
-        return hash((self.domains_deployed_simples, self.alive_traffic_classes, self.arrivals_departures))
+        return hash((tuple(self.domains_deployed_simples), tuple(self.alive_traffic_classes), tuple(self.arrivals_departures)))
 
 '''
 class Actions(IntEnum):
@@ -269,7 +270,7 @@ class Env:
             error("Invalid state, no event!!!")
             sys.exit()
 
-        if action == len(all_actions): # reject
+        if action == reject_action:
             if verbose:
                 debug("reject")
             reward = 0
@@ -281,14 +282,11 @@ class Env:
             
             deployment_domains = all_actions[action]
 
-            if verbose:
-                print("deployment_domains = ", deployment_domains)
-
             deployed_sns = {}
             total_cost = 0
-            domain_index = 0
             feasible_deployment = True
             for domain in deployment_domains:
+                domain_index = deployment_domains.index(domain)
                 for sns in domain:
                     print("try to deploy", sns, "in domain", domain_index)
                     cost_scale = -1
@@ -325,8 +323,6 @@ class Env:
                 if feasible_deployment == False:
                     break
 
-                domain_index += 1
-            
             if feasible_deployment:
                 print("self.alive_composites: ", self.alive_composites)
                 print("req.cns_id: ", req.cns_id)
