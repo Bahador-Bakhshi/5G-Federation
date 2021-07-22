@@ -1,6 +1,6 @@
 import Environment
 import parser
-import RandomPolicy
+import non_ml_polices
 
 if __name__ == "__main__":
     parser.parse_config("config.json")
@@ -11,7 +11,9 @@ if __name__ == "__main__":
     s = env.start()
     done = False
     while not done:
-        a = RandomPolicy.policy(s)
+        #a = non_ml_polices.random_policy(s)
+        #a = non_ml_polices.first_fit(s)
+        a = non_ml_polices.greedy(s)
         s,r,d = env.step(s, a)
         total_reward += r
         if d == 1:

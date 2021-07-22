@@ -50,9 +50,9 @@
 			"name": "consumer",
 			"domain_id": 0,
 			"quotas": [
-				{"capcity": 10, "reject_threshold": 1.0},
-				{"capcity": 20, "reject_threshold": 1.0},
-				{"capcity": 30, "reject_threshold": 1.0}
+				{"capcity": 1, "reject_threshold": 1.0},
+				{"capcity": 1, "reject_threshold": 1.0},
+				{"capcity": 1, "reject_threshold": 1.0}
 			],
 			"costs":[
 				{
