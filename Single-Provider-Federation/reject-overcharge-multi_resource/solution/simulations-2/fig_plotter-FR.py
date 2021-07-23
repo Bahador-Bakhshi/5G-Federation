@@ -38,10 +38,6 @@ def plotter(x_label, y_label, x, greedy_000, greedy_050, greedy_100, DP_05, DP_3
         print("Unknow axis X")
         sys.exit(-1)
 
-    print("y_label = ", y_label)
-    if y_label == "FR %":
-        y_label = "DR %"
-
     plt.ylabel(y_label)
 
     plt.plot(x, DP_99, label='PI', color='k', linestyle='solid', linewidth=1.25, marker = '*')
