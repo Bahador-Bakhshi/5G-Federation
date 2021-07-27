@@ -52,7 +52,7 @@ def get_deployment_cost(state, action):
             else:
                 cost_scale = 1
 
-            total_cost += Environment.all_domains[domain_index].costs[sns] * cost_scale
+            total_cost += Environment.all_domains[domain_index].usage_costs[sns] * cost_scale
 
     return total_cost
 

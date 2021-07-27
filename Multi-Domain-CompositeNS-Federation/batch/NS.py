@@ -12,12 +12,14 @@ class Simple_NFV_NS:
 
 class Composite_NFV_NS:
     cns_id = 0
-    revenue = 0
+    setup_charge = 0
+    usage_charge = 0
     nested_ns = None
 
-    def __init__(self, cns_id, revenue):
+    def __init__(self, cns_id, setup_charge, usage_charge):
         self.cns_id = cns_id
-        self.revenue = revenue
+        self.setup_charge = setup_charge
+        self.usage_charge = usage_charge
         self.nested_ns = []
     
     def add_nested_ns(self, nested_ns):

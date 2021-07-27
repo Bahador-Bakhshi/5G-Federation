@@ -197,8 +197,9 @@ class Env:
     events  = None
     arriaved_demand = None
     evaluation_mode = False
+    accepteds = None
 
-    def __init__(self, eplen=0, demands=None):
+    def __init__(self, accepteds, eplen=0, demands=None):
         self.original_domains_capacities = [[x for x in y.quotas] for y in all_domains]
         
         if eplen > 0:
@@ -212,6 +213,7 @@ class Env:
             self.evaluation_mode = True
 
         self.events = []
+        self.accepteds = accepteds
 
     def start(self):
         if verbose:
@@ -317,26 +319,28 @@ class Env:
                     
                     cost_scale = -1
             
-                    if all_domains[domain_index].costs[sns] < np.inf and check_feasible_deployment(all_simple_ns[sns], self.current_domains_capacities[domain_index]):
+                    if all_domains[domain_index].usage_costs[sns] < np.inf and check_feasible_deployment(all_simple_ns[sns], self.current_domains_capacities[domain_index]):
                         if should_overcharge(all_simple_ns[sns], self.current_domains_capacities[domain_index], all_domains[domain_index].quotas, all_domains[domain_index].reject_thresholds):
                             cost_scale = all_domains[domain_index].overcharges[sns]
                         else:
                             cost_scale = 1
                     else:
-                        error("invalid deployment domain")
+                        print("invalid deployment domain")
                         print("sns.resources = ", all_simple_ns[sns].resources)
                         print("domain = ", domain_index)
                         print("capacity = ", self.current_domains_capacities[domain_index])
 
                         for sns in deployed_sns.keys():
-                            tmp_domain_index = deployed_sns[sns]
+                            tmp_domain_index = deployed_sns[sns][0]
                             update_capacities(all_simple_ns[sns], self.current_domains_capacities[tmp_domain_index], 1)
                             self.domains_deployed_simples[tmp_domain_index][sns] -= 1
  
                         feasible_deployment = False
+
+                        sys.exit(-1)
                         break
 
-                    total_cost += all_domains[domain_index].costs[sns] * cost_scale
+                    total_cost += all_domains[domain_index].usage_costs[sns] * cost_scale
                     if verbose:
                         debug("cost_scale = ", cost_scale)
                         debug("total_cost = ", total_cost)
@@ -344,7 +348,7 @@ class Env:
                     update_capacities(all_simple_ns[sns], self.current_domains_capacities[domain_index], -1)
 
                     self.domains_deployed_simples[domain_index][sns] += 1
-                    deployed_sns[sns] = domain_index
+                    deployed_sns[sns] = (domain_index, cost_scale)
                 
                 if feasible_deployment == False:
                     break
@@ -357,7 +361,8 @@ class Env:
                 self.alive_composites[req.cns_id] += 1
                 self.alive_traffic_classes[req.class_id] += 1
                 req.deployed = deployed_sns
-                reward = all_composite_ns[req.cns_id].revenue - total_cost
+                #reward = all_composite_ns[req.cns_id].revenue - total_cost
+                reward = 0 #FIXME!!!
                 event = Event(0, req.dt, req) #add the departure event
                 heapq.heappush(self.events, event)
 
@@ -373,11 +378,12 @@ class Env:
 
         while event.event_type == 0: #departure, update the nework
             req = event.req
+            self.accepteds.append(req)
             if verbose:
                 debug("Departure event")
            
             for sns in req.deployed.keys():
-                domain_index = req.deployed[sns]
+                domain_index = req.deployed[sns][0]
                 update_capacities(all_simple_ns[sns], self.current_domains_capacities[domain_index], 1)
                 self.domains_deployed_simples[domain_index][sns] -= 1
 
@@ -500,7 +506,7 @@ def find_valid_actions(state):
             domain_index = deployment_domains.index(domain)
             tmp_domain_resources = list(state.domains_resources[domain_index]).copy()
             for sns in domain:
-                if all_domains[domain_index].costs[sns] < np.inf and check_feasible_deployment(all_simple_ns[sns], tmp_domain_resources):
+                if all_domains[domain_index].usage_costs[sns] < np.inf and check_feasible_deployment(all_simple_ns[sns], tmp_domain_resources):
                     update_capacities(all_simple_ns[sns], tmp_domain_resources, -1)
 
                     if debugger.check_points:

@@ -15,7 +15,8 @@ def print_ns(simples, composites):
     print("Composite NS ...:")
     for ns in composites:
         print("id = ", ns.cns_id)
-        print("\t revenue = ", ns.revenue)
+        print("\t setup_charge = ", ns.setup_charge)
+        print("\t usage_charge = ", ns.usage_charge)
         print("\t nested_ns  = ", ns.nested_ns)
 
 def print_loads(loads):
@@ -35,7 +36,7 @@ def print_domains(domains):
         debug("ID:", d.domain_id)
         debug("Quotas:", d.quotas)
         debug("reject_thresholds: ", d.reject_thresholds)
-        debug("Costs: ", d.costs)
+        debug("Costs: ", d.usage_costs)
         debug("Overcharges: ", d.overcharges)
         debug("-------------")
 
@@ -55,7 +56,7 @@ def parse_config(config_file):
 
     composite_ns = config["ns_catalog"]["composite_ns"]
     for ns in composite_ns:
-        service = Composite_NFV_NS(ns["cns_id"], ns["revenue"])
+        service = Composite_NFV_NS(ns["cns_id"], ns["setup_charge"], ns["usage_charge"])
         for nns in ns["nested_ns"]:
             service.add_nested_ns(nns)
 
@@ -72,7 +73,7 @@ def parse_config(config_file):
             domain.add_quota_threshold(q["capcity"], q["reject_threshold"])
 
         for c in d["costs"]:
-            domain.costs[c["sns_id"]] = c["cost"]
+            domain.usage_costs[c["sns_id"]] = c["usage_cost"]
             domain.overcharges[c["sns_id"]] = c["overcharge"]
         
         Environment.all_domains.append(domain)
