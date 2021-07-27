@@ -33,12 +33,21 @@ class State:
         self.domains_deployed_simples = [None] * len(all_domains)
         for i in range(len(self.domains_deployed_simples)):
             this_deployed_simples = deployed_simples[i].copy()
+            this_len = len(this_deployed_simples)
+            if this_len < len(all_simple_ns):
+                for _ in range(len(all_simple_ns) - this_len):
+                    this_deployed_simples.append(0)
+
             deployed_simples_tuple = tuple(this_deployed_simples)
             self.domains_deployed_simples[i] = deployed_simples_tuple
 
         self.domains_resources = [None] * len(all_domains)
         for i in range(len(self.domains_resources)):
             free_resources = capacities[i].copy()
+            free_len = len(free_resources)
+            if free_len < len(all_domains[0].quotas):
+                for _ in range(len(all_domains[0].quotas - free_len)):
+                    free_resources.append(0)
             resources_tuple = tuple(free_resources)
             self.domains_resources[i] = resources_tuple
 
@@ -211,7 +220,7 @@ class Env:
         self.current_domains_capacities = [[0 for i in range(len(all_domains[0].quotas))] for j in range(len(all_domains))]
         for i in range(len(all_domains)):
             for j in range(len(all_domains[0].quotas)):
-                self.current_domains_capacities[i][j] = self.original_domains_capacities[i][j] * all_domains[i].reject_thresholds[j]
+                self.current_domains_capacities[i][j] = int(self.original_domains_capacities[i][j] * all_domains[i].reject_thresholds[j])
 
         self.domains_deployed_simples = [[0 for i in range(len(all_simple_ns))] for j in range(len(all_domains))]
         self.alive_composites = [0 for i in range(len(all_composite_ns))]
@@ -303,7 +312,9 @@ class Env:
             for domain in deployment_domains:
                 domain_index = deployment_domains.index(domain)
                 for sns in domain:
-                    print("try to deploy", sns, "in domain", domain_index)
+                    if verbose:
+                        print("try to deploy: sns = ", sns, "in domain", domain_index)
+                    
                     cost_scale = -1
             
                     if all_domains[domain_index].costs[sns] < np.inf and check_feasible_deployment(all_simple_ns[sns], self.current_domains_capacities[domain_index]):
@@ -339,8 +350,10 @@ class Env:
                     break
 
             if feasible_deployment:
-                print("self.alive_composites: ", self.alive_composites)
-                print("req.cns_id: ", req.cns_id)
+                if verbose:
+                    print("self.alive_composites: ", self.alive_composites)
+                    print("req.cns_id: ", req.cns_id)
+                
                 self.alive_composites[req.cns_id] += 1
                 self.alive_traffic_classes[req.class_id] += 1
                 req.deployed = deployed_sns
@@ -477,6 +490,38 @@ def check_feasible_deployment(simple_ns, capacities):
             return False
 
     return True
+
+def find_valid_actions(state):
+    res = []
+    for action in range(len(all_actions)):
+        deployment_domains = all_actions[action]
+        feasible_deployment = True
+        for domain in deployment_domains:
+            domain_index = deployment_domains.index(domain)
+            tmp_domain_resources = list(state.domains_resources[domain_index]).copy()
+            for sns in domain:
+                if all_domains[domain_index].costs[sns] < np.inf and check_feasible_deployment(all_simple_ns[sns], tmp_domain_resources):
+                    update_capacities(all_simple_ns[sns], tmp_domain_resources, -1)
+
+                    if debugger.check_points:
+                        for x in tmp_domain_resources:
+                            if x < 0:
+                                print("tmp_domain_resources < 0")
+                                sys.exit(-1)
+
+                else:
+                    feasible_deployment = False
+                    break
+
+            if feasible_deployment == False:
+                break
+
+        if feasible_deployment:
+            res.append(action)
+    
+    res.append(reject_action)
+
+    return res
 
 
 def update_capacities(simple_ns, capacities, inc_dec):

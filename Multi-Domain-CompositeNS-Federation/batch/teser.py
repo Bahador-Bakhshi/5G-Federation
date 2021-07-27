@@ -21,14 +21,15 @@ def evaluate_policy(policy_fn, demands):
  
 if __name__ == "__main__":
     parser.parse_config("config.json")
-    demands_num = 100
-    demands = Environment.generate_req_set(demands_num)
+    demands_num = 2000
 
-    random_reward = evaluate_policy(non_ml_polices.random_policy, demands)    
-    first_fit_reward = evaluate_policy(non_ml_polices.first_fit_policy, demands)    
-    greedy_reward = evaluate_policy(non_ml_polices.greedy_policy, demands)    
+    for i in range(20):
+        demands = Environment.generate_req_set(demands_num)
+        random_reward = evaluate_policy(non_ml_polices.random_policy, demands)    
+        first_fit_reward = evaluate_policy(non_ml_polices.first_fit_policy, demands)    
+        greedy_reward = evaluate_policy(non_ml_polices.greedy_policy, demands)    
 
 
-    print("random_reward    = ", random_reward)
-    print("first_fit_reward = ", first_fit_reward)
-    print("greedy_reward    = ", greedy_reward)
+        print("random_reward    = ", random_reward)
+        print("first_fit_reward = ", first_fit_reward)
+        print("greedy_reward    = ", greedy_reward)

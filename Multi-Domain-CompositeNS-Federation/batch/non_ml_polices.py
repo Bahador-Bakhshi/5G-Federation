@@ -8,34 +8,8 @@ valid_actions_cache = {}
 
 def update_valid_actions_cache(state):
     valid_actions_cache[state] = []
-
-    for action in range(len(Environment.all_actions)):
-        deployment_domains = Environment.all_actions[action]
-        feasible_deployment = True
-        for domain in deployment_domains:
-            domain_index = deployment_domains.index(domain)
-            tmp_domain_resources = list(state.domains_resources[domain_index]).copy()
-            for sns in domain:
-                if Environment.all_domains[domain_index].costs[sns] < np.inf and Environment.check_feasible_deployment(Environment.all_simple_ns[sns], tmp_domain_resources):
-                    Environment.update_capacities(Environment.all_simple_ns[sns], tmp_domain_resources, -1)
-
-                    if debugger.check_points:
-                        for x in tmp_domain_resources:
-                            if x < 0:
-                                print("tmp_domain_resources < 0")
-                                sys.exit(-1)
-
-                else:
-                    feasible_deployment = False
-                    break
-
-            if feasible_deployment == False:
-                break
-
-        if feasible_deployment:
-            valid_actions_cache[state].append(action)
-
-    valid_actions_cache[state].append(Environment.reject_action)
+    res = Environment.find_valid_actions(state)
+    valid_actions_cache[state] = res.copy()
     
     if verbose:
         print("valid actions for state", state," = ", valid_actions_cache[state])
