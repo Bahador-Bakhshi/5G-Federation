@@ -13,13 +13,15 @@ all_composite_ns = []
 all_traffic_loads = []
 all_actions = []
 reject_action = 0
+depart_action = 0
 
 class State:
     domains_deployed_simples = []
     domains_resources = []
     alive_composites = ()
     alive_traffic_classes = ()
-    arrivals_departures = ()
+    arrivals_events = ()
+    departure_events = ()
 
     def __init__(self, deployed_simples, capacities, alive_composites, alive_traffic_classes, events):
        
@@ -57,8 +59,11 @@ class State:
         traffic_classes_alive_list = alive_traffic_classes.copy()
         self.alive_traffic_classes = tuple(traffic_classes_alive_list)
 
-        arrivals_departure_list = events.copy()
-        self.arrivals_departures = tuple(arrivals_departure_list)
+        arrivals_list = [1 if x > 0 else 0 for x in events]
+        self.arrivals_events = tuple(arrivals_list)
+
+        departure_list = [1 if x < 0 else 0 for x in events]
+        self.departure_events = tuple(departure_list)
 
     def __str__(self):
         res = ""
@@ -75,22 +80,17 @@ class State:
    
         res += str(self.alive_composites)
         res += str(self.alive_traffic_classes)
-        res += str(self.arrivals_departures)
+        res += str(self.arrivals_events)
+        res += str(self.departure_events)
 
         return res
 
     def __eq__(self, other):
-        return ((self.domains_deployed_simples == other.domains_deployed_simples) and (self.arrivals_departures == other.arrivals_departures)) and (self.alive_traffic_classes == other.alive_traffic_classes)
+        return ((self.domains_deployed_simples == other.domains_deployed_simples) and (self.arrivals_events == other.arrivals_events)) and (self.alive_traffic_classes == other.alive_traffic_classes)
 
     def __hash__(self):
-        return hash((tuple(self.domains_deployed_simples), tuple(self.alive_traffic_classes), tuple(self.arrivals_departures)))
+        return hash((tuple(self.domains_deployed_simples), tuple(self.alive_traffic_classes), tuple(self.arrivals_events), tuple(self.departure_events)))
 
-'''
-class Actions(IntEnum):
-    # [0, ..., len(all_domains) - 1] for deployment
-    reject    = len(all_domains)
-    no_action = len(all_domains) + 1
-'''
 
 class Request:
     st  = 0
@@ -195,7 +195,7 @@ class Env:
     episode_len = 0
     demands = None
     events  = None
-    arriaved_demand = None
+    current_demand = None
     evaluation_mode = False
     accepteds = None
 
@@ -248,7 +248,7 @@ class Env:
 
         requests = [0 for i in range(len(all_traffic_loads))]
         requests[event.req.class_id] = 1
-        self.arriaved_demand = event.req
+        self.current_demand = event.req
 
         state = State(self.domains_deployed_simples, self.current_domains_capacities, self.alive_composites, self.alive_traffic_classes, requests)
         
@@ -275,30 +275,77 @@ class Env:
             debug("============= env step: start  ================")
             debug("s = ", state, ", a = ", action)
         
-        req = self.arriaved_demand
-        current_requests = state.arrivals_departures
+        req = self.current_demand
+        current_arrival_requests = state.arrivals_events
+        current_departure_requests = state.departure_events
 
         if debugger.check_points:
-            count = 0
-            for i in range(len(current_requests)):
-                if current_requests[i] == -1:
-                    error("Invalid state, departure event!!!")
-                    sys.exit()
-
-                if current_requests[i] == 1:
-                    count += 1
+            count_arrival = 0
+            count_departure = 0
+            for i in range(len(current_arrival_requests)):
+                if current_arrival_requests[i] == 1:
+                    count_arrival += 1
+                if current_departure_requests[i] == 1:
+                    count_departure += 1
             
-            if count > 1:
-                error("Error in requests = ", current_requests)
+            if count_arrival + count_departure > 1:
+                error("Error in requests = ", current_arrival_requests, current_departure_requests)
                 sys.exit()
 
-            if count == 0: #there is no requst to accept
+            if count_arrival + count_departure == 0: #there is no requst to accept
                 error("Invalid state, no event!!!")
                 sys.exit()
 
-        if action == reject_action:
+            if count_arrival > 0 and action == depart_action:
+                error("Depart action in arrival")
+                sys.exit()
+
+            if count_departure > 0 and action != depart_action:
+                error("No depart_action in departure")
+                print("state = ", state)
+                print("action = ", action)
+                sys.exit()
+
+        if action == depart_action:
             if verbose:
-                debug("reject")
+                debug("departure action: req = ", req)
+
+            setup_revenue = all_composite_ns[req.cns_id].setup_charge
+            usage_revenue = all_composite_ns[req.cns_id].usage_charge * (req.dt - req.st)
+    
+            usage_cost = 0
+            for sns in req.deployed:
+                domain_index = req.deployed[sns][0]
+                cost_scale = req.deployed[sns][1]
+            
+                if verbose:
+                    print("\t domain usage_costs = ", all_domains[domain_index].usage_costs[sns])
+                    print("\t cost_scale  = ", cost_scale)
+                    print("\t cost = ", all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st))
+            
+                usage_cost += all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st)
+            
+            reward = setup_revenue + usage_revenue - usage_cost
+
+            self.accepteds.append(req)
+           
+            for sns in req.deployed.keys():
+                domain_index = req.deployed[sns][0]
+                update_capacities(all_simple_ns[sns], self.current_domains_capacities[domain_index], 1)
+                self.domains_deployed_simples[domain_index][sns] -= 1
+
+            self.alive_composites[req.cns_id] -= 1
+            self.alive_traffic_classes[req.class_id] -= 1
+
+            if verbose:
+                debug("self.domains_deployed_simples = ", self.domains_deployed_simples)
+                debug("self.domain_capacities = ", self.current_domains_capacities)
+                debug("self.alive_composites = ", self.alive_composites)
+                debug("self.alive_traffic_classes = ", self.alive_traffic_classes)
+
+        elif action == reject_action:
+            if verbose:
+                debug("reject action")
             reward = 0
         
         else: # action = a batch deployment
@@ -340,10 +387,10 @@ class Env:
                         sys.exit(-1)
                         break
 
-                    total_cost += all_domains[domain_index].usage_costs[sns] * cost_scale
+                    #total_cost += all_domains[domain_index].usage_costs[sns] * cost_scale
                     if verbose:
                         debug("cost_scale = ", cost_scale)
-                        debug("total_cost = ", total_cost)
+                        #debug("total_cost = ", total_cost)
 
                     update_capacities(all_simple_ns[sns], self.current_domains_capacities[domain_index], -1)
 
@@ -361,12 +408,18 @@ class Env:
                 self.alive_composites[req.cns_id] += 1
                 self.alive_traffic_classes[req.class_id] += 1
                 req.deployed = deployed_sns
-                #reward = all_composite_ns[req.cns_id].revenue - total_cost
-                reward = 0 #FIXME!!!
+                reward = 0 
                 event = Event(0, req.dt, req) #add the departure event
                 heapq.heappush(self.events, event)
 
         if len(self.events) == 0:
+            if debugger.check_points:
+                for i in range(len(self.domains_deployed_simples)):
+                    for j in range(len(self.domains_deployed_simples[i])):
+                        if self.domains_deployed_simples[i][j] != 0:
+                            error("bug in the last state: ", self.domains_deployed_simples)
+                            sys.exit()
+ 
             done = 1
             return None, reward, done 
 
@@ -375,56 +428,21 @@ class Env:
         if verbose:
             debug("event: time = ", event.time, ", type = ", event.event_type ,", req = ", event.req)
             debug("self.domains_deployed_simples = ", self.domains_deployed_simples)
+            debug("self.domain_capacities = ", self.current_domains_capacities)
+            debug("self.alive_composites = ", self.alive_composites)
+            debug("self.alive_traffic_classes = ", self.alive_traffic_classes)
 
-        while event.event_type == 0: #departure, update the nework
-            req = event.req
-            self.accepteds.append(req)
-            if verbose:
-                debug("Departure event")
-           
-            for sns in req.deployed.keys():
-                domain_index = req.deployed[sns][0]
-                update_capacities(all_simple_ns[sns], self.current_domains_capacities[domain_index], 1)
-                self.domains_deployed_simples[domain_index][sns] -= 1
-
-            self.alive_composites[req.cns_id] -= 1
-            self.alive_traffic_classes[req.class_id] -= 1
-
-            if verbose:
-                debug("self.domains_deployed_simples = ", self.domains_deployed_simples)
-                debug("self.domain_capacities = ", self.current_domains_capacities)
-                debug("self.alive_composites = ", self.alive_composites)
-                debug("self.alive_traffic_classes = ", self.alive_traffic_classes)
-
-            if len(self.events) == 0:
-
-                if debugger.check_points:
-                    for i in range(len(self.domains_deployed_simples)):
-                        for j in range(len(self.domains_deployed_simples[i])):
-                            if self.domains_deployed_simples[i][j] != 0:
-                                error("bug in the last state: ", self.domains_deployed_simples)
-                                sys.exit()
-            
-                done = 1
-                return None, reward, done 
-
-            event = heapq.heappop(self.events)
-            
-            if verbose:
-                debug("event: time = ", event.time, ", type = ", event.event_type ,", req = ", event.req)
-                debug("self.domains_deployed_simples = ", self.domains_deployed_simples)
-                debug("self.domain_capacities = ", self.current_domains_capacities)
-                debug("self.alive_composites = ", self.alive_composites)
-                debug("self.alive_traffic_classes = ", self.alive_traffic_classes)
-
-  
-        self.arriaved_demand = None
+        self.current_demand = None
         next_state = None
         done = 0
 
         requests = [0 for i in range(len(all_traffic_loads))]
-        requests[event.req.class_id] = 1
-        self.arriaved_demand = event.req
+        if event.event_type == 0: 
+            requests[event.req.class_id] = -1
+        else:
+            requests[event.req.class_id] = +1
+
+        self.current_demand = event.req
 
         next_state = State(self.domains_deployed_simples, self.current_domains_capacities, self.alive_composites, self.alive_traffic_classes, requests)
 
@@ -499,6 +517,16 @@ def check_feasible_deployment(simple_ns, capacities):
 
 def find_valid_actions(state):
     res = []
+    
+    departure = False
+    for event in state.departure_events:
+        if event > 0:
+            departure = True
+
+    if departure:
+        res.append(depart_action)
+        return res
+
     for action in range(len(all_actions)):
         deployment_domains = all_actions[action]
         feasible_deployment = True

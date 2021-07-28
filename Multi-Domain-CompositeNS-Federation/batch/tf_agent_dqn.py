@@ -35,17 +35,18 @@ from debugger import verbose
 # ## Hyperparameters
 
 
-learning_rate = 5e-5
-num_iterations = 300
+req_per_episode = 2000
 
-collection_per_train = 20
+learning_rate = 5e-5
+num_iterations = 200
+
+collection_per_train = int(req_per_episode / 10)
 replay_buffer_max_length = int(0.3 * collection_per_train * num_iterations) 
 #initial_collect_steps = int(0.25 * replay_buffer_max_length)
-initial_collect_steps = 2 * collection_per_train
+initial_collect_steps = 2 * req_per_episode * 5
 
 batch_size = 8
 
-req_per_episode = 2000
 
 log_interval = 10
 eval_interval = 10
@@ -230,7 +231,7 @@ def train(agent, train_env, eval_env):
     init_driver.run()
     if verbose:
         print("init_driver run")
-    
+  
     iterator = create_iterator(replay_buffer)
     if verbose:
         print("iterator is created")

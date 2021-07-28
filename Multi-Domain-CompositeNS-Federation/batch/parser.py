@@ -89,6 +89,7 @@ def parse_config(config_file):
 
     Environment.all_actions = Environment.enumerate_all_actions()
     Environment.reject_action = len(Environment.all_actions)
+    Environment.depart_action = Environment.reject_action + 1
     
     if verbose:
         print("All actions")

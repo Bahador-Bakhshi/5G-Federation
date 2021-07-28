@@ -35,15 +35,15 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         super().__init__()
 
         self.discount = 0.99995
-
-        self.env = Environment.Env(eplen = req_num, demands = requests)
+        self.accepteds = []
+        self.env = Environment.Env(accepteds = self.accepteds, eplen = req_num, demands = requests)
 
         self._action_spec = tf_agents.specs.BoundedArraySpec(
                              shape = (), 
                              dtype = np.int32, 
                              name = "action", 
                              minimum = 0, 
-                             maximum = len(Environment.all_actions)
+                             maximum = len(Environment.all_actions) + 1
                         )
        
         self._observation_spec = {
@@ -53,6 +53,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                                             len(Environment.all_domains) * len(Environment.all_domains[0].quotas) +
                                             len(Environment.all_composite_ns) +
                                             len(Environment.all_traffic_loads) + 
+                                            len(Environment.all_traffic_loads) +
                                             len(Environment.all_traffic_loads)
                                             , ), 
                                         dtype = np.int32, 
@@ -61,7 +62,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
                                         maximum = 200
                                     ), 
                                 'valid_actions': array_spec.ArraySpec(
-                                            shape = (len(Environment.all_actions) + 1, ), 
+                                            shape = (len(Environment.all_actions) + 2, ), 
                                             dtype = np.bool_,
                                             name  = "valid_actions"
                                     )
@@ -91,8 +92,13 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
             index += 1
 
         for i in range(len(Environment.all_traffic_loads)):
-            res[index] = obs.arrivals_departures[i]
+            res[index] = obs.arrivals_events[i]
             index += 1
+
+        for i in range(len(Environment.all_traffic_loads)):
+            res[index] = obs.departure_events[i]
+            index += 1
+ 
         if verbose:
             print("state --> array: state = ", obs, ", array = ", res)
         

@@ -14,6 +14,7 @@ def update_valid_actions_cache(state):
     if verbose:
         print("valid actions for state", state," = ", valid_actions_cache[state])
 
+    print("valid actions for state", state," = ", valid_actions_cache[state])
 
 def random_policy(state):
 
@@ -62,17 +63,21 @@ def greedy_policy(state):
             print("using action cache :-)")
     else:
         update_valid_actions_cache(state)
-    
+   
+    if len(valid_actions_cache[state]) == 1:
+        return valid_actions_cache[state][0]
+
     best_action = Environment.reject_action
     best_action_cost = np.inf
     for action in valid_actions_cache[state]:
-        this_action_cost = get_deployment_cost(state, action)
-        if verbose:
-            print("action = ", action, ", cost = ", this_action_cost)
+        if action != Environment.depart_action:
+            this_action_cost = get_deployment_cost(state, action)
+            if verbose:
+                print("action = ", action, ", cost = ", this_action_cost)
         
-        if this_action_cost < best_action_cost:
-            best_action = action
-            best_action_cost = this_action_cost 
+            if this_action_cost < best_action_cost:
+                best_action = action
+                best_action_cost = this_action_cost 
 
     if verbose:
         print("best_action = ", best_action)

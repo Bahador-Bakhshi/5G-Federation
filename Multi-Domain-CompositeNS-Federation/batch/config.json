@@ -22,7 +22,7 @@
 			{
 				"cns_id": 0,
 				"setup_charge":30,
-				"usage_charge":9,
+				"usage_charge":10,
 				"nested_ns":[
 					0
 				]
