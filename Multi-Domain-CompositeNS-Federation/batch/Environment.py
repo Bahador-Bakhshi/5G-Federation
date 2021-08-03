@@ -12,8 +12,8 @@ all_simple_ns = []
 all_composite_ns = []
 all_traffic_loads = []
 all_actions = []
-reject_action = 0
-depart_action = 0
+#reject_action = 0
+#depart_action = 0
 
 class State:
     domains_deployed_simples = []
@@ -26,11 +26,12 @@ class State:
     def __init__(self, deployed_simples, capacities, alive_composites, alive_traffic_classes, events):
        
         if verbose:
-            print("deployed_simples = ", deployed_simples)
-            print("capacities = ", capacities)
-            print("alive_composites = ", alive_composites)
-            print("alive_traffic_classes = ", alive_traffic_classes)
-            print("events = ", events)
+            print("State __init__: ")
+            print("\t deployed_simples = ", deployed_simples)
+            print("\t capacities = ", capacities)
+            print("\t alive_composites = ", alive_composites)
+            print("\t alive_traffic_classes = ", alive_traffic_classes)
+            print("\t events = ", events)
 
         self.domains_deployed_simples = [None] * len(all_domains)
         for i in range(len(self.domains_deployed_simples)):
@@ -64,7 +65,7 @@ class State:
 
         departure_list = [1 if x < 0 else 0 for x in events]
         self.departure_events = tuple(departure_list)
-
+    
     def __str__(self):
         res = ""
         res += "["
@@ -80,16 +81,38 @@ class State:
    
         res += str(self.alive_composites)
         res += str(self.alive_traffic_classes)
+        res += ", "
         res += str(self.arrivals_events)
         res += str(self.departure_events)
 
         return res
 
     def __eq__(self, other):
-        return ((self.domains_deployed_simples == other.domains_deployed_simples) and (self.arrivals_events == other.arrivals_events)) and (self.alive_traffic_classes == other.alive_traffic_classes)
+        #return ((self.domains_deployed_simples == other.domains_deployed_simples) and (self.arrivals_events == other.arrivals_events)) and (self.alive_traffic_classes == other.alive_traffic_classes) and (self.departure_events == other.departure_events)
+        return self.__hash__() == other.__hash__()
 
     def __hash__(self):
         return hash((tuple(self.domains_deployed_simples), tuple(self.alive_traffic_classes), tuple(self.arrivals_events), tuple(self.departure_events)))
+
+    def copy_me(self):
+        new_event = [0 for i in range(len(self.arrivals_events))]
+        for i in range(len(self.arrivals_events)):
+            if self.arrivals_events[i] != 0:
+                new_event[i] = 1
+        for i in range(len(self.departure_events)):
+            if self.departure_events[i] != 0:
+                new_event[i] = -1
+
+        res = State([list(x) for x in self.domains_deployed_simples].copy(), [list(x) for x in self.domains_resources].copy(), list(self.alive_composites).copy(), list(self.alive_traffic_classes).copy(), new_event.copy())
+        
+        '''
+        if debugger.check_points:
+            if res != self:
+                print("Error in state copy_me")
+                sys.exit(-1)
+        '''
+
+        return res
 
 
 class Request:
@@ -296,17 +319,17 @@ class Env:
                 error("Invalid state, no event!!!")
                 sys.exit()
 
-            if count_arrival > 0 and action == depart_action:
+            if count_arrival > 0 and action == None:
                 error("Depart action in arrival")
                 sys.exit()
 
-            if count_departure > 0 and action != depart_action:
+            if count_departure > 0 and action != None:
                 error("No depart_action in departure")
                 print("state = ", state)
                 print("action = ", action)
                 sys.exit()
 
-        if action == depart_action:
+        if action == None:
             if verbose:
                 debug("departure action: req = ", req)
 
@@ -343,7 +366,7 @@ class Env:
                 debug("self.alive_composites = ", self.alive_composites)
                 debug("self.alive_traffic_classes = ", self.alive_traffic_classes)
 
-        elif action == reject_action:
+        elif action == tuple():
             if verbose:
                 debug("reject action")
             reward = 0
@@ -351,9 +374,9 @@ class Env:
         else: # action = a batch deployment
             
             if verbose:
-                debug("Try to deploy: req = ", req,", in domains = ", all_actions[action])
+                debug("Try to deploy: req = ", req,", in domains = ", action)
             
-            deployment_domains = all_actions[action]
+            deployment_domains = action
 
             deployed_sns = {}
             total_cost = 0
@@ -516,7 +539,7 @@ def check_feasible_deployment(simple_ns, capacities):
     return True
 
 def find_valid_actions(state):
-    res = []
+    res = set()
     
     departure = False
     for event in state.departure_events:
@@ -524,16 +547,24 @@ def find_valid_actions(state):
             departure = True
 
     if departure:
-        res.append(depart_action)
+        res.add(None)
         return res
 
+    current_cns_index = state.arrivals_events.index(1)
     for action in range(len(all_actions)):
         deployment_domains = all_actions[action]
         feasible_deployment = True
-        for domain in deployment_domains:
-            domain_index = deployment_domains.index(domain)
+        updated_sns_list_per_domain = []
+        
+        for domain_index in range(len(deployment_domains)):
+            this_domain_updated_sns_list = []
+            sns_of_domain = deployment_domains[domain_index]
+            for sns in sns_of_domain:
+                if sns in all_composite_ns[current_cns_index].nested_ns:
+                    this_domain_updated_sns_list.append(sns)
+            
             tmp_domain_resources = list(state.domains_resources[domain_index]).copy()
-            for sns in domain:
+            for sns in this_domain_updated_sns_list:
                 if all_domains[domain_index].usage_costs[sns] < np.inf and check_feasible_deployment(all_simple_ns[sns], tmp_domain_resources):
                     update_capacities(all_simple_ns[sns], tmp_domain_resources, -1)
 
@@ -549,13 +580,47 @@ def find_valid_actions(state):
 
             if feasible_deployment == False:
                 break
+            else:
+                updated_sns_list_per_domain.append(tuple(this_domain_updated_sns_list))
 
         if feasible_deployment:
-            res.append(action)
+            res.add(tuple(updated_sns_list_per_domain))
     
-    res.append(reject_action)
+    res.add(tuple()) #this is the reject action
+
+    if verbose:
+        print("find_valid_actions: state = ", state,", res = ", res)
 
     return res
+
+
+valid_actions_cache = {}
+
+def print_valid_actions_cache():
+    print("*************************************")
+    for state in valid_actions_cache.keys():
+        print(state,"-->", valid_actions_cache[state])
+    print("-------------------------------------")
+
+def update_valid_actions_cache(state):
+    valid_actions_cache[state] = []
+    res = find_valid_actions(state)
+    
+    valid_actions_cache[state] = res.copy()
+    
+    if verbose:
+        print("valid actions for state", state," = ", valid_actions_cache[state])
+
+def get_cached_valid_action(state):
+    if state in valid_actions_cache:
+        if verbose:
+            print("using action cache :-)")
+            print("state = ", state, ", valid_actions = ", valid_actions_cache[state])
+    else:
+        update_valid_actions_cache(state)
+
+    return valid_actions_cache[state]
+
 
 
 def update_capacities(simple_ns, capacities, inc_dec):
@@ -568,6 +633,33 @@ def should_overcharge(simple_ns, current_capacities, quotas, reject_threshold):
             return True
 
     return False
+
+def compute_profit(accepteds):
+    revenue = 0
+    cost = 0
+
+    for req in accepteds:
+        if verbose:
+            print("compute_profit = ")
+            print("\t req: ", req)
+            print("\t setup_charge = ", all_composite_ns[req.cns_id].setup_charge)
+            print("\t usage_charge = ", all_composite_ns[req.cns_id].usage_charge * (req.dt - req.st))
+
+        revenue += all_composite_ns[req.cns_id].setup_charge
+        revenue += all_composite_ns[req.cns_id].usage_charge * (req.dt - req.st)
+
+        for sns in req.deployed:
+            domain_index = req.deployed[sns][0]
+            cost_scale = req.deployed[sns][1]
+            
+            if verbose:
+                print("\t domain usage_costs = ", all_domains[domain_index].usage_costs[sns])
+                print("\t cost_scale  = ", cost_scale)
+                print("\t cost = ", all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st))
+            
+            cost += all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st)
+
+    return revenue - cost
 
 
 if __name__ == "__main__":

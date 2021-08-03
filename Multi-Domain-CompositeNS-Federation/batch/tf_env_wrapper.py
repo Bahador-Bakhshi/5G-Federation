@@ -34,7 +34,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
     def __init__(self, req_num = 0, requests = None):
         super().__init__()
 
-        self.discount = 0.99995
+        self.discount = 0.0
         self.accepteds = []
         self.env = Environment.Env(accepteds = self.accepteds, eplen = req_num, demands = requests)
 
@@ -150,6 +150,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
             print("tf_env_wrapper: _reset")
     
         self.the_first_action = 0 
+        self.accepteds.clear()
 
         s = self.env.reset()
 

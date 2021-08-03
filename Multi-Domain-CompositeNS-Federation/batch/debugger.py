@@ -1,6 +1,6 @@
 import sys
 
-verbose = False
+verbose = True
 check_points = True
 debug = print if verbose else lambda *a, **k: None
 warning = print 

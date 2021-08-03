@@ -55,7 +55,7 @@
 				},
 				{
 					"sns_id": 1,
-					"usage_cost": 5,
+					"usage_cost": 20,
 					"overcharge": 1
 				}
 			]
@@ -76,7 +76,7 @@
 				},
 				{
 					"sns_id": 1,
-					"usage_cost": 50,
+					"usage_cost": 5,
 					"overcharge": 1
 				}
 			]

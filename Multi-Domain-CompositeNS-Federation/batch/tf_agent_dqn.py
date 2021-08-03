@@ -31,26 +31,29 @@ from tf_agents.environments import utils
 
 import parser
 import tf_env_wrapper
+import debugger
 from debugger import verbose
+import Environment
 # ## Hyperparameters
 
 
 req_per_episode = 2000
 
 learning_rate = 5e-5
-num_iterations = 200
+num_iterations = 2000
 
-collection_per_train = int(req_per_episode / 10)
+collection_per_train = 10 #int(req_per_episode * 2) * 2
 replay_buffer_max_length = int(0.3 * collection_per_train * num_iterations) 
 #initial_collect_steps = int(0.25 * replay_buffer_max_length)
 initial_collect_steps = 2 * req_per_episode * 5
 
-batch_size = 8
-
+batch_size = 32
 
 log_interval = 10
-eval_interval = 10
-num_eval_episodes = 5 
+eval_interval = 100
+num_eval_episodes = 5
+target_update_period = 25
+
 
 def create_envs(req_num = 0, requests = None):
 
@@ -123,11 +126,12 @@ def create_DQN_agent(train_env):
                 train_env.action_spec(),
                 q_network=q_net,
                 optimizer=optimizer,
-                td_errors_loss_fn=common.element_wise_squared_loss,
+                #td_errors_loss_fn=common.element_wise_squared_loss,
                 train_step_counter=train_step_counter,
-                epsilon_greedy=lambda: epsilon_fn(train_step_counter), 
+                #epsilon_greedy=lambda: epsilon_fn(train_step_counter), 
                 #epsilon_greedy= 0.95,
-                target_update_period = 10,
+                gamma = 0.0,
+                target_update_period = target_update_period,
                 observation_and_action_constraint_splitter=observation_and_action_constraint_splitter,
                 emit_log_probability = True
             )
@@ -151,18 +155,28 @@ def compute_avg_return(environment, policy, num_episodes=0):
     
     for _ in range(num_episodes):
         time_step = environment.reset()
+        environment.envs[0].accepteds.clear()
         episode_return = 0.0
 
         while not time_step.is_last():
             action_step = policy.action(time_step)
             #print("action = ", action_step.action, ", time_step = ", time_step)
             time_step = environment.step(action_step.action)
-            episode_return += time_step.reward
-        
+            reward = time_step.reward
+            episode_return += tf.keras.backend.get_value(reward)
+
+        if(debugger.check_points):
+            test_episode_return = Environment.compute_profit(environment.envs[0].accepteds)
+            if abs(test_episode_return - episode_return) > 0.1:
+                print("test_episode_return != episode_return")
+                print("test_episode_return = ", test_episode_return)
+                print("episode_return = ", episode_return)
+                sys.exit(-1)
+
         total_return += episode_return
 
     avg_return = total_return / num_episodes
-    return avg_return.numpy()[0]
+    return avg_return 
 
 def create_replay_buffer(agent, train_env):
     replay_buffer = tf_uniform_replay_buffer.TFUniformReplayBuffer(
