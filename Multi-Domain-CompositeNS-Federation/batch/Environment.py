@@ -25,6 +25,7 @@ class State:
 
     def __init__(self, deployed_simples, capacities, alive_composites, alive_traffic_classes, events):
        
+        '''
         if verbose:
             print("State __init__: ")
             print("\t deployed_simples = ", deployed_simples)
@@ -32,6 +33,7 @@ class State:
             print("\t alive_composites = ", alive_composites)
             print("\t alive_traffic_classes = ", alive_traffic_classes)
             print("\t events = ", events)
+        '''
 
         self.domains_deployed_simples = [None] * len(all_domains)
         for i in range(len(self.domains_deployed_simples)):
@@ -643,10 +645,10 @@ def compute_profit(accepteds):
             print("compute_profit = ")
             print("\t req: ", req)
             print("\t setup_charge = ", all_composite_ns[req.cns_id].setup_charge)
-            print("\t usage_charge = ", all_composite_ns[req.cns_id].usage_charge * (req.dt - req.st))
+            print("\t usage_charge = ", all_composite_ns[req.cns_id].usage_charge) # * (req.dt - req.st))
 
         revenue += all_composite_ns[req.cns_id].setup_charge
-        revenue += all_composite_ns[req.cns_id].usage_charge * (req.dt - req.st)
+        revenue += all_composite_ns[req.cns_id].usage_charge # * (req.dt - req.st)
 
         for sns in req.deployed:
             domain_index = req.deployed[sns][0]
@@ -655,7 +657,7 @@ def compute_profit(accepteds):
             if verbose:
                 print("\t domain usage_costs = ", all_domains[domain_index].usage_costs[sns])
                 print("\t cost_scale  = ", cost_scale)
-                print("\t cost = ", all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st))
+                print("\t cost = ", all_domains[domain_index].usage_costs[sns] * cost_scale) #* (req.dt - req.st))
             
             cost += all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st)
 
