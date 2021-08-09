@@ -5,7 +5,7 @@ import debugger
 from debugger import verbose
 from Environment import print_valid_actions_cache, get_cached_valid_action
 
-gamma = 0.9999
+gamma = 2.2
 
 def random_policy(state):
     valid_actions = get_cached_valid_action(state)
@@ -42,6 +42,7 @@ def profit_estimation_based_policy(state, profit_estimator_function, n=0):
 
     return best_action
 
+'''
 def deployment_profit_no_prediction(state, action, dummy):
     if action == tuple():
         return 0
@@ -71,7 +72,7 @@ def deployment_profit_no_prediction(state, action, dummy):
         print("\t total_profit = ", total_profit)
 
     return total_profit
-
+'''
 
 def deployment_profit_no_prediction_old(state, action, dummy):
     if action == tuple():
@@ -139,11 +140,16 @@ def get_transient_state(state, action):
     
     return transient_state
 
+profit_cache = {}
 
 def n_step_profit_prediction(state, action, n):
-
+    key = (state, action, n)
+    global profit_cache 
+    if key in profit_cache:
+        return profit_cache[key]
+   
     if n == 1:
-        next_state_profit_estimator = deployment_profit_no_prediction
+        next_state_profit_estimator = deployment_profit_no_prediction_old
     else:
         n -= 1
         next_state_profit_estimator = n_step_profit_prediction
@@ -159,10 +165,12 @@ def n_step_profit_prediction(state, action, n):
     for domain_index in range(len(all_deployment_domains)):
         deployment_domain_sns = all_deployment_domains[domain_index]
         for sns in deployment_domain_sns:
-            total_cost += Environment.all_domains[domain_index].usage_costs[sns] * (1.0 / Environment.all_traffic_loads[current_traffic_class].mu)
+            total_cost += Environment.all_domains[domain_index].usage_costs[sns]
+            #* (1.0 / Environment.all_traffic_loads[current_traffic_class].mu)
 
     if action != tuple():
-        total_revenue = Environment.all_composite_ns[current_traffic_class].usage_charge *  (1.0 / Environment.all_traffic_loads[current_traffic_class].mu)
+        total_revenue = Environment.all_composite_ns[current_traffic_class].usage_charge 
+        #*  (1.0 / Environment.all_traffic_loads[current_traffic_class].mu)
     else:
         total_revenue = 0
 
@@ -209,7 +217,7 @@ def n_step_profit_prediction(state, action, n):
         if verbose:
             print("profits_if_action_applied = ", profits_if_action_applied)
 
-        max_profit_if_action_applied  = max(profits_if_action_applied.values())
+        max_profit_if_action_applied = max(profits_if_action_applied.values())
 
         this_next_profit = (max_profit_if_action_applied) * (Environment.all_traffic_loads[tc_index].lam / (total_arrival_rates + total_departure_rates))
 
@@ -223,9 +231,10 @@ def n_step_profit_prediction(state, action, n):
     if verbose:
         print("final total_profit = ", total_profit)
 
+    profit_cache[key] = total_profit
     return total_profit
 
 
 def one_step_predict_policy(state):
-    return profit_estimation_based_policy(state, n_step_profit_prediction, 1)
+    return profit_estimation_based_policy(state, n_step_profit_prediction, 5)
 

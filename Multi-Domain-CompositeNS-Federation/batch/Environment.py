@@ -25,7 +25,6 @@ class State:
 
     def __init__(self, deployed_simples, capacities, alive_composites, alive_traffic_classes, events):
        
-        '''
         if verbose:
             print("State __init__: ")
             print("\t deployed_simples = ", deployed_simples)
@@ -33,7 +32,6 @@ class State:
             print("\t alive_composites = ", alive_composites)
             print("\t alive_traffic_classes = ", alive_traffic_classes)
             print("\t events = ", events)
-        '''
 
         self.domains_deployed_simples = [None] * len(all_domains)
         for i in range(len(self.domains_deployed_simples)):
@@ -659,7 +657,7 @@ def compute_profit(accepteds):
                 print("\t cost_scale  = ", cost_scale)
                 print("\t cost = ", all_domains[domain_index].usage_costs[sns] * cost_scale) #* (req.dt - req.st))
             
-            cost += all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st)
+            cost += all_domains[domain_index].usage_costs[sns] * cost_scale #* (req.dt - req.st)
 
     return revenue - cost
 
