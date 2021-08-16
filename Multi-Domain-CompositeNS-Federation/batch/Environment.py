@@ -21,9 +21,9 @@ class State:
     alive_composites = ()
     alive_traffic_classes = ()
     arrivals_events = ()
-    departure_events = ()
+    departure_events_perdomain = ()
 
-    def __init__(self, deployed_simples, capacities, alive_composites, alive_traffic_classes, events):
+    def __init__(self, deployed_simples, capacities, alive_composites, alive_traffic_classes, arrival_events, departure_events):
        
         if verbose:
             print("State __init__: ")
@@ -31,7 +31,8 @@ class State:
             print("\t capacities = ", capacities)
             print("\t alive_composites = ", alive_composites)
             print("\t alive_traffic_classes = ", alive_traffic_classes)
-            print("\t events = ", events)
+            print("\t arrival_events = ", arrival_events)
+            print("\t departure_events = ", departure_events)
 
         self.domains_deployed_simples = [None] * len(all_domains)
         for i in range(len(self.domains_deployed_simples)):
@@ -60,11 +61,15 @@ class State:
         traffic_classes_alive_list = alive_traffic_classes.copy()
         self.alive_traffic_classes = tuple(traffic_classes_alive_list)
 
-        arrivals_list = [1 if x > 0 else 0 for x in events]
+        arrivals_list = [1 if x > 0 else 0 for x in arrival_events]
         self.arrivals_events = tuple(arrivals_list)
 
-        departure_list = [1 if x < 0 else 0 for x in events]
-        self.departure_events = tuple(departure_list)
+        all_departures = []
+        for i in range(len(all_domains)):
+            departure_list = [1 if x > 0 else 0 for x in departure_events[i]]
+            all_departures.append(tuple(departure_list))
+
+        self.departure_events_perdomain = tuple(all_departures)
     
     def __str__(self):
         res = ""
@@ -83,7 +88,7 @@ class State:
         res += str(self.alive_traffic_classes)
         res += ", "
         res += str(self.arrivals_events)
-        res += str(self.departure_events)
+        res += str(self.departure_events_perdomain)
 
         return res
 
@@ -92,27 +97,75 @@ class State:
         return self.__hash__() == other.__hash__()
 
     def __hash__(self):
-        return hash((tuple(self.domains_deployed_simples), tuple(self.alive_traffic_classes), tuple(self.arrivals_events), tuple(self.departure_events)))
+        return hash((tuple(self.domains_deployed_simples), tuple(self.alive_traffic_classes), tuple(self.arrivals_events), tuple(self.departure_events_perdomain)))
 
     def copy_me(self):
-        new_event = [0 for i in range(len(self.arrivals_events))]
-        for i in range(len(self.arrivals_events)):
-            if self.arrivals_events[i] != 0:
-                new_event[i] = 1
-        for i in range(len(self.departure_events)):
-            if self.departure_events[i] != 0:
-                new_event[i] = -1
-
-        res = State([list(x) for x in self.domains_deployed_simples].copy(), [list(x) for x in self.domains_resources].copy(), list(self.alive_composites).copy(), list(self.alive_traffic_classes).copy(), new_event.copy())
+        res = State([list(x) for x in self.domains_deployed_simples].copy(), [list(x) for x in self.domains_resources].copy(), list(self.alive_composites).copy(), list(self.alive_traffic_classes).copy(), list(self.arrivals_events).copy(), [list(x) for x in self.departure_events_perdomain].copy())
         
-        '''
         if debugger.check_points:
             if res != self:
                 print("Error in state copy_me")
                 sys.exit(-1)
-        '''
 
         return res
+
+
+def check_state_validity(state):
+    if debugger.check_points:
+        for domain in range(len(all_domains)):
+            for sns in range(len(all_simple_ns)):
+                if state.domains_deployed_simples[domain][sns] < 0:
+                    print("Error in state ", state)
+                    print("state.domains_deployed_simples[domain][sns] < 0")
+                    sys.exit(-1)
+
+        for domain in range(len(all_domains)):
+            for res in range(len(all_domains[0].quotas)):
+                if state.domains_resources[domain][res] < 0 or state.domains_resources[domain][res] > int(all_domains[domain].quotas[res] * all_domains[domain].reject_thresholds[res]):
+                    print("Error in state ", state)
+                    print("Invalid capacity: ", state.domains_resources[domain][res], int(all_domains[domain].quotas[res] * all_domains[domain].reject_thresholds[res]))
+                    sys.exit(-1)
+
+        for domain in range(len(all_composite_ns)):
+            if state.alive_composites[domain] < 0:
+                print("Error in state ", state)
+                print("Invalid state.alive_composites")
+                sys.exit(-1)
+
+        for tc in range(len(all_traffic_loads)):
+            if state.alive_traffic_classes[tc] < 0:
+                print("Error in state ", state)
+                print("Invalid state.alive_traffic_classes")
+                sys.exit(-1)
+
+        cnt = 0
+        for tc in range(len(all_traffic_loads)):
+            if state.arrivals_events[tc] > 1 or state.arrivals_events[tc] < 0:
+                print("Error in state ", state)
+                print("Invalid state.arrivals_events")
+                sys.exit(-1)
+            elif state.arrivals_events[tc] == 1:
+                cnt += 1
+
+        if cnt > 1:
+            print("Error in state ", state)
+            print("Invalid state.arrivals_events")
+            sys.exit(-1)
+
+        cnt = 0
+        for domain in range(len(all_domains)):
+            for tc in range(len(all_traffic_loads)):
+                if state.departure_events_perdomain[domain][tc] < 0 or state.departure_events_perdomain[domain][tc] > 1:
+                    print("Error in state ", state)
+                    print("Invalid state.departure_events_perdomain")
+                    sys.exit(-1)
+                elif state.departure_events_perdomain[domain][tc] == 1:
+                    cnt += 1
+
+        if cnt > 1:
+            print("Error in state ", state)
+            print("Invalid state.departure_events_perdomain")
+            sys.exit(-1)
 
 
 class Request:
@@ -258,6 +311,7 @@ class Env:
             print_reqs(self.demands)
 
         for i in range(len(self.demands)):
+            self.demands[i].deployed = {}
             self.events.append(Event(1, self.demands[i].st, self.demands[i]))
 
         heapq.heapify(self.events)
@@ -269,11 +323,13 @@ class Env:
         event = heapq.heappop(self.events)
         
 
-        requests = [0 for i in range(len(all_traffic_loads))]
-        requests[event.req.class_id] = 1
+        arrival_requests = [0 for i in range(len(all_traffic_loads))]
+        arrival_requests[event.req.class_id] = 1
         self.current_demand = event.req
+        
+        departure_events = [[0 for i in range(len(all_composite_ns))] for j in range(len(all_domains))]
 
-        state = State(self.domains_deployed_simples, self.current_domains_capacities, self.alive_composites, self.alive_traffic_classes, requests)
+        state = State(self.domains_deployed_simples, self.current_domains_capacities, self.alive_composites, self.alive_traffic_classes, arrival_requests, departure_events.copy())
         
         if verbose:
             print("The first state = ", state)
@@ -298,9 +354,9 @@ class Env:
             debug("============= env step: start  ================")
             debug("s = ", state, ", a = ", action)
         
-        req = self.current_demand
+        this_req = self.current_demand
         current_arrival_requests = state.arrivals_events
-        current_departure_requests = state.departure_events
+        current_departure_requests = state.departure_events_perdomain
 
         if debugger.check_points:
             count_arrival = 0
@@ -308,8 +364,11 @@ class Env:
             for i in range(len(current_arrival_requests)):
                 if current_arrival_requests[i] == 1:
                     count_arrival += 1
-                if current_departure_requests[i] == 1:
-                    count_departure += 1
+
+            for d in current_departure_requests:
+                for e in d:
+                    if e == 1:
+                        count_departure += 1
             
             if count_arrival + count_departure > 1:
                 error("Error in requests = ", current_arrival_requests, current_departure_requests)
@@ -331,34 +390,35 @@ class Env:
 
         if action == None:
             if verbose:
-                debug("departure action: req = ", req)
+                debug("departure action: req = ", this_req)
 
-            setup_revenue = all_composite_ns[req.cns_id].setup_charge
-            usage_revenue = all_composite_ns[req.cns_id].usage_charge * (req.dt - req.st)
+            setup_revenue = all_composite_ns[this_req.cns_id].setup_charge
+            usage_revenue = all_composite_ns[this_req.cns_id].usage_charge #* (req.dt - req.st)
     
             usage_cost = 0
-            for sns in req.deployed:
-                domain_index = req.deployed[sns][0]
-                cost_scale = req.deployed[sns][1]
+            for sns in this_req.deployed:
+                domain_index = this_req.deployed[sns][0]
+                cost_scale = this_req.deployed[sns][1]
             
                 if verbose:
                     print("\t domain usage_costs = ", all_domains[domain_index].usage_costs[sns])
                     print("\t cost_scale  = ", cost_scale)
-                    print("\t cost = ", all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st))
+                    #print("\t cost = ", all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st))
+                    print("\t cost = ", all_domains[domain_index].usage_costs[sns] * cost_scale)
             
-                usage_cost += all_domains[domain_index].usage_costs[sns] * cost_scale * (req.dt - req.st)
+                usage_cost += all_domains[domain_index].usage_costs[sns] * cost_scale #* (req.dt - req.st)
             
             reward = setup_revenue + usage_revenue - usage_cost
 
-            self.accepteds.append(req)
+            self.accepteds.append(this_req)
            
-            for sns in req.deployed.keys():
-                domain_index = req.deployed[sns][0]
+            for sns in this_req.deployed.keys():
+                domain_index = this_req.deployed[sns][0]
                 update_capacities(all_simple_ns[sns], self.current_domains_capacities[domain_index], 1)
                 self.domains_deployed_simples[domain_index][sns] -= 1
 
-            self.alive_composites[req.cns_id] -= 1
-            self.alive_traffic_classes[req.class_id] -= 1
+            self.alive_composites[this_req.cns_id] -= 1
+            self.alive_traffic_classes[this_req.class_id] -= 1
 
             if verbose:
                 debug("self.domains_deployed_simples = ", self.domains_deployed_simples)
@@ -374,7 +434,7 @@ class Env:
         else: # action = a batch deployment
             
             if verbose:
-                debug("Try to deploy: req = ", req,", in domains = ", action)
+                debug("Try to deploy: req = ", this_req,", in domains = ", action)
             
             deployment_domains = action
 
@@ -426,13 +486,13 @@ class Env:
             if feasible_deployment:
                 if verbose:
                     print("self.alive_composites: ", self.alive_composites)
-                    print("req.cns_id: ", req.cns_id)
+                    print("req.cns_id: ", this_req.cns_id)
                 
-                self.alive_composites[req.cns_id] += 1
-                self.alive_traffic_classes[req.class_id] += 1
-                req.deployed = deployed_sns
+                self.alive_composites[this_req.cns_id] += 1
+                self.alive_traffic_classes[this_req.class_id] += 1
+                this_req.deployed = deployed_sns
                 reward = 0 
-                event = Event(0, req.dt, req) #add the departure event
+                event = Event(0, this_req.dt, this_req) #add the departure event
                 heapq.heappush(self.events, event)
 
         if len(self.events) == 0:
@@ -445,7 +505,7 @@ class Env:
  
             done = 1
             return None, reward, done 
-
+        
         event = heapq.heappop(self.events)
         
         if verbose:
@@ -459,15 +519,16 @@ class Env:
         next_state = None
         done = 0
 
-        requests = [0 for i in range(len(all_traffic_loads))]
-        if event.event_type == 0: 
-            requests[event.req.class_id] = -1
+        arrival_requests = [0 for i in range(len(all_traffic_loads))]
+        departure_events = [[0 for i in range(len(all_traffic_loads))] for j in range(len(all_domains))]
+        if event.event_type == 0:
+            departure_events[event.req.deployed[list(event.req.deployed)[0]][0]][event.req.class_id] = +1  #FIXME [0][0]!!!!
         else:
-            requests[event.req.class_id] = +1
+            arrival_requests[event.req.class_id] = +1
 
         self.current_demand = event.req
 
-        next_state = State(self.domains_deployed_simples, self.current_domains_capacities, self.alive_composites, self.alive_traffic_classes, requests)
+        next_state = State(self.domains_deployed_simples, self.current_domains_capacities, self.alive_composites, self.alive_traffic_classes, arrival_requests, departure_events.copy())
 
         if verbose:
             debug("next_state = ", next_state)
@@ -498,13 +559,14 @@ class Event:
 
 
 def print_events(events):
+    verbose = True
     if verbose:
-        debug("----------------------------")
+        print("----------------------------")
     
     for i in range(len(events)):
         e = events[i]
         if verbose:
-            debug("type = ", e.event_type ,", req = ", e.req)
+            print("type = ", e.event_type ,", req = ", e.req)
 
 
 def can_be_deployed(instance_num, req_index, domain_index, scale, all_domains_alives):
@@ -540,11 +602,12 @@ def check_feasible_deployment(simple_ns, capacities):
 
 def find_valid_actions(state):
     res = set()
-    
+
     departure = False
-    for event in state.departure_events:
-        if event > 0:
-            departure = True
+    for d in state.departure_events_perdomain:
+        for event in d:
+            if event > 0:
+                departure = True
 
     if departure:
         res.add(None)

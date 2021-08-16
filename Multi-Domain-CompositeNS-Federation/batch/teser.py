@@ -8,6 +8,8 @@ import offline_policy
 def evaluate_policy(policy_fn, demands):
     total_reward = 0
     total_accept = 0
+    non_ml_polices.average_reward = 0
+    counter = 0
     done = False
    
     accepteds = []
@@ -24,6 +26,13 @@ def evaluate_policy(policy_fn, demands):
         s,r,d = env.step(s, a)
         if d == 1:
             done = True
+        
+        if a != None:
+            total_reward = Environment.compute_profit(accepteds)
+            counter += 1
+            average_reward = (1.0 * total_reward) / counter
+            if counter % 100 == 0:
+                print("cnt = ", counter,", avg = ", average_reward, flush=True)
    
     total_reward = Environment.compute_profit(accepteds)
     return total_reward, total_accept
@@ -31,7 +40,7 @@ def evaluate_policy(policy_fn, demands):
  
 if __name__ == "__main__":
     parser.parse_config("config.json")
-    demands_num = 5000
+    demands_num = 10000
     iteration = 1
 
     greedy_reward = greedy_accept = 0
@@ -39,9 +48,10 @@ if __name__ == "__main__":
     mdp_reward = mdp_accept = 0
 
     for i in range(iteration):
-        #demands = Environment.generate_req_set(demands_num)
-        demands = export_import_requests.load_reqs(reqs_file_name = "./requests.csv")
-        demands_num = len(demands)
+        demands = Environment.generate_req_set(demands_num)
+        
+        #demands = export_import_requests.load_reqs(reqs_file_name = "./requests.csv")
+        #demands_num = len(demands)
 
         '''
         print("-------------------RAND--------------------")
@@ -49,22 +59,32 @@ if __name__ == "__main__":
         print("-------------------First--------------------")
         first_fit_reward = evaluate_policy(non_ml_polices.first_fit_policy, demands)   
         '''
-
+        
+        '''
         print("-------------------Greedy--------------------")
+        Environment.valid_actions_cache = {}
+        non_ml_polices.profit_cache = {}
         reward, accept = evaluate_policy(non_ml_polices.greedy_policy, demands)    
         greedy_reward += reward
         greedy_accept = accept
- 
-        print("-------------------MDP--------------------")
-        lookup = offline_policy.load_mdp_policy()
-        reward, accept = evaluate_policy(lookup, demands)    
-        mdp_reward += reward
-        mdp_accept = accept
+        print("reward = ", reward)
+        '''
+
+        #print("-------------------MDP--------------------")
+        #Environment.valid_actions_cache = {}
+        #non_ml_polices.profit_cache = {}
+        #lookup = offline_policy.load_mdp_policy()
+        #reward, accept = evaluate_policy(lookup, demands)    
+        #mdp_reward += reward
+        #mdp_accept = accept
  
         print("-------------------Predict--------------------")
+        Environment.valid_actions_cache = {}
+        non_ml_polices.profit_cache = {}
         reward, accept = evaluate_policy(non_ml_polices.one_step_predict_policy, demands)
         predict_reward += reward
         predict_accept = accept
+        print("reward = ", reward)
         
         print("greedy_accept  = ", greedy_accept / demands_num)
         print("mdp_accept     = ", mdp_accept / demands_num)
