@@ -14,12 +14,21 @@ def print_p_q(Q):
                 print("\t\t", ns,"->",Q[state][action][1][ns])
     print("........................................")
  
-def get_all_a_val(Q, state):
+def get_all_a_val(Q, state, level):
     q_s_a = dict()
     for action in Q[state]:
         val = 0
         for ns in Q[state][action][1]:
-            val += Q[state][action][1][ns]["val"] * Q[state][action][1][ns]["pr"]
+            if Q[state][action][1][ns]["level"] >= level:
+                val += Q[state][action][1][ns]["val"] * Q[state][action][1][ns]["pr"]
+            else:
+                if not(ns in Q):
+                    add_new_state(Q, ns)
+                new_value = get_v_s(Q, ns, level - 1)
+                Q[state][action][1][ns]["val"] = new_value
+                Q[state][action][1][ns]["level"] = level
+                val += Q[state][action][1][ns]["val"] * Q[state][action][1][ns]["pr"]
+
         q_s_a [action] = val
     
     if verbose:
@@ -27,8 +36,8 @@ def get_all_a_val(Q, state):
     return q_s_a
 
 
-def get_v_s(Q, state):
-    all_q_a_vals = get_all_a_val(Q, state)
+def get_v_s(Q, state, level):
+    all_q_a_vals = get_all_a_val(Q, state, level)
     best_action = max(all_q_a_vals, key=all_q_a_vals.get)
     res = all_q_a_vals[best_action]
     if verbose:
@@ -36,13 +45,13 @@ def get_v_s(Q, state):
     return res
 
 
-def e_greedy(Q, state, epsilon):
+def e_greedy(Q, state, epsilon, level):
     num_valid_actions = len(Q[state])
     probabilities = dict()
     for action in Q[state]:
         probabilities[action] = epsilon / num_valid_actions
 
-    all_q_a_vals = get_all_a_val(Q, state)
+    all_q_a_vals = get_all_a_val(Q, state, level)
     best_action = max(all_q_a_vals, key=all_q_a_vals.get)
     probabilities[best_action] += (1.0 - epsilon)
 
@@ -59,10 +68,10 @@ def add_new_state(Q, state):
         next_states_probs, reward = DP.pr(state, action)
         Q[state][action][0] = reward
         for next_state in next_states_probs:
-            Q[state][action][1][next_state] = {"pr": next_states_probs[next_state], "val": reward + np.random.uniform(0,1)}
+            Q[state][action][1][next_state] = {"pr": next_states_probs[next_state], "level": 0, "val": reward + np.random.uniform(0,1)}
 
 
-def pLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0):
+def pLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0, level):
     Q = dict()
     
     # Create an epsilon greedy policy function
@@ -93,7 +102,7 @@ def pLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0):
             if not (state in Q):
                 add_new_state(Q, state)
 
-            action = e_greedy(Q, state, epsilon)
+            action = e_greedy(Q, state, epsilon, level)
 
             if verbose:
                 print("selected action =", action)
@@ -117,7 +126,7 @@ def pLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0):
                 discount_factor = 1.0
             '''
 
-            next_state_value = get_v_s(Q, next_state)
+            next_state_value = get_v_s(Q, next_state, level)
             
             td_target = reward + discount_factor * next_state_value
 
@@ -140,7 +149,7 @@ def pLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0):
     
     final_policy = {}
     for state in Q:
-        final_policy[state] = e_greedy(Q, state, 0)
+        final_policy[state] = e_greedy(Q, state, 0, 0)
 
     if verbose:
         print(final_policy)
