@@ -19,7 +19,7 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_num = 2000
+    sim_num = 10000
 
     best_QL_alpha   = 1.0
     best_QL_epsilon = 1.0
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     parser.parse_config("config.json")
 
-    init_size = 10
+    init_size = 1
 
     step = 0
     scale = 1
@@ -78,7 +78,7 @@ if __name__ == "__main__":
             #DP.print_policy(dyna_ql_55_policy)
             '''
 
-            pl_policy = PL.pLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, QL_gamma_55)
+            pl_policy = PL.pLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, QL_gamma_55, 1)
             #print("---------- PL --------------")
             #DP.print_policy(pl_policy)
 
