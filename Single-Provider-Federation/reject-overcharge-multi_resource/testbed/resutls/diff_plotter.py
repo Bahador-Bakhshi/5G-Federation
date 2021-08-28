@@ -25,23 +25,25 @@ def load_trace(trace_file_name, output):
 
                 PI.append(float(row[3])/100)
                 RL.append(float(row[6])/100)
+                
 
             line_count += 1
     print("PI = ", PI)
     print("RL = ", RL)
+    
     #sys.exit(-1)
     
     font = {
             'weight' : 'bold',
-            'size'   : 6
+            'size'   : 8
     }
 
     matplotlib.rc('font', **font)
     plt.rcParams["axes.labelweight"] = "bold"
-    plt.rcParams["axes.labelsize"] = "8"
+    plt.rcParams["axes.labelsize"] = "10"
 
     fig, ax = plt.subplots()
-    plt.grid(axis="y", linestyle="--", linewidth=0.5)
+    plt.grid(axis="y", linestyle="dotted", linewidth=0.4)
 
     ax.set_xlabel("Experiments")
     labels = exp.copy()
@@ -64,7 +66,7 @@ def load_trace(trace_file_name, output):
     #ax.tick_params(axis='y')
 
     #plt.legend(handlelength=1, ncol=2, handleheight=2.4, labelspacing=0.00)
-    plt.legend(loc='best', ncol=3, handlelength=3, prop={'size': 5})
+    plt.legend(loc='best', ncol=3, handlelength=3, prop={'size': 7})
 
     ax.set_aspect(0.5)
 
