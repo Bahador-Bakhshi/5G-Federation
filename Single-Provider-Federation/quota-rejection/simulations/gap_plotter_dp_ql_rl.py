@@ -78,6 +78,6 @@ plt.plot(x, RL, label='RL', color='r', linestyle='-.', linewidth=2, marker = 'o'
 
 plt.legend(loc='best', handlelength=4)
 
-plt.savefig("gap_"+str(sys.argv[1])+".png", bbox_inches='tight')
+plt.savefig("gap_"+str(sys.argv[1])+".pdf", bbox_inches='tight', format="pdf", transparent=True)
 
 
