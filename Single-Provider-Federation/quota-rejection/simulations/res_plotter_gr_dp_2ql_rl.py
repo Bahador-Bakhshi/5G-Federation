@@ -83,5 +83,5 @@ plt.plot(x, greedy_100, label='Greedy', color='y', linestyle='dashdot', linewidt
 plt.legend(loc='best', handlelength=4)
 
 #plt.show()
-plt.savefig(str(sys.argv[1])+".png", bbox_inches='tight')
+plt.savefig(str(sys.argv[1])+".pdf", bbox_inches='tight', format="pdf",transparent=True)
 
