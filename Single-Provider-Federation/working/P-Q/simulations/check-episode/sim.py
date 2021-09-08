@@ -19,7 +19,8 @@ from tester import test_greedy_random_policy, test_policy, greedy_result, mdp_po
 
 if __name__ == "__main__":
 
-    sim_num = 10000
+    sim_num = 100000
+    eval_num = 50 * sim_num 
 
     best_QL_alpha   = 1.0
     best_QL_epsilon = 1.0
@@ -33,12 +34,12 @@ if __name__ == "__main__":
 
     parser.parse_config("config.json")
 
-    init_size = 1
+    init_size = 10
 
     step = 0
     scale = 1
 
-    iterations = 10
+    iterations = 1
     
     i = 1
  
@@ -78,17 +79,17 @@ if __name__ == "__main__":
             #DP.print_policy(dyna_ql_55_policy)
             '''
 
-            pl_policy = PL.pLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, QL_gamma_55, 1)
+            pl_policy = PL.pLearning(env, episode_num, 1, best_QL_alpha, best_QL_epsilon, QL_gamma_55, 0, False)
             #print("---------- PL --------------")
             #DP.print_policy(pl_policy)
 
-            ''' 
-            rl_policy = RL.rLearning(env, episode_num, 1, best_RL_alpha, best_RL_epsilon, best_RL_beta)
-            print("---------- RL --------------")
-            DP.print_policy(rl_policy)
-            '''
-            demands = Environment.generate_req_set(sim_num)
+            #rl_policy = RL.rLearning(env, episode_num, 1, best_RL_alpha, best_RL_epsilon, best_RL_beta)
+            #print("---------- RL --------------")
+            #DP.print_policy(rl_policy)
+            
+            demands = Environment.generate_req_set(eval_num)
             Environment.print_reqs(demands)
+
             '''
             greedy_profit_100, greedy_accept_100, greedy_federate_100 = greedy_result(demands, 1.0, greedy_profit_100, greedy_accept_100, greedy_federate_100)
 
@@ -97,8 +98,8 @@ if __name__ == "__main__":
             ql_95_profit, ql_95_accept, ql_95_federate = mdp_policy_result(demands, ql_95_policy, ql_95_profit, ql_95_accept, ql_95_federate)
             dyna_ql_55_profit, dyna_ql_55_accept, dyna_ql_55_federate = mdp_policy_result(demands, dyna_ql_55_policy, dyna_ql_55_profit, dyna_ql_55_accept, dyna_ql_55_federate)
             
-            rl_profit, rl_accept, rl_federate = mdp_policy_result(demands, rl_policy, rl_profit, rl_accept, rl_federate)
             '''
+            #rl_profit, rl_accept, rl_federate = mdp_policy_result(demands, rl_policy, rl_profit, rl_accept, rl_federate)
             
             ql_55_profit, ql_55_accept, ql_55_federate = mdp_policy_result(demands, ql_55_policy, ql_55_profit, ql_55_accept, ql_55_federate)
             pl_profit, pl_accept, pl_federate = mdp_policy_result(demands, pl_policy, pl_profit, pl_accept, pl_federate)

@@ -32,7 +32,7 @@ def qLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0, prefix):
 
         for t in itertools.count():
             if t % 400 == 0:
-                print("episode = ", ith_episode,", step = ", t)
+                print("QL: episode = ", ith_episode,", step = ", t, flush=True)
 
             if verbose:
                 debug("\nt =", t, "sate =", state)
@@ -113,7 +113,7 @@ def get_p_r(state, action):
 
 def dyna_qLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0, model_usage_iteration, prefix):
 
-    Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
+    Q = defaultdict(lambda: np.random.uniform(0, 0, len(env.action_space)))
     model_estimation = RandDict.RandomDict()
     
     # Create an epsilon greedy policy function
