@@ -207,11 +207,12 @@ class Env:
     events  = None
     arriaved_demand = None
 
-    def __init__(self, local_capacity, provider_capacity, eplen):
+    def __init__(self, local_capacity, provider_capacity, eplen = 0, given_demands = None):
         self.action_space = Actions
         self.local_domain_capacity  = local_capacity
         self.provider_domain_capacity = provider_capacity
         self.episode_len = eplen
+        self.demands = given_demands.copy()
         self.events = []
 
     def start(self):
@@ -223,8 +224,9 @@ class Env:
 
         self.local_alives = [0 for i in range(total_classes)]
         self.provider_alives = [0 for i in range(total_classes)]
-        
-        self.demands = generate_req_set(self.episode_len)
+       
+        if self.episode_len > 0:
+            self.demands = generate_req_set(self.episode_len)
         
         if verbose:
             print_reqs(self.demands)
@@ -485,6 +487,7 @@ def get_valid_actions(state):
         if compute_capacity(1, all_domains_alives) >= 0:
             actions.append(Actions.federate)
         
+        #if True:
         if len(actions) == 0:
             actions.append(Actions.reject)
 
