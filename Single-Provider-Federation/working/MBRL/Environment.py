@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = False
+verbose = True
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print
@@ -168,8 +168,54 @@ def generate_class_req_set(service, load, num, class_id):
     
     return all_req
 
+def generate_class_req_set_with_learned_params(service, params, num, class_index):
+    t = 0
+    all_req = []
+    
+    for i in range(num):
+        t += np.random.exponential(params["iat"])
+        life = np.random.exponential(params["ht"])
+        all_req.append(Request(service.cpu, t, t + life, service.revenue, class_index))
 
-known_traffic_params = list()
+    if verbose:
+        print_reqs(all_req)
+    
+    return all_req
+
+
+
+known_traffic_params = dict() #of (service, load)
+ema_rate = 1.0
+decay = 1.0
+
+def take_moving_average(current, new, num):
+    if current == 0:
+        current = new
+    else:
+        current += (ema_rate / (1 + num * decay))* (new - current)
+
+    return current
+
+
+def update_IAT(class_id, current_arrival, learned_traffic_params):
+    if not(class_id in learned_traffic_params):
+        learned_traffic_params[class_id] = {"iat_seen": 0, "iat": current_arrival, "cr_ar": current_arrival, "ht_seen": -1, "ht": 0}
+    else:
+        current_estimate = learned_traffic_params[class_id]
+        current_estimate["iat_seen"] += 1
+        current_estimate["iat"] = take_moving_average(current_estimate["iat"], current_arrival - current_estimate["cr_ar"], current_estimate["iat_seen"])
+        current_estimate["cr_ar"] = current_arrival
+
+    print("IAT: class_id = ", class_id, "-->", learned_traffic_params[class_id])
+
+
+def update_HT(class_id, current_ht, learned_traffic_params):
+    current_estimate = learned_traffic_params[class_id]
+    current_estimate["ht_seen"] += 1
+    current_estimate["ht"]= take_moving_average(current_estimate["ht"], current_ht, current_estimate["ht_seen"])
+    
+    print("HT : class_id = ", class_id, "-->", learned_traffic_params[class_id])
+
 
 def generate_req_set(num):
     all_class_reqs = []
@@ -183,7 +229,6 @@ def generate_req_set(num):
                 total_n += len(req_list)
                 all_class_reqs.append(req_list)
                 
-                known_traffic_params.append(None)
                 known_traffic_params[class_id] = (service, load)
                 class_id += 1
 
@@ -201,6 +246,30 @@ def generate_req_set(num):
     return result
 
 
+def generate_req_set_with_learned_param(num, learned_traffic_params):
+    all_class_reqs = []
+    
+    total_n = 0
+    for class_index in learned_traffic_params:
+        req_list = generate_class_req_set_with_learned_params(known_traffic_params[class_index][0], learned_traffic_params[class_index], num, class_index)
+        total_n += len(req_list)
+        all_class_reqs.append(req_list)
+                
+    j = 0
+    req_set = [None] * total_n
+    for i in range(len(all_class_reqs)):
+        for k in range(len(all_class_reqs[i])):
+            req_set[j] = all_class_reqs[i][k]
+            j += 1
+
+    req_set.sort(key=lambda x: x.st)
+
+    result = req_set[:num]
+
+    return result
+
+
+
 class Env:
     action_space = None
     local_domain_capacity = 0
@@ -213,6 +282,7 @@ class Env:
     demands = None
     events  = None
     arriaved_demand = None
+    learned_traffic_params = dict() #of (seen_num, IAT, HT, last_arrival, ???)
 
     def __init__(self, local_capacity, provider_capacity, eplen = 0, given_demands = None):
         self.action_space = Actions
@@ -284,9 +354,11 @@ class Env:
             debug("env reset")
         
         self.stop()
+        self.learned_traffic_params.clear()
         return self.start()
     
     def step(self, state, action):
+        update_IAT(state.req.class_id, state.req.st, self.learned_traffic_params)
         reward = 0
         if verbose:
             debug("============= env step: start  ================")
@@ -402,6 +474,7 @@ class Env:
             debug("event.req.class_id = ", event.req.class_id)
 
         while event.event_type == 0: #departure, update the nework
+            update_HT(event.req.class_id, event.req.dt - event.req.st, self.learned_traffic_params)
             if verbose:
                 debug("Departure event")
            

@@ -103,7 +103,7 @@ def mbql_result(demands, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_num = 1000000
+    sim_num = 5
 
     parser.parse_config("config.json")
 
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     step = 3
     scale = 0
 
-    iterations = 5
+    iterations = 1
     
     i = 0
     

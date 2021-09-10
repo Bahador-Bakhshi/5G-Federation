@@ -64,33 +64,32 @@ def createEpsilonGreedyPolicy(Q, env):
     return policyFunction 
 
 
-def generate_active_demands(domains_alives, domain_index, action, requests):
+def generate_active_demands(real_env, domains_alives, domain_index, action, requests):
     this_domain_alives = domains_alives[domain_index]
 
     for class_index in range(len(this_domain_alives)):
         if this_domain_alives[class_index] > 0:
             service = Environment.known_traffic_params[class_index][0]
-            load = Environment.known_traffic_params[class_index][1]
+            avg_ht  = real_env.learned_traffic_params[class_index]["ht"]
             for _ in range(this_domain_alives[class_index]):
-                life = np.random.exponential(1.0 / load.mu)
+                life = np.random.exponential(avg_ht)
                 req = Environment.Request(service.cpu, 0, life, service.revenue, class_index)
                 req.known_action = action
                 req.deployed = domain_index
 
                 requests.append(req)
 
-
-def set_model_init_state(state, new_req_num):
+def set_model_init_state(real_env, state, new_req_num):
     global model_env 
     model_env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota)
 
     domains_alives = state.domains_alives.copy()
     requests = list()
 
-    generate_active_demands(domains_alives, 0, Environment.Actions.accept, requests)
-    generate_active_demands(domains_alives, 1, Environment.Actions.federate, requests)
+    generate_active_demands(real_env, domains_alives, 0, Environment.Actions.accept, requests)
+    generate_active_demands(real_env, domains_alives, 1, Environment.Actions.federate, requests)
 
-    new_req_set = Environment.generate_req_set(new_req_num)
+    new_req_set = Environment.generate_req_set_with_learned_param(new_req_num, real_env.learned_traffic_params)
     requests += new_req_set
     model_env.set_requests(requests)
 
@@ -145,8 +144,8 @@ def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.5):
         return reward, None
 
     td_update(Q_table, state, action, next_state, reward, gamma, alpha)
-
-    set_model_init_state(next_state, 100)
+    
+    set_model_init_state(env, next_state, 10)
     model_state = model_env.reset()
     while model_state != None:
         req = model_state.req
