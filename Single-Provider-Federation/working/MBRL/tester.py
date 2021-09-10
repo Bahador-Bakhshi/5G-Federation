@@ -147,7 +147,9 @@ if __name__ == "__main__":
             demands = Environment.generate_req_set(sim_num)
 
             greedy_profit_100, greedy_accept_100, greedy_federate_100 = greedy_result(demands, greedy_profit_100, greedy_accept_100, greedy_federate_100)
-            
+           
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+
             mbql_profit, mbql_accept, mbql_federate = mbql_result(demands, mbql_profit, mbql_accept, mbql_federate)
             
             '''

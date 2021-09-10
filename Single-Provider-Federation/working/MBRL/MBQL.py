@@ -68,7 +68,7 @@ def generate_active_demands(real_env, domains_alives, domain_index, action, requ
     this_domain_alives = domains_alives[domain_index]
 
     for class_index in range(len(this_domain_alives)):
-        if this_domain_alives[class_index] > 0:
+        if this_domain_alives[class_index] > 0 and class_index in real_env.learned_traffic_params and real_env.learned_traffic_params[class_index]["ht_seen"] >= 0:
             service = Environment.known_traffic_params[class_index][0]
             avg_ht  = real_env.learned_traffic_params[class_index]["ht"]
             for _ in range(this_domain_alives[class_index]):
@@ -144,9 +144,16 @@ def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.5):
         return reward, None
 
     td_update(Q_table, state, action, next_state, reward, gamma, alpha)
+   
+    print("..................... MBQL Start .......................")
+    print("1)\n\t ", env.learned_traffic_params)
     
     set_model_init_state(env, next_state, 10)
+    print("env       = ", env)
+    print("model_env = ", model_env)
     model_state = model_env.reset()
+    print("2)\n\t ", env.learned_traffic_params)
+    
     while model_state != None:
         req = model_state.req
 
@@ -162,6 +169,9 @@ def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.5):
             td_update(Q_table, model_state, model_action, model_next_state, model_reward, gamma, alpha)
 
         model_state = model_next_state
+    
+    print("3)\n\t ", env.learned_traffic_params)
+    print("..................... MBQL End .......................")
     
     return reward, next_state
 

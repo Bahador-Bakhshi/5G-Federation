@@ -79,6 +79,10 @@ class Local_Domain:
                 return s
 
 class Traffic_Load:
+    service = None
+    lam  = 0
+    mu   = 0
+
     def __init__(self, nsid, lam, mu):
         for service in domain.services:
             if service.nsid == nsid:
@@ -88,9 +92,13 @@ class Traffic_Load:
 
 
 class Providers:
+    pid = 0
+    quota = 0
+    federation_costs = None
+
     def __init__(self, pid):
         self.pid = pid
-        self.federation_costs = dict()
+        self.federation_costs = {}
 
     def add_fed_cost(self, nsid, cost):
         for service in domain.services:
@@ -113,13 +121,19 @@ total_actions = len(Actions)
 total_classes = 0
 
 class Request:
+    w   = 0
+    st  = 0
+    dt  = 0
+    rev = 0
+    class_id = 0
+    deployed = -1 # adomain id
+
     def __init__(self, w, st, dt, rev, index):
         self.w  = w
         self.st = st
         self.dt = dt
         self.rev= rev
         self.class_id = index
-        self.deployed = -1
 
     def __str__(self):
         return "w = "+ str(self.w) +" st = "+ str(self.st) +" dt = "+ str(self.dt) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed) +", action = "+ (str(self.known_action) if hasattr(self, 'known_action') else "None")
@@ -252,6 +266,20 @@ def generate_req_set_with_learned_param(num, learned_traffic_params):
 
 
 class Env:
+    '''
+    action_space = None
+    local_domain_capacity = 0
+    provider_domain_capacity = 0
+    episode_len = 0
+    current_local_capacity = 0
+    current_provider_capacity = 0
+    local_alives = None
+    provider_alives = None
+    demands = None
+    events  = None
+    arriaved_demand = None
+    learned_traffic_params = dict()
+    '''
     def __init__(self, local_capacity, provider_capacity, eplen = 0, given_demands = None):
         self.action_space = Actions
         self.local_domain_capacity  = local_capacity
@@ -556,6 +584,10 @@ def get_valid_actions(state):
     return actions
 
 class Event:
+    event_type = 0 # 0 for departure 1 for arrival
+    time = 0
+    req = None
+
     def __init__(self, ty, ti, rq):
         self.event_type = ty
         self.time = ti
