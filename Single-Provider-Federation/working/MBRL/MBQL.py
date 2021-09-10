@@ -64,11 +64,13 @@ def createEpsilonGreedyPolicy(Q, env):
     return policyFunction 
 
 
+observation_window = 20
+
 def generate_active_demands(real_env, domains_alives, domain_index, action, requests):
     this_domain_alives = domains_alives[domain_index]
 
     for class_index in range(len(this_domain_alives)):
-        if this_domain_alives[class_index] > 0 and class_index in real_env.learned_traffic_params and real_env.learned_traffic_params[class_index]["ht_seen"] >= 0:
+        if this_domain_alives[class_index] > 0 and class_index in real_env.learned_traffic_params and real_env.learned_traffic_params[class_index]["ht_seen"] >= observation_window:
             service = Environment.known_traffic_params[class_index][0]
             avg_ht  = real_env.learned_traffic_params[class_index]["ht"]
             for _ in range(this_domain_alives[class_index]):
@@ -89,7 +91,7 @@ def set_model_init_state(real_env, state, new_req_num):
     generate_active_demands(real_env, domains_alives, 0, Environment.Actions.accept, requests)
     generate_active_demands(real_env, domains_alives, 1, Environment.Actions.federate, requests)
 
-    new_req_set = Environment.generate_req_set_with_learned_param(new_req_num, real_env.learned_traffic_params)
+    new_req_set = Environment.generate_req_set_with_learned_param(new_req_num, real_env.learned_traffic_params, observation_window)
     requests += new_req_set
     model_env.set_requests(requests)
 
@@ -129,7 +131,7 @@ def get_action(state, epsilon):
     return action
 
 
-def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.5):
+def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.05):
     if verbose:
         debug("sate =", state)
         print_Q(Q_table)
@@ -146,13 +148,8 @@ def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.5):
     td_update(Q_table, state, action, next_state, reward, gamma, alpha)
    
     print("..................... MBQL Start .......................")
-    print("1)\n\t ", env.learned_traffic_params)
-    
-    set_model_init_state(env, next_state, 10)
-    print("env       = ", env)
-    print("model_env = ", model_env)
+    set_model_init_state(env, next_state, 100)
     model_state = model_env.reset()
-    print("2)\n\t ", env.learned_traffic_params)
     
     while model_state != None:
         req = model_state.req
@@ -170,7 +167,6 @@ def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.5):
 
         model_state = model_next_state
     
-    print("3)\n\t ", env.learned_traffic_params)
     print("..................... MBQL End .......................")
     
     return reward, next_state

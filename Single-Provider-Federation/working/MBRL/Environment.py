@@ -3,7 +3,7 @@ import numpy as np
 import sys 
 import heapq
 
-verbose = True
+verbose = False
 debug = print if verbose else lambda *a, **k: None
 warning = print 
 error = print
@@ -122,7 +122,7 @@ class Request:
         self.deployed = -1
 
     def __str__(self):
-        return "w = "+ str(self.w) +" st = "+ str(self.st) +" dt = "+ str(self.dt) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed) +", action = "+ (str(self.known_action) if hasattr(self, 'known_action') else "None")
+        return "w = "+ str(self.w) +" st = "+ str(format(self.st,"2.3f")) +" dt = "+ str(format(self.dt,"2.3f")) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed) +", action = "+ (str(self.known_action) if hasattr(self, 'known_action') else "None")
 
 
 def print_reqs(reqs):
@@ -176,7 +176,6 @@ def take_moving_average(current, new, num):
 
 
 def update_IAT(class_id, current_arrival, learned_traffic_params):
-    print("update_IAT: params = ", learned_traffic_params)
     if not(class_id in learned_traffic_params):
         learned_traffic_params[class_id] = {"iat_seen": 0, "iat": current_arrival, "cr_ar": current_arrival, "ht_seen": -1, "ht": 0}
     else:
@@ -185,16 +184,17 @@ def update_IAT(class_id, current_arrival, learned_traffic_params):
         current_estimate["iat"] = take_moving_average(current_estimate["iat"], current_arrival - current_estimate["cr_ar"], current_estimate["iat_seen"])
         current_estimate["cr_ar"] = current_arrival
 
-    print("IAT: class_id = ", class_id, "-->", learned_traffic_params[class_id])
+    if verbose:
+        print("IAT: class_id = ", class_id, "-->", learned_traffic_params[class_id])
 
 
 def update_HT(class_id, current_ht, learned_traffic_params):
-    print("update_HT: learned_params = ", learned_traffic_params)
     current_estimate = learned_traffic_params[class_id]
     current_estimate["ht_seen"] += 1
     current_estimate["ht"]= take_moving_average(current_estimate["ht"], current_ht, current_estimate["ht_seen"])
     
-    print("HT : class_id = ", class_id, "-->", learned_traffic_params[class_id])
+    if verbose:
+        print("HT : class_id = ", class_id, "-->", learned_traffic_params[class_id])
 
 
 def generate_req_set(num):
@@ -226,12 +226,12 @@ def generate_req_set(num):
     return result
 
 
-def generate_req_set_with_learned_param(num, learned_traffic_params):
+def generate_req_set_with_learned_param(num, learned_traffic_params, window):
     all_class_reqs = []
     
     total_n = 0
     for class_index in learned_traffic_params:
-        if learned_traffic_params[class_index]["iat_seen"] > 0 and learned_traffic_params[class_index]["ht_seen"] >= 0:
+        if learned_traffic_params[class_index]["iat_seen"] >= window and learned_traffic_params[class_index]["ht_seen"] >= window:
             req_list = generate_class_req_set_with_learned_params(known_traffic_params[class_index][0], learned_traffic_params[class_index], num, class_index)
             total_n += len(req_list)
             all_class_reqs.append(req_list)

@@ -23,6 +23,7 @@ def test_greedy_policy(demands):
     i = 0
     last_total_reward = 0
     window = 100
+    warmup = int(len(demands) * 0.2)
 
     while state != None:
         i += 1
@@ -38,7 +39,8 @@ def test_greedy_policy(demands):
        
         next_state, reward, done = env.step(state, action)
 
-        total_reward += reward
+        if i > warmup:
+            total_reward += reward
 
         if done:
             break
@@ -62,12 +64,15 @@ def test_mbql_policy(demands):
     i = 0
     last_total_reward = 0
     window = 100
+    warmup = int(len(demands) * 0.2)
    
     while state != None:
         i += 1
 
         reward, next_state = MBQL.MBqLearning(env, state)
-        total_reward += reward
+
+        if i > warmup:
+            total_reward += reward
 
         state = next_state
 
@@ -103,16 +108,15 @@ def mbql_result(demands, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_num = 5
+    sim_num = 500
 
     parser.parse_config("config.json")
-
     
     init_size = 2
     step = 3
     scale = 0
 
-    iterations = 1
+    iterations = 10
     
     i = 0
     
