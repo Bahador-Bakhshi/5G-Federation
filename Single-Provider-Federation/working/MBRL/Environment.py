@@ -16,6 +16,8 @@ class State:
     domains_alives= []
     arrivals_departures = ()
 
+    req = None
+
     def __init__(self, tc_num):
         self.domains_alives = [None] * (1 + providers_num) #1 for the local domain
         for i in range(len(self.domains_alives)):
@@ -142,7 +144,7 @@ class Request:
         self.class_id = index
 
     def __str__(self):
-        return "w = "+ str(self.w) +" st = "+ str(self.st) +" dt = "+ str(self.dt) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed)
+        return "w = "+ str(self.w) +" st = "+ str(self.st) +" dt = "+ str(self.dt) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed) +", action = "+ (str(self.known_action) if hasattr(self, 'known_action') else "None")
 
 
 def print_reqs(reqs):
@@ -167,18 +169,23 @@ def generate_class_req_set(service, load, num, class_id):
     return all_req
 
 
+known_traffic_params = list()
+
 def generate_req_set(num):
     all_class_reqs = []
     
     total_n = 0
+    class_id = 0
     for service in domain.services:
-        class_id = 0
         for load in traffic_loads:
             if service.nsid == load.service.nsid:
                 req_list = generate_class_req_set(service, load, num, class_id)
                 total_n += len(req_list)
                 all_class_reqs.append(req_list)
-            class_id += 1
+                
+                known_traffic_params.append(None)
+                known_traffic_params[class_id] = (service, load)
+                class_id += 1
 
     j = 0
     req_set = [None] * total_n
@@ -212,8 +219,12 @@ class Env:
         self.local_domain_capacity  = local_capacity
         self.provider_domain_capacity = provider_capacity
         self.episode_len = eplen
-        self.demands = given_demands.copy()
+        if given_demands is not None:
+            self.demands = given_demands.copy()
         self.events = []
+
+    def set_requests(self, demands):
+        self.demands = demands
 
     def start(self):
         if verbose:
@@ -229,7 +240,11 @@ class Env:
             self.demands = generate_req_set(self.episode_len)
         
         if verbose:
+            print("env.demands...")
             print_reqs(self.demands)
+
+        if len(self.demands) == 0:
+            return None
 
         for i in range(len(self.demands)):
             self.events.append(Event(1, self.demands[i].st, self.demands[i]))
@@ -252,6 +267,7 @@ class Env:
         state = State(len(traffic_loads))
         state.domains_alives = [tuple(self.local_alives), tuple(self.provider_alives)]
         state.arrivals_departures = tuple(requests)
+        state.req = event.req
         
         if verbose:
             print("The first state = ", state)
@@ -437,6 +453,7 @@ class Env:
         next_state = State(len(traffic_loads))
         next_state.domains_alives = [tuple(self.local_alives), tuple(self.provider_alives)]
         next_state.arrivals_departures = tuple(requests)
+        next_state.req = event.req
 
         if verbose:
             debug("next_state = ", next_state)
@@ -487,8 +504,8 @@ def get_valid_actions(state):
         if compute_capacity(1, all_domains_alives) >= 0:
             actions.append(Actions.federate)
         
-        #if True:
-        if len(actions) == 0:
+        if True:
+        #if len(actions) == 0:
             actions.append(Actions.reject)
 
     if verbose:

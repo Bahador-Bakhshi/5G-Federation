@@ -1,6 +1,6 @@
 {
 	"local":{
-		"total_cpu": 20,
+		"total_cpu": 25,
 		"ns_catalog":[
 			{
 				"id": 0,
@@ -10,7 +10,7 @@
 			{
 				"id": 1,
 				"cpu": 2,
-				"revenue": 40
+				"revenue": 60
 			}
 		]
 	},
@@ -18,15 +18,15 @@
 	"providers":[
 		{
 			"provider_id": 0,
-			"quota": 10,
+			"quota": 15,
 			"federation_costs":[
 				{
 					"nsid": 0,
-					"cost": 30
+					"cost": 40
 				},
 				{
 					"nsid": 1,
-					"cost": 1
+					"cost": 5
 				}
 			]
 		}

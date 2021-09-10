@@ -19,7 +19,13 @@ def test_greedy_policy(demands):
     total_reward = 0
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, given_demands = demands)
     state = env.reset()
+
+    i = 0
+    last_total_reward = 0
+    window = 100
+
     while state != None:
+        i += 1
         valid_actions = Environment.get_valid_actions(state)
         
         action = None
@@ -38,7 +44,12 @@ def test_greedy_policy(demands):
             break
 
         state = next_state
+        
+        if i % window == 0:
+            print("window = ", window, "gain = ", (total_reward - last_total_reward) / window)
+            last_total_reward = total_reward
 
+    print("---------------------------------------")
     return total_reward, 0, 0
 
 
@@ -47,13 +58,24 @@ def test_mbql_policy(demands):
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, given_demands = demands)
     MBQL.init(env)
     state = env.reset()
-    
+ 
+    i = 0
+    last_total_reward = 0
+    window = 100
+   
     while state != None:
+        i += 1
+
         reward, next_state = MBQL.MBqLearning(env, state)
         total_reward += reward
 
         state = next_state
 
+        if i % window == 0:
+            print("window = ", window, "gain = ", (total_reward - last_total_reward) / window)
+            last_total_reward = total_reward
+    
+    print("--------------------------------------")
     return total_reward, 0, 0
 
 
@@ -81,8 +103,7 @@ def mbql_result(demands, profit, accept, federate):
 
 if __name__ == "__main__":
 
-
-    sim_num = 200000
+    sim_num = 1000000
 
     parser.parse_config("config.json")
 
@@ -91,7 +112,7 @@ if __name__ == "__main__":
     step = 3
     scale = 0
 
-    iterations = 1
+    iterations = 5
     
     i = 0
     
