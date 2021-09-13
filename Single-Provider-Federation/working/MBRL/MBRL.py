@@ -16,6 +16,7 @@ from DP import policy_iteration, print_policy
 Q_table = None
 policy  = None
 model_env = None
+rho = 0
 
 def print_Q(Q):
     debug("---------------------")
@@ -123,20 +124,37 @@ def init(env):
     global policy
     policy = createEpsilonGreedyPolicy(Q_table, env)
 
+    global rho
+    rho = 0
 
-def td_update(Q, state, action, next_state, reward, discount_factor, alpha):
-    best_next_action = np.argmax(Q[next_state])
+
+def td_update(state, action, next_state, reward, alpha):
+    best_next_action = np.argmax(Q_table[next_state])
     
-    td_target = reward + discount_factor * Q[next_state][best_next_action]
+    td_target = reward - rho + Q_table[next_state][best_next_action]
     if verbose:
         debug("td_target = ", td_target)
                 
-    td_delta = td_target - Q[state][action]
+    td_delta = td_target - Q_table[state][action]
     if verbose:
         debug("td_delta = ", td_delta)
 
-    Q[state][action] += alpha * td_delta
+    Q_table[state][action] += alpha * td_delta
  
+
+def td_update_rho(state, next_state, reward, beta):
+    max_state_inedx = np.argmax(Q_table[state])
+    max_next_state_index = np.argmax(Q_table[next_state])
+
+    td_target = reward - Q_table[state][max_state_inedx] + Q_table[next_state][max_next_state_index]
+    
+    global rho
+    td_delta = td_target - rho
+
+    rho += beta * td_delta
+
+    #print("rho = ", rho)
+
 
 def get_action(state, epsilon):
     action_probabilities = policy(state, epsilon)
@@ -147,11 +165,16 @@ def get_action(state, epsilon):
     action = Environment.Actions(action_index)
     if verbose:
         debug("selected action =", action)
-    
-    return action
+   
+    if action_index == np.argmax(Q_table[state]):
+        update_rho = True
+    else:
+        update_rho = False
+
+    return action, update_rho
 
 
-def apply_model(real_env, state, epsilon, gamma, alpha, sample_num, sample_len):
+def apply_model(real_env, state, epsilon, alpha, beta, sample_num, sample_len):
     #print("..................... MBQL Start .......................")
     for _ in range(sample_num):
         set_model_init_state(real_env, state, sample_len)
@@ -163,26 +186,30 @@ def apply_model(real_env, state, epsilon, gamma, alpha, sample_num, sample_len):
             if hasattr(req, 'known_action') and req.known_action != None:
                 model_action = req.known_action
                 q_update = False
+                update_rho = False
             else:
-                model_action = get_action(model_state, epsilon)
+                model_action, update_rho = get_action(model_state, epsilon)
                 q_update = True
         
             model_next_state, model_reward, model_done = model_env.step(model_state, model_action)
             
             if q_update:
-                td_update(Q_table, model_state, model_action, model_next_state, model_reward, gamma, alpha)
-
+                td_update(model_state, model_action, model_next_state, model_reward, alpha)
+            
+                if update_rho:
+                    td_update_rho(model_state, model_next_state, model_reward, beta)
+ 
             model_state = model_next_state
     
     #print("..................... MBQL End .......................")
     
 
-def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.5):
+def MBrLearning(env, state, alpha = 0.1,  epsilon = 0.3, beta = 0.1):
     if verbose:
         debug("sate =", state)
         print_Q(Q_table)
     
-    action = get_action(state, epsilon)
+    action, update_rho = get_action(state, epsilon)
 
     next_state, reward, done = env.step(state, action)
     if verbose:
@@ -191,10 +218,12 @@ def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.5):
     if done:
         return reward, None
 
-    td_update(Q_table, state, action, next_state, reward, gamma, alpha)
+    td_update(state, action, next_state, reward, alpha)
+
+    if update_rho:
+        td_update_rho(state, next_state, reward, beta)
  
-    #apply_model(env, next_state, epsilon, gamma, alpha, 10, 5)
-    apply_model(env, next_state, 1.0, gamma, alpha, 1, 1)
+    apply_model(env, next_state, 1.0, alpha, beta, 20, 5)
     
     return reward, next_state
 

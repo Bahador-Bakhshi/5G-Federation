@@ -6,6 +6,7 @@ from collections import defaultdict
 import sys
 import QL
 import MBQL
+import MBRL
 import RL
 import heapq
 import itertools 
@@ -55,10 +56,10 @@ def test_greedy_policy(demands):
     return total_reward, 0, 0
 
 
-def test_mbql_policy(demands):
+def test_mbql_policy(module, agent, demands):
     total_reward = 0
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, given_demands = demands)
-    MBQL.init(env)
+    module.init(env)
     state = env.reset()
  
     i = 0
@@ -69,7 +70,7 @@ def test_mbql_policy(demands):
     while state != None:
         i += 1
 
-        reward, next_state = MBQL.MBqLearning(env, state)
+        reward, next_state = agent(env, state)
 
         if i > warmup:
             total_reward += reward
@@ -95,10 +96,10 @@ def greedy_result(demands, profit, accept, federate):
     return profit, accept, federate
 
 
-def mbql_result(demands, profit, accept, federate):
+def mb_result(module, agent, demands, profit, accept, federate):
     demands_num = float(len(demands))
 
-    p, a, f = test_mbql_policy(demands)
+    p, a, f = test_mbql_policy(module, agent, demands)
     profit += p / demands_num
     accept += a / demands_num
     federate += f / demands_num
@@ -108,7 +109,7 @@ def mbql_result(demands, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_num = 100
+    sim_num = 500
 
     parser.parse_config("config.json")
     
@@ -131,9 +132,9 @@ if __name__ == "__main__":
         DP.print_policy(dp_policy_95)
         '''
         
-        greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit = rl_profit = mbql_profit = 0
-        greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_accept = rl_accept = mbql_accept = 0
-        greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate = rl_federate = mbql_federate = 0
+        greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit = rl_profit = mbql_profit = mbrl_profit = 0
+        greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_accept = rl_accept = mbql_accept = mbrl_accept = 0
+        greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate = rl_federate = mbql_federate = mbrl_federate = 0
 
         for j in range(iterations):
             
@@ -154,7 +155,9 @@ if __name__ == "__main__":
            
             print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 
-            mbql_profit, mbql_accept, mbql_federate = mbql_result(demands, mbql_profit, mbql_accept, mbql_federate)
+            mbql_profit, mbql_accept, mbql_federate = mb_result(MBQL, MBQL.MBqLearning, demands, mbql_profit, mbql_accept, mbql_federate)
+            
+            mbrl_profit, mbrl_accept, mbrl_federate = mb_result(MBRL, MBRL.MBrLearning, demands, mbrl_profit, mbrl_accept, mbrl_federate)
             
             '''
             dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
@@ -175,9 +178,11 @@ if __name__ == "__main__":
         print("DP_95 Profit = ", dp_profit_95 / iterations)
         print("QL Profit   = ", ql_profit / iterations)
         print("MBQL Profit = ", mbql_profit / iterations)
+        print("MBRL Profit = ", mbrl_profit / iterations)
         print("RL Profit   = ", rl_profit / iterations)
         print("", flush=True)
 
+        '''
         print("Capacity_Accept = ", Environment.domain.total_cpu)
         print("Greedy Accept 00 = ", greedy_accept_00 / iterations)
         print("Greedy Accept 50  = ", greedy_accept_50 / iterations)
@@ -203,6 +208,7 @@ if __name__ == "__main__":
         print("MBQL Federate  = ", mbql_federate / iterations)
         print("RL Federate    = ", rl_federate / iterations)
         print("", flush=True)
+        '''
 
     print("DONE!!!")
 
