@@ -71,6 +71,10 @@ def generate_active_demands(real_env, domains_alives, domain_index, action, requ
 
     for class_index in range(len(this_domain_alives)):
         if this_domain_alives[class_index] > 0 and class_index in real_env.learned_traffic_params and real_env.learned_traffic_params[class_index]["ht_seen"] >= observation_window:
+
+            if np.random.uniform(0,1) < 0.1:
+                print(real_env.learned_traffic_params)
+
             service = Environment.known_traffic_params[class_index][0]
             avg_ht  = real_env.learned_traffic_params[class_index]["ht"]
             for _ in range(this_domain_alives[class_index]):
@@ -90,6 +94,20 @@ def set_model_init_state(real_env, state, new_req_num):
 
     generate_active_demands(real_env, domains_alives, 0, Environment.Actions.accept, requests)
     generate_active_demands(real_env, domains_alives, 1, Environment.Actions.federate, requests)
+    
+    class_index = state.arrivals_departures.index(1)
+    service = Environment.known_traffic_params[class_index][0]
+    if class_index in real_env.learned_traffic_params:
+        params = real_env.learned_traffic_params[class_index]
+        life = np.random.exponential(params["ht"])
+    else:
+        life = np.random.uniform(0, 1)
+
+    arrived_request = Environment.Request(service.cpu, 0, life, service.revenue, class_index)
+
+    tmp_list = list()
+    tmp_list.append(arrived_request)
+    requests += tmp_list
 
     new_req_set = Environment.generate_req_set_with_learned_param(new_req_num, real_env.learned_traffic_params, observation_window)
     requests += new_req_set
@@ -131,7 +149,33 @@ def get_action(state, epsilon):
     return action
 
 
-def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.05):
+def apply_model(real_env, state, epsilon, gamma, alpha, sample_num, sample_len):
+    #print("..................... MBQL Start .......................")
+    for _ in range(sample_num):
+        set_model_init_state(real_env, state, sample_len)
+        model_state = model_env.reset()
+    
+        while model_state != None:
+            req = model_state.req
+
+            if hasattr(req, 'known_action') and req.known_action != None:
+                model_action = req.known_action
+                q_update = False
+            else:
+                model_action = get_action(model_state, epsilon)
+                q_update = True
+        
+            model_next_state, model_reward, model_done = model_env.step(model_state, model_action)
+            
+            if q_update:
+                td_update(Q_table, model_state, model_action, model_next_state, model_reward, gamma, alpha)
+
+            model_state = model_next_state
+    
+    #print("..................... MBQL End .......................")
+    
+
+def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.5):
     if verbose:
         debug("sate =", state)
         print_Q(Q_table)
@@ -146,28 +190,9 @@ def MBqLearning(env, state, alpha = 0.1,  epsilon = 0.3, gamma = 0.05):
         return reward, None
 
     td_update(Q_table, state, action, next_state, reward, gamma, alpha)
-   
-    print("..................... MBQL Start .......................")
-    set_model_init_state(env, next_state, 100)
-    model_state = model_env.reset()
-    
-    while model_state != None:
-        req = model_state.req
-
-        if hasattr(req, 'known_action') and req.known_action != None:
-            model_action = req.known_action
-            q_update = False
-        else:
-            model_action = get_action(model_state, epsilon)
-            q_update = True
-        
-        model_next_state, model_reward, model_done = model_env.step(model_state, model_action)
-        if q_update:
-            td_update(Q_table, model_state, model_action, model_next_state, model_reward, gamma, alpha)
-
-        model_state = model_next_state
-    
-    print("..................... MBQL End .......................")
+ 
+    #apply_model(env, next_state, epsilon, gamma, alpha, 10, 5)
+    apply_model(env, next_state, 1.0, gamma, alpha, 1, 1)
     
     return reward, next_state
 

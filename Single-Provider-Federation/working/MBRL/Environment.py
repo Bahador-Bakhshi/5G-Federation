@@ -120,6 +120,7 @@ class Request:
         self.rev= rev
         self.class_id = index
         self.deployed = -1
+        self.known_action = None
 
     def __str__(self):
         return "w = "+ str(self.w) +" st = "+ str(format(self.st,"2.3f")) +" dt = "+ str(format(self.dt,"2.3f")) +" rev = "+ str(self.rev) +", index = "+ str(self.class_id) +", deployed = "+ str(self.deployed) +", action = "+ (str(self.known_action) if hasattr(self, 'known_action') else "None")
@@ -562,8 +563,7 @@ class Event:
         self.req = rq
 
     def __lt__(self, other):
-        return self.time < other.time
-
+        return (self.time < other.time) or (self.time == other.time and self.req.known_action != None)
 
 def print_events(events):
     if verbose:
