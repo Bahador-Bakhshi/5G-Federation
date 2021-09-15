@@ -17,6 +17,10 @@ Q_table = None
 policy  = None
 model_env = None
 rho = 0
+counter = 0
+alpha = 0
+beta = 0
+epsilon = 0
 
 def print_Q(Q):
     debug("-------- Q_table ----------")
@@ -144,6 +148,12 @@ def init(env):
 
     global rho
     rho = 0
+
+    global counter, alpha, beta, epsilon
+    counter = 0
+    alpha = 0.1
+    beta = 0.1
+    epsilon = 0.3
 
 
 def td_update(state, action, next_state, reward, alpha):
@@ -299,12 +309,21 @@ def init_new_state(state, real_env, alpha, beta):
         estimate_action_value(state, action, real_env, 10, alpha, beta)
 
 
-def MBrLearning(env, state, alpha = 0.1,  epsilon = 0.3, beta = 0.1):
+def MBrLearning(env, state):
     if verbose:
         debug("sate =", state)
         print_Q(Q_table)
     
-    
+    global counter, epsilon, alpha, beta
+
+    counter += 1
+    if (counter + 1) % 100 == 0:
+        alpha = max(0.05, alpha * 0.85)
+        beta = max(0.05, beta * 0.85)
+        epsilon = max(0.1, epsilon * 0.85)
+
+        print("alpha = ", alpha, "beta = ", beta, "epsilon = ", epsilon)
+
     action, update_rho = get_action(state, epsilon)
 
     next_state, reward, done = env.step(state, action)

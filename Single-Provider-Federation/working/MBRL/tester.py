@@ -61,7 +61,7 @@ def test_policy(policy, demands):
     return total_reward, 0, 0
 
 
-def test_mbql_policy(module, agent, demands):
+def test_mb_policy(module, agent, demands):
     total_reward = 0
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, given_demands = demands)
     module.init(env)
@@ -121,7 +121,7 @@ def mf_result(mf_policy, demands, profit, accept, federate):
 def mb_result(module, agent, demands, profit, accept, federate):
     demands_num = float(len(demands))
 
-    p, a, f = test_mbql_policy(module, agent, demands)
+    p, a, f = test_mb_policy(module, agent, demands)
     profit += p / (demands_num - warmup)
     accept += a / (demands_num - warmup)
     federate += f / (demands_num - warmup)
@@ -131,7 +131,7 @@ def mb_result(module, agent, demands, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_num = 100
+    sim_num = 5000
     episode_num = 1
 
     parser.parse_config("config.json")
@@ -174,7 +174,7 @@ if __name__ == "__main__":
             rl_policy = RL.rLearning(env, episode_num, 1)
 
             demands = Environment.generate_req_set(sim_num)
-            warmup = int(len(demands) * 0.2)
+            warmup = int(len(demands) * 0.3)
 
             greedy_profit_100, greedy_accept_100, greedy_federate_100 = greedy_result(demands, greedy_profit_100, greedy_accept_100, greedy_federate_100)
            

@@ -54,7 +54,7 @@ def createEpsilonGreedyPolicy(Q, env):
     return policyFunction 
 
 
-def rLearning(env, num_episodes, dynamic, alpha = 0.2,  epsilon = 0.8, beta = 0.6):
+def rLearning(env, num_episodes, dynamic, alpha = 0.1,  epsilon = 1.0, beta = 0.1):
     
     Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
 
@@ -67,18 +67,19 @@ def rLearning(env, num_episodes, dynamic, alpha = 0.2,  epsilon = 0.8, beta = 0.
     # For every episode
     for ith_episode in range(num_episodes):
 
-        if(dynamic == 1):
-            alpha = alpha * 0.99
-            epsilon = epsilon * 0.99
-            beta = beta * 0.99
-
-        if verbose:
-            debug("alpha = ", alpha, "epsilon = ", epsilon)
-            
         # Reset the environment and pick the first action
         state = env.reset()
 
         for t in itertools.count():
+
+            if (t + 1) % 100 == 0:
+                if(dynamic == 1):
+                    alpha = max(0.05, alpha * 0.85)
+                    beta = max(0.05, beta * 0.85)
+                    epsilon = max(0.1, epsilon * 0.85)
+
+            if verbose:
+                debug("alpha = ", alpha, "epsilon = ", epsilon)
             
             # get probabilities of all actions from current state
             action_probabilities = policy(state, epsilon)
