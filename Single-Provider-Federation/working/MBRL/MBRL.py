@@ -19,14 +19,27 @@ model_env = None
 rho = 0
 
 def print_Q(Q):
-    debug("---------------------")
+    debug("-------- Q_table ----------")
     for s, s_a in Q.items():
         debug("{}: {}".format(s, s_a))
     debug("*********************")
 
+def init_val(env, state):
+    if state in Q_table:
+        return
+
+    va = Environment.get_valid_actions(state)
+    Q_table[state] = [-1 * np.inf] * len(env.action_space)
+
+    for action in va:
+        Q_table[state][action] = 0
+    
 
 def createEpsilonGreedyPolicy(Q, env): 
     def policyFunction(state, epsilon): 
+        if not (state in Q_table):
+            init_val(env, state)
+
         va = Environment.get_valid_actions(state)
         num_actions = len(va)
 
@@ -65,13 +78,13 @@ def createEpsilonGreedyPolicy(Q, env):
     return policyFunction 
 
 
-observation_window = 20
+observation_window = 0
 
 def generate_active_demands(real_env, domains_alives, domain_index, action, requests):
     this_domain_alives = domains_alives[domain_index]
 
     for class_index in range(len(this_domain_alives)):
-        if this_domain_alives[class_index] > 0 and class_index in real_env.learned_traffic_params and real_env.learned_traffic_params[class_index]["ht_seen"] >= observation_window:
+        if this_domain_alives[class_index] > 0:
 
             '''
             if np.random.uniform(0,1) < 0.1:
@@ -79,7 +92,11 @@ def generate_active_demands(real_env, domains_alives, domain_index, action, requ
             '''
 
             service = Environment.known_traffic_params[class_index][0]
-            avg_ht  = real_env.learned_traffic_params[class_index]["ht"]
+            if class_index in real_env.learned_traffic_params and real_env.learned_traffic_params[class_index]["ht_seen"] > observation_window:
+                avg_ht = real_env.learned_traffic_params[class_index]["ht"]
+            else:
+                avg_ht = np.random.uniform(0,10)
+
             for _ in range(this_domain_alives[class_index]):
                 life = np.random.exponential(avg_ht)
                 req = Environment.Request(service.cpu, 0, life, service.revenue, class_index)
@@ -119,7 +136,8 @@ def set_model_init_state(real_env, state, new_req_num):
 
 def init(env):
     global Q_table
-    Q_table = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
+    #Q_table = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
+    Q_table = dict()
     
     global policy
     policy = createEpsilonGreedyPolicy(Q_table, env)
@@ -174,8 +192,18 @@ def get_action(state, epsilon):
     return action, update_rho
 
 
+def get_greedy_action(env, state):
+    if not (state in Q_table):
+        init_val(env, state)
+
+    action_index = np.argmax(Q_table[state])
+    return Environment.Actions(action_index)
+
+
 def apply_model(real_env, state, epsilon, alpha, beta, sample_num, sample_len):
-    #print("..................... MBQL Start .......................")
+    if verbose:
+        print("..................... MBQL Start .......................")
+    
     for _ in range(sample_num):
         set_model_init_state(real_env, state, sample_len)
         model_state = model_env.reset()
@@ -192,22 +220,90 @@ def apply_model(real_env, state, epsilon, alpha, beta, sample_num, sample_len):
                 q_update = True
         
             model_next_state, model_reward, model_done = model_env.step(model_state, model_action)
+
+            if model_next_state != None:
+                if not (model_next_state in Q_table):
+                    init_val(real_env, model_next_state) 
             
-            if q_update:
-                td_update(model_state, model_action, model_next_state, model_reward, alpha)
+                    if q_update:
+                        td_update(model_state, model_action, model_next_state, model_reward, alpha)
             
-                if update_rho:
-                    td_update_rho(model_state, model_next_state, model_reward, beta)
+                    if update_rho:
+                        td_update_rho(model_state, model_next_state, model_reward, beta)
  
             model_state = model_next_state
     
-    #print("..................... MBQL End .......................")
+    if verbose:
+        print("..................... MBQL End .......................")
     
+def estimate_action_value(state, action, real_env, sample_len, alpha, beta):
+    if verbose:
+        print("..................... Estimation Start .......................")
+        print("state  = ", state)
+        print("action = ", action)
+
+    current_q_copy = Q_table[state].copy()
+    Q_table[state][action] = np.inf
+
+    update_trace = list()
+
+    set_model_init_state(real_env, state, sample_len)
+    
+    model_state = model_env.reset()
+    
+    while model_state != None:
+        req = model_state.req
+        
+        if hasattr(req, 'known_action') and req.known_action != None:
+            model_action = req.known_action
+            q_update = False
+        else:
+            model_action = get_greedy_action(model_env, model_state)
+            q_update = True
+       
+        if model_action == Environment.Actions.no_action:
+            print("Q = ", Q_table[model_state])
+            print("s = ", model_state)
+            print("a = ", model_action)
+            sys.exit(-1)
+
+        model_next_state, model_reward, model_done = model_env.step(model_state, model_action)
+            
+        if q_update:
+            update_trace.append((model_state, model_next_state, model_reward, model_action, model_done))
+ 
+        model_state = model_next_state
+
+    #print("update_trace = ", update_trace)
+    Q_table[state] = current_q_copy.copy()
+
+    for i in range(len(update_trace) - 1, -1, -1):
+        transition = update_trace[i]
+        if transition[1] == None:
+            continue #the last one
+        
+        td_update(transition[0], transition[3], transition[1], transition[2], alpha)
+        if i > 0:
+            td_update_rho(transition[0], transition[1], transition[2], beta)
+
+    if verbose:
+        print("..................... Estimation End .......................")
+ 
+
+def init_new_state(state, real_env, alpha, beta):
+    va = Environment.get_valid_actions(state)
+    #Q_table[state] = [-1 * np.inf] * len(real_env.action_space)
+
+    for action in va:
+        #Q_table[state][action] = 0
+        estimate_action_value(state, action, real_env, 10, alpha, beta)
+
 
 def MBrLearning(env, state, alpha = 0.1,  epsilon = 0.3, beta = 0.1):
     if verbose:
         debug("sate =", state)
         print_Q(Q_table)
+    
     
     action, update_rho = get_action(state, epsilon)
 
@@ -218,12 +314,17 @@ def MBrLearning(env, state, alpha = 0.1,  epsilon = 0.3, beta = 0.1):
     if done:
         return reward, None
 
+    if not (next_state in Q_table):
+        #init_new_state(next_state, env, alpha, beta)
+        init_val(env, next_state)
+
     td_update(state, action, next_state, reward, alpha)
 
     if update_rho:
         td_update_rho(state, next_state, reward, beta)
  
-    apply_model(env, next_state, 1.0, alpha, beta, 20, 5)
+    apply_model(env, next_state, 1.0, alpha, beta, 10, 10)
+    init_new_state(next_state, env, alpha, beta)
     
     return reward, next_state
 

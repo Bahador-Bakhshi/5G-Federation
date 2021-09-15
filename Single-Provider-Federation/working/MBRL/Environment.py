@@ -227,15 +227,26 @@ def generate_req_set(num):
     return result
 
 
-def generate_req_set_with_learned_param(num, learned_traffic_params, window):
+def generate_req_set_with_learned_param(num, learned_traffic_params, window = 0):
     all_class_reqs = []
     
     total_n = 0
     for class_index in learned_traffic_params:
-        if learned_traffic_params[class_index]["iat_seen"] >= window and learned_traffic_params[class_index]["ht_seen"] >= window:
-            req_list = generate_class_req_set_with_learned_params(known_traffic_params[class_index][0], learned_traffic_params[class_index], num, class_index)
-            total_n += len(req_list)
-            all_class_reqs.append(req_list)
+        params = dict()
+
+        if learned_traffic_params[class_index]["iat_seen"] > window:
+            params["iat"] = learned_traffic_params[class_index]["iat"]
+        else:
+            params["iat"] = np.random.uniform(0, 1)
+
+        if learned_traffic_params[class_index]["ht_seen"] > window:
+            params["ht"] = learned_traffic_params[class_index]["ht"]
+        else:
+            params["ht"] = np.random.uniform(0, 1)
+
+        req_list = generate_class_req_set_with_learned_params(known_traffic_params[class_index][0], params, num, class_index)
+        total_n += len(req_list)
+        all_class_reqs.append(req_list)
                 
     j = 0
     req_set = [None] * total_n
@@ -343,6 +354,7 @@ class Env:
         
         if action == Actions.no_action:
             error("no_action")
+            raise Exception("no_action")
             sys.exit()
 
         req = self.arriaved_demand
