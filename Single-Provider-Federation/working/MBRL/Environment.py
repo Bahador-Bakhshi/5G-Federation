@@ -133,12 +133,14 @@ def print_reqs(reqs):
         pass
 
 
-def generate_class_req_set(service, load, num, class_id):
+def generate_class_req_set(service, load, time, class_id):
     t = 0
     all_req = []
+    time_slot_size = (1.0 * time) / len(load.lam)
     
-    for i in range(num):
-        t += np.random.exponential(1.0 / load.lam)
+    while t < time:
+        slot_index = int (t / time_slot_size)
+        t += np.random.exponential(1.0 / load.lam[slot_index])
         life = np.random.exponential(1.0 / load.mu)
         all_req.append(Request(service.cpu, t, t + life, service.revenue, class_id))
 
@@ -164,17 +166,29 @@ def generate_class_req_set_with_learned_params(service, params, num, class_index
 
 
 known_traffic_params = dict() #of (service, load)
-ema_rate = 1.0
+sample_rate = 1.0
 decay = 1.0
+ema_rate = 0.05
 
 def take_moving_average(current, new, num):
     if current == 0:
         current = new
     else:
-        current += (ema_rate / (1 + num * decay))* (new - current)
+        current += ema_rate * (new - current)
 
     return current
 
+def take_sample_average(current, new, num):
+    if current == 0:
+        current = new
+    else:
+        current += (sample_rate / (1 + num * decay))* (new - current)
+
+    return current
+
+def print_model_param(params):
+    for class_index in params:
+        print("params = ", class_index, params[class_index])
 
 def update_IAT(class_id, current_arrival, learned_traffic_params):
     if not(class_id in learned_traffic_params):
@@ -192,13 +206,13 @@ def update_IAT(class_id, current_arrival, learned_traffic_params):
 def update_HT(class_id, current_ht, learned_traffic_params):
     current_estimate = learned_traffic_params[class_id]
     current_estimate["ht_seen"] += 1
-    current_estimate["ht"]= take_moving_average(current_estimate["ht"], current_ht, current_estimate["ht_seen"])
+    current_estimate["ht"]= take_sample_average(current_estimate["ht"], current_ht, current_estimate["ht_seen"])
     
     if verbose:
         print("HT : class_id = ", class_id, "-->", learned_traffic_params[class_id])
 
 
-def generate_req_set(num):
+def generate_req_set(time):
     all_class_reqs = []
     
     total_n = 0
@@ -206,7 +220,7 @@ def generate_req_set(num):
     for service in domain.services:
         for load in traffic_loads:
             if service.nsid == load.service.nsid:
-                req_list = generate_class_req_set(service, load, num, class_id)
+                req_list = generate_class_req_set(service, load, time, class_id)
                 total_n += len(req_list)
                 all_class_reqs.append(req_list)
                 
@@ -222,7 +236,7 @@ def generate_req_set(num):
 
     req_set.sort(key=lambda x: x.st)
 
-    result = req_set[:num]
+    result = req_set
 
     return result
 
@@ -601,5 +615,5 @@ def compute_capacity(domain_index, all_domains_alives):
 
 
 if __name__ == "__main__":
-    s1 = State(4)
-    print(s1)
+    parser.parse_config("config.json")
+

@@ -306,7 +306,7 @@ def init_new_state(state, real_env, alpha, beta):
 
     for action in va:
         #Q_table[state][action] = 0
-        estimate_action_value(state, action, real_env, 10, alpha, beta)
+        estimate_action_value(state, action, real_env, 5, alpha, beta)
 
 
 def MBrLearning(env, state):
@@ -342,8 +342,10 @@ def MBrLearning(env, state):
     if update_rho:
         td_update_rho(state, next_state, reward, beta)
  
-    apply_model(env, next_state, 1.0, alpha, beta, 10, 10)
-    init_new_state(next_state, env, alpha, beta)
+    #apply_model(env, next_state, 1.0, alpha, beta, 10, 5)
+    #init_new_state(next_state, env, alpha, beta)
+    
+    #Environment.print_model_param(env.learned_traffic_params)
     
     return reward, next_state
 

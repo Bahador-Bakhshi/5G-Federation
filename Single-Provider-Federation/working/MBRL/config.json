@@ -1,6 +1,6 @@
 {
 	"local":{
-		"total_cpu": 10,
+		"total_cpu": 100,
 		"ns_catalog":[
 			{
 				"id": 0,
@@ -9,16 +9,22 @@
 			},
 			{
 				"id": 1,
-				"cpu": 4,
+				"cpu": 1,
 				"revenue": 20
+			},
+			{
+				"id": 2,
+				"cpu": 3,
+				"revenue": 50
 			}
+
 		]
 	},
 
 	"providers":[
 		{
 			"provider_id": 0,
-			"quota": 20,
+			"quota": 50,
 			"federation_costs":[
 				{
 					"nsid": 0,
@@ -27,6 +33,10 @@
 				{
 					"nsid": 1,
 					"cost": 5
+				},
+				{
+					"nsid": 2,
+					"cost": 45
 				}
 			]
 		}
@@ -35,14 +45,20 @@
 	"loads":[
 		{
 			"catalog_id": 0,
-			"lambda": 10,
-			"mu": 4
+			"lambda": [10,6,2,6,10],
+			"mu": 0.4
 		},
 		{
 			"catalog_id": 1,
-			"lambda": 5,
-			"mu": 0.5
+			"lambda": [5,5,5,5,5],
+			"mu": 0.1
+		},
+		{
+			"catalog_id": 2,
+			"lambda": [2,6,10,6,2],
+			"mu": 0.2
 		}
+
 	]
 }
 

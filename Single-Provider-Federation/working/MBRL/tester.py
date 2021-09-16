@@ -131,7 +131,7 @@ def mb_result(module, agent, demands, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_num = 5000
+    sim_time = 1000
     episode_num = 1
 
     parser.parse_config("config.json")
@@ -139,9 +139,16 @@ if __name__ == "__main__":
     init_size = 2
     step = 3
     scale = 0
-
-    iterations = 50
     
+    '''
+    if sim_num < 1000:
+        iterations = 50
+    elif sim_num < 10000:
+        iterations = 20
+    else:
+        iterations = 5
+    '''
+    iterations = 10
     i = 0
     
     while i <= scale:
@@ -161,7 +168,7 @@ if __name__ == "__main__":
 
         for j in range(iterations):
             
-            env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_num)
+            env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
             
             '''
             ql_policy = QL.qLearning(env, episode_num, 1)
@@ -173,14 +180,15 @@ if __name__ == "__main__":
             '''
             rl_policy = RL.rLearning(env, episode_num, 1)
 
-            demands = Environment.generate_req_set(sim_num)
+            demands = Environment.generate_req_set(sim_time)
             warmup = int(len(demands) * 0.3)
+            print("# of demands = ", len(demands))
 
             greedy_profit_100, greedy_accept_100, greedy_federate_100 = greedy_result(demands, greedy_profit_100, greedy_accept_100, greedy_federate_100)
            
             print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 
-            mbql_profit, mbql_accept, mbql_federate = mb_result(MBQL, MBQL.MBqLearning, demands, mbql_profit, mbql_accept, mbql_federate)
+            #mbql_profit, mbql_accept, mbql_federate = mb_result(MBQL, MBQL.MBqLearning, demands, mbql_profit, mbql_accept, mbql_federate)
             
             mbrl_profit, mbrl_accept, mbrl_federate = mb_result(MBRL, MBRL.MBrLearning, demands, mbrl_profit, mbrl_accept, mbrl_federate)
             

@@ -70,3 +70,4 @@ def parse_config(config_file):
 
 if __name__ == "__main__":
     parse_config("config.json")
+    demands = Environment.generate_req_set(100.0)
