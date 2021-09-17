@@ -131,7 +131,7 @@ def mb_result(module, agent, demands, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_time = 1000
+    sim_time = 200
     episode_num = 1
 
     parser.parse_config("config.json")
@@ -148,7 +148,7 @@ if __name__ == "__main__":
     else:
         iterations = 5
     '''
-    iterations = 10
+    iterations = 5
     i = 0
     
     while i <= scale:

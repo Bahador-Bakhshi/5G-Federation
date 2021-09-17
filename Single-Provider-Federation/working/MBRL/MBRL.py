@@ -5,6 +5,7 @@ import matplotlib
 import matplotlib.style 
 import numpy as np 
 import pandas as pd 
+import random
 import sys 
 from collections import defaultdict 
 import Environment
@@ -21,6 +22,10 @@ counter = 0
 alpha = 0
 beta = 0
 epsilon = 0
+
+explor_num = 20
+explor_deep = 20
+exploit_deep = 0
 
 def print_Q(Q):
     debug("-------- Q_table ----------")
@@ -306,7 +311,7 @@ def init_new_state(state, real_env, alpha, beta):
 
     for action in va:
         #Q_table[state][action] = 0
-        estimate_action_value(state, action, real_env, 5, alpha, beta)
+        estimate_action_value(state, action, real_env, exploit_deep, alpha, beta)
 
 
 def MBrLearning(env, state):
@@ -341,8 +346,11 @@ def MBrLearning(env, state):
 
     if update_rho:
         td_update_rho(state, next_state, reward, beta)
- 
-    #apply_model(env, next_state, 1.0, alpha, beta, 10, 5)
+
+    #rand_state = random.choice(list(Q_table.keys()))
+    #apply_model(env, rand_state, epsilon, alpha, beta, explor_num, explor_deep)
+    
+    apply_model(env, next_state, epsilon, alpha, beta, explor_num, explor_deep)
     #init_new_state(next_state, env, alpha, beta)
     
     #Environment.print_model_param(env.learned_traffic_params)
