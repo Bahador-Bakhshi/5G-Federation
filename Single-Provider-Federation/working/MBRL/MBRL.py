@@ -44,7 +44,7 @@ def init_val(env, state):
     Q_table[state] = [-1 * np.inf] * len(env.action_space)
 
     for action in va:
-        Q_table[state][action] = 0
+        Q_table[state][action] = np.random.uniform(0,1)
     
 
 def createEpsilonGreedyPolicy(Q, env): 
@@ -319,7 +319,7 @@ def init_new_state(state, real_env, alpha, beta):
             estimate_action_value(state, action, real_env, exploit_deep, alpha, beta)
 
 
-def MBrLearning(env, state):
+def MBrLearning(env, state, stop_learning = np.inf):
     if verbose:
         debug("sate =", state)
         print_Q(Q_table)
@@ -327,17 +327,18 @@ def MBrLearning(env, state):
     global counter, epsilon, alpha, beta
 
     counter += 1
-    '''
     if (counter + 1) % 100 == 0:
-        alpha = max(0.05, alpha * 0.85)
-        beta = max(0.05, beta * 0.85)
-        epsilon = max(0.1, epsilon * 0.85)
+        alpha = max(0.05, alpha * 0.95)
+        beta = max(0.05, beta * 0.95)
+        epsilon = max(0.1, epsilon * 0.95)
 
-        print("alpha = ", alpha, "beta = ", beta, "epsilon = ", epsilon)
+        #print("alpha = ", alpha, "beta = ", beta, "epsilon = ", epsilon)
+
     '''
     alpha = 0.1
     beta = 0.1
     epsilon = 0.4
+    '''
 
     action, update_rho = get_action(state, epsilon)
 
@@ -348,24 +349,26 @@ def MBrLearning(env, state):
     if done:
         return reward, None
     
-    apply_model(env, state, action, epsilon, alpha, beta, bg_explor_num, bg_explor_deep)
+    if state.req.st <= stop_learning:
+        apply_model(env, state, action, epsilon, alpha, beta, bg_explor_num, bg_explor_deep)
+    else:
+        pass
+        #print("NO updating")
+        #print("\t action = ", action, ", reward = ", reward)
     
     if not (next_state in Q_table):
         #init_new_state(next_state, env, alpha, beta)
         init_val(env, next_state)
 
-    td_update(state, action, next_state, reward, alpha)
+    if state.req.st <= stop_learning:
+        td_update(state, action, next_state, reward, alpha)
 
-    if update_rho:
-        td_update_rho(state, next_state, reward, beta)
+        if update_rho:
+            td_update_rho(state, next_state, reward, beta)
 
-    #rand_state = random.choice(list(Q_table.keys()))
-    #apply_model(env, rand_state, epsilon, alpha, beta, explor_num, explor_deep)
+        apply_model(env, next_state, None, epsilon, alpha, beta, explor_num, explor_deep)
+        init_new_state(next_state, env, alpha, beta)
     
-    apply_model(env, next_state, None, epsilon, alpha, beta, explor_num, explor_deep)
-    init_new_state(next_state, env, alpha, beta)
-    
-    #Environment.print_model_param(env.learned_traffic_params)
     
     return reward, next_state
 

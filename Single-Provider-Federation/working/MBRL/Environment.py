@@ -140,9 +140,12 @@ def generate_class_req_set(service, load, time, class_id):
     
     while t < time:
         slot_index = int (t / time_slot_size)
-        t += np.random.exponential(1.0 / load.lam[slot_index])
-        life = np.random.exponential(1.0 / load.mu)
-        all_req.append(Request(service.cpu, t, t + life, service.revenue, class_id))
+        if load.lam[slot_index] > 0:
+            t += np.random.exponential(1.0 / load.lam[slot_index])
+            life = np.random.exponential(1.0 / load.mu)
+            all_req.append(Request(service.cpu, t, t + life, service.revenue, class_id))
+        else:
+            t += time_slot_size + 0.001
 
     if verbose:
         print_reqs(all_req)

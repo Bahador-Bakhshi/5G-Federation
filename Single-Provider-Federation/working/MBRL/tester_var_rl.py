@@ -135,10 +135,7 @@ if __name__ == "__main__":
     #episode_num = 1000
     episode_num = 10
 
-    parser.parse_config("config_4v.json")
-    
-    init_size = 2
-    step = 3
+    parser.parse_config("config_var.json")
     
     iterations = 10
     i = 0
@@ -146,7 +143,7 @@ if __name__ == "__main__":
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
     rl_policy = RL.rLearning(env, episode_num, 1)
 
-    times = [10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000]
+    times = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
     scale = len(times)
     while i < scale:
         
