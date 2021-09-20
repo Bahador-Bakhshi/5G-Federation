@@ -131,8 +131,8 @@ def mb_result(module, agent, demands, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_time = 200
-    episode_num = 1
+    sim_time = 100
+    episode_num = 50
 
     parser.parse_config("config.json")
     
@@ -148,7 +148,7 @@ if __name__ == "__main__":
     else:
         iterations = 5
     '''
-    iterations = 5
+    iterations = 20
     i = 0
     
     while i <= scale:
@@ -162,23 +162,14 @@ if __name__ == "__main__":
         DP.print_policy(dp_policy_95)
         '''
         
-        greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit = rl_profit = mbql_profit = mbrl_profit = 0
-        greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_accept = rl_accept = mbql_accept = mbrl_accept = 0
-        greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate = rl_federate = mbql_federate = mbrl_federate = 0
+        greedy_profit_00 = greedy_profit_50 = greedy_profit_100 = dp_profit_05 = dp_profit_30 = dp_profit_60 = dp_profit_95 = ql_profit = rl_profit = mbql_profit = mbrl_profit = mfrl_profit = 00
+        greedy_accept_00 = greedy_accept_50 = greedy_accept_100 = dp_accept_05 = dp_accept_30 = dp_accept_60 = dp_accept_95 = ql_accept = rl_accept = mbql_accept = mbrl_accept = mfrl_accept = 0
+        greedy_federate_00 = greedy_federate_50 = greedy_federate_100 = dp_federate_05 = dp_federate_30 = dp_federate_60 = dp_federate_95 = ql_federate = rl_federate = mbql_federate = mbrl_federate = mfrl_federate = 0
 
         for j in range(iterations):
             
-            env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
-            
-            '''
-            ql_policy = QL.qLearning(env, episode_num, 1)
-            print("---------- QL --------------")
-            DP.print_policy(ql_policy)
-        
-            print("---------- RL --------------")
-            DP.print_policy(rl_policy)
-            '''
-            rl_policy = RL.rLearning(env, episode_num, 1)
+            #env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time * 100)
+            #rl_policy = RL.rLearning(env, episode_num, 1)
 
             demands = Environment.generate_req_set(sim_time)
             warmup = int(len(demands) * 0.3)
@@ -189,8 +180,19 @@ if __name__ == "__main__":
             print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 
             #mbql_profit, mbql_accept, mbql_federate = mb_result(MBQL, MBQL.MBqLearning, demands, mbql_profit, mbql_accept, mbql_federate)
+            MBRL.bg_explor_num  = 10
+            MBRL.bg_explor_deep = 5
+           
+            MBRL.explor_num  = 5
+            MBRL.explor_deep = 2
             
+            MBRL.exploit_num  = 1
+            MBRL.exploit_deep = 2
             mbrl_profit, mbrl_accept, mbrl_federate = mb_result(MBRL, MBRL.MBrLearning, demands, mbrl_profit, mbrl_accept, mbrl_federate)
+            
+            MBRL.explor_num = 0
+            MBRL.explor_deep = 0
+            #mfrl_profit, mfrl_accept, mfrl_federate = mb_result(MBRL, MBRL.MBrLearning, demands, mfrl_profit, mfrl_accept, mfrl_federate)
             
             '''
             dp_profit_95, dp_accept_95, dp_federate_95 = mdp_policy_result(demands, dp_policy_95, dp_profit_95, dp_accept_95, dp_federate_95)
@@ -198,7 +200,7 @@ if __name__ == "__main__":
             ql_profit, ql_accept, ql_federate = mdp_policy_result(demands, ql_policy, ql_profit, ql_accept, ql_federate)
             
             '''
-            rl_profit, rl_accept, rl_federate = mf_result(rl_policy, demands, rl_profit, rl_accept, rl_federate)
+            #rl_profit, rl_accept, rl_federate = mf_result(rl_policy, demands, rl_profit, rl_accept, rl_federate)
 
 
         print("Capacity_Profit = ", Environment.domain.total_cpu)
@@ -212,6 +214,7 @@ if __name__ == "__main__":
         print("QL Profit   = ", ql_profit / iterations)
         print("MBQL Profit = ", mbql_profit / iterations)
         print("MBRL Profit = ", mbrl_profit / iterations)
+        print("MFRL Profit = ", mfrl_profit / iterations)
         print("RL Profit   = ", rl_profit / iterations)
         print("", flush=True)
 

@@ -23,8 +23,11 @@ alpha = 0
 beta = 0
 epsilon = 0
 
-explor_num = 20
-explor_deep = 20
+bg_explor_num = 0
+bg_explor_deep = 0
+explor_num = 0
+explor_deep = 0
+exploit_num = 0
 exploit_deep = 0
 
 def print_Q(Q):
@@ -114,7 +117,7 @@ def generate_active_demands(real_env, domains_alives, domain_index, action, requ
 
                 requests.append(req)
 
-def set_model_init_state(real_env, state, new_req_num):
+def set_model_init_state(real_env, state, action, new_req_num):
     global model_env 
     model_env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota)
 
@@ -133,6 +136,7 @@ def set_model_init_state(real_env, state, new_req_num):
         life = np.random.uniform(0, 1)
 
     arrived_request = Environment.Request(service.cpu, 0, life, service.revenue, class_index)
+    arrived_request.known_action = action
 
     tmp_list = list()
     tmp_list.append(arrived_request)
@@ -215,12 +219,12 @@ def get_greedy_action(env, state):
     return Environment.Actions(action_index)
 
 
-def apply_model(real_env, state, epsilon, alpha, beta, sample_num, sample_len):
+def apply_model(real_env, state, action, epsilon, alpha, beta, sample_num, sample_len):
     if verbose:
         print("..................... MBQL Start .......................")
     
     for _ in range(sample_num):
-        set_model_init_state(real_env, state, sample_len)
+        set_model_init_state(real_env, state, action, sample_len)
         model_state = model_env.reset()
     
         while model_state != None:
@@ -262,7 +266,7 @@ def estimate_action_value(state, action, real_env, sample_len, alpha, beta):
 
     update_trace = list()
 
-    set_model_init_state(real_env, state, sample_len)
+    set_model_init_state(real_env, state, None, sample_len)
     
     model_state = model_env.reset()
     
@@ -311,7 +315,8 @@ def init_new_state(state, real_env, alpha, beta):
 
     for action in va:
         #Q_table[state][action] = 0
-        estimate_action_value(state, action, real_env, exploit_deep, alpha, beta)
+        for _ in range(exploit_num):
+            estimate_action_value(state, action, real_env, exploit_deep, alpha, beta)
 
 
 def MBrLearning(env, state):
@@ -322,12 +327,17 @@ def MBrLearning(env, state):
     global counter, epsilon, alpha, beta
 
     counter += 1
+    '''
     if (counter + 1) % 100 == 0:
         alpha = max(0.05, alpha * 0.85)
         beta = max(0.05, beta * 0.85)
         epsilon = max(0.1, epsilon * 0.85)
 
         print("alpha = ", alpha, "beta = ", beta, "epsilon = ", epsilon)
+    '''
+    alpha = 0.1
+    beta = 0.1
+    epsilon = 0.4
 
     action, update_rho = get_action(state, epsilon)
 
@@ -337,7 +347,9 @@ def MBrLearning(env, state):
             
     if done:
         return reward, None
-
+    
+    apply_model(env, state, action, epsilon, alpha, beta, bg_explor_num, bg_explor_deep)
+    
     if not (next_state in Q_table):
         #init_new_state(next_state, env, alpha, beta)
         init_val(env, next_state)
@@ -350,8 +362,8 @@ def MBrLearning(env, state):
     #rand_state = random.choice(list(Q_table.keys()))
     #apply_model(env, rand_state, epsilon, alpha, beta, explor_num, explor_deep)
     
-    apply_model(env, next_state, epsilon, alpha, beta, explor_num, explor_deep)
-    #init_new_state(next_state, env, alpha, beta)
+    apply_model(env, next_state, None, epsilon, alpha, beta, explor_num, explor_deep)
+    init_new_state(next_state, env, alpha, beta)
     
     #Environment.print_model_param(env.learned_traffic_params)
     
