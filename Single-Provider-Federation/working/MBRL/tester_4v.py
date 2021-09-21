@@ -131,9 +131,9 @@ def mb_result(module, agent, demands, stop_learning, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_time = 1000
+    sim_time = 5000
     #episode_num = 1
-    stop_learning = 0.9999 * sim_time
+    stop_learning = 0.50 * sim_time
 
     parser.parse_config("config_4v.json")
     
@@ -159,7 +159,7 @@ if __name__ == "__main__":
             #rl_policy = RL.rLearning(env, episode_num, 1)
 
             demands = Environment.generate_req_set(sim_time)
-            warmup = int(len(demands) * 0.3)
+            warmup = int(len(demands) * 0.1)
             print("# of demands = ", len(demands))
 
             greedy_profit_100, alaki1, alaki2 = greedy_result(demands, greedy_profit_100, alaki1, alaki2)
