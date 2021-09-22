@@ -43,7 +43,7 @@ collection_per_train = 20
 replay_buffer_max_length = int(0.1 * collection_per_train * num_iterations) 
 
 batch_size = 8
-learning_rate = 5e-5
+learning_rate = 5e-4
 
 log_interval = 100
 eval_interval = 200
