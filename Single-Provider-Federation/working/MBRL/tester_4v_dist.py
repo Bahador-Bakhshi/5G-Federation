@@ -131,16 +131,16 @@ def mb_result(module, agent, demands, stop_learning, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_time = 3000
+    sim_time = 1000
     #episode_num = 1
     stop_learning = 1.0 * sim_time
 
-    parser.parse_config("config_var-3.json")
+    parser.parse_config("config_4v.json")
+    
+    scale = 0
     
     iterations = 10
-    
     i = 0
-    scale = 0
     
     while i <= scale:
         
@@ -157,7 +157,7 @@ if __name__ == "__main__":
             #rl_policy = RL.rLearning(env, episode_num, 1)
 
             demands = Environment.generate_req_set(sim_time)
-            warmup = int(len(demands) * 0.0)
+            warmup = int(len(demands) * 0.05)
             print("# of demands = ", len(demands))
 
             greedy_profit_100, alaki1, alaki2 = greedy_result(demands, greedy_profit_100, alaki1, alaki2)
@@ -172,6 +172,7 @@ if __name__ == "__main__":
             MBRL.exploit_deep = 0
             mbrl_000_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning, mbrl_000_profit, alaki1, alaki2)
  
+
             MBRL.bg_explor_num  = 0
             MBRL.bg_explor_deep = 0
            
@@ -181,6 +182,7 @@ if __name__ == "__main__":
             MBRL.exploit_num  = 1
             MBRL.exploit_deep = 2
             mbrl_011_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning, mbrl_011_profit, alaki1, alaki2)
+
 
             MBRL.bg_explor_num  = 5
             MBRL.bg_explor_deep = 3

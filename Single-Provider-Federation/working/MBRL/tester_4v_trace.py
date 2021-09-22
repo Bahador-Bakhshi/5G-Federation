@@ -16,6 +16,8 @@ import parser
 import DP
 from Environment import State, debug, error, warning, verbose
 
+alg_name = ""
+
 def greedy_policy(state):
     valid_actions = Environment.get_valid_actions(state)
         
@@ -31,13 +33,13 @@ def greedy_policy(state):
  
 
 def test_policy(policy, demands):
-    total_reward = 0
+    total_reward = 0.0
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, given_demands = demands)
     state = env.reset()
 
     i = 0
-    last_total_reward = 0
-    window = 10000
+    last_total_reward = 0.0
+    window = 10
 
     while state != None:
         i += 1
@@ -54,7 +56,7 @@ def test_policy(policy, demands):
         state = next_state
         
         if i % window == 0:
-            print("window = ", window, "gain = ", (total_reward - last_total_reward) / window)
+            print(alg_name, " window = ", window, "gain = ", (total_reward - last_total_reward) / window)
             last_total_reward = total_reward
 
     print("---------------------------------------")
@@ -62,14 +64,14 @@ def test_policy(policy, demands):
 
 
 def test_mb_policy(module, agent, demands, stop_learning):
-    total_reward = 0
+    total_reward = 0.0
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, given_demands = demands)
     module.init(env)
     state = env.reset()
  
     i = 0
-    last_total_reward = 0
-    window = 100
+    last_total_reward = 0.0
+    window = 10
    
     while state != None:
         i += 1
@@ -83,7 +85,7 @@ def test_mb_policy(module, agent, demands, stop_learning):
         state = next_state
 
         if i % window == 0:
-            print("window = ", window, "gain = ", (total_reward - last_total_reward) / window)
+            print(alg_name, " window = ", window, "gain = ", (total_reward - last_total_reward) / window)
             last_total_reward = total_reward
     
     print("--------------------------------------")
@@ -131,16 +133,18 @@ def mb_result(module, agent, demands, stop_learning, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_time = 3000
+    sim_time = 1000
     #episode_num = 1
-    stop_learning = 1.0 * sim_time
+    stop_learning = 0.50 * sim_time
 
-    parser.parse_config("config_var-3.json")
+    parser.parse_config("config_4v.json")
     
-    iterations = 10
-    
-    i = 0
+    init_size = 2
+    step = 3
     scale = 0
+    
+    iterations = 1
+    i = 0
     
     while i <= scale:
         
@@ -170,8 +174,10 @@ if __name__ == "__main__":
             
             MBRL.exploit_num  = 0
             MBRL.exploit_deep = 0
+            alg_name = "MBRL_000"
             mbrl_000_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning, mbrl_000_profit, alaki1, alaki2)
  
+
             MBRL.bg_explor_num  = 0
             MBRL.bg_explor_deep = 0
            
@@ -180,7 +186,9 @@ if __name__ == "__main__":
             
             MBRL.exploit_num  = 1
             MBRL.exploit_deep = 2
+            alg_name = "MBRL_011"
             mbrl_011_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning, mbrl_011_profit, alaki1, alaki2)
+
 
             MBRL.bg_explor_num  = 5
             MBRL.bg_explor_deep = 3
@@ -190,6 +198,7 @@ if __name__ == "__main__":
             
             MBRL.exploit_num  = 0
             MBRL.exploit_deep = 0
+            alg_name = "MBRL_100"
             mbrl_100_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning,  mbrl_100_profit, alaki1, alaki2)
 
             MBRL.bg_explor_num  = 5
@@ -200,6 +209,7 @@ if __name__ == "__main__":
             
             MBRL.exploit_num  = 1
             MBRL.exploit_deep = 2
+            alg_name = "MBRL_111"
             mbrl_111_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning, mbrl_111_profit, alaki1, alaki2)
 
             
