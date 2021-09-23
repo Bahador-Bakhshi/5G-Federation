@@ -135,7 +135,10 @@ if __name__ == "__main__":
     episode_num = 1000
     #episode_num = 10
 
-    parser.parse_config("config_var-3.json")
+    parser.parse_config("config_4v.json")
+    
+    init_size = 2
+    step = 3
     
     iterations = 10
     i = 0
@@ -143,7 +146,7 @@ if __name__ == "__main__":
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
     rl_policy = RL.rLearning(env, episode_num, 1)
 
-    times = [5000]
+    times = [1000]
     scale = len(times)
     while i < scale:
         
@@ -158,7 +161,7 @@ if __name__ == "__main__":
             print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
             
             demands = Environment.generate_req_set(sim_time)
-            warmup = int(len(demands) * 0.1)
+            warmup = int(len(demands) * 0.05)
             print("# of demands = ", len(demands))
 
             greedy_profit_100, alaki1, alaki2 = greedy_result(demands, greedy_profit_100, alaki1, alaki2)

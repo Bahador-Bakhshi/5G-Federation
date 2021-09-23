@@ -132,10 +132,10 @@ def mb_result(module, agent, demands, profit, accept, federate):
 if __name__ == "__main__":
 
     sim_time = 10000
-    #episode_num = 1000
-    episode_num = 10
+    episode_num = 1000
+    #episode_num = 10
 
-    parser.parse_config("config_var-3-avg.json")
+    parser.parse_config("config_var-0-avg.json")
     
     iterations = 10
     i = 0
@@ -158,7 +158,7 @@ if __name__ == "__main__":
             print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
             
             demands = Environment.generate_req_set(sim_time)
-            warmup = int(len(demands) * 0.3)
+            warmup = int(len(demands) * 0.1)
             print("# of demands = ", len(demands))
 
             greedy_profit_100, alaki1, alaki2 = greedy_result(demands, greedy_profit_100, alaki1, alaki2)
