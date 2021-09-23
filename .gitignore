@@ -3,3 +3,4 @@ res.out*
 *.swp
 __pycache__
 *tmp*
+*.img*

@@ -33,7 +33,7 @@ def print_events(events):
 
 class Environment:
 
-    def __init__(self, topology, observation_maker, src_dst_list = None, req_num = 0, sfcs_list = 0):
+    def __init__(self, topology, observation_maker, src_dst_list = None, req_num = 0, sfcs_list = 0, number_of_paths = 0):
         self.topology = topology
         self.observer = observation_maker
         self.episode_len = req_num
@@ -42,12 +42,23 @@ class Environment:
         self.src_dst_list = src_dst_list
         self.req_num = req_num
         self.sfcs_list = sfcs_list
+
+        self.global_pairs_paths_actives = {}
+        if number_of_paths > 0:
+            for (src, dst) in src_dst_list:
+                paths_actives = []
+                for k in range(number_of_paths):
+                    this_path_actives = [0] * len(sfcs_list)
+                    paths_actives.append(this_path_actives.copy())
+                self.global_pairs_paths_actives[(src,dst)] = paths_actives.copy()
     
     def set_test_requests(self, test_requests):
         self.all_requests = test_requests
         self.in_test_mode = True
 
     def stop(self):
+        self.events.clear()
+        network.reset_topology(self.topology)
         if debug > 2:
             print("Environment stop")
         return
@@ -55,12 +66,16 @@ class Environment:
     def reset(self):
         if debug > -1:
             print("Environment reset")
+        print("RESET !!!!")
         self.stop()
         return self.start()
 
     def start(self):
+        self.events.clear()
         if debug > 1:
             print("Environment start: begin ---------------->>>>>")
+            print("in_test_mode = ", self.in_test_mode)
+            print("req_num = ", self.req_num)
         
         if self.in_test_mode == False:
             self.all_requests = requests.generate_all_requests(self.src_dst_list, self.req_num, self.sfcs_list)
@@ -74,8 +89,8 @@ class Environment:
 
         self.current_event = heapq.heappop(self.events)
         
-        observation, discount = self.observer(self.topology, self.current_event.req)
-
+        observation, discount = self.observer(self.topology, self.src_dst_list, self.current_event.req)
+        
         if debug > 1:
             print("Environment start: <<<<-----------------  end")
 
@@ -96,7 +111,9 @@ class Environment:
         elif action == Actions.accept:
             feasible = network.deploy_request(self.topology, self.current_event.req)
             if feasible:
-                reward = 1
+                self.global_pairs_paths_actives[(self.current_event.req.src, self.current_event.req.dst)][self.current_event.req.path_id][self.current_event.req.sfc.sfc_id] += 1
+                reward = self.current_event.req.sfc.bw
+                #reward = 1.0
                 event = Event(0, self.current_event.req.t_end, self.current_event.req)
                 heapq.heappush(self.events, event)
 
@@ -104,13 +121,13 @@ class Environment:
             print("Unknown action")
             sys.exit(-1)
 
-
         if len(self.events) > 0:
             self.current_event = heapq.heappop(self.events)
             if debug > 2:
                 print_events([self.current_event])
             
             while self.current_event.event_type == 0:
+                self.global_pairs_paths_actives[(self.current_event.req.src, self.current_event.req.dst)][self.current_event.req.path_id][self.current_event.req.sfc.sfc_id] -= 1
                 network.free(self.topology, self.current_event.req)
                 if len(self.events) > 0:
                     self.current_event = heapq.heappop(self.events)

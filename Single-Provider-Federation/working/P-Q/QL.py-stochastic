@@ -1,0 +1,341 @@
+#!/usr/bin/python3
+
+from TD import *
+import random
+import DP
+import RandDict
+
+def qLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0, prefix):
+
+    Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
+    
+    # Create an epsilon greedy policy function
+    # appropriately for environment action space
+    seen_states = set()
+    policy = createEpsilonGreedyPolicy(Q, env)
+
+    discount_factor = 0.0
+    decay = 0.025
+
+    # For every episode
+    for ith_episode in range(num_episodes):
+
+        if(dynamic == 1):
+            #alpha = alpha * 0.97
+            #epsilon = epsilon * 0.97
+            alpha = alpha0 / (1.0 + ith_episode * decay)
+            epsilon = epsilon0 / (1.0 + ith_episode * decay)
+        if verbose:
+            debug("alpha = ", alpha, "epsilon = ", epsilon, "gamma = ", gamma0)
+        
+        state = env.reset()
+
+        for t in itertools.count():
+            if t % 400 == 0:
+                print("episode = ", ith_episode,", step = ", t)
+
+            if verbose:
+                debug("\nt =", t, "sate =", state)
+                print_Q(Q)
+
+            action_probabilities = policy(state, epsilon, seen_states)
+            if verbose:
+                debug("action_probabilities = ", action_probabilities)
+
+            # choose action according to the probability distribution
+            action_index = np.random.choice(np.arange(len(action_probabilities)), p = action_probabilities)
+            action = Environment.Actions(action_index)
+
+            if verbose:
+                debug("selected action =", action)
+
+            # take action and get reward, transit to next state
+            next_state, reward, done = env.step(state, action)
+
+            if verbose:
+                debug("next_state =", next_state, "reward =", reward, ", done =", done)
+            
+            if done:
+                break
+
+            if Environment.is_active_state(state):
+                discount_factor = gamma0
+            else:
+                discount_factor = 1.0
+
+            best_next_action = np.argmax(Q[next_state])
+                
+            if verbose:
+                debug("best_next_action = ", best_next_action)
+
+            #if state == next_state:
+            #        pass #FIXME!!!!!!!!!!!!!!!!!
+
+            td_target = reward + discount_factor * Q[next_state][best_next_action]
+
+            if verbose:
+                debug("td_target = ", td_target)
+                
+            td_delta = td_target - Q[state][action]
+                    
+            if verbose:
+                debug("td_delta = ", td_delta)
+
+            Q[state][action] += alpha * td_delta
+ 
+            seen_states.add(state)
+            
+            if verbose:
+                debug("seen_states = ", seen_states)
+           
+            state = next_state
+    
+    final_policy = {}
+    for i in Q:
+        final_policy[i] = Environment.Actions(np.argmax(Q[i]))
+
+    if verbose:
+        print(final_policy)
+    
+    print(prefix, " ", num_episodes, get_q_values_stat(Q))
+    return final_policy
+
+'''
+p_r_cache = dict()
+def get_p_r(state, action):
+    if not ((state, action) in p_r_cache):
+        p, r = DP.pr(state, action)
+        p_r_cache[(state, action)] = (p, r)
+
+    res = p_r_cache[(state, action)]
+    return res[0], res[1]
+'''
+
+def dyna_qLearning(env, num_episodes, dynamic, alpha0, epsilon0, gamma0, model_usage_iteration, prefix):
+
+    Q = defaultdict(lambda: np.random.uniform(0, 1, len(env.action_space)))
+    model_estimation = RandDict.RandomDict()
+    
+    # Create an epsilon greedy policy function
+    # appropriately for environment action space
+    seen_states = set()
+    policy = createEpsilonGreedyPolicy(Q, env)
+
+    discount_factor = gamma0
+    rho = 1.0
+    decay = 0.025
+
+    # For every episode
+    for ith_episode in range(num_episodes):
+
+        if(dynamic == 1):
+            #alpha = alpha * 0.97
+            #epsilon = epsilon * 0.97
+            alpha = alpha0 / (1.0 + ith_episode * decay)
+            epsilon = epsilon0 / (1.0 + ith_episode * decay)
+        if verbose:
+            debug("alpha = ", alpha, "epsilon = ", epsilon, "gamma = ", gamma0)
+        
+        state = env.reset()
+
+        for t in itertools.count():
+            if t % 400 == 0:
+                print("episode = ", ith_episode,", step = ", t)
+
+            if verbose:
+                debug("\nt =", t, "sate =", state)
+                print_Q(Q)
+
+            action_probabilities = policy(state, epsilon, seen_states)
+            if verbose:
+                debug("action_probabilities = ", action_probabilities)
+
+            # choose action according to the probability distribution
+            action_index = np.random.choice(np.arange(len(action_probabilities)), p = action_probabilities)
+            action = Environment.Actions(action_index)
+
+            if verbose:
+                debug("selected action =", action)
+
+            # take action and get reward, transit to next state
+            next_state, reward, done = env.step(state, action)
+
+            if verbose:
+                debug("next_state =", next_state, "reward =", reward, ", done =", done)
+            
+            if done:
+                break
+            
+
+            '''
+            if Environment.is_active_state(state):
+                discount_factor = gamma0
+            else:
+                discount_factor = 1.0
+            '''
+            
+            ''''
+            best_next_action = np.argmax(Q[next_state])
+                
+            if verbose:
+                debug("best_next_action = ", best_next_action)
+
+            td_target = reward + model_estimation[(state, action)][2][next_state] * (discount_factor * Q[next_state][best_next_action])
+            '''
+            
+            #all_next_states = list()
+            #all_next_states.append(next_state)
+            
+            #ns_set = model_estimation[(state, action)][1]
+            #ns_prs = model_estimation[(state, action)][2]
+
+
+            '''
+            td_target = 0
+            for ns in ns_set:
+                max_q = 0
+                if ns in Q:
+                    max_q = max(Q[ns])
+
+                td_target += ns_prs[ns] * (reward + discount_factor * max_q)
+            '''
+            '''
+            for _ in range(model_usage_iteration):
+                ns = (random.choices(list(ns_prs.keys()), weights=ns_prs.values(), k=1))[0]
+                all_next_states.append(ns)
+
+
+            for ns in all_next_states:
+                max_q = 0
+                if ns in Q:
+                    max_q = max(Q[ns])
+
+                td_target = (reward + discount_factor * max_q)
+ 
+                td_delta = td_target - Q[state][action]
+                    
+                if verbose:
+                    debug("td_delta = ", td_delta)
+
+                Q[state][action] += alpha * td_delta
+            '''
+            best_next_action = np.argmax(Q[next_state])
+            current_best_action = np.argmax(Q[state])
+            if Q[state][action] == Q[state][current_best_action]:
+                rho += alpha * (reward - rho + Q[next_state][best_next_action] - Q[state][current_best_action])
+ 
+            va = Environment.get_valid_actions(state)
+
+            for a in va:
+                if not ((state, a) in model_estimation):
+                    prs, dp_reward = DP.pr(state, a)
+                    new_entry = (dp_reward, set(), dict())
+                    for this_next_state in prs.keys():
+                        new_entry[1].add(this_next_state)
+                        new_entry[2][this_next_state] = prs[this_next_state]
+               
+                    model_estimation[(state, a)] = new_entry
+            
+            for a in va:
+                ns_prs = model_estimation[(state, a)][2]
+                td_target = model_estimation[(state, a)][0]
+                for ns in ns_prs.keys():
+                    if ns in Q:
+                        max_q = max(Q[ns])
+                        td_target += ns_prs[ns] * max_q
+
+                td_delta = td_target - Q[state][a]
+                    
+                Q[state][a] += alpha * td_delta
+ 
+            seen_states.add(state)
+            
+            if verbose:
+                debug("seen_states = ", seen_states)
+          
+            
+            '''
+            if (state, action) in model_estimation:
+                if next_state in model_estimation[(state, action)][1]:
+                    pass
+                else:
+                    model_estimation[(state, action)][1].add(next_state)
+                    pr = DP.get_next_state_pr(state, action, next_state)
+                    model_estimation[(state, action)][2][next_state] = pr
+            else:
+                new_entry = (reward, set(), dict())
+                new_entry[1].add(next_state)
+                pr = DP.get_next_state_pr(state, action, next_state)
+                new_entry[2][next_state] = pr
+                model_estimation[(state, action)] = new_entry
+            '''
+
+            for _ in range(0):
+                rand_key, rand_val = model_estimation.random_item()
+                old_state  = rand_key[0]
+                old_action = rand_key[1]
+                old_reward = rand_val[0]
+                old_ns_set = rand_val[1]
+                old_ns_prs = rand_val[2]
+             
+                '''
+                print("\n\nstate, action = ", old_state, old_action)
+                print("old_ns_prs = ")
+                for ns in old_ns_prs:
+                    print("\t s, p = ", ns, old_ns_prs[ns])
+                '''
+                
+                next_estimate = 0
+                for ns in old_ns_set:
+                    max_q = 0
+                    if ns in Q:
+                        max_q = max(Q[ns])
+
+                    next_estimate += old_ns_prs[ns] * max_q
+                '''
+                ns = (random.choices(list(old_ns_prs.keys()), weights=old_ns_prs.values(), k=1))[0]
+                if ns in Q:
+                    next_estimate = max(Q[ns])
+                '''
+
+                target = old_reward + discount_factor * next_estimate
+                
+                #print("target = ", target)
+                #print("delta  = ", (target - Q[old_state][old_action]))
+
+                Q[old_state][old_action] += alpha * (target - Q[old_state][old_action])
+
+            state = next_state
+
+    
+    final_policy = {}
+    for i in Q:
+        final_policy[i] = Environment.Actions(np.argmax(Q[i]))
+
+    if verbose:
+        print(final_policy)
+    
+    print(prefix, " ", num_episodes, get_q_values_stat(Q))
+    return final_policy
+
+
+
+
+if __name__ == "__main__":
+
+    demand_num = 200
+
+    parser.parse_config("config.json")
+    
+    #pi_policy = policy_iteration(0.995)
+    #print("********* DP Policy ***********")
+    #print_policy(pi_policy)
+
+    for i in range(1,5):
+        env = Environment.Env(Environment.domain.capacities.copy(), Environment.providers[1].quotas.copy(), demand_num)
+        ql_policy = qLearning(env, i * 100, 1, 0.9, 0.9, 0.9, "XYX")
+
+    #print("********* QL Policy ***********")
+    #print_policy(ql_policy)
+
+

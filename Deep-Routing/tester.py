@@ -6,21 +6,22 @@ import gpu
 
 import network
 import requests
-import environment
+import environment_pps
 import traditionals
 import parser
 import kpath
-import tf_agent
+import tf_agent_ppo_pps
 
 from graph import debug
 
 class Tester_Agent:
 
     def __init__(self, topology, policy, observer):
-        self.topology = topology
+        self.topology = topology.copy()
+        network.reset_topology(self.topology)
         self.policy = policy
         self.observer = observer
-        self.env = environment.Environment(self.topology, self.observer)
+        self.env = environment_pps.Environment(self.topology, self.observer)
 
     def test(self, requests):
         self.env.set_test_requests(requests)
@@ -28,12 +29,15 @@ class Tester_Agent:
 
         done = 0
         total_reward = 0
-
+        accept = 0
         while done == 0:
             action = self.policy(observation)
             observation, reward, done, _ = self.env.step(action)
             total_reward += reward
+            if reward > 0:
+                accept += 1
 
+        print("accept = ", accept)
         return total_reward
 
 
@@ -45,9 +49,9 @@ def main():
 
     src_dst_list, req_num, sfcs_list = requests.generate_traffic_load_config(topology)
   
-    tf_agent.req_num = req_num
-    agent = tf_agent.main(topology, src_dst_list, sfcs_list)
-
+    tf_agent_ppo_pps.req_num = req_num
+    the_best_policy = tf_agent_ppo_pps.main(topology, src_dst_list, sfcs_list)
+    
     org_lambdas = []
     for index in requests.traffic_config["traffic_rates"]:
         org_lambdas.append(index["lambda"])
@@ -62,8 +66,8 @@ def main():
         total_reward_ddqn = total_reward_mhc = total_reward_kpath = 0.0
         for _ in range(20):
             all_requests = requests.generate_all_requests(src_dst_list, req_num, sfcs_list)
-    
-            total_reward_ddqn += tf_agent.evaluate_agent(topology, src_dst_list, sfcs_list, agent, all_requests)
+            
+            total_reward_ddqn += tf_agent_ppo_pps.evaluate_policy(topology, src_dst_list, sfcs_list, the_best_policy, all_requests, True)
             #print("Total reward - Deep = ", total_reward)
 
             min_hop_count_tester = Tester_Agent(topology, traditionals.MinHopCount.policy, traditionals.MinHopCount.observer)

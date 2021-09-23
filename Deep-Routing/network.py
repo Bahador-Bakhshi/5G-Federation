@@ -20,7 +20,7 @@ def instantiate_vnfs(topology, placement):
 def route_path(topology, path, sfc):
     if debug > 2:
         print("route_path: ")
-        print("\t", topology.edges(data=True))
+        #print("\t", topology.edges(data=True))
         print("\t path   = ", path)
         print("\t sfc.bw = ", sfc.bw)
 
@@ -36,7 +36,7 @@ def route_path(topology, path, sfc):
         topology.edges[path[i], path[i+1]]["bw"] = bw
     
     if debug > -20:
-        print("\t", topology.edges(data=True))
+        #print("\t", topology.edges(data=True))
         print("-------------------------------------")
     
     return True 
@@ -65,7 +65,7 @@ def free_vnfs(topology, placement):
 def free_path(topology, path, sfc):
     if debug > 2:
         print("free_path: ")
-        print("\t", topology.edges(data=True))
+        #print("\t", topology.edges(data=True))
         print("\t path   = ", path)
         print("\t sfc.bw = ", sfc.bw)
 
@@ -78,7 +78,7 @@ def free_path(topology, path, sfc):
         topology.edges[path[i], path[i+1]]["bw"] = bw
 
     if debug > 2:
-        print("\t", topology.edges(data=True))
+        #print("\t", topology.edges(data=True))
         print("-------------------------------------")
 
 def free(topology, request):
@@ -92,4 +92,8 @@ def is_empty(topology):
             return False
 
     return True
+
+def reset_topology(topology):
+    for e in topology.edges:
+        topology.edges[e[0],e[1]]["bw"] = topology.edges[e[0],e[1]]["org_bw"]
 

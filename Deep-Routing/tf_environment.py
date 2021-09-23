@@ -40,7 +40,7 @@ def object_to_array_state(observation):
     
     for (src, dst) in kpath.FixKpathAllPairs.all_pairs_kpaths.keys():
         if debug > 3:
-            print("object_to_array_state: (src, dst) = ", src, dst)
+            print("object_to_array_state: (src, dst)  = ", src, dst)
             print("object_to_array_state: observation = ", observation)
         
         src_dst_bws = (observation.kpaths_bw[(src,dst)]).copy()
@@ -72,6 +72,7 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
 
         self.discount = discount
         self.topology = topology
+        network.reset_topology(self.topology)
         self.requests = requests
         self.src_dst_list = src_dst_list
        
@@ -190,7 +191,8 @@ class TF_Agent_Env_Wrapper(tf_agents.environments.py_environment.PyEnvironment):
         self._state = s
 
         obs = self.get_observation_actions(s)
-        print("_reset: gamma = ",self.discount,", obs = ", obs)
+        if debug > 2:
+            print("_reset: self = ",self,", env = ",self.env,", obs = ",obs)
         
         return tf_agents.trajectories.time_step.restart(obs)
 
