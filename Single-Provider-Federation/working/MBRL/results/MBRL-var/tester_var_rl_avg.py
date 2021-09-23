@@ -61,7 +61,7 @@ def test_policy(policy, demands):
     return total_reward, 0, 0
 
 
-def test_mb_policy(module, agent, demands, stop_learning):
+def test_mb_policy(module, agent, demands):
     total_reward = 0
     env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, given_demands = demands)
     module.init(env)
@@ -74,7 +74,7 @@ def test_mb_policy(module, agent, demands, stop_learning):
     while state != None:
         i += 1
 
-        reward, next_state = agent(env, state, stop_learning)
+        reward, next_state = agent(env, state)
         
         global warmup
         if i > warmup:
@@ -118,10 +118,10 @@ def mf_result(mf_policy, demands, profit, accept, federate):
     return profit, accept, federate
 
 
-def mb_result(module, agent, demands, stop_learning, profit, accept, federate):
+def mb_result(module, agent, demands, profit, accept, federate):
     demands_num = float(len(demands))
 
-    p, a, f = test_mb_policy(module, agent, demands, stop_learning)
+    p, a, f = test_mb_policy(module, agent, demands)
     profit += p / (demands_num - warmup)
     accept += a / (demands_num - warmup)
     federate += f / (demands_num - warmup)
@@ -131,19 +131,23 @@ def mb_result(module, agent, demands, stop_learning, profit, accept, federate):
 
 if __name__ == "__main__":
 
-    sim_time = 3000
-    #episode_num = 1
-    stop_learning = 1.0 * sim_time
+    sim_time = 10000
+    episode_num = 1000
+    #episode_num = 10
 
-    parser.parse_config("config_var-3.json")
+    parser.parse_config("config_var-0-avg.json")
     
     iterations = 10
-    
     i = 0
-    scale = 0
     
-    while i <= scale:
+    env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
+    rl_policy = RL.rLearning(env, episode_num, 1)
+
+    times = [5000]
+    scale = len(times)
+    while i < scale:
         
+        sim_time = times[i]
         i += 1
 
         greedy_profit_100 = rl_profit = mbrl_000_profit = mbrl_011_profit = mbrl_100_profit = mbrl_111_profit = 0
@@ -153,11 +157,8 @@ if __name__ == "__main__":
         
             print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
             
-            #env = Environment.Env(Environment.domain.total_cpu, Environment.providers[1].quota, sim_time)
-            #rl_policy = RL.rLearning(env, episode_num, 1)
-
             demands = Environment.generate_req_set(sim_time)
-            warmup = int(len(demands) * 0.0)
+            warmup = int(len(demands) * 0.1)
             print("# of demands = ", len(demands))
 
             greedy_profit_100, alaki1, alaki2 = greedy_result(demands, greedy_profit_100, alaki1, alaki2)
@@ -170,8 +171,9 @@ if __name__ == "__main__":
             
             MBRL.exploit_num  = 0
             MBRL.exploit_deep = 0
-            mbrl_000_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning, mbrl_000_profit, alaki1, alaki2)
+            #mbrl_000_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, mbrl_000_profit, alaki1, alaki2)
  
+
             MBRL.bg_explor_num  = 0
             MBRL.bg_explor_deep = 0
            
@@ -180,7 +182,8 @@ if __name__ == "__main__":
             
             MBRL.exploit_num  = 1
             MBRL.exploit_deep = 2
-            mbrl_011_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning, mbrl_011_profit, alaki1, alaki2)
+            #mbrl_011_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, mbrl_011_profit, alaki1, alaki2)
+
 
             MBRL.bg_explor_num  = 5
             MBRL.bg_explor_deep = 3
@@ -190,7 +193,7 @@ if __name__ == "__main__":
             
             MBRL.exploit_num  = 0
             MBRL.exploit_deep = 0
-            mbrl_100_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning,  mbrl_100_profit, alaki1, alaki2)
+            #mbrl_100_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, mbrl_100_profit, alaki1, alaki2)
 
             MBRL.bg_explor_num  = 5
             MBRL.bg_explor_deep = 3
@@ -200,10 +203,10 @@ if __name__ == "__main__":
             
             MBRL.exploit_num  = 1
             MBRL.exploit_deep = 2
-            mbrl_111_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, stop_learning, mbrl_111_profit, alaki1, alaki2)
+            #mbrl_111_profit, alaki1, alaki2 = mb_result(MBRL, MBRL.MBrLearning, demands, mbrl_111_profit, alaki1, alaki2)
 
             
-            #rl_profit, alaki1, alaki2 = mf_result(rl_policy, demands, rl_profit, alaki1, alaki2)
+            rl_profit, alaki1, alaki2 = mf_result(rl_policy, demands, rl_profit, alaki1, alaki2)
 
 
         print("Capacity_Profit = ", Environment.domain.total_cpu)
