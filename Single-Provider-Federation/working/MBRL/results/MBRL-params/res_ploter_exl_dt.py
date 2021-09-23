@@ -45,9 +45,11 @@ surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
 # Customize the z axis.
 #ax.set_zlim(-1.01, 1.01)
 ax.set_xlim(0.00, 5.00)
+plt.xlabel(r'$\kappa$')
 ax.xaxis.set_major_locator(LinearLocator(6))
 
 ax.set_ylim(0.00, 5.00)
+plt.ylabel(r'$\theta$')
 ax.yaxis.set_major_locator(LinearLocator(6))
 
 ax.set_zlim(29, 55)
