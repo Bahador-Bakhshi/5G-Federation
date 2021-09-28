@@ -1,21 +1,19 @@
-"""
-=====================
-3D surface (colormap)
-=====================
-
-Demonstrates plotting a 3D surface colored with the coolwarm colormap.
-The surface is made opaque by using antialiased=False.
-
-Also demonstrates using the LinearLocator and custom formatting for the
-z axis tick labels.
-"""
-
+import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator
 import numpy as np
 
 fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+
+font = {
+            'weight' : 'bold',
+            'size'   : 15
+        }
+
+matplotlib.rc('font', **font)
+matplotlib.rcParams["axes.labelweight"] = "bold"
+matplotlib.rcParams["axes.labelsize"] = "18"
 
 # Make data.
 X_range = np.arange(0, 6, 1)
@@ -45,22 +43,16 @@ surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
 # Customize the z axis.
 #ax.set_zlim(-1.01, 1.01)
 ax.set_xlim(0.00, 5.00)
-plt.xlabel(r'$\kappa$')
+ax.set_xlabel(r'$\kappa$')
 ax.xaxis.set_major_locator(LinearLocator(6))
 
 ax.set_ylim(0.00, 5.00)
-plt.ylabel(r'$\theta$')
+ax.set_ylabel(r'$\theta$')
 ax.yaxis.set_major_locator(LinearLocator(6))
 
 ax.set_zlim(29, 55)
+ax.set_zlabel("Average Profit", fontweight = 'bold', fontsize=12, rotation=90)
 ax.zaxis.set_major_locator(LinearLocator(5))
 
-# A StrMethodFormatter is used automatically
-#ax.zaxis.set_major_formatter('{x:.02f}')
+plt.savefig("param_exl_dt.pdf", bbox_inches='tight', pad_inches=0.15, format="pdf",transparent=True)
 
-# Add a color bar which maps values to colors.
-#fig.colorbar(surf, shrink=0.5, aspect=5)
-
-#plt.show()
-
-plt.savefig("param_exl_dt.pdf", bbox_inches='tight', format="pdf",transparent=True)
