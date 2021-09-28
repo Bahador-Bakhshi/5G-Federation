@@ -51,6 +51,7 @@ ax.set_ylabel(r'$\theta$')
 ax.yaxis.set_major_locator(LinearLocator(5))
 
 ax.set_zlim(29, 55)
+ax.zaxis.set_rotate_label(False)
 ax.set_zlabel("Average Profit", fontweight = 'bold', fontsize=12, rotation=90)
 ax.zaxis.set_major_locator(LinearLocator(5))
 
