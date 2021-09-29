@@ -19,16 +19,18 @@ def plotter():
 
     plt.grid(linestyle="--", linewidth=0.5)
 
-    plt.xlabel('% of learning period')
+    plt.xlabel('# of variable service types')
     plt.ylabel('Average Profit')
 
-    X = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    X = [0, 1, 2, 3]
  
-    MFRL    = [32.54769777, 32.34704197, 32.35968621, 34.05037297, 35.27343658, 36.716724, 37.98891066, 39.38006103, 40.74047934, 42.02829461]
-    MB_Full = [32.68831797, 32.60475304, 32.35968621, 35.20544098, 37.36696232, 39.87699175, 42.27996921, 44.54401671, 46.93844256, 49.40515261]
-    MB_DTP  = [32.52556692, 32.59392947, 32.41813453, 34.70740598, 36.60856674, 38.85594332, 40.8817007, 43.54743094, 45.45189978, 47.82142008]
-    MB_BGEX = [32.13649886, 32.5505782, 32.8538967, 34.84099003, 36.97873461, 39.06340425, 41.13747648, 43.92959815, 45.96110205, 48.52424226]
-    RL_Offline = [56.8322134, 56.8322134, 56.8322134, 56.8322134, 56.8322134, 56.8322134, 56.8322134, 56.8322134, 56.8322134, 56.8322134]
+    MFRL    = [37.10400639, 39.95489138, 41.5367551, 45.2879642]
+   
+    MB_BGEX = [43.63102333, 46.92739621, 48.95666589, 52.39837265]
+    MB_DTP  = [50.00439925, 52.1621353, 57.05615117, 64.18598042]
+    MB_Full = [50.00002159, 53.45814054, 57.96062222, 65.03075777]
+
+    RL_Offline = [55.51622754, 58.3429547, 61.93517684, 69.2524923]
     
     plt.plot(X, RL_Offline, label='RL-Offline', color='tab:red', linestyle='-.', linewidth=1.25, marker = 'D')
     
@@ -39,13 +41,13 @@ def plotter():
     plt.plot(X, MFRL, label='MFRL', color='k', linestyle='solid', linewidth=1.25, marker = '*')
 
     plt.legend(loc='best', handlelength=2, prop={'size': 12})
-
-    '''
-    x_ticks = [x[i] for i in range(0, len(x) + 1, 2)] #change 2 to 3 for "check_episode"
-    ax.set_xticks(x_ticks)
-    '''
     
-    plt.savefig("stop_learning.pdf", bbox_inches='tight', format="pdf",transparent=True)
+    x_ticks = X
+    ax.set_xticks(x_ticks)
+
+
+
+    plt.savefig("var_traffic.pdf", bbox_inches='tight', format="pdf",transparent=True)
     
     
     
