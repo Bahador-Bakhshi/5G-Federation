@@ -40,10 +40,13 @@ def plotter():
 
     plt.plot(X, MFRL, label='MFRL', color='k', linestyle='solid', linewidth=1.25, marker = '*')
 
-    plt.legend(loc='best', handlelength=2, prop={'size': 12})
+    plt.legend(loc='best', ncol=3, handlelength=2, prop={'size': 10})
     
     x_ticks = X
     ax.set_xticks(x_ticks)
+    
+    ax.set_ylim(35,75)
+    ax.set_aspect(0.037)
 
 
 

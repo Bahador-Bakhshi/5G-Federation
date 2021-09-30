@@ -38,12 +38,10 @@ def plotter():
 
     plt.plot(X, MFRL, label='MFRL', color='k', linestyle='solid', linewidth=1.25, marker = '*')
 
-    plt.legend(loc='best', handlelength=2, prop={'size': 12})
+    plt.legend(loc='best', ncol=2, handlelength=2, prop={'size': 10})
 
-    '''
-    x_ticks = [x[i] for i in range(0, len(x) + 1, 2)] #change 2 to 3 for "check_episode"
-    ax.set_xticks(x_ticks)
-    '''
+    ax.set_ylim(30,60)
+    ax.set_aspect(0.015)
     
     plt.savefig("stop_learning.pdf", bbox_inches='tight', format="pdf",transparent=True)
     
