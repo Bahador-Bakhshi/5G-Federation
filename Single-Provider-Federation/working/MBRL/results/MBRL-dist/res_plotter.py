@@ -14,6 +14,7 @@ def plotter():
     matplotlib.rc('font', **font)
     plt.rcParams["axes.labelweight"] = "bold"
     plt.rcParams["axes.labelsize"] = "13"
+    matplotlib.rcParams['hatch.linewidth'] = 0.3
 
     D = [('Poisson', 42.09220511, 48.43800928, 48.18082863, 49.41549366, 58.54997673),
          ('Uniform', 41.82511832, 49.18577047, 49.18173626, 49.65339127, 59.82769006),
@@ -33,11 +34,11 @@ def plotter():
 
     ax = plt.subplot()
 
-    ax.barh(ind + (1 + 0.5) * width, RL_Off, width, align='center', color='tab:red', label='RL-Offline', edgecolor="white", hatch="///") 
-    ax.barh(ind + (0 + 0.5) * width, MB_Full, width, align='center', color='tab:green', label='MB-Full', edgecolor="white", hatch="+++") 
-    ax.barh(ind - (0 + 0.5) * width, MB_DTP, width, align='center', color='c', label='MB-DTP', edgecolor="white", hatch="xxx") 
-    ax.barh(ind - (1 + 0.5) * width, MB_BGEX, width, align='center', color='b', label='MB-BGEX', edgecolor="white", hatch="|||") 
-    ax.barh(ind - (2 + 0.5) * width, MFRL, width, align='center', color='k', label='MFRL', edgecolor="white", hatch="\\\\\\") 
+    ax.barh(ind + (1 + 0.5) * width, RL_Off, width, align='center', color='tab:red', label='RL-Offline', linewidth = 0.1, edgecolor="white", hatch="///") 
+    ax.barh(ind + (0 + 0.5) * width, MB_Full, width, align='center', color='tab:green', label='MB-Full', linewidth = 0.1, edgecolor="white", hatch="+++") 
+    ax.barh(ind - (0 + 0.5) * width, MB_DTP, width, align='center', color='c', label='MB-DTP', linewidth = 0.1, edgecolor="white", hatch="xxx") 
+    ax.barh(ind - (1 + 0.5) * width, MB_BGEX, width, align='center', color='tab:blue', label='MB-BGEX', linewidth = 0.1, edgecolor="white", hatch="|||") 
+    ax.barh(ind - (2 + 0.5) * width, MFRL, width, align='center', color='tab:orange', label='MFRL', linewidth = 0.1, edgecolor="white", hatch="\\\\\\") 
 
 
     plt.tick_params(
@@ -52,6 +53,7 @@ def plotter():
     ax.set_yticklabels(dist)
     plt.yticks(rotation=90)
     plt.xlabel('Average Profit')
+    plt.xticks(fontsize=12)
     
     ax.legend(loc='best', handlelength=1, handletextpad=0.1, ncol=5, prop={'size': 9.5})   
     #ax.legend(handletextpad=0.1)

@@ -55,5 +55,8 @@ ax.zaxis.set_rotate_label(False)
 ax.set_zlabel("Average Profit", fontweight = 'bold', fontsize=15, rotation=90)
 ax.zaxis.set_major_locator(LinearLocator(5))
 
+ax.tick_params(labelsize=12)
+
+
 plt.savefig("param_exp_dt.pdf", bbox_inches='tight', pad_inches=0.1, format="pdf",transparent=True)
 

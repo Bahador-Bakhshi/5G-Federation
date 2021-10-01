@@ -34,9 +34,9 @@ def plotter():
     
     plt.plot(X, MB_Full, label='MB-Full', color='tab:green', linestyle='dashed', linewidth=1.25, marker = 'v')
     plt.plot(X, MB_DTP, label='MB-DTP', color='c', linestyle='dashed', linewidth=1.25, marker = '>')
-    plt.plot(X, MB_BGEX, label='MB-BGEX', color='b', linestyle='dashed', linewidth=1.25, marker = '^')
+    plt.plot(X, MB_BGEX, label='MB-BGEX', color='tab:blue', linestyle='dashed', linewidth=1.25, marker = '^')
 
-    plt.plot(X, MFRL, label='MFRL', color='k', linestyle='solid', linewidth=1.25, marker = '*')
+    plt.plot(X, MFRL, label='MFRL', color='tab:orange', linestyle='solid', linewidth=1.25, marker = '*')
 
     plt.legend(loc='best', ncol=2, handlelength=2, prop={'size': 10})
 

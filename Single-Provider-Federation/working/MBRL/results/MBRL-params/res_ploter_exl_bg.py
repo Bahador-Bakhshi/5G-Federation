@@ -40,14 +40,11 @@ surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
                        linewidth=0, antialiased=False)
 
 # Customize the z axis.
-#ax.set_zlim(-1.01, 1.01)
 ax.set_xlim(0.00, 5.00)
-#plt.xlabel(r'$\kappa$')
 ax.set_xlabel(r'$\kappa$', fontsize=15)
 ax.xaxis.set_major_locator(LinearLocator(6))
 
 ax.set_ylim(0.00, 20.00)
-#plt.ylabel(r'$\theta$')
 ax.set_ylabel(r'$\theta$', fontsize=15)
 ax.yaxis.set_major_locator(LinearLocator(5))
 
@@ -56,6 +53,7 @@ ax.zaxis.set_rotate_label(False)
 ax.set_zlabel("Average Profit", fontweight = 'bold', fontsize=15, rotation=90)
 ax.zaxis.set_major_locator(LinearLocator(5))
 
+ax.tick_params(labelsize=12)
 
 plt.savefig("param_exl_bg.pdf",  bbox_inches='tight', pad_inches=0.15, format="pdf",transparent=True)
 
