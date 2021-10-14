@@ -244,11 +244,11 @@ def apply_model(real_env, state, action, epsilon, alpha, beta, sample_num, sampl
                 if not (model_next_state in Q_table):
                     init_val(real_env, model_next_state) 
             
-                    if q_update:
-                        td_update(model_state, model_action, model_next_state, model_reward, alpha)
+                if q_update:
+                    td_update(model_state, model_action, model_next_state, model_reward, alpha)
             
-                    if update_rho:
-                        td_update_rho(model_state, model_next_state, model_reward, beta)
+                if update_rho:
+                    td_update_rho(model_state, model_next_state, model_reward, beta)
  
             model_state = model_next_state
     
