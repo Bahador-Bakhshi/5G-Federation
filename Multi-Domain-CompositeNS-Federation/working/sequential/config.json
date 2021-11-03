@@ -1,0 +1,132 @@
+{
+	"ns_catalog":{
+		"simple_ns":[
+			{
+				"sns_id": 0,
+				"resources":[
+					4,
+					2,
+					1
+				]
+			},
+			{
+				"sns_id": 1,
+				"resources":[
+					2,
+					3,
+					2
+				]
+			},
+			{
+				"sns_id": 2,
+				"resources":[
+					2,
+					2,
+					4
+				]
+			}
+		],
+		"composite_ns":[
+			{
+				"cns_id": 0,
+				"setup_charge": 0,
+				"usage_charge": 95,
+				"nested_ns":[
+					0
+				]
+			},
+			{
+				"cns_id": 1,
+				"setup_charge": 0,
+				"usage_charge": 85,
+				"nested_ns":[
+					1
+				]
+			},
+			{
+				"cns_id": 1,
+				"setup_charge": 0,
+				"usage_charge": 50,
+				"nested_ns":[
+					2
+				]
+			}
+		]
+	},
+
+	"domains":[
+		{
+			"name": "consumer",
+			"domain_id": 0,
+			"quotas": [
+				{"capcity": 24, "reject_threshold": 1.0},
+				{"capcity": 20, "reject_threshold": 1.0},
+				{"capcity": 24, "reject_threshold": 1.0}
+			],
+			"costs":[
+				{
+					"sns_id": 0,
+					"usage_cost": 0,
+					"overcharge": 1.0
+				},
+				{
+					"sns_id": 1,
+					"usage_cost": 0,
+					"overcharge": 1.0
+				},
+				{
+					"sns_id": 2,
+					"usage_cost": 0,
+					"overcharge": 1.0
+				}
+			]
+		},
+		{
+			"name": "provider 1",
+			"domain_id": 1,
+			"quotas": [
+				{"capcity": 10, "reject_threshold": 2.0},
+				{"capcity": 15, "reject_threshold": 2.0},
+				{"capcity": 25, "reject_threshold": 2.0}
+			],
+			"costs":[
+				{
+					"sns_id": 0,
+					"usage_cost": 80,
+					"overcharge": 2.0
+				},
+				{
+					"sns_id": 1,
+					"usage_cost": 40,
+					"overcharge": 2.0
+				},
+				{
+					"sns_id": 2,
+					"usage_cost": 5,
+					"overcharge": 2.0
+				}
+
+			]
+		}
+	],
+
+	"loads":[
+		{
+			"cns_id": 0,
+			"lambda": 10,
+			"mu": 4
+		},
+		{
+			"cns_id": 1,
+			"lambda": 11,
+			"mu": 2
+		},
+		{
+			"cns_id": 2,
+			"lambda": 12,
+			"mu": 0.75
+		}
+
+	]
+}
+
