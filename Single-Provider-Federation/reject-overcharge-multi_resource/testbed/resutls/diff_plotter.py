@@ -68,7 +68,7 @@ def load_trace(trace_file_name, output):
     #plt.legend(handlelength=1, ncol=2, handleheight=2.4, labelspacing=0.00)
     plt.legend(loc='best', ncol=3, handlelength=3, prop={'size': 7})
 
-    ax.set_aspect(0.5)
+    ax.set_aspect(0.75)
 
     plt.savefig(output+".pdf", bbox_inches='tight', format="pdf",transparent=True)
 
